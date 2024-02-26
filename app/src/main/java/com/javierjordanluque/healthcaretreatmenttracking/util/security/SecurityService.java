@@ -3,6 +3,7 @@ package com.javierjordanluque.healthcaretreatmenttracking.util.security;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 
+import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -17,23 +18,24 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
 public class SecurityService {
-    private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
+    private static final String ALGORITHM = KeyProperties.KEY_ALGORITHM_AES;
+    private static final String BLOCK_MODE = KeyProperties.BLOCK_MODE_CBC;
+    private static final String PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7;
+    private static final String TRANSFORMATION = ALGORITHM + "/" + BLOCK_MODE + "/" + PADDING;
     private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
     private static final String KEY_ALIAS = "HealthcareTreatmentTracking_AESKey";
     private static final String HASH_ALGORITHM = "SHA-256";
-
     private static SecretKey secretKey;
 
     public static CipherData encrypt(byte[] data) throws Exception {
         if (secretKey == null)
             secretKey = getKey();
 
-        IvParameterSpec iv = generateIV();
         Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         byte[] encryptedData = cipher.doFinal(data);
 
-        return new CipherData(encryptedData, iv.getIV());
+        return new CipherData(encryptedData, cipher.getIV());
     }
 
     public static byte[] decrypt(CipherData encryptedData) throws Exception {
@@ -49,10 +51,12 @@ public class SecurityService {
         keyStore.load(null);
 
         if (!keyStore.containsAlias(KEY_ALIAS)) {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE);
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
             KeyGenParameterSpec keySpec = new KeyGenParameterSpec.Builder(KEY_ALIAS, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                    .setBlockModes(BLOCK_MODE)
+                    .setEncryptionPaddings(PADDING)
+                    .setUserAuthenticationRequired(false)
+                    .setRandomizedEncryptionRequired(true)
                     .build();
             keyGenerator.init(keySpec);
             keyGenerator.generateKey();
@@ -61,16 +65,9 @@ public class SecurityService {
         return ((SecretKey) keyStore.getKey(KEY_ALIAS, null));
     }
 
-    private static IvParameterSpec generateIV() {
-        byte[] iv = new byte[16];
-        new SecureRandom().nextBytes(iv);
-
-        return new IvParameterSpec(iv);
-    }
-
     public static HashData hashPasswordWithSalt(String password) throws NoSuchAlgorithmException {
         byte[] salt = generateSalt();
-        byte[] hashedPassword = hash(concatenateBytes(password.getBytes(), salt));
+        byte[] hashedPassword = hash(concatenateBytes(password.getBytes(StandardCharsets.UTF_8), salt));
 
         return new HashData(hashedPassword, salt);
     }
@@ -95,6 +92,12 @@ public class SecurityService {
         System.arraycopy(dataB, 0, result, dataA.length, dataB.length);
 
         return result;
+    }
+
+    public static boolean equalsHashAndPassword(HashData hashData, String password) throws NoSuchAlgorithmException {
+        byte[] hashedPassword = hash(concatenateBytes(password.getBytes(StandardCharsets.UTF_8), hashData.getSalt()));
+
+        return Arrays.equals(hashData.getHashedPassword(), hashedPassword);
     }
 
     public static boolean meetsPasswordRequirements(String password) {
