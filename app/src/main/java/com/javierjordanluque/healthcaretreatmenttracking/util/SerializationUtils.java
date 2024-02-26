@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthcaretreatmenttracking.util;
 
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
 public class SerializationUtils {
@@ -33,15 +34,15 @@ public class SerializationUtils {
     }
 
     private static byte[] serializeString(String string) {
-        return string.getBytes();
+        return string.getBytes(StandardCharsets.UTF_8);
     }
 
     private static String deserializeString(byte[] data) {
-        return new String(data);
+        return new String(data, StandardCharsets.UTF_8);
     }
 
     private static byte[] serializeEnum(Enum<?> enumValue) {
-        return enumValue.name().getBytes();
+        return enumValue.name().getBytes(StandardCharsets.UTF_8);
     }
 
     private static <T extends Enum<T>> T deserializeEnum(byte[] data, Class<?> enumType) throws Exception {
