@@ -66,7 +66,7 @@ public abstract class BaseRepository<T extends Identifiable> {
         close(db);
     }
 
-    public T getById(long id) {
+    public T findById(long id) {
         SQLiteDatabase db = open();
 
         String selection = "id=?";
@@ -79,7 +79,7 @@ public abstract class BaseRepository<T extends Identifiable> {
         return null;
     }
 
-    public List<T> getAll() {
+    public List<T> findAll() {
         List<T> items = new ArrayList<>();
         SQLiteDatabase db = open();
 
