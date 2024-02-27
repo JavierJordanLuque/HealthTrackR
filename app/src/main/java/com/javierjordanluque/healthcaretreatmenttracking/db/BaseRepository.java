@@ -3,8 +3,8 @@ package com.javierjordanluque.healthcaretreatmenttracking.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.javierjordanluque.healthcaretreatmenttracking.models.Identifiable;
 
@@ -12,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRepository<T extends Identifiable> {
-    private final Context context;
+    private final String TABLE_NAME;
     private final DatabaseHelper databaseHelper;
 
-    public BaseRepository(Context context) {
-        this.context = context;
+    public BaseRepository(String tableName, Context context) {
+        TABLE_NAME = tableName;
         databaseHelper = new DatabaseHelper(context);
     }
 
-    protected SQLiteDatabase open() throws SQLException {
+    protected SQLiteDatabase open() throws SQLiteException {
         return databaseHelper.getWritableDatabase();
     }
 
@@ -30,91 +30,69 @@ public abstract class BaseRepository<T extends Identifiable> {
         }
     }
 
-    protected abstract String getTableName();
     protected abstract ContentValues getContentValues(T item);
     protected abstract T cursorToItem(Cursor cursor);
 
     public long insert(T item) {
-        SQLiteDatabase db = null;
-        try {
-            db = open();
-            ContentValues values = getContentValues(item);
-            return db.insert(getTableName(), null, values);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        } finally {
-            close(db);
-        }
+        SQLiteDatabase db = open();
+
+        ContentValues values = getContentValues(item);
+        long insertedId = db.insert(TABLE_NAME, null, values);
+
+        close(db);
+        return insertedId;
     }
 
     public void update(T item) {
-        SQLiteDatabase db = null;
-        try {
-            db = open();
-            ContentValues values = getContentValues(item);
-            long id = item.getId();
-            String selection = "id=?";
-            String[] selectionArgs = {String.valueOf(id)};
-            db.update(getTableName(), values, selection, selectionArgs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close(db);
-        }
+        SQLiteDatabase db = open();
+
+        ContentValues values = getContentValues(item);
+        long id = item.getId();
+        String selection = "id=?";
+        String[] selectionArgs = {String.valueOf(id)};
+        db.update(TABLE_NAME, values, selection, selectionArgs);
+
+        close(db);
     }
 
     public void delete(T item) {
-        SQLiteDatabase db = null;
-        try {
-            db = open();
-            long id = item.getId();
-            String selection = "id=?";
-            String[] selectionArgs = {String.valueOf(id)};
-            db.delete(getTableName(), selection, selectionArgs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close(db);
-        }
+        SQLiteDatabase db = open();
+
+        long id = item.getId();
+        String selection = "id=?";
+        String[] selectionArgs = {String.valueOf(id)};
+        db.delete(TABLE_NAME, selection, selectionArgs);
+
+        close(db);
     }
 
     public T getById(long id) {
-        SQLiteDatabase db = null;
-        try {
-            db = open();
-            String selection = "id=?";
-            String[] selectionArgs = {String.valueOf(id)};
-            Cursor cursor = db.query(getTableName(), null, selection, selectionArgs, null, null, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                return cursorToItem(cursor);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close(db);
-        }
+        SQLiteDatabase db = open();
+
+        String selection = "id=?";
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor != null && cursor.moveToFirst())
+            return cursorToItem(cursor);
+
+        close(db);
         return null;
     }
 
     public List<T> getAll() {
         List<T> items = new ArrayList<>();
-        SQLiteDatabase db = null;
-        try {
-            db = open();
-            Cursor cursor = db.query(getTableName(), null, null, null, null, null, null);
-            if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    T item = cursorToItem(cursor);
-                    items.add(item);
-                }
-                cursor.close();
+        SQLiteDatabase db = open();
+
+        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                T item = cursorToItem(cursor);
+                items.add(item);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close(db);
+            cursor.close();
         }
+
+        close(db);
         return items;
     }
 }
