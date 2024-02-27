@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS `TREATMENT` (
   `end_date_iv` BLOB NULL,
   `diagnosis` BLOB NULL,
   `diagnosis_iv` BLOB NULL,
-  `category` BLOB NOT NULL,
-  `category_iv` BLOB NOT NULL,
+  `category` BLOB NULL,
+  `category_iv` BLOB NULL,
   FOREIGN KEY (`user_id`) REFERENCES `USER` (`id`)
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `TREATMENT_MEDICINE` (
   `treatment_id` INTEGER NOT NULL,
   `medicine_id` INTEGER NOT NULL,
   `dose` INTEGER NULL,
-  `administration_route` TEXT NOT NULL,
+  `administration_route` TEXT NULL,
   `initialDosingTime` DATETIME NOT NULL,
   `dosage_frequency_hours` INTEGER NOT NULL,
   `dosage_frequency_minutes` INTEGER NOT NULL,
