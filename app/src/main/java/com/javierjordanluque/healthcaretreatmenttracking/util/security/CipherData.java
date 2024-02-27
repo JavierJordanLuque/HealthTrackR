@@ -13,15 +13,7 @@ public class CipherData {
         return encryptedData;
     }
 
-    public void setEncryptedData(byte[] encryptedData) {
-        this.encryptedData = encryptedData;
-    }
-
     public byte[] getInitializationVector() {
         return initializationVector;
-    }
-
-    public void setInitializationVector(byte[] initializationVector) {
-        this.initializationVector = initializationVector;
     }
 }
