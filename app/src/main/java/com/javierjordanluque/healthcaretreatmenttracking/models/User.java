@@ -85,7 +85,7 @@ public class User implements Identifiable {
         userRepository.update(user);
     }
 
-    public void changePassword(String currentPassword, String newPassword) {
+    public void changePassword(Context context, String currentPassword, String newPassword) {
         // @TODO
     }
 
@@ -105,9 +105,11 @@ public class User implements Identifiable {
         conditions.remove(condition);
     }
 
-    public void addTreatment(Context context, Treatment treatment) {
-        TreatmentRepository treatmentRepository = new TreatmentRepository(context);
-        treatment.setId(treatmentRepository.insert(treatment));
+    protected void addTreatment(Context context, Treatment treatment) {
+        if (context != null) {
+            TreatmentRepository treatmentRepository = new TreatmentRepository(context);
+            treatment.setId(treatmentRepository.insert(treatment));
+        }
         treatments.add(treatment);
     }
 
