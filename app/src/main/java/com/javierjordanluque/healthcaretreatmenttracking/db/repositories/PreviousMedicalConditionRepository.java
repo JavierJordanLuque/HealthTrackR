@@ -51,16 +51,17 @@ public class PreviousMedicalConditionRepository extends BaseRepository<PreviousM
     @Override
     @SuppressLint("Range")
     protected PreviousMedicalCondition cursorToItem(Cursor cursor) {
-        CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(NAME)), cursor.getBlob(cursor.getColumnIndex(NAME_IV)));
+        UserRepository userRepository = new UserRepository(context);
+        User user = userRepository.findById(cursor.getLong(cursor.getColumnIndex(USER_ID)));
 
+        CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(NAME)), cursor.getBlob(cursor.getColumnIndex(NAME_IV)));
         String name = null;
         try {
             name = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        UserRepository userRepository = new UserRepository(context);
-        User user = userRepository.findById(cursor.getLong(cursor.getColumnIndex(USER_ID)));
+
         PreviousMedicalCondition condition = new PreviousMedicalCondition(user, name);
         condition.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
