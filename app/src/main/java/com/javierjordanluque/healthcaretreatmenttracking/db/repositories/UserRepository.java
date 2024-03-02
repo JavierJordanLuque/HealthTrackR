@@ -63,17 +63,26 @@ public class UserRepository extends BaseRepository<User> {
     @SuppressLint("Range")
     protected User cursorToItem(Cursor cursor) {
         User user = new User(cursor.getString(cursor.getColumnIndex(EMAIL)), cursor.getString(cursor.getColumnIndex(FULL_NAME)));
-
         user.setId(cursor.getLong(cursor.getColumnIndex(ID)));
-        user.setBirthDate(LocalDate.parse(cursor.getString(cursor.getColumnIndex(BIRTH_DATE))));
-        user.setGender(Gender.valueOf(cursor.getString(cursor.getColumnIndex(GENDER))));
 
-        CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE)), cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE_IV)));
-        try {
-            BloodType bloodType = (BloodType) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), BloodType.class);
-            user.setBloodType(bloodType);
-        } catch (Exception e) {
-            e.printStackTrace();
+        String birth_date = cursor.getString(cursor.getColumnIndex(BIRTH_DATE));
+        if (birth_date != null)
+            user.setBirthDate(LocalDate.parse(birth_date));
+
+        String gender = cursor.getString(cursor.getColumnIndex(GENDER));
+        if (gender != null)
+            user.setGender(Gender.valueOf(gender));
+
+        byte[] blood_type = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE));
+        byte[] blood_type_iv = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE_IV));
+        if (blood_type != null && blood_type_iv != null) {
+            CipherData cipherData = new CipherData(blood_type, blood_type_iv);
+            try {
+                BloodType bloodType = (BloodType) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), BloodType.class);
+                user.setBloodType(bloodType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return user;
@@ -87,8 +96,12 @@ public class UserRepository extends BaseRepository<User> {
         String[] selectionArgs = {userEmail};
         Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
-            HashData hashData = new HashData(cursor.getBlob(cursor.getColumnIndex(PASSWORD)), cursor.getBlob(cursor.getColumnIndex(SALT)));
-            return new UserCredentials(cursor.getLong(cursor.getColumnIndex(ID)), hashData);
+            byte[] password = cursor.getBlob(cursor.getColumnIndex(PASSWORD));
+            byte[] salt =  cursor.getBlob(cursor.getColumnIndex(SALT));
+            if (password != null && salt != null) {
+                HashData hashData = new HashData(password, salt);
+                return new UserCredentials(cursor.getLong(cursor.getColumnIndex(ID)), hashData);
+            }
         }
 
         close(db);
