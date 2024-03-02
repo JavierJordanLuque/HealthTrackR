@@ -116,28 +116,40 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
             e.printStackTrace();
         }
 
-        cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(END_DATE)), cursor.getBlob(cursor.getColumnIndex(END_DATE_IV)));
+        byte[] endDateBytes = cursor.getBlob(cursor.getColumnIndex(END_DATE));
+        byte[] endDateIV = cursor.getBlob(cursor.getColumnIndex(END_DATE_IV));
         LocalDate endDate = null;
-        try {
-            endDate = (LocalDate) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), LocalDate.class);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (endDateBytes != null && endDateIV != null) {
+            cipherData = new CipherData(endDateBytes, endDateIV);
+            try {
+                endDate = (LocalDate) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), LocalDate.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(DIAGNOSIS)), cursor.getBlob(cursor.getColumnIndex(DIAGNOSIS_IV)));
+        byte[] diagnosisBytes = cursor.getBlob(cursor.getColumnIndex(DIAGNOSIS));
+        byte[] diagnosisIV = cursor.getBlob(cursor.getColumnIndex(DIAGNOSIS_IV));
         String diagnosis = null;
-        try {
-            diagnosis = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (diagnosisBytes != null && diagnosisIV != null) {
+            cipherData = new CipherData(diagnosisBytes, diagnosisIV);
+            try {
+                diagnosis = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(DIAGNOSIS)), cursor.getBlob(cursor.getColumnIndex(DIAGNOSIS_IV)));
+        byte[] categoryBytes = cursor.getBlob(cursor.getColumnIndex(CATEGORY));
+        byte[] categoryIV = cursor.getBlob(cursor.getColumnIndex(CATEGORY_IV));
         TreatmentCategory category = null;
-        try {
-            category = (TreatmentCategory) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), TreatmentCategory.class);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (categoryBytes != null && categoryIV != null) {
+            cipherData = new CipherData(categoryBytes, categoryIV);
+            try {
+                category = (TreatmentCategory) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), TreatmentCategory.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         Treatment treatment = new Treatment(null, user, title, startDate, endDate, diagnosis, category);
