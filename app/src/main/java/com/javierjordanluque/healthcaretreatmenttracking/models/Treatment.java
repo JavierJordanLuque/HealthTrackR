@@ -31,24 +31,37 @@ public class Treatment implements Identifiable {
         this.diagnosis = diagnosis;
         this.category = category;
 
-        if (user != null)
-            user.addTreatment(context, this);
+        // if (user != null)
+        this.user.addTreatment(context, this);
+    }
+
+    public Treatment() {
     }
 
     public void modifyTreatment(Context context, String title, LocalDate startDate, LocalDate endDate, String diagnosis, TreatmentCategory category) {
-        if (!this.title.equals(title))
-            setTitle(title);
-        if (!this.startDate.equals(startDate))
-            setStartDate(startDate);
-        if (!this.endDate.equals(endDate))
-            setEndDate(endDate);
-        if (!this.diagnosis.equals(diagnosis))
-            setDiagnosis(diagnosis);
-        if (!this.category.equals(category))
-            setCategory(category);
-
-        Treatment treatment = new Treatment(null, null, this.title, this.startDate, this.endDate, this.diagnosis, this.category);
+        Treatment treatment = new Treatment();
         treatment.setId(this.id);
+
+        if (!this.title.equals(title)) {
+            setTitle(title);
+            treatment.setTitle(this.title);
+        }
+        if (!this.startDate.equals(startDate)) {
+            setStartDate(startDate);
+            treatment.setStartDate(this.startDate);
+        }
+        if (!this.endDate.equals(endDate)) {
+            setEndDate(endDate);
+            treatment.setEndDate(this.endDate);
+        }
+        if (!this.diagnosis.equals(diagnosis)) {
+            setDiagnosis(diagnosis);
+            treatment.setDiagnosis(this.diagnosis);
+        }
+        if (!this.category.equals(category)) {
+            setCategory(category);
+            treatment.setCategory(this.category);
+        }
 
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         treatmentRepository.update(treatment);
