@@ -3,6 +3,9 @@ package com.javierjordanluque.healthcaretreatmenttracking.models;
 import android.content.Context;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MedicineRepository;
+import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.QuestionRepository;
+import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.StepRepository;
+import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.SymptomRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.TreatmentRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.TreatmentCategory;
 
@@ -195,7 +198,7 @@ public class Treatment implements Identifiable {
         this.category = category;
     }
 
-    public List<Medicine> getMedicines() {
+    public List<Medicine> getMedicines(Context context) {
         if (medicines == null) {
             MedicineRepository medicineRepository = new MedicineRepository(context);
             setMedicines(medicineRepository.findTreatmentMedicines(this.id));
@@ -208,7 +211,7 @@ public class Treatment implements Identifiable {
         this.medicines = medicines;
     }
 
-    public List<Step> getSteps() {
+    public List<Step> getSteps(Context context) {
         if (steps == null) {
             StepRepository stepRepository = new StepRepository(context);
             setSteps(stepRepository.findTreatmentSteps(this.id));
@@ -221,7 +224,7 @@ public class Treatment implements Identifiable {
         this.steps = steps;
     }
 
-    public List<Symptom> getSymptoms() {
+    public List<Symptom> getSymptoms(Context context) {
         if (symptoms == null) {
             SymptomRepository symptomRepository = new SymptomRepository(context);
             setSymptoms(symptomRepository.findTreatmentSymptoms(this.id));
@@ -234,7 +237,7 @@ public class Treatment implements Identifiable {
         this.symptoms = symptoms;
     }
 
-    public List<Question> getQuestions() {
+    public List<Question> getQuestions(Context context) {
         if (questions == null) {
             QuestionRepository questionRepository = new QuestionRepository(context);
             setQuestions(questionRepository.findTreatmentQuestions(this.id));
@@ -247,7 +250,7 @@ public class Treatment implements Identifiable {
         this.questions = questions;
     }
 
-    public List<MedicalAppointment> getAppointments() {
+    public List<MedicalAppointment> getAppointments(Context context) {
         if (appointments == null) {
             MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
             setAppointments(medicalAppointmentRepository.findTreatmentAppointments(this.id));
