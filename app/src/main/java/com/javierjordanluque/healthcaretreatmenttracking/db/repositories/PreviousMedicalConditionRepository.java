@@ -18,11 +18,11 @@ import java.util.List;
 
 public class PreviousMedicalConditionRepository extends BaseRepository<PreviousMedicalCondition> {
     private static final String TABLE_NAME = "PREVIOUS_MEDICAL_CONDITION";
-    private Context context;
     private final String ID = "id";
     private final String USER_ID = "user_id";
     private final String NAME = "name";
     private final String NAME_IV = "name_iv";
+    private Context context;
 
     public PreviousMedicalConditionRepository(Context context) {
         super(TABLE_NAME, context);

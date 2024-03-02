@@ -18,11 +18,11 @@ import java.util.List;
 
 public class AllergyRepository extends BaseRepository<Allergy> {
     private static final String TABLE_NAME = "ALLERGY";
-    private Context context;
     private final String ID = "id";
     private final String USER_ID = "user_id";
     private final String NAME = "name";
     private final String NAME_IV = "name_iv";
+    private Context context;
 
     public AllergyRepository(Context context) {
         super(TABLE_NAME, context);

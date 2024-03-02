@@ -20,7 +20,6 @@ import java.util.List;
 
 public class TreatmentRepository extends BaseRepository<Treatment> {
     private static final String TABLE_NAME = "TREATMENT";
-    private Context context;
     private final String ID = "id";
     private final String USER_ID = "user_id";
     private final String TITLE = "title";
@@ -33,6 +32,7 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
     private final String DIAGNOSIS_IV = "diagnosis_iv";
     private final String CATEGORY = "category";
     private final String CATEGORY_IV = "category_iv";
+    private Context context;
 
     public TreatmentRepository(Context context) {
         super(TABLE_NAME, context);
