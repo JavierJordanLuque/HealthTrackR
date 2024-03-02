@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `TREATMENT_MEDICINE` (
   `initial_dosing_time` DATETIME NOT NULL,
   `dosage_frequency_hours` INTEGER NOT NULL,
   `dosage_frequency_minutes` INTEGER NOT NULL,
+  PRIMARY KEY (treatment_id, medicine_id),
   FOREIGN KEY (`treatment_id`) REFERENCES `TREATMENT` (`id`),
   FOREIGN KEY (`medicine_id`) REFERENCES `MEDICINE` (`id`)
 );
