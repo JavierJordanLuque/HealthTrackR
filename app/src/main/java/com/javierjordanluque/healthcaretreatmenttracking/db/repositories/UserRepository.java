@@ -73,10 +73,10 @@ public class UserRepository extends BaseRepository<User> {
         if (gender != null)
             user.setGender(Gender.valueOf(gender));
 
-        byte[] blood_type = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE));
-        byte[] blood_type_iv = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE_IV));
-        if (blood_type != null && blood_type_iv != null) {
-            CipherData cipherData = new CipherData(blood_type, blood_type_iv);
+        byte[] bloodTypeBytes = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE));
+        byte[] bloodTypeIV = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE_IV));
+        if (bloodTypeBytes != null && bloodTypeIV != null) {
+            CipherData cipherData = new CipherData(bloodTypeBytes, bloodTypeIV);
             try {
                 BloodType bloodType = (BloodType) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), BloodType.class);
                 user.setBloodType(bloodType);
