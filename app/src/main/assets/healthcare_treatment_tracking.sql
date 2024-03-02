@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `TREATMENT_MEDICINE` (
   `medicine_id` INTEGER NOT NULL,
   `dose` INTEGER NULL,
   `administration_route` TEXT NULL,
-  `initialDosingTime` DATETIME NOT NULL,
+  `initial_dosing_time` DATETIME NOT NULL,
   `dosage_frequency_hours` INTEGER NOT NULL,
   `dosage_frequency_minutes` INTEGER NOT NULL,
   FOREIGN KEY (`treatment_id`) REFERENCES `TREATMENT` (`id`),
