@@ -40,15 +40,15 @@ public class User implements Identifiable {
         User user = new User(null, updatedFullName);
         user.setId(this.id);
 
-        if (!this.birthDate.equals(birthDate)) {
+        if ((this.birthDate == null && birthDate != null ) || (birthDate != null && !this.birthDate.equals(birthDate))) {
             setBirthDate(birthDate);
             user.setBirthDate(this.birthDate);
         }
-        if (!this.gender.equals(gender)) {
+        if ((this.gender == null && gender != null ) || (gender != null && !this.gender.equals(gender))) {
             setGender(gender);
             user.setGender(this.gender);
         }
-        if (!this.bloodType.equals(bloodType)) {
+        if ((this.bloodType == null && bloodType != null ) || (bloodType != null && !this.bloodType.equals(bloodType))) {
             setBloodType(bloodType);
             user.setBloodType(this.bloodType);
         }

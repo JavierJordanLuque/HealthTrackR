@@ -50,15 +50,15 @@ public class Treatment implements Identifiable {
             setStartDate(startDate);
             treatment.setStartDate(this.startDate);
         }
-        if (!this.endDate.equals(endDate)) {
+        if ((this.endDate == null && endDate != null ) || (endDate != null && !this.endDate.equals(endDate))) {
             setEndDate(endDate);
             treatment.setEndDate(this.endDate);
         }
-        if (!this.diagnosis.equals(diagnosis)) {
+        if ((this.diagnosis == null && diagnosis != null ) || (diagnosis != null && !this.diagnosis.equals(diagnosis))) {
             setDiagnosis(diagnosis);
             treatment.setDiagnosis(this.diagnosis);
         }
-        if (!this.category.equals(category)) {
+        if ((this.category == null && category != null ) || (category != null && !this.category.equals(category))) {
             setCategory(category);
             treatment.setCategory(this.category);
         }
