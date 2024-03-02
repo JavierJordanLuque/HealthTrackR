@@ -31,9 +31,13 @@ public class User implements Identifiable {
     }
 
     public void modifyUser(Context context, String fullName, LocalDate birthDate, Gender gender, BloodType bloodType, List<Allergy> allergies, List<PreviousMedicalCondition> conditions) {
-        if (!this.fullName.equals(fullName))
+        String updatedFullName = null;
+        if (!this.fullName.equals(fullName)) {
             setFullName(fullName);
-        User user = new User(this.email, this.fullName);
+            updatedFullName = this.fullName;
+        }
+
+        User user = new User(null, updatedFullName);
         user.setId(this.id);
 
         if (!this.birthDate.equals(birthDate)) {
