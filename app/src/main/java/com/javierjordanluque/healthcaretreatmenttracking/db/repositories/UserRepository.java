@@ -89,17 +89,17 @@ public class UserRepository extends BaseRepository<User> {
     }
 
     @SuppressLint("Range")
-    public UserCredentials findUserCredentials(String userEmail) {
+    public UserCredentials findUserCredentials(String email) {
         SQLiteDatabase db = open();
 
         String selection = EMAIL + "=?";
-        String[] selectionArgs = {userEmail};
+        String[] selectionArgs = {email};
         Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
-            byte[] password = cursor.getBlob(cursor.getColumnIndex(PASSWORD));
+            byte[] passwordBytes = cursor.getBlob(cursor.getColumnIndex(PASSWORD));
             byte[] salt =  cursor.getBlob(cursor.getColumnIndex(SALT));
-            if (password != null && salt != null) {
-                HashData hashData = new HashData(password, salt);
+            if (passwordBytes != null && salt != null) {
+                HashData hashData = new HashData(passwordBytes, salt);
                 return new UserCredentials(cursor.getLong(cursor.getColumnIndex(ID)), hashData);
             }
         }
