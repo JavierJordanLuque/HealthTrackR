@@ -1,6 +1,8 @@
 package com.javierjordanluque.healthcaretreatmenttracking.models;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.MultimediaType;
 
@@ -15,6 +17,17 @@ public class Multimedia implements Identifiable {
         this.type = type;
         this.path = path;
         this.step.addMultimedia(context, this);
+    }
+
+    public Object getMedia() {
+        switch (type) {
+            case IMAGE:
+                return BitmapFactory.decodeFile(path);
+            case VIDEO:
+                return Uri.parse(path);
+            default:
+                return null;
+        }
     }
 
     @Override
