@@ -37,7 +37,7 @@ public class StepRepository extends BaseRepository<Step> {
             contentValues.put(TITLE, step.getTitle());
         if (step.getDescription() != null)
             contentValues.put(DESCRIPTION, step.getDescription());
-        if (step.getNumOrder() >= 0)
+        if (step.getNumOrder() != null)
             contentValues.put(NUM_ORDER, step.getNumOrder());
 
         return contentValues;

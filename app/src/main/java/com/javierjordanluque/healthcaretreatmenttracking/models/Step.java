@@ -12,7 +12,7 @@ public class Step implements Identifiable {
     private Treatment treatment;
     private String title;
     private String description;
-    private int numOrder;
+    private Integer numOrder;
     private List<Multimedia> multimedias;
 
     public Step(Context context, Treatment treatment, String title, String description, int numOrder) {
@@ -24,7 +24,6 @@ public class Step implements Identifiable {
     }
 
     public Step(){
-        this.numOrder = -1;
     }
 
     public void modifyStep(Context context, String title, String description, int numOrder) {
@@ -91,7 +90,7 @@ public class Step implements Identifiable {
         this.description = description;
     }
 
-    public int getNumOrder() {
+    public Integer getNumOrder() {
         return numOrder;
     }
 
