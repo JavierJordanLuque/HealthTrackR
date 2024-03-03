@@ -2,6 +2,7 @@ package com.javierjordanluque.healthcaretreatmenttracking.models;
 
 import android.content.Context;
 
+import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MedicineRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.QuestionRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.StepRepository;
