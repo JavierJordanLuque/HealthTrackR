@@ -56,7 +56,6 @@ CREATE TABLE IF NOT EXISTS `MEDICAL_APPOINTMENT` (
   `time` TEXT NOT NULL,
   `latitude` REAL NULL,
   `longitude` REAL NULL,
-  `pending` INTEGER NOT NULL,
   FOREIGN KEY (`treatment_id`) REFERENCES `TREATMENT` (`id`)
 );
 
