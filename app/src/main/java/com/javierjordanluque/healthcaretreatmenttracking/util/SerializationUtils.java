@@ -1,8 +1,8 @@
 package com.javierjordanluque.healthcaretreatmenttracking.util;
 
 import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 
 public class SerializationUtils {
     public static byte[] serialize(Object object) {
@@ -10,8 +10,8 @@ public class SerializationUtils {
             return serializeString((String) object);
         } else if (object instanceof Enum) {
             return serializeEnum((Enum<?>) object);
-        } else if (object instanceof LocalDate) {
-            return serializeLocalDate((LocalDate) object);
+        } else if (object instanceof Long) {
+            return serializeTimestamp((long) object);
         } else {
             throw new IllegalArgumentException("Object type (" + object.getClass().getName() + ") not compatible for serialization");
         }
@@ -26,8 +26,8 @@ public class SerializationUtils {
             } catch (Exception e) {
                 throw new Exception("Could not deserialize data (" + deserializeString(data) + ") to enum type (" + type.getName() + ")");
             }
-        } else if (type.equals(LocalDate.class)) {
-            return deserializeLocalDate(data);
+        } else if (type.equals(Long.class)) {
+            return deserializeTimestamp(data);
         } else {
             throw new IllegalArgumentException("Object type (" + type.getName() + ") not compatible for deserialization");
         }
@@ -50,11 +50,14 @@ public class SerializationUtils {
         return (T) valueOfMethod.invoke(null, deserializeString(data));
     }
 
-    private static byte[] serializeLocalDate(LocalDate localDate) {
-        return serializeString(localDate.toString());
+    private static byte[] serializeTimestamp(long timestamp) {
+        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+        buffer.putLong(timestamp);
+        return buffer.array();
     }
 
-    private static LocalDate deserializeLocalDate(byte[] data) {
-        return LocalDate.parse(deserializeString(data));
+    private static long deserializeTimestamp(byte[] data) {
+        ByteBuffer buffer = ByteBuffer.wrap(data);
+        return buffer.getLong();
     }
 }
