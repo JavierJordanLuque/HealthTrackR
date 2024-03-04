@@ -16,7 +16,8 @@ import com.javierjordanluque.healthcaretreatmenttracking.util.security.CipherDat
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.HashData;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.SecurityService;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.ZoneOffset;
 
 public class UserRepository extends BaseRepository<User> {
     private static final String TABLE_NAME = "USER";
@@ -43,7 +44,7 @@ public class UserRepository extends BaseRepository<User> {
         if (user.getFullName() != null)
             contentValues.put(FULL_NAME, user.getFullName());
         if (user.getBirthDate() != null)
-            contentValues.put(BIRTH_DATE, user.getBirthDate().toString());
+            contentValues.put(BIRTH_DATE, user.getBirthDate().atStartOfDay(ZoneOffset.UTC).toInstant().getEpochSecond());
         if (user.getGender() != null)
             contentValues.put(GENDER, user.getGender().name());
         if (user.getBloodType() != null) {
@@ -65,9 +66,8 @@ public class UserRepository extends BaseRepository<User> {
         User user = new User(cursor.getString(cursor.getColumnIndex(EMAIL)), cursor.getString(cursor.getColumnIndex(FULL_NAME)));
         user.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
-        String birth_date = cursor.getString(cursor.getColumnIndex(BIRTH_DATE));
-        if (birth_date != null)
-            user.setBirthDate(LocalDate.parse(birth_date));
+        if (!cursor.isNull(cursor.getColumnIndex(BIRTH_DATE)))
+            user.setBirthDate(Instant.ofEpochSecond(cursor.getLong(cursor.getColumnIndex(BIRTH_DATE))).atZone(ZoneOffset.UTC).toLocalDate());
 
         String gender = cursor.getString(cursor.getColumnIndex(GENDER));
         if (gender != null)
