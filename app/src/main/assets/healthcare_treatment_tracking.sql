@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `USER` (
   `password` BLOB NULL,
   `salt` BLOB NULL,
   `full_name` TEXT NOT NULL,
-  `birth_date` DATE NULL,
+  `birth_date` INTEGER NULL,
   `gender` TEXT NULL,
   `blood_type` BLOB NULL,
   `blood_type_iv` BLOB NULL
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `TREATMENT_MEDICINE` (
   `medicine_id` INTEGER NOT NULL,
   `dose` INTEGER NULL,
   `administration_route` TEXT NULL,
-  `initial_dosing_time` DATETIME NOT NULL,
+  `initial_dosing_time` INTEGER NOT NULL,
   `dosage_frequency_hours` INTEGER NOT NULL,
   `dosage_frequency_minutes` INTEGER NOT NULL,
   PRIMARY KEY (treatment_id, medicine_id),
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `MEDICAL_APPOINTMENT` (
   `purpose` TEXT NULL,
   `date` BLOB NOT NULL,
   `date_iv` BLOB NOT NULL,
-  `time` TEXT NOT NULL,
+  `time` INTEGER NOT NULL,
   `latitude` REAL NULL,
   `longitude` REAL NULL,
   FOREIGN KEY (`treatment_id`) REFERENCES `TREATMENT` (`id`)
