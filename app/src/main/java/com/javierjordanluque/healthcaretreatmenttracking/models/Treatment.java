@@ -10,15 +10,15 @@ import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.Symptom
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.TreatmentRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.TreatmentCategory;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public class Treatment implements Identifiable {
     private long id;
     private User user;
     private String title;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private ZonedDateTime startDate;
+    private ZonedDateTime endDate;
     private String diagnosis;
     private TreatmentCategory category;
     private List<Medicine> medicines;
@@ -27,7 +27,7 @@ public class Treatment implements Identifiable {
     private List<Question> questions;
     private List<MedicalAppointment> appointments;
 
-    public Treatment(Context context, User user, String title, LocalDate startDate, LocalDate endDate, String diagnosis, TreatmentCategory category) {
+    public Treatment(Context context, User user, String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) {
         this.user = user;
         this.title = title;
         this.startDate = startDate;
@@ -42,7 +42,7 @@ public class Treatment implements Identifiable {
     public Treatment() {
     }
 
-    public void modifyTreatment(Context context, String title, LocalDate startDate, LocalDate endDate, String diagnosis, TreatmentCategory category) {
+    public void modifyTreatment(Context context, String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) {
         Treatment treatment = new Treatment();
         treatment.setId(this.id);
 
@@ -167,19 +167,19 @@ public class Treatment implements Identifiable {
         this.title = title;
     }
 
-    public LocalDate getStartDate() {
+    public ZonedDateTime getStartDate() {
         return startDate;
     }
 
-    private void setStartDate(LocalDate startDate) {
+    private void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    private void setEndDate(LocalDate endDate) {
+    private void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 

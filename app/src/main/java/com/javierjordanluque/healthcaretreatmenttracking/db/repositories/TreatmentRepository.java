@@ -14,9 +14,11 @@ import com.javierjordanluque.healthcaretreatmenttracking.util.SerializationUtils
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.CipherData;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.SecurityService;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class TreatmentRepository extends BaseRepository<Treatment> {
     private static final String TABLE_NAME = "TREATMENT";
@@ -56,7 +58,7 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         }
         if (treatment.getStartDate() != null) {
             try {
-                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getStartDate()));
+                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getStartDate().toEpochSecond()));
                 contentValues.put(START_DATE, cipherData.getEncryptedData());
                 contentValues.put(START_DATE_IV, cipherData.getInitializationVector());
             } catch (Exception e) {
@@ -65,7 +67,7 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         }
         if (treatment.getEndDate() != null) {
             try {
-                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getEndDate()));
+                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getEndDate().toEpochSecond()));
                 contentValues.put(END_DATE, cipherData.getEncryptedData());
                 contentValues.put(END_DATE_IV, cipherData.getInitializationVector());
             } catch (Exception e) {
@@ -109,20 +111,20 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         }
 
         cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(START_DATE)), cursor.getBlob(cursor.getColumnIndex(START_DATE_IV)));
-        LocalDate startDate = null;
+        ZonedDateTime startDate = null;
         try {
-            startDate = (LocalDate) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), LocalDate.class);
+            startDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         byte[] endDateBytes = cursor.getBlob(cursor.getColumnIndex(END_DATE));
         byte[] endDateIV = cursor.getBlob(cursor.getColumnIndex(END_DATE_IV));
-        LocalDate endDate = null;
+        ZonedDateTime endDate = null;
         if (endDateBytes != null && endDateIV != null) {
             cipherData = new CipherData(endDateBytes, endDateIV);
             try {
-                endDate = (LocalDate) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), LocalDate.class);
+                endDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());;
             } catch (Exception e) {
                 e.printStackTrace();
             }
