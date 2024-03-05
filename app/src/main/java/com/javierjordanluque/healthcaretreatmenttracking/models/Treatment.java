@@ -11,6 +11,7 @@ import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.Treatme
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.TreatmentCategory;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Treatment implements Identifiable {
@@ -142,8 +143,16 @@ public class Treatment implements Identifiable {
     }
 
     public List<MedicalAppointment> filterAppointments(boolean pastAppointments, boolean pendingAppointments) {
-        // @TODO
-        return null;
+        List<MedicalAppointment> filteredAppointments = new ArrayList<>();
+
+        for (MedicalAppointment appointment : appointments) {
+            if (pendingAppointments && appointment.isPending())
+                filteredAppointments.add(appointment);
+            if (pastAppointments && !appointment.isPending())
+                filteredAppointments.add(appointment);
+        }
+
+        return filteredAppointments;
     }
 
     @Override
