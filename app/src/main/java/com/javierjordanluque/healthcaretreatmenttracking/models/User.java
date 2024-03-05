@@ -31,15 +31,17 @@ public class User implements Identifiable {
         this.fullName = fullName;
     }
 
+    private User() {
+    }
+
     public void modifyUser(Context context, String fullName, LocalDate birthDate, Gender gender, BloodType bloodType, List<Allergy> allergies, List<PreviousMedicalCondition> conditions) {
-        String updatedFullName = null;
+        User user = new User();
+        user.setId(this.id);
+
         if (!this.fullName.equals(fullName)) {
             setFullName(fullName);
-            updatedFullName = this.fullName;
+            user.setFullName(this.fullName);
         }
-
-        User user = new User(null, updatedFullName);
-        user.setId(this.id);
 
         if ((this.birthDate == null && birthDate != null ) || (birthDate != null && !this.birthDate.equals(birthDate))) {
             setBirthDate(birthDate);
