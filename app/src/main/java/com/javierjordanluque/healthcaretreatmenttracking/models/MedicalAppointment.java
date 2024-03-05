@@ -23,13 +23,19 @@ public class MedicalAppointment implements Identifiable {
         this.treatment.addAppointment(context, this);
 
         if (context != null) {
-            long timestamp = dateTime.minusHours(1).toInstant().toEpochMilli();
-            notification = new Notification(this, timestamp);
-            NotificationRepository notificationRepository = new NotificationRepository(context);
-            notification.setId(notificationRepository.insert(notification));
-            // @TODO
-            // Call NotificationScheduler's scheduleNotification method
+            scheduleAppointmentNotification(context);
         }
+    }
+
+    private void scheduleAppointmentNotification(Context context) {
+        long timestamp = dateTime.minusHours(1).toInstant().toEpochMilli();
+        notification = new Notification(this, timestamp);
+
+        NotificationRepository notificationRepository = new NotificationRepository(context);
+        notification.setId(notificationRepository.insert(notification));
+
+        // @TODO
+        // Call NotificationScheduler's scheduleNotification method
     }
 
     public MedicalAppointment() {
