@@ -23,7 +23,7 @@ public class Step implements Identifiable {
         this.treatment.addStep(context, this);
     }
 
-    public Step(){
+    private Step(){
     }
 
     public void modifyStep(Context context, String title, String description, int numOrder) {

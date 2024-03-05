@@ -39,7 +39,7 @@ public class Treatment implements Identifiable {
         this.user.addTreatment(context, this);
     }
 
-    public Treatment() {
+    private Treatment() {
     }
 
     public void modifyTreatment(Context context, String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) {

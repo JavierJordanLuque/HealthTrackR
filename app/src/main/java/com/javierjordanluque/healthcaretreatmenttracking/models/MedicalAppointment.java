@@ -38,7 +38,7 @@ public class MedicalAppointment implements Identifiable {
         // Call NotificationScheduler's scheduleNotification method
     }
 
-    public MedicalAppointment() {
+    private MedicalAppointment() {
     }
 
     public void modifyMedicalAppointment(Context context, String purpose, ZonedDateTime dateTime, Location location) {
