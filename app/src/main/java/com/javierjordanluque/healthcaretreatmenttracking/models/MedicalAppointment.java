@@ -5,43 +5,37 @@ import android.content.Context;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.NotificationRepository;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.time.ZonedDateTime;
 
 public class MedicalAppointment implements Identifiable {
     private long id;
     private Treatment treatment;
     private String purpose;
-    private LocalDate date;
-    private LocalTime time;
+    private ZonedDateTime dateTime;
     private Location location;
     private Notification notification;
 
-    public MedicalAppointment(Context context, Treatment treatment, String purpose, LocalDate date, LocalTime time, Location location) {
+    public MedicalAppointment(Context context, Treatment treatment, String purpose, ZonedDateTime dateTime, Location location) {
         this.treatment = treatment;
         this.purpose = purpose;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime;
         this.location = location;
         this.treatment.addAppointment(context, this);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(this.date + " " + this.time, formatter);
-        long timestamp = dateTime.minusHours(1).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        notification = new Notification(this, timestamp);
-        NotificationRepository notificationRepository = new NotificationRepository(context);
-        notification.setId(notificationRepository.insert(notification));
-        // @TODO
-        // Call NotificationScheduler's scheduleNotification method
+        if (context != null) {
+            long timestamp = dateTime.minusHours(1).toInstant().toEpochMilli();
+            notification = new Notification(this, timestamp);
+            NotificationRepository notificationRepository = new NotificationRepository(context);
+            notification.setId(notificationRepository.insert(notification));
+            // @TODO
+            // Call NotificationScheduler's scheduleNotification method
+        }
     }
 
     public MedicalAppointment() {
     }
 
-    public void modifyMedicalAppointment(Context context, String purpose, LocalDate date, LocalTime time, Location location) {
+    public void modifyMedicalAppointment(Context context, String purpose, ZonedDateTime dateTime, Location location) {
         MedicalAppointment appointment = new MedicalAppointment();
         appointment.setId(this.id);
 
@@ -49,13 +43,9 @@ public class MedicalAppointment implements Identifiable {
             setPurpose(purpose);
             appointment.setPurpose(this.purpose);
         }
-        if (!this.date.equals(date)) {
-            setDate(date);
-            appointment.setDate(this.date);
-        }
-        if (!this.time.equals(time)) {
-            setTime(time);
-            appointment.setTime(this.time);
+        if (!this.dateTime.equals(dateTime)) {
+            setDateTime(dateTime);
+            appointment.setDateTime(this.dateTime);
         }
         if ((this.location == null && location != null ) || (location != null && !this.location.equals(location))) {
             setLocation(location);
@@ -73,8 +63,7 @@ public class MedicalAppointment implements Identifiable {
     }
 
     public boolean isPending() {
-        LocalDateTime dateTime = LocalDateTime.of(this.date, this.time);
-        LocalDateTime now = LocalDateTime.now();
+        ZonedDateTime now = ZonedDateTime.now();
 
         return dateTime.isAfter(now);
     }
@@ -100,20 +89,12 @@ public class MedicalAppointment implements Identifiable {
         this.purpose = purpose;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public ZonedDateTime getDateTime() {
+        return dateTime;
     }
 
-    private void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    private void setTime(LocalTime time) {
-        this.time = time;
+    private void setDateTime(ZonedDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Location getLocation() {

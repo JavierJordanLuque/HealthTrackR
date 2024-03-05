@@ -14,20 +14,19 @@ import com.javierjordanluque.healthcaretreatmenttracking.util.SerializationUtils
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.CipherData;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.SecurityService;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointment> {
     private static final String TABLE_NAME = "MEDICAL_APPOINTMENT";
     private final String ID = "id";
     private final String TREATMENT_ID = "treatment_id";
     private final String PURPOSE = "purpose";
-    private final String DATE = "date";
-    private final String DATE_IV = "date_iv";
-    private final String TIME = "time";
+    private final String DATE_TIME = "date_time";
+    private final String DATE_TIME_IV = "date_time_iv";
     private final String LATITUDE = "latitude";
     private final String LONGITUDE = "longitude";
     private Context context;
@@ -46,17 +45,14 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
         if (appointment.getPurpose() != null) {
             contentValues.put(PURPOSE, appointment.getPurpose());
         }
-        if (appointment.getDate() != null) {
+        if (appointment.getDateTime() != null) {
             try {
-                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(appointment.getDate()));
-                contentValues.put(DATE, cipherData.getEncryptedData());
-                contentValues.put(DATE_IV, cipherData.getInitializationVector());
+                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(appointment.getDateTime().toEpochSecond()));
+                contentValues.put(DATE_TIME, cipherData.getEncryptedData());
+                contentValues.put(DATE_TIME_IV, cipherData.getInitializationVector());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        if (appointment.getTime() != null) {
-            contentValues.put(TIME, appointment.getTime().toString());
         }
         if (appointment.getLocation() != null) {
             contentValues.put(LATITUDE, appointment.getLocation().getLatitude());
@@ -72,19 +68,18 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
-        CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(DATE)), cursor.getBlob(cursor.getColumnIndex(DATE_IV)));
-        LocalDate date = null;
+        CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(DATE_TIME)), cursor.getBlob(cursor.getColumnIndex(DATE_TIME_IV)));
+        ZonedDateTime dateTime = null;
         try {
-            date = (LocalDate) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
+            dateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LocalTime time = LocalTime.parse(cursor.getString(cursor.getColumnIndex(TIME)), DateTimeFormatter.ofPattern("HH:mm"));
         Location location = null;
         if (!cursor.isNull(cursor.getColumnIndex(LATITUDE)) && !cursor.isNull(cursor.getColumnIndex(LONGITUDE)))
             location = new Location(cursor.getDouble(cursor.getColumnIndex(LATITUDE)), cursor.getDouble(cursor.getColumnIndex(LONGITUDE)));
 
-        MedicalAppointment appointment = new MedicalAppointment(null, treatment, cursor.getString(cursor.getColumnIndex(PURPOSE)), date, time, location);
+        MedicalAppointment appointment = new MedicalAppointment(null, treatment, cursor.getString(cursor.getColumnIndex(PURPOSE)), dateTime, location);
         appointment.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
         return appointment;
