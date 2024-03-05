@@ -36,7 +36,6 @@ public class Treatment implements Identifiable {
         this.diagnosis = diagnosis;
         this.category = category;
 
-        // if (user != null)
         this.user.addTreatment(context, this);
     }
 
