@@ -11,6 +11,7 @@ import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.Gen
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.TreatmentCategory;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,9 +124,20 @@ public class User implements Identifiable {
         treatments.remove(treatment);
     }
 
-    public List<Treatment> filterTreatments(String title, LocalDate startDate, LocalDate endDate, TreatmentCategory category) {
-        // @TODO
-        return null;
+    public List<Treatment> filterTreatments(String title, ZonedDateTime startDate, ZonedDateTime endDate, TreatmentCategory category) {
+        List<Treatment> filteredTreatments = new ArrayList<>();
+
+        for (Treatment treatment : treatments) {
+            boolean titleMatches = title == null || treatment.getTitle().contains(title);
+            boolean startDateMatches = startDate == null || treatment.getStartDate().isAfter(startDate) || treatment.getStartDate().isEqual(startDate);
+            boolean endDateMatches = endDate == null || treatment.getEndDate().isBefore(endDate) || treatment.getEndDate().isEqual(endDate);
+            boolean categoryMatches = category == null || treatment.getCategory().equals(category);
+
+            if (titleMatches && startDateMatches && endDateMatches && categoryMatches)
+                filteredTreatments.add(treatment);
+        }
+
+        return filteredTreatments;
     }
 
     @Override
