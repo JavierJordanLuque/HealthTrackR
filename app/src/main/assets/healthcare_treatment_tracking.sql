@@ -51,9 +51,8 @@ CREATE TABLE IF NOT EXISTS `MEDICAL_APPOINTMENT` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `treatment_id` INTEGER NOT NULL,
   `purpose` TEXT NULL,
-  `date` BLOB NOT NULL,
-  `date_iv` BLOB NOT NULL,
-  `time` INTEGER NOT NULL,
+  `date_time` BLOB NOT NULL,
+  `date_time_iv` BLOB NOT NULL,
   `latitude` REAL NULL,
   `longitude` REAL NULL,
   FOREIGN KEY (`treatment_id`) REFERENCES `TREATMENT` (`id`)
