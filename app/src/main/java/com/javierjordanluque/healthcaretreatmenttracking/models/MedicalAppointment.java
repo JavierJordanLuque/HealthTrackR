@@ -1,9 +1,17 @@
 package com.javierjordanluque.healthcaretreatmenttracking.models;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+
+import androidx.core.app.ActivityCompat;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.NotificationRepository;
+import com.javierjordanluque.healthcaretreatmenttracking.util.PermissionConstants;
+import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.NotificationScheduler;
 
 import java.time.ZonedDateTime;
 
@@ -22,20 +30,28 @@ public class MedicalAppointment implements Identifiable {
         this.location = location;
         this.treatment.addAppointment(context, this);
 
-        if (context != null) {
-            scheduleAppointmentNotification(context);
-        }
+        if (context != null)
+            scheduleAppointmentNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
     }
 
-    private void scheduleAppointmentNotification(Context context) {
-        long timestamp = dateTime.minusHours(1).toInstant().toEpochMilli();
-        notification = new Notification(this, timestamp);
+    public void scheduleAppointmentNotification(Context context, long previousMinutes) {
+        if (dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes + NotificationScheduler.MARGIN_MINUTES))) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                if (context instanceof Activity) {
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionConstants.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
+                    // Implement @Override onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) on activity where appointment is created,
+                    // if permission granted it should call scheduleAppointmentNotification(context), if not don't schedule any notification
+                }
+            } else {
+                long timestamp = dateTime.minusHours(previousMinutes).toInstant().toEpochMilli();
+                notification = new Notification(this, timestamp);
 
-        NotificationRepository notificationRepository = new NotificationRepository(context);
-        notification.setId(notificationRepository.insert(notification));
+                NotificationRepository notificationRepository = new NotificationRepository(context);
+                notification.setId(notificationRepository.insert(notification));
 
-        // @TODO
-        // Call NotificationScheduler's scheduleNotification method
+                NotificationScheduler.scheduleInexactNotification(context, notification);
+            }
+        }
     }
 
     private MedicalAppointment() {
