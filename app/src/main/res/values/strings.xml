@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Healthcare Treatment Tracking</string>
+    <string name="medication_channel_name">Medication Reminders</string>
+    <string name="medical_appointment_channel_name">Medical Appointment Reminders</string>
+    <string name="medication_channel_description">Receive timely notifications for medication schedules. Stay on track with your medication doses by getting reminders before each scheduled dose and at the time of intake.</string>
+    <string name="medical_appointment_channel_description">Receive timely notifications for upcoming medical appointments. Stay organized and prepared by getting reminders before each scheduled appointment.</string>
+    <string name="medication_notification_title">Medication Dose</string>
+    <string name="medical_appointment_notification_title">Medical Appointment</string>
+    <string name="medication_notification_message_dose">"Next dose of"</string>
+    <string name="medication_notification_message_treatment">from treatment</string>
+    <string name="medication_notification_message_schedule_now">is scheduled for now</string>
+    <string name="medication_notification_message_scheduled_in">is scheduled in</string>
+    <string name="medical_appointment_notification_message_appointment">Medical appointment for</string>
+    <string name="medical_appointment_notification_message_treatment">under treatment</string>
+    <string name="medical_appointment_notification_scheduled_now"> scheduled for now</string>
+    <string name="medical_appointment_notification_message_scheduled_in">scheduled in</string>
+    <string name="medical_appointment_notification_message_latitude">Location: Latitude</string>
+    <string name="medical_appointment_notification_message_longitude">Longitude</string>
+    <string name="notification_message_days">days</string>
+    <string name="notification_message_hours">hours</string>
+    <string name="notification_message_minutes">minutes</string>
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Healthcare Treatment Tracking</string>
+    <string name="medication_notification_message_dose">"Siguiente dosis de "</string>
+    <string name="medication_channel_name">Recordatorios de Medicación</string>
+    <string name="medical_appointment_channel_name">Recordatorios de Citas Médicas</string>
+    <string name="medication_channel_description">Recibe notificaciones oportunas para tus horarios de medicación. Mantente al tanto de tus dosis de medicamento recibiendo recordatorios antes de cada dosis programada y en el momento de la toma.</string>
+    <string name="medical_appointment_channel_description">Recibe notificaciones oportunas para próximas citas médicas. Mantente organizado y preparado al recibir recordatorios antes de cada cita programada.</string>
+    <string name="medication_notification_title">Dosis de Medicación</string>
+    <string name="medical_appointment_notification_title">Cita Médica</string>
+    <string name="medication_notification_message_treatment">" del tratamiento "</string>
+    <string name="medication_notification_message_schedule_now">" está programada para ahora."</string>
+    <string name="medication_notification_message_scheduled_in">" está programada para dentro de "</string>
+    <string name="medical_appointment_notification_message_appointment">"Cita médica para "</string>
+    <string name="medical_appointment_notification_message_treatment">" del tratamiento "</string>
+    <string name="medical_appointment_notification_scheduled_now">" programado para ahora"</string>
+    <string name="medical_appointment_notification_message_scheduled_in">" programada para dentro de "</string>
+    <string name="medical_appointment_notification_message_latitude">" Localización: Latitud "</string>
+    <string name="medical_appointment_notification_message_longitude">", Longitud "</string>
+    <string name="notification_message_days">" días "</string>
+    <string name="notification_message_hours">" horas "</string>
+    <string name="notification_message_minutes">" minutos"</string>
+</resources>
