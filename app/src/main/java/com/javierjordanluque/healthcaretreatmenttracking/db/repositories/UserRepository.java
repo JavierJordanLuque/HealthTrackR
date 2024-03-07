@@ -16,6 +16,7 @@ import com.javierjordanluque.healthcaretreatmenttracking.util.security.CipherDat
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.HashData;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.SecurityService;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZoneOffset;
 
@@ -23,9 +24,12 @@ public class UserRepository extends BaseRepository<User> {
     private static final String TABLE_NAME = "USER";
     private final String ID = "id";
     private final String EMAIL = "email";
+    private final String EMAIL_IV = "email_iv";
+    private final String EMAIL_HASH = "email_hash";
     private final String PASSWORD = "password";
-    private final String SALT = "salt";
+    private final String PASSWORD_SALT = "password_salt";
     private final String FULL_NAME = "full_name";
+    private final String FULL_NAME_IV = "full_name_iv";
     private final String BIRTH_DATE = "birth_date";
     private final String GENDER = "gender";
     private final String BLOOD_TYPE = "blood_type";
@@ -39,17 +43,33 @@ public class UserRepository extends BaseRepository<User> {
     protected ContentValues getContentValues(User user) {
         ContentValues contentValues = new ContentValues();
 
-        if (user.getEmail() != null)
-            contentValues.put(EMAIL, user.getEmail());
-        if (user.getFullName() != null)
-            contentValues.put(FULL_NAME, user.getFullName());
+        CipherData cipherData;
+        if (user.getEmail() != null) {
+            try {
+                cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getEmail()));
+                contentValues.put(EMAIL, cipherData.getEncryptedData());
+                contentValues.put(EMAIL_IV, cipherData.getInitializationVector());
+                contentValues.put(EMAIL_HASH, SecurityService.hash(SerializationUtils.serialize(user.getEmail())));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (user.getFullName() != null) {
+            try {
+                cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getFullName()));
+                contentValues.put(FULL_NAME, cipherData.getEncryptedData());
+                contentValues.put(FULL_NAME_IV, cipherData.getInitializationVector());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         if (user.getBirthDate() != null)
             contentValues.put(BIRTH_DATE, user.getBirthDate().atStartOfDay(ZoneOffset.UTC).toInstant().getEpochSecond());
         if (user.getGender() != null)
             contentValues.put(GENDER, user.getGender().name());
         if (user.getBloodType() != null) {
             try {
-                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getBloodType()));
+                cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getBloodType()));
                 contentValues.put(BLOOD_TYPE, cipherData.getEncryptedData());
                 contentValues.put(BLOOD_TYPE_IV, cipherData.getInitializationVector());
             } catch (Exception e) {
@@ -63,7 +83,23 @@ public class UserRepository extends BaseRepository<User> {
     @Override
     @SuppressLint("Range")
     protected User cursorToItem(Cursor cursor) {
-        User user = new User(cursor.getString(cursor.getColumnIndex(EMAIL)), cursor.getString(cursor.getColumnIndex(FULL_NAME)));
+        CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(EMAIL)), cursor.getBlob(cursor.getColumnIndex(EMAIL_IV)));
+        String email = null;
+        try {
+            email = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(FULL_NAME)), cursor.getBlob(cursor.getColumnIndex(FULL_NAME_IV)));
+        String fullName = null;
+        try {
+            fullName = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        User user = new User(email, fullName);
         user.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
         if (!cursor.isNull(cursor.getColumnIndex(BIRTH_DATE)))
@@ -76,7 +112,7 @@ public class UserRepository extends BaseRepository<User> {
         byte[] bloodTypeBytes = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE));
         byte[] bloodTypeIV = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE_IV));
         if (bloodTypeBytes != null && bloodTypeIV != null) {
-            CipherData cipherData = new CipherData(bloodTypeBytes, bloodTypeIV);
+            cipherData = new CipherData(bloodTypeBytes, bloodTypeIV);
             try {
                 BloodType bloodType = (BloodType) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), BloodType.class);
                 user.setBloodType(bloodType);
@@ -88,23 +124,29 @@ public class UserRepository extends BaseRepository<User> {
         return user;
     }
 
-    @SuppressLint("Range")
+    @SuppressLint({"Range", "Recycle"})
     public UserCredentials findUserCredentials(String email) {
         SQLiteDatabase db = open();
 
-        String selection = EMAIL + "=?";
-        String[] selectionArgs = {email};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            byte[] passwordBytes = cursor.getBlob(cursor.getColumnIndex(PASSWORD));
-            byte[] salt =  cursor.getBlob(cursor.getColumnIndex(SALT));
-            if (passwordBytes != null && salt != null) {
-                HashData hashData = new HashData(passwordBytes, salt);
-                return new UserCredentials(cursor.getLong(cursor.getColumnIndex(ID)), hashData);
-            }
-        }
+        try {
+            byte[] emailHash = SecurityService.hash(SerializationUtils.serialize(email));
 
-        close(db);
+            String selection = EMAIL_HASH + "=?";
+            String[] selectionArgs = {new String(emailHash, StandardCharsets.UTF_8)};
+            Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                byte[] passwordBytes = cursor.getBlob(cursor.getColumnIndex(PASSWORD));
+                byte[] salt =  cursor.getBlob(cursor.getColumnIndex(PASSWORD_SALT));
+                if (passwordBytes != null && salt != null) {
+                    HashData hashData = new HashData(passwordBytes, salt);
+                    return new UserCredentials(cursor.getLong(cursor.getColumnIndex(ID)), hashData);
+                }
+            }
+
+            close(db);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -112,8 +154,8 @@ public class UserRepository extends BaseRepository<User> {
         SQLiteDatabase db = open();
 
         ContentValues values = new ContentValues();
-        values.put(PASSWORD, userCredentials.getHashData().getHashedPassword());
-        values.put(SALT, userCredentials.getHashData().getSalt());
+        values.put(PASSWORD, userCredentials.getHashData().getHashedData());
+        values.put(PASSWORD_SALT, userCredentials.getHashData().getSalt());
 
         long id = userCredentials.getUserId();
         String selection = "id=?";
