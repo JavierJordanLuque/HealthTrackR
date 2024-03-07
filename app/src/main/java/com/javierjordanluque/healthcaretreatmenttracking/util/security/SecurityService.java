@@ -3,7 +3,6 @@ package com.javierjordanluque.healthcaretreatmenttracking.util.security;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 
-import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -65,11 +64,11 @@ public class SecurityService {
         return ((SecretKey) keyStore.getKey(KEY_ALIAS, null));
     }
 
-    public static HashData hashPasswordWithSalt(String password) throws NoSuchAlgorithmException {
+    public static HashData hashWithSalt(byte[] data) throws NoSuchAlgorithmException {
         byte[] salt = generateSalt();
-        byte[] hashedPassword = hash(concatenateBytes(password.getBytes(StandardCharsets.UTF_8), salt));
+        byte[] hashedData = hash(concatenateBytes(data, salt));
 
-        return new HashData(hashedPassword, salt);
+        return new HashData(hashedData, salt);
     }
 
     private static byte[] generateSalt() {
@@ -80,7 +79,7 @@ public class SecurityService {
         return salt;
     }
 
-    private static byte[] hash(byte[] data) throws NoSuchAlgorithmException {
+    public static byte[] hash(byte[] data) throws NoSuchAlgorithmException {
         MessageDigest messageDigest = MessageDigest.getInstance(HASH_ALGORITHM);
 
         return messageDigest.digest(data);
@@ -94,10 +93,15 @@ public class SecurityService {
         return result;
     }
 
-    public static boolean equalsHashAndPassword(HashData hashData, String password) throws NoSuchAlgorithmException {
-        byte[] hashedPassword = hash(concatenateBytes(password.getBytes(StandardCharsets.UTF_8), hashData.getSalt()));
+    public static boolean equalsHashAndData(byte[] hashedData, byte[] salt, byte[] data) throws NoSuchAlgorithmException {
+        byte[] newHash;
+        if (salt == null) {
+             newHash = hash(data);
+        } else {
+            newHash = hash(concatenateBytes(data, salt));
+        }
 
-        return Arrays.equals(hashData.getHashedPassword(), hashedPassword);
+        return Arrays.equals(newHash, hashedData);
     }
 
     public static boolean meetsPasswordRequirements(String password) {

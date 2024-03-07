@@ -1,16 +1,16 @@
 package com.javierjordanluque.healthcaretreatmenttracking.util.security;
 
 public class HashData {
-    private byte[] hashedPassword;
+    private byte[] hashedData;
     private byte[] salt;
 
-    public HashData(byte[] hashedPassword, byte[] salt) {
-        this.hashedPassword = hashedPassword;
+    public HashData(byte[] hashedData, byte[] salt) {
+        this.hashedData = hashedData;
         this.salt = salt;
     }
 
-    public byte[] getHashedPassword() {
-        return hashedPassword;
+    public byte[] getHashedData() {
+        return hashedData;
     }
 
     public byte[] getSalt() {
