@@ -17,12 +17,12 @@ import com.javierjordanluque.healthcaretreatmenttracking.util.security.HashData;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.SecurityService;
 
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.ZoneOffset;
 
 public class UserRepository extends BaseRepository<User> {
     private static final String TABLE_NAME = "USER";
-    private final String ID = "id";
     private final String EMAIL = "email";
     private final String EMAIL_IV = "email_iv";
     private final String EMAIL_HASH = "email_hash";
@@ -124,7 +124,7 @@ public class UserRepository extends BaseRepository<User> {
         return user;
     }
 
-    @SuppressLint({"Range", "Recycle"})
+    @SuppressLint("Range")
     public UserCredentials findUserCredentials(String email) {
         SQLiteDatabase db = open();
 
@@ -135,33 +135,40 @@ public class UserRepository extends BaseRepository<User> {
             String[] selectionArgs = {new String(emailHash, StandardCharsets.UTF_8)};
             Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
-                byte[] passwordBytes = cursor.getBlob(cursor.getColumnIndex(PASSWORD));
-                byte[] salt =  cursor.getBlob(cursor.getColumnIndex(PASSWORD_SALT));
-                if (passwordBytes != null && salt != null) {
-                    HashData hashData = new HashData(passwordBytes, salt);
-                    return new UserCredentials(cursor.getLong(cursor.getColumnIndex(ID)), hashData);
+                try {
+                    byte[] passwordBytes = cursor.getBlob(cursor.getColumnIndex(PASSWORD));
+                    byte[] salt = cursor.getBlob(cursor.getColumnIndex(PASSWORD_SALT));
+                    if (passwordBytes != null && salt != null) {
+                        HashData hashData = new HashData(passwordBytes, salt);
+                        return new UserCredentials(cursor.getLong(cursor.getColumnIndex(ID)), hashData);
+                    }
+                } finally {
+                    cursor.close();
                 }
             }
-
-            close(db);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+        } finally {
+            close(db);
         }
+
         return null;
     }
 
     public void updateUserCredentials(UserCredentials userCredentials) {
         SQLiteDatabase db = open();
 
-        ContentValues values = new ContentValues();
-        values.put(PASSWORD, userCredentials.getHashData().getHashedData());
-        values.put(PASSWORD_SALT, userCredentials.getHashData().getSalt());
+        try {
+            ContentValues values = new ContentValues();
+            values.put(PASSWORD, userCredentials.getHashData().getHashedData());
+            values.put(PASSWORD_SALT, userCredentials.getHashData().getSalt());
 
-        long id = userCredentials.getUserId();
-        String selection = "id=?";
-        String[] selectionArgs = {String.valueOf(id)};
-        db.update(TABLE_NAME, values, selection, selectionArgs);
-
-        close(db);
+            long id = userCredentials.getUserId();
+            String selection = ID + "=?";
+            String[] selectionArgs = {String.valueOf(id)};
+            db.update(TABLE_NAME, values, selection, selectionArgs);
+        } finally {
+            close(db);
+        }
     }
 }

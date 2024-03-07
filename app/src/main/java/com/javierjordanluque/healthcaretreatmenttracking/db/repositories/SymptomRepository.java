@@ -18,7 +18,6 @@ import java.util.List;
 
 public class SymptomRepository extends BaseRepository<Symptom> {
     private static final String TABLE_NAME = "SYMPTOM";
-    private final String ID = "id";
     private final String TREATMENT_ID = "treatment_id";
     private final String DESCRIPTION = "description";
     private final String DESCRIPTION_IV = "description_iv";
@@ -71,19 +70,25 @@ public class SymptomRepository extends BaseRepository<Symptom> {
     public List<Symptom> findTreatmentSymptoms(long treatmentId) {
         List<Symptom> symptoms = new ArrayList<>();
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = TREATMENT_ID + "=?";
-        String[] selectionArgs = {String.valueOf(treatmentId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                Symptom symptom = cursorToItem(cursor);
-                symptoms.add(symptom);
+        try {
+            String selection = TREATMENT_ID + "=?";
+            String[] selectionArgs = {String.valueOf(treatmentId)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    Symptom symptom = cursorToItem(cursor);
+                    symptoms.add(symptom);
+                }
             }
-            cursor.close();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
         }
 
-        close(db);
         return symptoms;
     }
 }

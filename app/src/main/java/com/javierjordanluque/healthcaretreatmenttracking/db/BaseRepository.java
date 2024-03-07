@@ -53,7 +53,7 @@ public abstract class BaseRepository<T extends Identifiable> {
         try {
             ContentValues values = getContentValues(item);
             long id = item.getId();
-            String selection = ID + "= ?";
+            String selection = ID + "=?";
             String[] selectionArgs = {String.valueOf(id)};
             db.update(TABLE_NAME, values, selection, selectionArgs);
         } finally {
@@ -66,7 +66,7 @@ public abstract class BaseRepository<T extends Identifiable> {
 
         try {
             long id = item.getId();
-            String selection = ID + "= ?";
+            String selection = ID + "=?";
             String[] selectionArgs = {String.valueOf(id)};
             db.delete(TABLE_NAME, selection, selectionArgs);
         } finally {
@@ -79,7 +79,7 @@ public abstract class BaseRepository<T extends Identifiable> {
         Cursor cursor = null;
 
         try {
-            String selection = ID + "= ?";
+            String selection = ID + "=?";
             String[] selectionArgs = {String.valueOf(id)};
             cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
             if (cursor != null && cursor.moveToFirst())

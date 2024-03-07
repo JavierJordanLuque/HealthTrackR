@@ -22,7 +22,6 @@ import java.util.TimeZone;
 
 public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointment> {
     private static final String TABLE_NAME = "MEDICAL_APPOINTMENT";
-    private final String ID = "id";
     private final String TREATMENT_ID = "treatment_id";
     private final String PURPOSE = "purpose";
     private final String DATE_TIME = "date_time";
@@ -88,19 +87,25 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
     public List<MedicalAppointment> findTreatmentAppointments(long treatmentId) {
         List<MedicalAppointment> appointments = new ArrayList<>();
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = TREATMENT_ID + "=?";
-        String[] selectionArgs = {String.valueOf(treatmentId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                MedicalAppointment appointment = cursorToItem(cursor);
-                appointments.add(appointment);
+        try {
+            String selection = TREATMENT_ID + "=?";
+            String[] selectionArgs = {String.valueOf(treatmentId)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    MedicalAppointment appointment = cursorToItem(cursor);
+                    appointments.add(appointment);
+                }
             }
-            cursor.close();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
         }
 
-        close(db);
         return appointments;
     }
 }

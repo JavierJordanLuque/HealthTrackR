@@ -16,7 +16,6 @@ import java.util.List;
 
 public class NotificationRepository extends BaseRepository<Notification> {
     private static final String TABLE_NAME = "NOTIFICATION";
-    private final String ID = "id";
     private final String TREATMENT_ID = "treatment_id";
     private final String MEDICINE_ID = "medicine_id";
     private final String MEDICAL_APPOINTMENT_ID = "medical_appointment_id";
@@ -59,7 +58,8 @@ public class NotificationRepository extends BaseRepository<Notification> {
             notification = new Notification(appointment, timestamp);
         }
 
-        notification.setId(cursor.getLong(cursor.getColumnIndex(ID)));
+        if (notification != null)
+            notification.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
         return notification;
     }
@@ -67,33 +67,47 @@ public class NotificationRepository extends BaseRepository<Notification> {
     public List<Notification> findMedicineNotifications(long treatmentId, long medicineId) {
         List<Notification> notifications = new ArrayList<>();
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = TREATMENT_ID + "=? and " + MEDICINE_ID + "=?";
-        String[] selectionArgs = {String.valueOf(treatmentId), String.valueOf(medicineId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                Notification notification = cursorToItem(cursor);
-                notifications.add(notification);
+        try {
+            String selection = TREATMENT_ID + "=? and " + MEDICINE_ID + "=?";
+            String[] selectionArgs = {String.valueOf(treatmentId), String.valueOf(medicineId)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    Notification notification = cursorToItem(cursor);
+                    notifications.add(notification);
+                }
             }
-            cursor.close();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
         }
 
-        close(db);
         return notifications;
     }
 
     @SuppressLint("Range")
     public Notification findAppointmentNotification(long appointmentId) {
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = MEDICAL_APPOINTMENT_ID + "=?";
-        String[] selectionArgs = {String.valueOf(appointmentId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null && cursor.moveToFirst())
-            return cursorToItem(cursor);
+        try {
+            String selection = MEDICAL_APPOINTMENT_ID + "=?";
+            String[] selectionArgs = {String.valueOf(appointmentId)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
-        close(db);
+            if (cursor != null && cursor.moveToFirst()) {
+                return cursorToItem(cursor);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
+        }
+
         return null;
     }
 }

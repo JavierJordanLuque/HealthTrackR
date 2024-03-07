@@ -15,7 +15,6 @@ import java.util.List;
 
 public class QuestionRepository extends BaseRepository<Question> {
     private static final String TABLE_NAME = "QUESTION";
-    private final String ID = "id";
     private final String TREATMENT_ID = "treatment_id";
     private final String DESCRIPTION = "description";
     private Context context;
@@ -53,19 +52,25 @@ public class QuestionRepository extends BaseRepository<Question> {
     public List<Question> findTreatmentQuestions(long treatmentId) {
         List<Question> questions = new ArrayList<>();
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = TREATMENT_ID + "=?";
-        String[] selectionArgs = {String.valueOf(treatmentId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                Question question = cursorToItem(cursor);
-                questions.add(question);
+        try {
+            String selection = TREATMENT_ID + "=?";
+            String[] selectionArgs = {String.valueOf(treatmentId)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    Question question = cursorToItem(cursor);
+                    questions.add(question);
+                }
             }
-            cursor.close();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
         }
 
-        close(db);
         return questions;
     }
 }

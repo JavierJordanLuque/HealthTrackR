@@ -15,7 +15,6 @@ import java.util.List;
 
 public class StepRepository extends BaseRepository<Step> {
     private static final String TABLE_NAME = "STEP";
-    private final String ID = "id";
     private final String TREATMENT_ID = "treatment_id";
     private final String TITLE = "title";
     private final String DESCRIPTION = "description";
@@ -58,19 +57,25 @@ public class StepRepository extends BaseRepository<Step> {
     public List<Step> findTreatmentSteps(long treatmentId) {
         List<Step> steps = new ArrayList<>();
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = TREATMENT_ID + "=?";
-        String[] selectionArgs = {String.valueOf(treatmentId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                Step step = cursorToItem(cursor);
-                steps.add(step);
+        try {
+            String selection = TREATMENT_ID + "=?";
+            String[] selectionArgs = {String.valueOf(treatmentId)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    Step step = cursorToItem(cursor);
+                    steps.add(step);
+                }
             }
-            cursor.close();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
         }
 
-        close(db);
         return steps;
     }
 }

@@ -22,7 +22,6 @@ import java.util.TimeZone;
 
 public class TreatmentRepository extends BaseRepository<Treatment> {
     private static final String TABLE_NAME = "TREATMENT";
-    private final String ID = "id";
     private final String USER_ID = "user_id";
     private final String TITLE = "title";
     private final String TITLE_IV = "title_iv";
@@ -124,7 +123,7 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         if (endDateBytes != null && endDateIV != null) {
             cipherData = new CipherData(endDateBytes, endDateIV);
             try {
-                endDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());;
+                endDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -164,18 +163,21 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         List<Treatment> treatments = new ArrayList<>();
         SQLiteDatabase db = open();
 
-        String selection = USER_ID + "=?";
-        String[] selectionArgs = {String.valueOf(userId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                Treatment treatment = cursorToItem(cursor);
-                treatments.add(treatment);
+        try {
+            String selection = USER_ID + "=?";
+            String[] selectionArgs = {String.valueOf(userId)};
+            Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    Treatment treatment = cursorToItem(cursor);
+                    treatments.add(treatment);
+                }
+                cursor.close();
             }
-            cursor.close();
+        } finally {
+            close(db);
         }
 
-        close(db);
         return treatments;
     }
 }

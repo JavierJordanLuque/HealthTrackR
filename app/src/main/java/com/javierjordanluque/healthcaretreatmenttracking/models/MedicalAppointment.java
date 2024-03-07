@@ -126,4 +126,17 @@ public class MedicalAppointment implements Identifiable {
     private void setLocation(Location location) {
         this.location = location;
     }
+
+    public Notification getNotification(Context context) {
+        if (notification == null) {
+            NotificationRepository notificationRepository = new NotificationRepository(context);
+            setNotification(notificationRepository.findAppointmentNotification(this.id));
+        }
+
+        return notification;
+    }
+
+    private void setNotification(Notification notification) {
+        this.notification = notification;
+    }
 }

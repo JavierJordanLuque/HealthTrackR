@@ -18,7 +18,6 @@ import java.util.List;
 
 public class AllergyRepository extends BaseRepository<Allergy> {
     private static final String TABLE_NAME = "ALLERGY";
-    private final String ID = "id";
     private final String USER_ID = "user_id";
     private final String NAME = "name";
     private final String NAME_IV = "name_iv";
@@ -71,19 +70,25 @@ public class AllergyRepository extends BaseRepository<Allergy> {
     public List<Allergy> findUserAllergies(long userId) {
         List<Allergy> allergies = new ArrayList<>();
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = USER_ID + "=?";
-        String[] selectionArgs = {String.valueOf(userId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                Allergy allergy = cursorToItem(cursor);
-                allergies.add(allergy);
+        try {
+            String selection = USER_ID + "=?";
+            String[] selectionArgs = {String.valueOf(userId)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    Allergy allergy = cursorToItem(cursor);
+                    allergies.add(allergy);
+                }
             }
-            cursor.close();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
         }
 
-        close(db);
         return allergies;
     }
 }

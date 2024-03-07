@@ -16,7 +16,6 @@ import java.util.List;
 
 public class MultimediaRepository extends BaseRepository<Multimedia> {
     private static final String TABLE_NAME = "MULTIMEDIA";
-    private final String ID = "id";
     private final String STEP_ID = "step_id";
     private final String TYPE = "type";
     private final String PATH = "path";
@@ -56,19 +55,25 @@ public class MultimediaRepository extends BaseRepository<Multimedia> {
     public List<Multimedia> findStepMultimedias(long stepId) {
         List<Multimedia> multimedias = new ArrayList<>();
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = STEP_ID + "=?";
-        String[] selectionArgs = {String.valueOf(stepId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                Multimedia multimedia = cursorToItem(cursor);
-                multimedias.add(multimedia);
+        try {
+            String selection = STEP_ID + "=?";
+            String[] selectionArgs = {String.valueOf(stepId)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    Multimedia multimedia = cursorToItem(cursor);
+                    multimedias.add(multimedia);
+                }
             }
-            cursor.close();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
         }
 
-        close(db);
         return multimedias;
     }
 }

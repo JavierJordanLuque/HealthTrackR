@@ -18,7 +18,6 @@ import java.util.List;
 
 public class PreviousMedicalConditionRepository extends BaseRepository<PreviousMedicalCondition> {
     private static final String TABLE_NAME = "PREVIOUS_MEDICAL_CONDITION";
-    private final String ID = "id";
     private final String USER_ID = "user_id";
     private final String NAME = "name";
     private final String NAME_IV = "name_iv";
@@ -71,19 +70,25 @@ public class PreviousMedicalConditionRepository extends BaseRepository<PreviousM
     public List<PreviousMedicalCondition> findUserConditions(long userId) {
         List<PreviousMedicalCondition> conditions = new ArrayList<>();
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = USER_ID + "=?";
-        String[] selectionArgs = {String.valueOf(userId)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                PreviousMedicalCondition condition = cursorToItem(cursor);
-                conditions.add(condition);
+        try {
+            String selection = USER_ID + "=?";
+            String[] selectionArgs = {String.valueOf(userId)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    PreviousMedicalCondition condition = cursorToItem(cursor);
+                    conditions.add(condition);
+                }
             }
-            cursor.close();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
         }
 
-        close(db);
         return conditions;
     }
 }
