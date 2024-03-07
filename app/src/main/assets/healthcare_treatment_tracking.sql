@@ -1,9 +1,11 @@
 CREATE TABLE IF NOT EXISTS `USER` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-  `email` TEXT NOT NULL,
+  `email` BLOB NOT NULL,
+  `email_salt` BLOB NOT NULL,
   `password` BLOB NULL,
   `salt` BLOB NULL,
-  `full_name` TEXT NOT NULL,
+  `full_name` BLOB NOT NULL,
+  `full_name_iv` BLOB NOT NULL,
   `birth_date` INTEGER NULL,
   `gender` TEXT NULL,
   `blood_type` BLOB NULL,
@@ -30,8 +32,12 @@ CREATE TABLE IF NOT EXISTS `MEDICINE` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `name` BLOB NOT NULL,
   `name_iv` BLOB NOT NULL,
+  `name_hash` BLOB NOT NULL,
+  `name_salt` BLOB NOT NULL,
   `active_substance` BLOB NULL,
-  `active_substance_iv` BLOB NULL
+  `active_substance_iv` BLOB NULL,
+  `active_substance_hash` BLOB NULL,
+  `active_substance_salt` BLOB NULL
 );
 
 CREATE TABLE IF NOT EXISTS `TREATMENT_MEDICINE` (
