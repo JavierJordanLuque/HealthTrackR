@@ -13,6 +13,7 @@ import java.util.List;
 
 public abstract class BaseRepository<T extends Identifiable> {
     private final String TABLE_NAME;
+    public static final String ID = "id";
     private final DatabaseHelper databaseHelper;
 
     public BaseRepository(String tableName, Context context) {
@@ -25,9 +26,8 @@ public abstract class BaseRepository<T extends Identifiable> {
     }
 
     protected void close(SQLiteDatabase db) {
-        if (db != null && db.isOpen()) {
+        if (db != null && db.isOpen())
             db.close();
-        }
     }
 
     protected abstract ContentValues getContentValues(T item);
@@ -35,64 +35,83 @@ public abstract class BaseRepository<T extends Identifiable> {
 
     public long insert(T item) {
         SQLiteDatabase db = open();
+        long insertedId = -1;
 
-        ContentValues values = getContentValues(item);
-        long insertedId = db.insert(TABLE_NAME, null, values);
+        try {
+            ContentValues values = getContentValues(item);
+            insertedId = db.insert(TABLE_NAME, null, values);
+        } finally {
+            close(db);
+        }
 
-        close(db);
         return insertedId;
     }
 
     public void update(T item) {
         SQLiteDatabase db = open();
 
-        ContentValues values = getContentValues(item);
-        long id = item.getId();
-        String selection = "id=?";
-        String[] selectionArgs = {String.valueOf(id)};
-        db.update(TABLE_NAME, values, selection, selectionArgs);
-
-        close(db);
+        try {
+            ContentValues values = getContentValues(item);
+            long id = item.getId();
+            String selection = ID + "= ?";
+            String[] selectionArgs = {String.valueOf(id)};
+            db.update(TABLE_NAME, values, selection, selectionArgs);
+        } finally {
+            close(db);
+        }
     }
 
     public void delete(T item) {
         SQLiteDatabase db = open();
 
-        long id = item.getId();
-        String selection = "id=?";
-        String[] selectionArgs = {String.valueOf(id)};
-        db.delete(TABLE_NAME, selection, selectionArgs);
-
-        close(db);
+        try {
+            long id = item.getId();
+            String selection = ID + "= ?";
+            String[] selectionArgs = {String.valueOf(id)};
+            db.delete(TABLE_NAME, selection, selectionArgs);
+        } finally {
+            close(db);
+        }
     }
 
     public T findById(long id) {
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        String selection = "id=?";
-        String[] selectionArgs = {String.valueOf(id)};
-        Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor != null && cursor.moveToFirst())
-            return cursorToItem(cursor);
+        try {
+            String selection = ID + "= ?";
+            String[] selectionArgs = {String.valueOf(id)};
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+            if (cursor != null && cursor.moveToFirst())
+                return cursorToItem(cursor);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
+        }
 
-        close(db);
         return null;
     }
 
     public List<T> findAll() {
         List<T> items = new ArrayList<>();
         SQLiteDatabase db = open();
+        Cursor cursor = null;
 
-        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                T item = cursorToItem(cursor);
-                items.add(item);
+        try {
+            cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    T item = cursorToItem(cursor);
+                    items.add(item);
+                }
             }
-            cursor.close();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            close(db);
         }
 
-        close(db);
         return items;
     }
 }
