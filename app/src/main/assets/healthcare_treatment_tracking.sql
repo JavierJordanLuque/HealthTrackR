@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS `USER` (
   `email` BLOB NOT NULL,
   `email_iv` BLOB NOT NULL,
   `email_hash` BLOB NOT NULL,
-  `email_salt` BLOB NOT NULL,
   `password` BLOB NULL,
   `password_salt` BLOB NULL,
   `full_name` BLOB NOT NULL,
@@ -37,11 +36,9 @@ CREATE TABLE IF NOT EXISTS `MEDICINE` (
   `name` BLOB NOT NULL,
   `name_iv` BLOB NOT NULL,
   `name_hash` BLOB NOT NULL,
-  `name_salt` BLOB NOT NULL,
   `active_substance` BLOB NULL,
   `active_substance_iv` BLOB NULL,
-  `active_substance_hash` BLOB NULL,
-  `active_substance_salt` BLOB NULL
+  `active_substance_hash` BLOB NULL
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS `name_hash_UNIQUE` ON `MEDICINE` (`name_hash`);
