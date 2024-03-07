@@ -1,9 +1,11 @@
 CREATE TABLE IF NOT EXISTS `USER` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `email` BLOB NOT NULL,
+  `email_iv` BLOB NOT NULL,
+  `email_hash` BLOB NOT NULL,
   `email_salt` BLOB NOT NULL,
   `password` BLOB NULL,
-  `salt` BLOB NULL,
+  `password_salt` BLOB NULL,
   `full_name` BLOB NOT NULL,
   `full_name_iv` BLOB NOT NULL,
   `birth_date` INTEGER NULL,
@@ -11,6 +13,11 @@ CREATE TABLE IF NOT EXISTS `USER` (
   `blood_type` BLOB NULL,
   `blood_type_iv` BLOB NULL
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS `email_UNIQUE` ON `USER` (`email`);
+CREATE UNIQUE INDEX IF NOT EXISTS `email_iv_UNIQUE` ON `USER` (`email_iv`);
+CREATE UNIQUE INDEX IF NOT EXISTS `email_hash_UNIQUE` ON `USER` (`email_hash`);
+CREATE UNIQUE INDEX IF NOT EXISTS `email_salt_UNIQUE` ON `USER` (`email_salt`);
 
 CREATE TABLE IF NOT EXISTS `TREATMENT` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,6 +47,11 @@ CREATE TABLE IF NOT EXISTS `MEDICINE` (
   `active_substance_salt` BLOB NULL
 );
 
+CREATE UNIQUE INDEX IF NOT EXISTS `name_UNIQUE` ON `MEDICINE` (`name`);
+CREATE UNIQUE INDEX IF NOT EXISTS `name_iv_UNIQUE` ON `MEDICINE` (`name_iv`);
+CREATE UNIQUE INDEX IF NOT EXISTS `name_hash_UNIQUE` ON `MEDICINE` (`name_hash`);
+CREATE UNIQUE INDEX IF NOT EXISTS `name_salt_UNIQUE` ON `MEDICINE` (`name_salt`);
+
 CREATE TABLE IF NOT EXISTS `TREATMENT_MEDICINE` (
   `treatment_id` INTEGER NOT NULL,
   `medicine_id` INTEGER NOT NULL,
@@ -48,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `TREATMENT_MEDICINE` (
   `initial_dosing_time` INTEGER NOT NULL,
   `dosage_frequency_hours` INTEGER NOT NULL,
   `dosage_frequency_minutes` INTEGER NOT NULL,
-  PRIMARY KEY (treatment_id, medicine_id),
+  PRIMARY KEY (`treatment_id`, `medicine_id`),
   FOREIGN KEY (`treatment_id`) REFERENCES `TREATMENT` (`id`),
   FOREIGN KEY (`medicine_id`) REFERENCES `MEDICINE` (`id`)
 );
