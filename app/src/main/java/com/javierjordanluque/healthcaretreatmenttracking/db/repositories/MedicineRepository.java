@@ -171,10 +171,8 @@ public class MedicineRepository extends BaseRepository<Medicine> {
         if (basicMedicine == null) {
             ContentValues values = getBasicMedicineContentValues(medicine);
             insertedId = db.insert(TABLE_NAME_BASIC_MEDICINE, null, values);
-            medicine.setId(insertedId);
         } else {
             insertedId = basicMedicine.getId();
-            medicine.setId(insertedId);
         }
         ContentValues values = getMedicineContentValuesToInsert(medicine);
         db.insert(TABLE_NAME_MEDICINE, null, values);
