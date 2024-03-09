@@ -11,6 +11,9 @@ import androidx.core.app.ActivityCompat;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.NotificationRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.util.PermissionConstants;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.NotificationScheduler;
 
 import java.time.ZonedDateTime;
@@ -23,7 +26,7 @@ public class MedicalAppointment implements Identifiable {
     private Location location;
     private Notification notification;
 
-    public MedicalAppointment(Context context, Treatment treatment, String purpose, ZonedDateTime dateTime, Location location) {
+    public MedicalAppointment(Context context, Treatment treatment, String purpose, ZonedDateTime dateTime, Location location) throws DBInsertException {
         this.treatment = treatment;
         this.purpose = purpose;
         this.dateTime = dateTime;
@@ -34,7 +37,7 @@ public class MedicalAppointment implements Identifiable {
             scheduleAppointmentNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
     }
 
-    public void scheduleAppointmentNotification(Context context, long previousMinutes) {
+    private void scheduleAppointmentNotification(Context context, long previousMinutes) throws DBInsertException {
         if (dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes + NotificationScheduler.MARGIN_MINUTES))) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 if (context instanceof Activity) {
@@ -57,7 +60,7 @@ public class MedicalAppointment implements Identifiable {
     private MedicalAppointment() {
     }
 
-    public void modifyMedicalAppointment(Context context, String purpose, ZonedDateTime dateTime, Location location) {
+    public void modifyMedicalAppointment(Context context, String purpose, ZonedDateTime dateTime, Location location) throws DBUpdateException {
         MedicalAppointment appointment = new MedicalAppointment();
         appointment.setId(this.id);
 
@@ -127,7 +130,7 @@ public class MedicalAppointment implements Identifiable {
         this.location = location;
     }
 
-    public Notification getNotification(Context context) {
+    public Notification getNotification(Context context) throws DBFindException {
         if (notification == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotification(notificationRepository.findAppointmentNotification(this.id));

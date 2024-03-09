@@ -9,6 +9,10 @@ import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.StepRep
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.SymptomRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.TreatmentRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.TreatmentCategory;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -28,7 +32,7 @@ public class Treatment implements Identifiable {
     private List<Question> questions;
     private List<MedicalAppointment> appointments;
 
-    public Treatment(Context context, User user, String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) {
+    public Treatment(Context context, User user, String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) throws DBInsertException {
         this.user = user;
         this.title = title;
         this.startDate = startDate;
@@ -42,7 +46,7 @@ public class Treatment implements Identifiable {
     private Treatment() {
     }
 
-    public void modifyTreatment(Context context, String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) {
+    public void modifyTreatment(Context context, String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) throws DBUpdateException {
         Treatment treatment = new Treatment();
         treatment.setId(this.id);
 
@@ -71,7 +75,7 @@ public class Treatment implements Identifiable {
         treatmentRepository.update(treatment);
     }
 
-    protected void addMedicine(Context context, Medicine medicine) {
+    protected void addMedicine(Context context, Medicine medicine) throws DBInsertException {
         if (context != null) {
             MedicineRepository medicineRepository = new MedicineRepository(context);
             medicine.setId(medicineRepository.insert(medicine));
@@ -79,13 +83,13 @@ public class Treatment implements Identifiable {
         medicines.add(medicine);
     }
 
-    public void removeMedicine(Context context, Medicine medicine) {
+    public void removeMedicine(Context context, Medicine medicine) throws DBDeleteException {
         MedicineRepository medicineRepository = new MedicineRepository(context);
         medicineRepository.delete(medicine);
         medicines.remove(medicine);
     }
 
-    protected void addStep(Context context, Step step) {
+    protected void addStep(Context context, Step step) throws DBInsertException {
         if (context != null) {
             StepRepository stepRepository = new StepRepository(context);
             step.setId(stepRepository.insert(step));
@@ -93,13 +97,13 @@ public class Treatment implements Identifiable {
         steps.add(step);
     }
 
-    public void removeStep(Context context, Step step) {
+    public void removeStep(Context context, Step step) throws DBDeleteException {
         StepRepository stepRepository = new StepRepository(context);
         stepRepository.delete(step);
         steps.remove(step);
     }
 
-    protected void addSymptom(Context context, Symptom symptom) {
+    protected void addSymptom(Context context, Symptom symptom) throws DBInsertException {
         if (context != null) {
             SymptomRepository symptomRepository = new SymptomRepository(context);
             symptom.setId(symptomRepository.insert(symptom));
@@ -107,13 +111,13 @@ public class Treatment implements Identifiable {
         symptoms.add(symptom);
     }
 
-    public void removeSymptom(Context context, Symptom symptom) {
+    public void removeSymptom(Context context, Symptom symptom) throws DBDeleteException {
         SymptomRepository symptomRepository = new SymptomRepository(context);
         symptomRepository.delete(symptom);
         symptoms.remove(symptom);
     }
 
-    protected void addQuestion(Context context, Question question) {
+    protected void addQuestion(Context context, Question question) throws DBInsertException {
         if (context != null) {
             QuestionRepository questionRepository = new QuestionRepository(context);
             question.setId(questionRepository.insert(question));
@@ -121,13 +125,13 @@ public class Treatment implements Identifiable {
         questions.add(question);
     }
 
-    public void removeQuestion(Context context, Question question) {
+    public void removeQuestion(Context context, Question question) throws DBDeleteException {
         QuestionRepository questionRepository = new QuestionRepository(context);
         questionRepository.delete(question);
         questions.remove(question);
     }
 
-    protected void addAppointment(Context context, MedicalAppointment appointment) {
+    protected void addAppointment(Context context, MedicalAppointment appointment) throws DBInsertException {
         if (context != null) {
             MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
             appointment.setId(medicalAppointmentRepository.insert(appointment));
@@ -135,7 +139,7 @@ public class Treatment implements Identifiable {
         appointments.add(appointment);
     }
 
-    public void removeAppointment(Context context, MedicalAppointment appointment) {
+    public void removeAppointment(Context context, MedicalAppointment appointment) throws DBDeleteException {
         MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
         medicalAppointmentRepository.delete(appointment);
         appointments.remove(appointment);
@@ -207,7 +211,7 @@ public class Treatment implements Identifiable {
         this.category = category;
     }
 
-    public List<Medicine> getMedicines(Context context) {
+    public List<Medicine> getMedicines(Context context) throws DBFindException {
         if (medicines == null) {
             MedicineRepository medicineRepository = new MedicineRepository(context);
             setMedicines(medicineRepository.findTreatmentMedicines(this.id));
@@ -220,7 +224,7 @@ public class Treatment implements Identifiable {
         this.medicines = medicines;
     }
 
-    public List<Step> getSteps(Context context) {
+    public List<Step> getSteps(Context context) throws DBFindException {
         if (steps == null) {
             StepRepository stepRepository = new StepRepository(context);
             setSteps(stepRepository.findTreatmentSteps(this.id));
@@ -233,7 +237,7 @@ public class Treatment implements Identifiable {
         this.steps = steps;
     }
 
-    public List<Symptom> getSymptoms(Context context) {
+    public List<Symptom> getSymptoms(Context context) throws DBFindException {
         if (symptoms == null) {
             SymptomRepository symptomRepository = new SymptomRepository(context);
             setSymptoms(symptomRepository.findTreatmentSymptoms(this.id));
@@ -246,7 +250,7 @@ public class Treatment implements Identifiable {
         this.symptoms = symptoms;
     }
 
-    public List<Question> getQuestions(Context context) {
+    public List<Question> getQuestions(Context context) throws DBFindException {
         if (questions == null) {
             QuestionRepository questionRepository = new QuestionRepository(context);
             setQuestions(questionRepository.findTreatmentQuestions(this.id));
@@ -259,7 +263,7 @@ public class Treatment implements Identifiable {
         this.questions = questions;
     }
 
-    public List<MedicalAppointment> getAppointments(Context context) {
+    public List<MedicalAppointment> getAppointments(Context context) throws DBFindException {
         if (appointments == null) {
             MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
             setAppointments(medicalAppointmentRepository.findTreatmentAppointments(this.id));

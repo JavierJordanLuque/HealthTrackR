@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.MultimediaType;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
 
 public class Multimedia implements Identifiable {
     private long id;
@@ -12,7 +13,7 @@ public class Multimedia implements Identifiable {
     private MultimediaType type;
     private String path;
 
-    public Multimedia(Context context, Step step, MultimediaType type, String path) {
+    public Multimedia(Context context, Step step, MultimediaType type, String path) throws DBInsertException {
         this.step = step;
         this.type = type;
         this.path = path;

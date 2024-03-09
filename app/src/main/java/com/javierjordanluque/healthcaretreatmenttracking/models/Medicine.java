@@ -12,6 +12,9 @@ import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.Medicin
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.NotificationRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.AdministrationRoute;
 import com.javierjordanluque.healthcaretreatmenttracking.util.PermissionConstants;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.NotificationScheduler;
 
 import java.time.Duration;
@@ -30,7 +33,8 @@ public class Medicine implements Identifiable {
     private Integer dosageFrequencyMinutes;
     private List<Notification> notifications;
 
-    public Medicine(Context context, Treatment treatment, String name, String activeSubstance, Integer dose, AdministrationRoute administrationRoute, ZonedDateTime initialDosingTime, int dosageFrequencyHours, int dosageFrequencyMinutes) {
+    public Medicine(Context context, Treatment treatment, String name, String activeSubstance, Integer dose, AdministrationRoute administrationRoute, ZonedDateTime initialDosingTime,
+                    int dosageFrequencyHours, int dosageFrequencyMinutes) throws DBInsertException {
         this.treatment = treatment;
         this.name = name;
         this.activeSubstance = activeSubstance;
@@ -45,8 +49,9 @@ public class Medicine implements Identifiable {
             schedulePreviousMedicationNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
     }
 
-    public void schedulePreviousMedicationNotification(Context context, int previousMinutes) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+    private void schedulePreviousMedicationNotification(Context context, int previousMinutes) throws DBInsertException {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             if (context instanceof Activity) {
                 ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionConstants.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
                 // Implement @Override onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) on activity where medicine is created,
@@ -64,7 +69,7 @@ public class Medicine implements Identifiable {
         }
     }
 
-    public void scheduleMedicationNotification(Context context) {
+    private void scheduleMedicationNotification(Context context) throws DBInsertException {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             if (context instanceof Activity) {
                 ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionConstants.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
@@ -86,7 +91,7 @@ public class Medicine implements Identifiable {
     private Medicine() {
     }
 
-    public void modifyMedicine(Context context, Integer dose, AdministrationRoute administrationRoute, ZonedDateTime initialDosingTime, int dosageFrequencyHours, int dosageFrequencyMinutes) {
+    public void modifyMedicine(Context context, Integer dose, AdministrationRoute administrationRoute, ZonedDateTime initialDosingTime, int dosageFrequencyHours, int dosageFrequencyMinutes) throws DBUpdateException {
         Medicine medicine = new Medicine();
         medicine.setId(this.id);
         medicine.setTreatment(this.treatment);
@@ -202,7 +207,7 @@ public class Medicine implements Identifiable {
         this.dosageFrequencyMinutes = dosageFrequencyMinutes;
     }
 
-    public List<Notification> getNotifications(Context context) {
+    public List<Notification> getNotifications(Context context) throws DBFindException {
         if (notifications == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotifications(notificationRepository.findMedicineNotifications(this.treatment.getId(), this.id));

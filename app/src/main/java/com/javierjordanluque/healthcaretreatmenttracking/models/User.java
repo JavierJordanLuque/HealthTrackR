@@ -9,6 +9,10 @@ import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.UserRep
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.BloodType;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.Gender;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.TreatmentCategory;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -34,7 +38,7 @@ public class User implements Identifiable {
     private User() {
     }
 
-    public void modifyUser(Context context, String fullName, LocalDate birthDate, Gender gender, BloodType bloodType, List<Allergy> allergies, List<PreviousMedicalCondition> conditions) {
+    public void modifyUser(Context context, String fullName, LocalDate birthDate, Gender gender, BloodType bloodType, List<Allergy> allergies, List<PreviousMedicalCondition> conditions) throws DBDeleteException, DBInsertException, DBUpdateException {
         User user = new User();
         user.setId(this.id);
 
@@ -112,7 +116,7 @@ public class User implements Identifiable {
         conditions.remove(condition);
     }
 
-    protected void addTreatment(Context context, Treatment treatment) {
+    protected void addTreatment(Context context, Treatment treatment) throws DBInsertException {
         if (context != null) {
             TreatmentRepository treatmentRepository = new TreatmentRepository(context);
             treatment.setId(treatmentRepository.insert(treatment));
@@ -120,7 +124,7 @@ public class User implements Identifiable {
         treatments.add(treatment);
     }
 
-    public void removeTreatment(Context context, Treatment treatment) {
+    public void removeTreatment(Context context, Treatment treatment) throws DBDeleteException {
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         treatmentRepository.delete(treatment);
         treatments.remove(treatment);
@@ -187,7 +191,7 @@ public class User implements Identifiable {
         this.bloodType = bloodType;
     }
 
-    public List<Allergy> getAllergies(Context context) {
+    public List<Allergy> getAllergies(Context context) throws DBFindException {
         if (allergies == null) {
             AllergyRepository allergyRepository = new AllergyRepository(context);
             setAllergies(allergyRepository.findUserAllergies(this.id));
@@ -200,7 +204,7 @@ public class User implements Identifiable {
         this.allergies = allergies;
     }
 
-    public List<PreviousMedicalCondition> getConditions(Context context) {
+    public List<PreviousMedicalCondition> getConditions(Context context) throws DBFindException {
         if (allergies == null) {
             PreviousMedicalConditionRepository previousMedicalConditionRepository = new PreviousMedicalConditionRepository(context);
             setConditions(previousMedicalConditionRepository.findUserConditions(this.id));
@@ -213,7 +217,7 @@ public class User implements Identifiable {
         this.conditions = conditions;
     }
 
-    public List<Treatment> getTreatments(Context context) {
+    public List<Treatment> getTreatments(Context context) throws DBFindException {
         if (treatments == null) {
             TreatmentRepository treatmentRepository = new TreatmentRepository(context);
             setTreatments(treatmentRepository.findUserTreatments(this.id));

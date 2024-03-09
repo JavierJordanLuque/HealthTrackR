@@ -3,16 +3,31 @@ package com.javierjordanluque.healthcaretreatmenttracking.util.security;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DecryptionException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.EncryptionException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.HashException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.SecretKeyException;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
@@ -26,45 +41,62 @@ public class SecurityService {
     private static final String HASH_ALGORITHM = "SHA-256";
     private static SecretKey secretKey;
 
-    public static CipherData encrypt(byte[] data) throws Exception {
-        if (secretKey == null)
-            secretKey = getKey();
+    public static CipherData encrypt(byte[] data) throws EncryptionException {
+        try {
+            if (secretKey == null)
+                secretKey = getKey();
 
-        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte[] encryptedData = cipher.doFinal(data);
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            byte[] encryptedData = cipher.doFinal(data);
 
-        return new CipherData(encryptedData, cipher.getIV());
-    }
-
-    public static byte[] decrypt(CipherData encryptedData) throws Exception {
-        IvParameterSpec ivSpec = new IvParameterSpec(encryptedData.getInitializationVector());
-        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
-
-        return cipher.doFinal(encryptedData.getEncryptedData());
-    }
-
-    private static SecretKey getKey() throws Exception {
-        KeyStore keyStore = KeyStore.getInstance(ANDROID_KEYSTORE);
-        keyStore.load(null);
-
-        if (!keyStore.containsAlias(KEY_ALIAS)) {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
-            KeyGenParameterSpec keySpec = new KeyGenParameterSpec.Builder(KEY_ALIAS, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                    .setBlockModes(BLOCK_MODE)
-                    .setEncryptionPaddings(PADDING)
-                    .setUserAuthenticationRequired(false)
-                    .setRandomizedEncryptionRequired(true)
-                    .build();
-            keyGenerator.init(keySpec);
-            keyGenerator.generateKey();
+            return new CipherData(encryptedData, cipher.getIV());
+        } catch (SecretKeyException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException exception) {
+            throw new EncryptionException("Failed to encrypt data (" + new String(data, StandardCharsets.UTF_8) + ")", exception);
         }
-
-        return ((SecretKey) keyStore.getKey(KEY_ALIAS, null));
     }
 
-    public static HashData hashWithSalt(byte[] data) throws NoSuchAlgorithmException {
+    public static byte[] decrypt(CipherData cipherData) throws DecryptionException {
+        try {
+            if (secretKey == null)
+                secretKey = getKey();
+
+            IvParameterSpec ivSpec = new IvParameterSpec(cipherData.getInitializationVector());
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
+
+            return cipher.doFinal(cipherData.getEncryptedData());
+        } catch (SecretKeyException | InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException |
+                 InvalidKeyException exception) {
+            throw new DecryptionException("Failed to decrypt data (" + Arrays.toString(cipherData.getEncryptedData()) + ") " +
+                    " with IV (" + Arrays.toString(cipherData.getInitializationVector()) + ")", exception);
+        }
+    }
+
+    private static SecretKey getKey() throws SecretKeyException {
+        try {
+            KeyStore keyStore = KeyStore.getInstance(ANDROID_KEYSTORE);
+            keyStore.load(null);
+
+            if (!keyStore.containsAlias(KEY_ALIAS)) {
+                KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
+                KeyGenParameterSpec keySpec = new KeyGenParameterSpec.Builder(KEY_ALIAS, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                        .setBlockModes(BLOCK_MODE)
+                        .setEncryptionPaddings(PADDING)
+                        .setUserAuthenticationRequired(false)
+                        .setRandomizedEncryptionRequired(true)
+                        .build();
+                keyGenerator.init(keySpec);
+                keyGenerator.generateKey();
+            }
+
+            return ((SecretKey) keyStore.getKey(KEY_ALIAS, null));
+        } catch (InvalidAlgorithmParameterException | UnrecoverableKeyException | CertificateException | KeyStoreException | IOException | NoSuchAlgorithmException exception) {
+            throw new SecretKeyException("Failed to getKey " + ALGORITHM + " secret key", exception);
+        }
+    }
+
+    public static HashData hashWithSalt(byte[] data) throws HashException {
         byte[] salt = generateSalt();
         byte[] hashedData = hash(concatenateBytes(data, salt));
 
@@ -79,12 +111,13 @@ public class SecurityService {
         return salt;
     }
 
-    public static byte[] hash(byte[] data) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest = MessageDigest.getInstance(HASH_ALGORITHM);
-
-        return messageDigest.digest(data);
+    public static byte[] hash(byte[] data) throws HashException {
+        try {
+            return MessageDigest.getInstance(HASH_ALGORITHM).digest(data);
+        } catch (NoSuchAlgorithmException exception) {
+            throw new HashException("Failed to hash data (" + new String(data, StandardCharsets.UTF_8) + ") with " + HASH_ALGORITHM, exception);
+        }
     }
-
 
     private static byte[] concatenateBytes(byte[] dataA, byte[] dataB) {
         byte[] result = Arrays.copyOf(dataA, dataA.length + dataB.length);
@@ -93,21 +126,15 @@ public class SecurityService {
         return result;
     }
 
-    public static boolean equalsHashAndData(byte[] hashedData, byte[] salt, byte[] data) throws NoSuchAlgorithmException {
-        byte[] newHash;
-        if (salt == null) {
-             newHash = hash(data);
-        } else {
-            newHash = hash(concatenateBytes(data, salt));
-        }
+    public static boolean equalsHashAndData(byte[] hashedData, byte[] salt, byte[] data) throws HashException {
+        byte[] newHash = (salt == null) ? hash(data) : hash(concatenateBytes(data, salt));
 
         return Arrays.equals(newHash, hashedData);
     }
 
     public static boolean meetsPasswordRequirements(String password) {
-        if (password.length() < 8) {
+        if (password.length() < 8)
             return false;
-        }
 
         Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$");
         Matcher matcher = pattern.matcher(password);

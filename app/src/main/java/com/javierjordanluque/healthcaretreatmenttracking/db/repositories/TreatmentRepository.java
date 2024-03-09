@@ -5,12 +5,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.BaseRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Treatment;
 import com.javierjordanluque.healthcaretreatmenttracking.models.User;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthcaretreatmenttracking.util.SerializationUtils;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DecryptionException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DeserializationException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.EncryptionException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.SerializationException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.CipherData;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.SecurityService;
 
@@ -41,55 +48,35 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
     }
 
     @Override
-    protected ContentValues getContentValues(Treatment treatment) {
+    protected ContentValues getContentValues(Treatment treatment) throws SerializationException, EncryptionException {
         ContentValues contentValues = new ContentValues();
 
         if (treatment.getUser() != null)
             contentValues.put(USER_ID, treatment.getUser().getId());
         if (treatment.getTitle() != null) {
-            try {
-                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getTitle()));
-                contentValues.put(TITLE, cipherData.getEncryptedData());
-                contentValues.put(TITLE_IV, cipherData.getInitializationVector());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getTitle()));
+            contentValues.put(TITLE, cipherData.getEncryptedData());
+            contentValues.put(TITLE_IV, cipherData.getInitializationVector());
         }
         if (treatment.getStartDate() != null) {
-            try {
-                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getStartDate().toEpochSecond()));
-                contentValues.put(START_DATE, cipherData.getEncryptedData());
-                contentValues.put(START_DATE_IV, cipherData.getInitializationVector());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getStartDate().toEpochSecond()));
+            contentValues.put(START_DATE, cipherData.getEncryptedData());
+            contentValues.put(START_DATE_IV, cipherData.getInitializationVector());
         }
         if (treatment.getEndDate() != null) {
-            try {
-                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getEndDate().toEpochSecond()));
-                contentValues.put(END_DATE, cipherData.getEncryptedData());
-                contentValues.put(END_DATE_IV, cipherData.getInitializationVector());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getEndDate().toEpochSecond()));
+            contentValues.put(END_DATE, cipherData.getEncryptedData());
+            contentValues.put(END_DATE_IV, cipherData.getInitializationVector());
         }
         if (treatment.getDiagnosis() != null) {
-            try {
-                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getDiagnosis()));
-                contentValues.put(DIAGNOSIS, cipherData.getEncryptedData());
-                contentValues.put(DIAGNOSIS_IV, cipherData.getInitializationVector());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getDiagnosis()));
+            contentValues.put(DIAGNOSIS, cipherData.getEncryptedData());
+            contentValues.put(DIAGNOSIS_IV, cipherData.getInitializationVector());
         }
         if (treatment.getCategory() != null) {
-            try {
-                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getCategory()));
-                contentValues.put(CATEGORY, cipherData.getEncryptedData());
-                contentValues.put(CATEGORY_IV, cipherData.getInitializationVector());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getCategory()));
+            contentValues.put(CATEGORY, cipherData.getEncryptedData());
+            contentValues.put(CATEGORY_IV, cipherData.getInitializationVector());
         }
 
         return contentValues;
@@ -97,36 +84,22 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
 
     @Override
     @SuppressLint("Range")
-    protected Treatment cursorToItem(Cursor cursor) {
+    protected Treatment cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException {
         UserRepository userRepository = new UserRepository(context);
         User user = userRepository.findById(cursor.getLong(cursor.getColumnIndex(USER_ID)));
 
         CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(TITLE)), cursor.getBlob(cursor.getColumnIndex(TITLE_IV)));
-        String title = null;
-        try {
-            title = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String title = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
 
         cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(START_DATE)), cursor.getBlob(cursor.getColumnIndex(START_DATE_IV)));
-        ZonedDateTime startDate = null;
-        try {
-            startDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ZonedDateTime startDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
 
         byte[] endDateBytes = cursor.getBlob(cursor.getColumnIndex(END_DATE));
         byte[] endDateIV = cursor.getBlob(cursor.getColumnIndex(END_DATE_IV));
         ZonedDateTime endDate = null;
         if (endDateBytes != null && endDateIV != null) {
             cipherData = new CipherData(endDateBytes, endDateIV);
-            try {
-                endDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            endDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
         }
 
         byte[] diagnosisBytes = cursor.getBlob(cursor.getColumnIndex(DIAGNOSIS));
@@ -134,11 +107,7 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         String diagnosis = null;
         if (diagnosisBytes != null && diagnosisIV != null) {
             cipherData = new CipherData(diagnosisBytes, diagnosisIV);
-            try {
-                diagnosis = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            diagnosis = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
         }
 
         byte[] categoryBytes = cursor.getBlob(cursor.getColumnIndex(CATEGORY));
@@ -146,11 +115,7 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         TreatmentCategory category = null;
         if (categoryBytes != null && categoryIV != null) {
             cipherData = new CipherData(categoryBytes, categoryIV);
-            try {
-                category = (TreatmentCategory) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), TreatmentCategory.class);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            category = (TreatmentCategory) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), TreatmentCategory.class);
         }
 
         Treatment treatment = new Treatment(null, user, title, startDate, endDate, diagnosis, category);
@@ -159,22 +124,27 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         return treatment;
     }
 
-    public List<Treatment> findUserTreatments(long userId) {
+    public List<Treatment> findUserTreatments(long userId) throws DBFindException {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
         List<Treatment> treatments = new ArrayList<>();
-        SQLiteDatabase db = open();
 
         try {
+            db = open();
             String selection = USER_ID + "=?";
             String[] selectionArgs = {String.valueOf(userId)};
-            Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
             if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    Treatment treatment = cursorToItem(cursor);
-                    treatments.add(treatment);
-                }
-                cursor.close();
+                while (cursor.moveToNext())
+                    treatments.add(cursorToItem(cursor));
             }
+        } catch (SQLiteException | DBFindException | DecryptionException |
+                 DeserializationException | DBInsertException exception) {
+            throw new DBFindException("Failed to findUserTreatments from user with id (" + userId + ")", exception);
         } finally {
+            if (cursor != null)
+                cursor.close();
             close(db);
         }
 

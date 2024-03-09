@@ -5,10 +5,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.BaseRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Step;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Treatment;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,32 +47,34 @@ public class StepRepository extends BaseRepository<Step> {
 
     @Override
     @SuppressLint("Range")
-    protected Step cursorToItem(Cursor cursor) {
+    protected Step cursorToItem(Cursor cursor) throws DBFindException, DBInsertException {
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
-        Step step = new Step(null, treatment, cursor.getString(cursor.getColumnIndex(TITLE)), cursor.getString(cursor.getColumnIndex(DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(NUM_ORDER)));
+        Step step = new Step(null, treatment, cursor.getString(cursor.getColumnIndex(TITLE)), cursor.getString(cursor.getColumnIndex(DESCRIPTION)),
+                cursor.getInt(cursor.getColumnIndex(NUM_ORDER)));
         step.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
         return step;
     }
 
-    public List<Step> findTreatmentSteps(long treatmentId) {
-        List<Step> steps = new ArrayList<>();
-        SQLiteDatabase db = open();
+    public List<Step> findTreatmentSteps(long treatmentId) throws DBFindException {
+        SQLiteDatabase db = null;
         Cursor cursor = null;
+        List<Step> steps = new ArrayList<>();
 
         try {
+            db = open();
             String selection = TREATMENT_ID + "=?";
             String[] selectionArgs = {String.valueOf(treatmentId)};
             cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
             if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    Step step = cursorToItem(cursor);
-                    steps.add(step);
-                }
+                while (cursor.moveToNext())
+                    steps.add(cursorToItem(cursor));
             }
+        } catch (SQLiteException | DBFindException | DBInsertException exception) {
+            throw new DBFindException("Failed to findTreatmentSteps from treatment with id (" + treatmentId + ")", exception);
         } finally {
             if (cursor != null)
                 cursor.close();

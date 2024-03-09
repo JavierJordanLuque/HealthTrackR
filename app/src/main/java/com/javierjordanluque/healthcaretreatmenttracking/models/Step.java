@@ -4,6 +4,10 @@ import android.content.Context;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MultimediaRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.StepRepository;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
 
 import java.util.List;
 
@@ -15,7 +19,7 @@ public class Step implements Identifiable {
     private Integer numOrder;
     private List<Multimedia> multimedias;
 
-    public Step(Context context, Treatment treatment, String title, String description, int numOrder) {
+    public Step(Context context, Treatment treatment, String title, String description, int numOrder) throws DBInsertException {
         this.treatment = treatment;
         this.title = title;
         this.description = description;
@@ -26,7 +30,7 @@ public class Step implements Identifiable {
     private Step(){
     }
 
-    public void modifyStep(Context context, String title, String description, int numOrder) {
+    public void modifyStep(Context context, String title, String description, int numOrder) throws DBUpdateException {
         Step step = new Step();
         step.setId(this.id);
 
@@ -47,7 +51,7 @@ public class Step implements Identifiable {
         stepRepository.update(step);
     }
 
-    protected void addMultimedia(Context context, Multimedia multimedia) {
+    protected void addMultimedia(Context context, Multimedia multimedia) throws DBInsertException {
         if (context != null) {
             MultimediaRepository multimediaRepository = new MultimediaRepository(context);
             multimedia.setId(multimediaRepository.insert(multimedia));
@@ -55,7 +59,7 @@ public class Step implements Identifiable {
         multimedias.add(multimedia);
     }
 
-    public void removeMultimedia(Context context, Multimedia multimedia) {
+    public void removeMultimedia(Context context, Multimedia multimedia) throws DBDeleteException {
         MultimediaRepository multimediaRepository = new MultimediaRepository(context);
         multimediaRepository.delete(multimedia);
         multimedias.remove(multimedia);
@@ -98,7 +102,7 @@ public class Step implements Identifiable {
         this.numOrder = numOrder;
     }
 
-    public List<Multimedia> getMultimedias(Context context) {
+    public List<Multimedia> getMultimedias(Context context) throws DBFindException {
         if (multimedias == null) {
             MultimediaRepository multimediaRepository = new MultimediaRepository(context);
             setMultimedias(multimediaRepository.findStepMultimedias(this.id));

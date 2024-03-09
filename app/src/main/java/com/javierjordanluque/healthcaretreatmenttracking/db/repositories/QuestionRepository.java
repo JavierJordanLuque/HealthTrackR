@@ -5,10 +5,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.BaseRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Question;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Treatment;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +33,15 @@ public class QuestionRepository extends BaseRepository<Question> {
 
         if (question.getTreatment() != null)
             contentValues.put(TREATMENT_ID, question.getTreatment().getId());
-        if (question.getDescription() != null) {
+        if (question.getDescription() != null)
             contentValues.put(DESCRIPTION, question.getDescription());
-        }
 
         return contentValues;
     }
 
     @Override
     @SuppressLint("Range")
-    protected Question cursorToItem(Cursor cursor) {
+    protected Question cursorToItem(Cursor cursor) throws DBFindException, DBInsertException {
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
@@ -49,22 +51,23 @@ public class QuestionRepository extends BaseRepository<Question> {
         return question;
     }
 
-    public List<Question> findTreatmentQuestions(long treatmentId) {
-        List<Question> questions = new ArrayList<>();
-        SQLiteDatabase db = open();
+    public List<Question> findTreatmentQuestions(long treatmentId) throws DBFindException {
+        SQLiteDatabase db = null;
         Cursor cursor = null;
+        List<Question> questions = new ArrayList<>();
 
         try {
+            db = open();
             String selection = TREATMENT_ID + "=?";
             String[] selectionArgs = {String.valueOf(treatmentId)};
             cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
             if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    Question question = cursorToItem(cursor);
-                    questions.add(question);
-                }
+                while (cursor.moveToNext())
+                    questions.add(cursorToItem(cursor));
             }
+        } catch (SQLiteException | DBFindException | DBInsertException exception) {
+            throw new DBFindException("Failed to findTreatmentQuestions from treatment with id (" + treatmentId + ")", exception);
         } finally {
             if (cursor != null)
                 cursor.close();

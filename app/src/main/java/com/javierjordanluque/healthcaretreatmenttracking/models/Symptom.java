@@ -2,12 +2,14 @@ package com.javierjordanluque.healthcaretreatmenttracking.models;
 
 import android.content.Context;
 
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
+
 public class Symptom implements Identifiable {
     private long id;
     private Treatment treatment;
     private String description;
 
-    public Symptom(Context context, Treatment treatment, String description) {
+    public Symptom(Context context, Treatment treatment, String description) throws DBInsertException {
         this.treatment = treatment;
         this.description = description;
         this.treatment.addSymptom(context, this);

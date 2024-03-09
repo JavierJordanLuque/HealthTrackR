@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.BaseRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.User;
@@ -12,12 +13,18 @@ import com.javierjordanluque.healthcaretreatmenttracking.models.UserCredentials;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.BloodType;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.Gender;
 import com.javierjordanluque.healthcaretreatmenttracking.util.SerializationUtils;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DecryptionException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DeserializationException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.EncryptionException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.HashException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.SerializationException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.CipherData;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.HashData;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.SecurityService;
 
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.ZoneOffset;
 
@@ -40,41 +47,29 @@ public class UserRepository extends BaseRepository<User> {
     }
 
     @Override
-    protected ContentValues getContentValues(User user) {
+    protected ContentValues getContentValues(User user) throws SerializationException, EncryptionException, HashException {
         ContentValues contentValues = new ContentValues();
 
         CipherData cipherData;
         if (user.getEmail() != null) {
-            try {
-                cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getEmail()));
-                contentValues.put(EMAIL, cipherData.getEncryptedData());
-                contentValues.put(EMAIL_IV, cipherData.getInitializationVector());
-                contentValues.put(EMAIL_HASH, SecurityService.hash(SerializationUtils.serialize(user.getEmail())));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getEmail()));
+            contentValues.put(EMAIL, cipherData.getEncryptedData());
+            contentValues.put(EMAIL_IV, cipherData.getInitializationVector());
+            contentValues.put(EMAIL_HASH, SecurityService.hash(SerializationUtils.serialize(user.getEmail())));
         }
         if (user.getFullName() != null) {
-            try {
-                cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getFullName()));
-                contentValues.put(FULL_NAME, cipherData.getEncryptedData());
-                contentValues.put(FULL_NAME_IV, cipherData.getInitializationVector());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getFullName()));
+            contentValues.put(FULL_NAME, cipherData.getEncryptedData());
+            contentValues.put(FULL_NAME_IV, cipherData.getInitializationVector());
         }
         if (user.getBirthDate() != null)
             contentValues.put(BIRTH_DATE, user.getBirthDate().atStartOfDay(ZoneOffset.UTC).toInstant().getEpochSecond());
         if (user.getGender() != null)
             contentValues.put(GENDER, user.getGender().name());
         if (user.getBloodType() != null) {
-            try {
-                cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getBloodType()));
-                contentValues.put(BLOOD_TYPE, cipherData.getEncryptedData());
-                contentValues.put(BLOOD_TYPE_IV, cipherData.getInitializationVector());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getBloodType()));
+            contentValues.put(BLOOD_TYPE, cipherData.getEncryptedData());
+            contentValues.put(BLOOD_TYPE_IV, cipherData.getInitializationVector());
         }
 
         return contentValues;
@@ -82,22 +77,12 @@ public class UserRepository extends BaseRepository<User> {
 
     @Override
     @SuppressLint("Range")
-    protected User cursorToItem(Cursor cursor) {
+    protected User cursorToItem(Cursor cursor) throws DecryptionException, DeserializationException {
         CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(EMAIL)), cursor.getBlob(cursor.getColumnIndex(EMAIL_IV)));
-        String email = null;
-        try {
-            email = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String email = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
 
         cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(FULL_NAME)), cursor.getBlob(cursor.getColumnIndex(FULL_NAME_IV)));
-        String fullName = null;
-        try {
-            fullName = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String fullName = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
 
         User user = new User(email, fullName);
         user.setId(cursor.getLong(cursor.getColumnIndex(ID)));
@@ -105,68 +90,67 @@ public class UserRepository extends BaseRepository<User> {
         if (!cursor.isNull(cursor.getColumnIndex(BIRTH_DATE)))
             user.setBirthDate(Instant.ofEpochSecond(cursor.getLong(cursor.getColumnIndex(BIRTH_DATE))).atZone(ZoneOffset.UTC).toLocalDate());
 
-        String gender = cursor.getString(cursor.getColumnIndex(GENDER));
-        if (gender != null)
-            user.setGender(Gender.valueOf(gender));
+        if (cursor.getString(cursor.getColumnIndex(GENDER)) != null)
+            user.setGender(Gender.valueOf(cursor.getString(cursor.getColumnIndex(GENDER))));
 
         byte[] bloodTypeBytes = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE));
         byte[] bloodTypeIV = cursor.getBlob(cursor.getColumnIndex(BLOOD_TYPE_IV));
         if (bloodTypeBytes != null && bloodTypeIV != null) {
             cipherData = new CipherData(bloodTypeBytes, bloodTypeIV);
-            try {
-                BloodType bloodType = (BloodType) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), BloodType.class);
-                user.setBloodType(bloodType);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            user.setBloodType((BloodType) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), BloodType.class));
         }
 
         return user;
     }
 
     @SuppressLint("Range")
-    public UserCredentials findUserCredentials(String email) {
-        SQLiteDatabase db = open();
+    public UserCredentials findUserCredentials(String email) throws DBFindException {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        UserCredentials userCredentials = null;
 
         try {
+            db = open();
             byte[] emailHash = SecurityService.hash(SerializationUtils.serialize(email));
 
             String selection = EMAIL_HASH + "=?";
             String[] selectionArgs = {new String(emailHash, StandardCharsets.UTF_8)};
-            Cursor cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+            cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
             if (cursor != null && cursor.moveToFirst()) {
-                try {
-                    byte[] passwordBytes = cursor.getBlob(cursor.getColumnIndex(PASSWORD));
-                    byte[] salt = cursor.getBlob(cursor.getColumnIndex(PASSWORD_SALT));
-                    if (passwordBytes != null && salt != null) {
-                        HashData hashData = new HashData(passwordBytes, salt);
-                        return new UserCredentials(cursor.getLong(cursor.getColumnIndex(ID)), hashData);
-                    }
-                } finally {
-                    cursor.close();
+                byte[] passwordBytes = cursor.getBlob(cursor.getColumnIndex(PASSWORD));
+                byte[] salt = cursor.getBlob(cursor.getColumnIndex(PASSWORD_SALT));
+                if (passwordBytes != null && salt != null) {
+                    HashData hashData = new HashData(passwordBytes, salt);
+                    userCredentials = new UserCredentials(cursor.getLong(cursor.getColumnIndex(ID)), hashData);
                 }
             }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        } catch (SQLiteException | SerializationException | HashException exception) {
+            throw new DBFindException("Failed to findUserCredentials from user with email (" + email + ")", exception);
         } finally {
+            if (cursor != null)
+                cursor.close();
             close(db);
         }
 
-        return null;
+        return userCredentials;
     }
 
-    public void updateUserCredentials(UserCredentials userCredentials) {
-        SQLiteDatabase db = open();
+    public void updateUserCredentials(UserCredentials userCredentials) throws DBUpdateException {
+        SQLiteDatabase db = null;
+        long id = userCredentials.getUserId();
 
         try {
+            db = open();
             ContentValues values = new ContentValues();
             values.put(PASSWORD, userCredentials.getHashData().getHashedData());
             values.put(PASSWORD_SALT, userCredentials.getHashData().getSalt());
-
-            long id = userCredentials.getUserId();
             String selection = ID + "=?";
             String[] selectionArgs = {String.valueOf(id)};
+
             db.update(TABLE_NAME, values, selection, selectionArgs);
+        } catch (SQLiteException exception) {
+            throw new DBUpdateException("Failed to updateUserCredentials from user with id (" + id + ")", exception);
         } finally {
             close(db);
         }

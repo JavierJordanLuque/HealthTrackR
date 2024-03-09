@@ -5,11 +5,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.BaseRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.MedicalAppointment;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Medicine;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Notification;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,16 +37,15 @@ public class NotificationRepository extends BaseRepository<Notification> {
             contentValues.put(TREATMENT_ID, notification.getMedicine().getTreatment().getId());
             contentValues.put(MEDICINE_ID, notification.getMedicine().getId());
         }
-        if (notification.getAppointment() != null) {
+        if (notification.getAppointment() != null)
             contentValues.put(MEDICAL_APPOINTMENT_ID, notification.getAppointment().getId());
-        }
 
         return contentValues;
     }
 
     @Override
     @SuppressLint("Range")
-    protected Notification cursorToItem(Cursor cursor) {
+    protected Notification cursorToItem(Cursor cursor) throws DBFindException {
         long timestamp = cursor.getLong(cursor.getColumnIndex(TIMESTAMP));
 
         Notification notification = null;
@@ -64,22 +65,23 @@ public class NotificationRepository extends BaseRepository<Notification> {
         return notification;
     }
 
-    public List<Notification> findMedicineNotifications(long treatmentId, long medicineId) {
-        List<Notification> notifications = new ArrayList<>();
-        SQLiteDatabase db = open();
+    public List<Notification> findMedicineNotifications(long treatmentId, long medicineId) throws DBFindException {
+        SQLiteDatabase db = null;
         Cursor cursor = null;
+        List<Notification> notifications = new ArrayList<>();
 
         try {
+            db = open();
             String selection = TREATMENT_ID + "=? and " + MEDICINE_ID + "=?";
             String[] selectionArgs = {String.valueOf(treatmentId), String.valueOf(medicineId)};
             cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
             if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    Notification notification = cursorToItem(cursor);
-                    notifications.add(notification);
-                }
+                while (cursor.moveToNext())
+                    notifications.add(cursorToItem(cursor));
             }
+        } catch (SQLiteException | DBFindException exception) {
+            throw new DBFindException("Failed to findMedicineNotifications from medicine with treatmentId (" + treatmentId + ") and medicineId (" + medicineId + ")", exception);
         } finally {
             if (cursor != null)
                 cursor.close();
@@ -90,24 +92,27 @@ public class NotificationRepository extends BaseRepository<Notification> {
     }
 
     @SuppressLint("Range")
-    public Notification findAppointmentNotification(long appointmentId) {
-        SQLiteDatabase db = open();
+    public Notification findAppointmentNotification(long appointmentId) throws DBFindException {
+        SQLiteDatabase db = null;
         Cursor cursor = null;
+        Notification notification = null;
 
         try {
+            db = open();
             String selection = MEDICAL_APPOINTMENT_ID + "=?";
             String[] selectionArgs = {String.valueOf(appointmentId)};
             cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
-            if (cursor != null && cursor.moveToFirst()) {
-                return cursorToItem(cursor);
-            }
+            if (cursor != null && cursor.moveToFirst())
+                notification = cursorToItem(cursor);
+        } catch (SQLiteException | DBFindException exception) {
+            throw new DBFindException("Failed to findAppointmentNotification from appointment with id (" + appointmentId + ")", exception);
         } finally {
             if (cursor != null)
                 cursor.close();
             close(db);
         }
 
-        return null;
+        return notification;
     }
 }

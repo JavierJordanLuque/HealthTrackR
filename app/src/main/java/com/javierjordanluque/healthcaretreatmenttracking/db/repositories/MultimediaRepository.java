@@ -5,11 +5,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.BaseRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Multimedia;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Step;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.MultimediaType;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +45,7 @@ public class MultimediaRepository extends BaseRepository<Multimedia> {
 
     @Override
     @SuppressLint("Range")
-    protected Multimedia cursorToItem(Cursor cursor) {
+    protected Multimedia cursorToItem(Cursor cursor) throws DBFindException, DBInsertException {
         StepRepository stepRepository = new StepRepository(context);
         Step step = stepRepository.findById(cursor.getLong(cursor.getColumnIndex(STEP_ID)));
 
@@ -52,22 +55,23 @@ public class MultimediaRepository extends BaseRepository<Multimedia> {
         return multimedia;
     }
 
-    public List<Multimedia> findStepMultimedias(long stepId) {
-        List<Multimedia> multimedias = new ArrayList<>();
-        SQLiteDatabase db = open();
+    public List<Multimedia> findStepMultimedias(long stepId) throws DBFindException {
+        SQLiteDatabase db = null;
         Cursor cursor = null;
+        List<Multimedia> multimedias = new ArrayList<>();
 
         try {
+            db = open();
             String selection = STEP_ID + "=?";
             String[] selectionArgs = {String.valueOf(stepId)};
             cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
             if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    Multimedia multimedia = cursorToItem(cursor);
-                    multimedias.add(multimedia);
-                }
+                while (cursor.moveToNext())
+                    multimedias.add(cursorToItem(cursor));
             }
+        } catch (SQLiteException | DBFindException | DBInsertException exception) {
+            throw new DBFindException("Failed to findStepMultimedias from step with id (" + stepId + ")", exception);
         } finally {
             if (cursor != null)
                 cursor.close();

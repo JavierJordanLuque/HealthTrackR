@@ -19,4 +19,5 @@
     <string name="notification_message_days">days</string>
     <string name="notification_message_hours">hours</string>
     <string name="notification_message_minutes">minutes</string>
+    <string name="error_initializing_app">Oops, something went wrong while setting up the app. Please try again later.</string>
 </resources>

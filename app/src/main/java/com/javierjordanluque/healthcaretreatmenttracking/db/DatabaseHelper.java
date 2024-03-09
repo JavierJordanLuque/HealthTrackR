@@ -5,6 +5,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.javierjordanluque.healthcaretreatmenttracking.R;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInitializingException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.ExceptionManager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,8 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             executeSQLScript(db, DATABASE_SCRIPT);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (DBInitializingException exception) {
+            ExceptionManager.advertiseUI(context, context.getString(R.string.error_initializing_app));
         }
     }
 
@@ -41,24 +45,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Method to upgrade database
     }
 
-    private void executeSQLScript(SQLiteDatabase db, String scriptFile) throws IOException {
-        InputStream inputStream = context.getAssets().open(scriptFile);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
-        StringBuilder statement = new StringBuilder();
-        while ((line = bufferedReader.readLine()) != null) {
-            if (!line.trim().isEmpty()) {
-                statement.append(line);
-                if (line.endsWith(";")) {
-                    try {
-                        db.execSQL(statement.toString());
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+    private void executeSQLScript(SQLiteDatabase db, String scriptFile) throws DBInitializingException {
+        try {
+            InputStream inputStream = context.getAssets().open(scriptFile);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder statement = new StringBuilder();
+            String line;
+            int lineNumber = 0;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                lineNumber++;
+                if (!line.trim().isEmpty()) {
+                    statement.append(line);
+                    if (line.endsWith(";")) {
+                        try {
+                            db.execSQL(statement.toString());
+                        } catch (SQLException exception) {
+                            throw new DBInitializingException("Failed to execute SQL statement on line (" + lineNumber + ") :" + line + " from SQLite database script " +
+                                    "(" + DATABASE_SCRIPT + ")", exception);
+                        }
+                        statement.setLength(0);
                     }
-                    statement.setLength(0);
                 }
             }
+            bufferedReader.close();
+        } catch (IOException exception) {
+            throw new DBInitializingException("Failed to manage SQLite database script (" + DATABASE_SCRIPT + ") inside assets folder", exception);
         }
-        bufferedReader.close();
     }
 }

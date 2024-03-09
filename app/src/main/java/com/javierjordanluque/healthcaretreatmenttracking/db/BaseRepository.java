@@ -7,13 +7,22 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import com.javierjordanluque.healthcaretreatmenttracking.models.Identifiable;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DecryptionException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DeserializationException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.EncryptionException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.HashException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.SerializationException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRepository<T extends Identifiable> {
     private final String TABLE_NAME;
-    public static final String ID = "id";
+    protected final String ID = "id";
     private final DatabaseHelper databaseHelper;
 
     public BaseRepository(String tableName, Context context) {
@@ -30,16 +39,20 @@ public abstract class BaseRepository<T extends Identifiable> {
             db.close();
     }
 
-    protected abstract ContentValues getContentValues(T item);
-    protected abstract T cursorToItem(Cursor cursor);
+    protected abstract ContentValues getContentValues(T item) throws SerializationException, EncryptionException, HashException;
+    protected abstract T cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException;
 
-    public long insert(T item) {
-        SQLiteDatabase db = open();
-        long insertedId = -1;
+    public long insert(T item) throws DBInsertException {
+        SQLiteDatabase db = null;
+        long insertedId;
 
         try {
+            db = open();
             ContentValues values = getContentValues(item);
+
             insertedId = db.insert(TABLE_NAME, null, values);
+        } catch (SQLiteException | SerializationException | EncryptionException | HashException exception) {
+            throw new DBInsertException("Failed to insert item (" + item.getClass().getSimpleName() + ")", exception);
         } finally {
             close(db);
         }
@@ -47,65 +60,84 @@ public abstract class BaseRepository<T extends Identifiable> {
         return insertedId;
     }
 
-    public void update(T item) {
-        SQLiteDatabase db = open();
+    public void update(T item) throws DBUpdateException {
+        SQLiteDatabase db = null;
+        long id = item.getId();
 
         try {
+            db = open();
             ContentValues values = getContentValues(item);
-            long id = item.getId();
             String selection = ID + "=?";
             String[] selectionArgs = {String.valueOf(id)};
+
             db.update(TABLE_NAME, values, selection, selectionArgs);
+        } catch (SQLiteException | SerializationException | EncryptionException | HashException exception) {
+            throw new DBUpdateException("Failed to update item (" + item.getClass().getSimpleName() + ") with id (" + id + ")", exception);
         } finally {
             close(db);
         }
     }
 
-    public void delete(T item) {
-        SQLiteDatabase db = open();
+    public void delete(T item) throws DBDeleteException {
+        SQLiteDatabase db = null;
+        long id = item.getId();
 
         try {
-            long id = item.getId();
+            db = open();
             String selection = ID + "=?";
             String[] selectionArgs = {String.valueOf(id)};
+
             db.delete(TABLE_NAME, selection, selectionArgs);
+        } catch (SQLiteException exception) {
+            throw new DBDeleteException("Failed to delete item (" + item.getClass().getSimpleName() + ") with id (" + id + ")", exception);
         } finally {
             close(db);
         }
     }
 
-    public T findById(long id) {
-        SQLiteDatabase db = open();
+    public T findById(long id) throws DBFindException {
+        SQLiteDatabase db = null;
         Cursor cursor = null;
+        T item = null;
 
         try {
+            db = open();
             String selection = ID + "=?";
             String[] selectionArgs = {String.valueOf(id)};
             cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
             if (cursor != null && cursor.moveToFirst())
-                return cursorToItem(cursor);
+                item = cursorToItem(cursor);
+        } catch (SQLiteException | DBFindException | DecryptionException |
+                 DeserializationException | DBInsertException exception) {
+            throw new DBFindException("Failed to findById item with id (" + id + ")", exception);
         } finally {
             if (cursor != null)
                 cursor.close();
             close(db);
         }
 
-        return null;
+        return item;
     }
 
-    public List<T> findAll() {
-        List<T> items = new ArrayList<>();
-        SQLiteDatabase db = open();
+    public List<T> findAll() throws DBFindException {
+        SQLiteDatabase db = null;
         Cursor cursor = null;
+        List<T> items = new ArrayList<>();
 
         try {
+            db = open();
             cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     T item = cursorToItem(cursor);
                     items.add(item);
                 }
             }
+        } catch (SQLiteException | DBFindException | DecryptionException |
+                 DeserializationException | DBInsertException exception) {
+            throw new DBFindException("Failed to findAll items", exception);
         } finally {
             if (cursor != null)
                 cursor.close();
