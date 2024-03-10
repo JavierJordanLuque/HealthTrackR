@@ -1,20 +1,17 @@
 package com.javierjordanluque.healthcaretreatmenttracking.models;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
-
-import androidx.core.app.ActivityCompat;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MedicineRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.NotificationRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.AdministrationRoute;
-import com.javierjordanluque.healthcaretreatmenttracking.util.PermissionConstants;
+import com.javierjordanluque.healthcaretreatmenttracking.util.PermissionManager;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.NotificationException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.NotificationScheduler;
 
 import java.time.Duration;
@@ -31,10 +28,10 @@ public class Medicine implements Identifiable {
     private ZonedDateTime initialDosingTime;
     private Integer dosageFrequencyHours;
     private Integer dosageFrequencyMinutes;
-    private List<Notification> notifications;
+    private List<MedicationNotification> notifications;
 
     public Medicine(Context context, Treatment treatment, String name, String activeSubstance, Integer dose, AdministrationRoute administrationRoute, ZonedDateTime initialDosingTime,
-                    int dosageFrequencyHours, int dosageFrequencyMinutes) throws DBInsertException {
+                    int dosageFrequencyHours, int dosageFrequencyMinutes) throws DBInsertException, DBDeleteException {
         this.treatment = treatment;
         this.name = name;
         this.activeSubstance = activeSubstance;
@@ -45,46 +42,43 @@ public class Medicine implements Identifiable {
         this.dosageFrequencyMinutes = dosageFrequencyMinutes;
         this.treatment.addMedicine(context, this);
 
-        if (context != null)
+        if (context != null) {
             schedulePreviousMedicationNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
-    }
-
-    private void schedulePreviousMedicationNotification(Context context, int previousMinutes) throws DBInsertException {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            if (context instanceof Activity) {
-                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionConstants.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
-                // Implement @Override onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) on activity where medicine is created,
-                // if permission granted it should call schedulePreviousMedicationNotification(context, previousMinutes), if not don't schedule any notification
-            }
-        } else {
-            long timestamp = initialDosingTime.minusHours(previousMinutes).toInstant().toEpochMilli();
-            Notification previousNotification = new Notification(this, timestamp);
-
-            NotificationRepository notificationRepository = new NotificationRepository(context);
-            previousNotification.setId(notificationRepository.insert(previousNotification));
-            notifications.add(previousNotification);
-
-            NotificationScheduler.scheduleInexactRepeatingNotification(context, previousNotification);
+            scheduleMedicationNotification(context);
         }
     }
 
-    private void scheduleMedicationNotification(Context context) throws DBInsertException {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            if (context instanceof Activity) {
-                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionConstants.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
-                // Implement @Override onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) on activity where medicine is created,
-                // if permission granted it should call scheduleMedicationNotification(context), if not don't schedule any notification
+    public void schedulePreviousMedicationNotification(Context context, int previousMinutes) throws DBInsertException, DBDeleteException {
+        if (PermissionManager.hasNotificationPermission(context)) {
+            long timestamp = initialDosingTime.minusHours(previousMinutes).toInstant().toEpochMilli();
+            MedicationNotification previousNotification = new MedicationNotification(this, timestamp);
+
+            NotificationRepository notificationRepository = new NotificationRepository(context);
+            previousNotification.setId(notificationRepository.insert(previousNotification));
+
+            try {
+                NotificationScheduler.scheduleInexactRepeatingNotification(context, previousNotification);
+                notifications.add(previousNotification);
+            } catch (NotificationException exception) {
+                notificationRepository.delete(previousNotification);
             }
-        } else {
+        }
+    }
+
+    public void scheduleMedicationNotification(Context context) throws DBInsertException, DBDeleteException {
+        if (PermissionManager.hasNotificationPermission(context)) {
             long timestamp = initialDosingTime.toInstant().toEpochMilli();
-            Notification notification = new Notification(this, timestamp);
+            MedicationNotification notification = new MedicationNotification(this, timestamp);
 
             NotificationRepository notificationRepository = new NotificationRepository(context);
             notification.setId(notificationRepository.insert(notification));
-            notifications.add(notification);
 
-            NotificationScheduler.scheduleInexactRepeatingNotification(context, notification);
+            try {
+                NotificationScheduler.scheduleInexactRepeatingNotification(context, notification);
+                notifications.add(notification);
+            } catch (NotificationException exception) {
+                notificationRepository.delete(notification);
+            }
         }
     }
 
@@ -125,7 +119,7 @@ public class Medicine implements Identifiable {
         // @TODO
     }
 
-    public static ZonedDateTime calculateNextDose(ZonedDateTime initialDosingTime, int dosageFrequencyHours, int dosageFrequencyMinutes) {
+    public ZonedDateTime calculateNextDose() {
         Duration frequency = Duration.ofHours(dosageFrequencyHours).plusMinutes(dosageFrequencyMinutes);
         ZonedDateTime now = ZonedDateTime.now();
 
@@ -207,7 +201,7 @@ public class Medicine implements Identifiable {
         this.dosageFrequencyMinutes = dosageFrequencyMinutes;
     }
 
-    public List<Notification> getNotifications(Context context) throws DBFindException {
+    public List<MedicationNotification> getNotifications(Context context) throws DBFindException {
         if (notifications == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotifications(notificationRepository.findMedicineNotifications(this.treatment.getId(), this.id));
@@ -216,7 +210,7 @@ public class Medicine implements Identifiable {
         return notifications;
     }
 
-    private void setNotifications(List<Notification> notifications) {
+    private void setNotifications(List<MedicationNotification> notifications) {
         this.notifications = notifications;
     }
 }

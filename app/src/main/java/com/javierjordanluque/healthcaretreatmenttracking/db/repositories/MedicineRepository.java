@@ -134,7 +134,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
     }
 
     @SuppressLint("Range")
-    private Medicine cursorToMedicine(Cursor cursor) throws DBFindException, DBInsertException {
+    private Medicine cursorToMedicine(Cursor cursor) throws DBFindException, DBInsertException, DBDeleteException {
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
@@ -303,7 +303,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
                 }
             }
         } catch (SQLiteException | DBFindException | DecryptionException |
-                 DeserializationException | DBInsertException exception) {
+                 DeserializationException | DBInsertException | DBDeleteException exception) {
             throw new DBFindException("Failed to findById medicine with treatmentId (" + treatmentId + ") and medicineId (" + medicineId + ")", exception);
         } finally {
             if (cursor != null)
@@ -345,7 +345,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
                 }
             }
         } catch (SQLiteException | DBFindException | DecryptionException |
-                 DeserializationException | DBInsertException exception) {
+                 DeserializationException | DBInsertException | DBDeleteException exception) {
             throw new DBFindException("Failed to findAll medicines", exception);
         } finally {
             if (cursor != null)
@@ -384,7 +384,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
                 }
             }
         } catch (SQLiteException | DBFindException | DecryptionException |
-                 DeserializationException | DBInsertException exception) {
+                 DeserializationException | DBInsertException | DBDeleteException exception) {
             throw new DBFindException("Failed to findTreatmentMedicines from treatment with id (" + treatmentId + ")", exception);
         } finally {
             if (cursor != null)

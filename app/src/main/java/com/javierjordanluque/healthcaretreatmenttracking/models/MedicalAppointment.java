@@ -1,19 +1,15 @@
 package com.javierjordanluque.healthcaretreatmenttracking.models;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
-
-import androidx.core.app.ActivityCompat;
 
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.NotificationRepository;
-import com.javierjordanluque.healthcaretreatmenttracking.util.PermissionConstants;
+import com.javierjordanluque.healthcaretreatmenttracking.util.PermissionManager;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
+import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.MedicalAppointmentNotification;
+import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.Notification;
 import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.NotificationScheduler;
 
 import java.time.ZonedDateTime;
@@ -24,7 +20,7 @@ public class MedicalAppointment implements Identifiable {
     private String purpose;
     private ZonedDateTime dateTime;
     private Location location;
-    private Notification notification;
+    private MedicalAppointmentNotification notification;
 
     public MedicalAppointment(Context context, Treatment treatment, String purpose, ZonedDateTime dateTime, Location location) throws DBInsertException {
         this.treatment = treatment;
@@ -37,23 +33,22 @@ public class MedicalAppointment implements Identifiable {
             scheduleAppointmentNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
     }
 
-    private void scheduleAppointmentNotification(Context context, long previousMinutes) throws DBInsertException {
-        if (dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes + NotificationScheduler.MARGIN_MINUTES))) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                if (context instanceof Activity) {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionConstants.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
-                    // Implement @Override onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) on activity where appointment is created,
-                    // if permission granted it should call scheduleAppointmentNotification(context), if not don't schedule any notification
-                }
-            } else {
-                long timestamp = dateTime.minusHours(previousMinutes).toInstant().toEpochMilli();
-                notification = new Notification(this, timestamp);
+    public void scheduleAppointmentNotification(Context context, int previousMinutes) throws DBInsertException {
+        // Check if the notification is valid by ensuring:
+        // 1. It's not scheduled to trigger before the margin minutes
+        // 2. It's not already past (considering the margin minutes)
+        // 3. The app has permission to send notifications
+        if (previousMinutes >= NotificationScheduler.MARGIN_MINUTES &&
+                dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes + NotificationScheduler.MARGIN_MINUTES)) &&
+                PermissionManager.hasNotificationPermission(context)) {
+            long timestamp = dateTime.minusHours(previousMinutes).toInstant().toEpochMilli();
+            MedicalAppointmentNotification notification = new MedicalAppointmentNotification(this, timestamp);
 
-                NotificationRepository notificationRepository = new NotificationRepository(context);
-                notification.setId(notificationRepository.insert(notification));
+            NotificationRepository notificationRepository = new NotificationRepository(context);
+            notification.setId(notificationRepository.insert(notification));
 
-                NotificationScheduler.scheduleInexactNotification(context, notification);
-            }
+            NotificationScheduler.scheduleInexactNotification(context, notification);
+            this.notification = notification;
         }
     }
 
@@ -139,7 +134,7 @@ public class MedicalAppointment implements Identifiable {
         return notification;
     }
 
-    private void setNotification(Notification notification) {
+    public void setNotification(MedicalAppointmentNotification notification) {
         this.notification = notification;
     }
 }

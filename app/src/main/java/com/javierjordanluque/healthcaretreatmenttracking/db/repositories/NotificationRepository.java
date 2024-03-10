@@ -10,7 +10,9 @@ import android.database.sqlite.SQLiteException;
 import com.javierjordanluque.healthcaretreatmenttracking.db.BaseRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.MedicalAppointment;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Medicine;
-import com.javierjordanluque.healthcaretreatmenttracking.models.Notification;
+import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.MedicalAppointmentNotification;
+import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.MedicationNotification;
+import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.Notification;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
 
 import java.util.ArrayList;
@@ -33,12 +35,14 @@ public class NotificationRepository extends BaseRepository<Notification> {
     protected ContentValues getContentValues(Notification notification) {
         ContentValues contentValues = new ContentValues();
 
-        if (notification.getMedicine() != null) {
-            contentValues.put(TREATMENT_ID, notification.getMedicine().getTreatment().getId());
-            contentValues.put(MEDICINE_ID, notification.getMedicine().getId());
+        if (notification instanceof MedicationNotification) {
+            MedicationNotification medicationNotification = (MedicationNotification) notification;
+            contentValues.put(TREATMENT_ID, medicationNotification.getMedicine().getTreatment().getId());
+            contentValues.put(MEDICINE_ID, medicationNotification.getMedicine().getId());
+        } else if (notification instanceof MedicalAppointmentNotification) {
+            MedicalAppointmentNotification appointmentNotification = (MedicalAppointmentNotification) notification;
+            contentValues.put(MEDICAL_APPOINTMENT_ID, appointmentNotification.getAppointment().getId());
         }
-        if (notification.getAppointment() != null)
-            contentValues.put(MEDICAL_APPOINTMENT_ID, notification.getAppointment().getId());
 
         return contentValues;
     }
@@ -52,11 +56,11 @@ public class NotificationRepository extends BaseRepository<Notification> {
         if (!cursor.isNull(cursor.getColumnIndex(TREATMENT_ID)) && !cursor.isNull(cursor.getColumnIndex(MEDICINE_ID))) {
             MedicineRepository medicineRepository = new MedicineRepository(context);
             Medicine medicine = medicineRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)), cursor.getLong(cursor.getColumnIndex(MEDICINE_ID)));
-            notification = new Notification(medicine, timestamp);
+            notification = new MedicationNotification(medicine, timestamp);
         } else if (!cursor.isNull(cursor.getColumnIndex(MEDICAL_APPOINTMENT_ID))) {
             MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
             MedicalAppointment appointment = medicalAppointmentRepository.findById(cursor.getLong(cursor.getColumnIndex(MEDICAL_APPOINTMENT_ID)));
-            notification = new Notification(appointment, timestamp);
+            notification = new MedicalAppointmentNotification(appointment, timestamp);
         }
 
         if (notification != null)
@@ -65,10 +69,10 @@ public class NotificationRepository extends BaseRepository<Notification> {
         return notification;
     }
 
-    public List<Notification> findMedicineNotifications(long treatmentId, long medicineId) throws DBFindException {
+    public List<MedicationNotification> findMedicineNotifications(long treatmentId, long medicineId) throws DBFindException {
         SQLiteDatabase db = null;
         Cursor cursor = null;
-        List<Notification> notifications = new ArrayList<>();
+        List<MedicationNotification> notifications = new ArrayList<>();
 
         try {
             db = open();
@@ -78,7 +82,7 @@ public class NotificationRepository extends BaseRepository<Notification> {
 
             if (cursor != null) {
                 while (cursor.moveToNext())
-                    notifications.add(cursorToItem(cursor));
+                    notifications.add((MedicationNotification) cursorToItem(cursor));
             }
         } catch (SQLiteException | DBFindException exception) {
             throw new DBFindException("Failed to findMedicineNotifications from medicine with treatmentId (" + treatmentId + ") and medicineId (" + medicineId + ")", exception);
@@ -92,10 +96,10 @@ public class NotificationRepository extends BaseRepository<Notification> {
     }
 
     @SuppressLint("Range")
-    public Notification findAppointmentNotification(long appointmentId) throws DBFindException {
+    public MedicalAppointmentNotification findAppointmentNotification(long appointmentId) throws DBFindException {
         SQLiteDatabase db = null;
         Cursor cursor = null;
-        Notification notification = null;
+        MedicalAppointmentNotification notification = null;
 
         try {
             db = open();
@@ -104,7 +108,7 @@ public class NotificationRepository extends BaseRepository<Notification> {
             cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
             if (cursor != null && cursor.moveToFirst())
-                notification = cursorToItem(cursor);
+                notification = (MedicalAppointmentNotification) cursorToItem(cursor);
         } catch (SQLiteException | DBFindException exception) {
             throw new DBFindException("Failed to findAppointmentNotification from appointment with id (" + appointmentId + ")", exception);
         } finally {

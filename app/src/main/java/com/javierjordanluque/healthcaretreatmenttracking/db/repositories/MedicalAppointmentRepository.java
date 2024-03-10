@@ -12,6 +12,7 @@ import com.javierjordanluque.healthcaretreatmenttracking.models.Location;
 import com.javierjordanluque.healthcaretreatmenttracking.models.MedicalAppointment;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Treatment;
 import com.javierjordanluque.healthcaretreatmenttracking.util.SerializationUtils;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DecryptionException;
@@ -65,7 +66,7 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
 
     @Override
     @SuppressLint("Range")
-    protected MedicalAppointment cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException {
+    protected MedicalAppointment cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException, DBDeleteException {
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
@@ -98,7 +99,7 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
                     appointments.add(cursorToItem(cursor));
             }
         } catch (SQLiteException | DBFindException | DecryptionException |
-                 DeserializationException | DBInsertException exception) {
+                 DeserializationException | DBInsertException | DBDeleteException exception) {
             throw new DBFindException("Failed to findTreatmentAppointments from treatment with id (" + treatmentId + ")", exception);
         } finally {
             if (cursor != null)
