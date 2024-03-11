@@ -19,11 +19,11 @@ public class HealthcareTreatmentTrackingApp extends Application {
         createNotificationChannelGroup(MEDICATION_CHANNEL_GROUP_ID, getString(R.string.medication_channel_group_name));
         createNotificationChannelGroup(MEDICAL_APPOINTMENT_CHANNEL_GROUP_ID, getString(R.string.medical_appointment_channel_group_name));
 
-        createNotificationChannel(PREVIOUS_MEDICATION_CHANNEL_ID, getString(R.string.previous_medication_channel_name),
+        createNotificationChannel(PREVIOUS_MEDICATION_CHANNEL_ID, getString(R.string.previous_medication_channel_name), NotificationManager.IMPORTANCE_HIGH,
                 getString(R.string.previous_medication_channel_description), MEDICATION_CHANNEL_GROUP_ID);
-        createNotificationChannel(MEDICATION_CHANNEL_ID, getString(R.string.medication_channel_name),
+        createNotificationChannel(MEDICATION_CHANNEL_ID, getString(R.string.medication_channel_name), NotificationManager.IMPORTANCE_HIGH,
                 getString(R.string.medication_channel_description), MEDICATION_CHANNEL_GROUP_ID);
-        createNotificationChannel(MEDICAL_APPOINTMENT_CHANNEL_ID, getString(R.string.medical_appointment_channel_name),
+        createNotificationChannel(MEDICAL_APPOINTMENT_CHANNEL_ID, getString(R.string.medical_appointment_channel_name), NotificationManager.IMPORTANCE_HIGH,
                 getString(R.string.medical_appointment_channel_description), MEDICAL_APPOINTMENT_CHANNEL_GROUP_ID);
     }
 
@@ -32,8 +32,8 @@ public class HealthcareTreatmentTrackingApp extends Application {
         notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(groupId, groupName));
     }
 
-    private void createNotificationChannel(String channelId, CharSequence channelName, String channelDescription, String groupId) {
-        NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+    private void createNotificationChannel(String channelId, CharSequence channelName, int importance, String channelDescription, String groupId) {
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
         channel.setDescription(channelDescription);
         if (groupId != null)
             channel.setGroup(groupId);

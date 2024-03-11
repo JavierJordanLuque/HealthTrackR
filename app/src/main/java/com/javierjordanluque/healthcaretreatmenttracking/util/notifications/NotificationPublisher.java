@@ -67,14 +67,25 @@ public class NotificationPublisher extends BroadcastReceiver {
                     PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(Integer.parseInt(notificationId),
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);*/
 
-                    builder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICATION_CHANNEL_ID)
-                            .setSmallIcon(R.drawable.ic_notification)
-                            .setContentTitle(context.getString(R.string.medication_notification_title))
-                            .setContentText(message)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setAutoCancel(true)
-                            .setCategory(NotificationCompat.CATEGORY_ALARM);
-                            //.setContentIntent(actionPendingIntent);
+                    if (medicationNotification.getTimestamp() != medicationNotification.getMedicine().getInitialDosingTime().toInstant().toEpochMilli()) {
+                        builder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.PREVIOUS_MEDICATION_CHANNEL_ID)
+                                .setSmallIcon(R.drawable.ic_notification)
+                                .setContentTitle(context.getString(R.string.medication_notification_title))
+                                .setContentText(message)
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setAutoCancel(true)
+                                .setCategory(NotificationCompat.CATEGORY_REMINDER);
+                                //.setContentIntent(actionPendingIntent);
+                    } else {
+                        builder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICATION_CHANNEL_ID)
+                                .setSmallIcon(R.drawable.ic_notification)
+                                .setContentTitle(context.getString(R.string.medication_notification_title))
+                                .setContentText(message)
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setAutoCancel(true)
+                                .setCategory(NotificationCompat.CATEGORY_ALARM);
+                                //.setContentIntent(actionPendingIntent);
+                    }
                 } else if (notification instanceof MedicalAppointmentNotification) {
                     MedicalAppointmentNotification appointmentNotification = (MedicalAppointmentNotification) notification;
 
@@ -143,15 +154,12 @@ public class NotificationPublisher extends BroadcastReceiver {
         long minutes = TimeUnit.MILLISECONDS.toMinutes(timeDifferenceMillis) % 60;
 
         String timeDifferenceString = "";
-        if (days > 0) {
+        if (days > 0)
             timeDifferenceString += days + " " + context.getString(R.string.notification_message_days) + " ";
-        }
-        if (hours > 0) {
+        if (hours > 0)
             timeDifferenceString += hours + " " + context.getString(R.string.notification_message_hours) + " ";
-        }
-        if (minutes > 0) {
+        if (minutes > 0)
             timeDifferenceString += minutes + " " + context.getString(R.string.notification_message_minutes);
-        }
 
         return timeDifferenceString.trim();
     }
