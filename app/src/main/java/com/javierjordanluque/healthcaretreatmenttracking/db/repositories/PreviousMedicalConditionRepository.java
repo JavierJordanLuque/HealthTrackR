@@ -27,7 +27,7 @@ public class PreviousMedicalConditionRepository extends BaseRepository<PreviousM
     private final String USER_ID = "user_id";
     private final String NAME = "name";
     private final String NAME_IV = "name_iv";
-    private Context context;
+    private final Context context;
 
     public PreviousMedicalConditionRepository(Context context) {
         super(TABLE_NAME, context);

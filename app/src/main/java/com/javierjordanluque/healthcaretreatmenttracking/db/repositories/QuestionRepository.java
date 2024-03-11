@@ -20,7 +20,7 @@ public class QuestionRepository extends BaseRepository<Question> {
     private static final String TABLE_NAME = "QUESTION";
     private final String TREATMENT_ID = "treatment_id";
     private final String DESCRIPTION = "description";
-    private Context context;
+    private final Context context;
 
     public QuestionRepository(Context context) {
         super(TABLE_NAME, context);

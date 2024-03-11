@@ -48,7 +48,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
     private final String INITIAL_DOSING_TIME = "initial_dosing_time";
     private final String DOSAGE_FREQUENCY_HOURS = "dosage_frequency_hours";
     private final String DOSAGE_FREQUENCY_MINUTES = "dosage_frequency_minutes";
-    private Context context;
+    private final Context context;
 
     public MedicineRepository(Context context) {
         super(TABLE_NAME_BASIC_MEDICINE, context);

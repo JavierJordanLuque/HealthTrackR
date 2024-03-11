@@ -17,17 +17,17 @@
         tools:targetApi="31">
 
         <receiver
-            android:name=".util.notifications.BootReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver
             android:name=".util.notifications.NotificationPublisher"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.javierjordanluque.healthcaretreatmenttracking.SHOW_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".util.notifications.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 

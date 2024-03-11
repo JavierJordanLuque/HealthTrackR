@@ -28,7 +28,7 @@ public class SymptomRepository extends BaseRepository<Symptom> {
     private final String TREATMENT_ID = "treatment_id";
     private final String DESCRIPTION = "description";
     private final String DESCRIPTION_IV = "description_iv";
-    private Context context;
+    private final Context context;
 
     public SymptomRepository(Context context) {
         super(TABLE_NAME, context);

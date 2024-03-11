@@ -2,8 +2,8 @@ package com.javierjordanluque.healthcaretreatmenttracking.models;
 
 public class BasicMedicine {
     private long id;
-    private String name;
-    private String activeSubstance;
+    private final String name;
+    private final String activeSubstance;
 
     public BasicMedicine(String name, String activeSubstance) {
         this.name = name;

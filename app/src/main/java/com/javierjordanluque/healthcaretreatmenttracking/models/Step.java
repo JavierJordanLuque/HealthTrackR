@@ -24,6 +24,7 @@ public class Step implements Identifiable {
         this.title = title;
         this.description = description;
         this.numOrder = numOrder;
+
         this.treatment.addStep(context, this);
     }
 

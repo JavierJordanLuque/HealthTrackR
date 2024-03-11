@@ -3,8 +3,8 @@ package com.javierjordanluque.healthcaretreatmenttracking.models;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.HashData;
 
 public class UserCredentials {
-    private long userId;
-    private HashData hashData;
+    private final long userId;
+    private final HashData hashData;
 
     public UserCredentials(long userId, HashData hashData) {
         this.userId = userId;

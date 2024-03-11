@@ -24,7 +24,7 @@ public class NotificationRepository extends BaseRepository<Notification> {
     private final String MEDICINE_ID = "medicine_id";
     private final String MEDICAL_APPOINTMENT_ID = "medical_appointment_id";
     private final String TIMESTAMP = "timestamp";
-    private Context context;
+    private final Context context;
 
     public NotificationRepository(Context context) {
         super(TABLE_NAME, context);
@@ -43,6 +43,7 @@ public class NotificationRepository extends BaseRepository<Notification> {
             MedicalAppointmentNotification appointmentNotification = (MedicalAppointmentNotification) notification;
             contentValues.put(MEDICAL_APPOINTMENT_ID, appointmentNotification.getAppointment().getId());
         }
+        contentValues.put(TIMESTAMP, notification.getTimestamp());
 
         return contentValues;
     }
@@ -85,7 +86,8 @@ public class NotificationRepository extends BaseRepository<Notification> {
                     notifications.add((MedicationNotification) cursorToItem(cursor));
             }
         } catch (SQLiteException | DBFindException exception) {
-            throw new DBFindException("Failed to findMedicineNotifications from medicine with treatmentId (" + treatmentId + ") and medicineId (" + medicineId + ")", exception);
+            throw new DBFindException("Failed to findMedicineNotifications from medicine with treatmentId (" + treatmentId + ") and medicineId (" + medicineId + ")",
+                    exception);
         } finally {
             if (cursor != null)
                 cursor.close();

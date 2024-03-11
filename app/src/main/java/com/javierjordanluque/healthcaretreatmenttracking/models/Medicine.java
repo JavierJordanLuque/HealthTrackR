@@ -40,6 +40,7 @@ public class Medicine implements Identifiable {
         this.initialDosingTime = initialDosingTime;
         this.dosageFrequencyHours = dosageFrequencyHours;
         this.dosageFrequencyMinutes = dosageFrequencyMinutes;
+
         this.treatment.addMedicine(context, this);
 
         if (context != null) {
@@ -85,7 +86,8 @@ public class Medicine implements Identifiable {
     private Medicine() {
     }
 
-    public void modifyMedicine(Context context, Integer dose, AdministrationRoute administrationRoute, ZonedDateTime initialDosingTime, int dosageFrequencyHours, int dosageFrequencyMinutes) throws DBUpdateException {
+    public void modifyMedicine(Context context, Integer dose, AdministrationRoute administrationRoute, ZonedDateTime initialDosingTime, int dosageFrequencyHours,
+                               int dosageFrequencyMinutes) throws DBUpdateException {
         Medicine medicine = new Medicine();
         medicine.setId(this.id);
         medicine.setTreatment(this.treatment);
@@ -115,7 +117,8 @@ public class Medicine implements Identifiable {
         medicineRepository.update(medicine);
     }
 
-    public void modifyMedicineNotification(Context context, int previousNotificationTimeHours, int previousNotificationTimeMinutes, boolean previousNotificationStatus, boolean dosingNotificationStatus) {
+    public void modifyMedicineNotification(Context context, int previousNotificationTimeHours, int previousNotificationTimeMinutes, boolean previousNotificationStatus,
+                                           boolean dosingNotificationStatus) {
         // @TODO
     }
 

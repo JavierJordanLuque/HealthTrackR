@@ -22,7 +22,7 @@ public class StepRepository extends BaseRepository<Step> {
     private final String TITLE = "title";
     private final String DESCRIPTION = "description";
     private final String NUM_ORDER = "num_order";
-    private Context context;
+    private final Context context;
 
     public StepRepository(Context context) {
         super(TABLE_NAME, context);

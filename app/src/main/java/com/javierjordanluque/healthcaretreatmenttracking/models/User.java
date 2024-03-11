@@ -38,7 +38,8 @@ public class User implements Identifiable {
     private User() {
     }
 
-    public void modifyUser(Context context, String fullName, LocalDate birthDate, Gender gender, BloodType bloodType, List<Allergy> allergies, List<PreviousMedicalCondition> conditions) throws DBDeleteException, DBInsertException, DBUpdateException {
+    public void modifyUser(Context context, String fullName, LocalDate birthDate, Gender gender, BloodType bloodType, List<Allergy> allergies,
+                           List<PreviousMedicalCondition> conditions) throws DBDeleteException, DBInsertException, DBUpdateException {
         User user = new User();
         user.setId(this.id);
 

@@ -2,13 +2,14 @@ package com.javierjordanluque.healthcaretreatmenttracking.models;
 
 public class Allergy implements Identifiable {
     private long id;
-    private User user;
-    private String name;
+    private final User user;
+    private final String name;
 
     public Allergy(User user, String name) {
         this.user = user;
         this.name = name;
-        user.addAllergy(this);
+
+        this.user.addAllergy(this);
     }
 
     @Override

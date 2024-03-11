@@ -6,12 +6,13 @@ import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInser
 
 public class Question implements Identifiable {
     private long id;
-    private Treatment treatment;
-    private String description;
+    private final Treatment treatment;
+    private final String description;
 
     public Question(Context context, Treatment treatment, String description) throws DBInsertException {
         this.treatment = treatment;
         this.description = description;
+
         this.treatment.addQuestion(context, this);
     }
 

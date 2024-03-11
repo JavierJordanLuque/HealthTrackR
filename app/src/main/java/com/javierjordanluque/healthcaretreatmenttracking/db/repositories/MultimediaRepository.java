@@ -22,7 +22,7 @@ public class MultimediaRepository extends BaseRepository<Multimedia> {
     private final String STEP_ID = "step_id";
     private final String TYPE = "type";
     private final String PATH = "path";
-    private Context context;
+    private final Context context;
 
     public MultimediaRepository(Context context) {
         super(TABLE_NAME, context);
@@ -49,7 +49,8 @@ public class MultimediaRepository extends BaseRepository<Multimedia> {
         StepRepository stepRepository = new StepRepository(context);
         Step step = stepRepository.findById(cursor.getLong(cursor.getColumnIndex(STEP_ID)));
 
-        Multimedia multimedia = new Multimedia(null, step, MultimediaType.valueOf(cursor.getString(cursor.getColumnIndex(TYPE))), cursor.getString(cursor.getColumnIndex(PATH)));
+        Multimedia multimedia = new Multimedia(null, step, MultimediaType.valueOf(cursor.getString(cursor.getColumnIndex(TYPE))),
+                cursor.getString(cursor.getColumnIndex(PATH)));
         multimedia.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
         return multimedia;

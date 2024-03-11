@@ -27,6 +27,7 @@ public class MedicalAppointment implements Identifiable {
         this.purpose = purpose;
         this.dateTime = dateTime;
         this.location = location;
+
         this.treatment.addAppointment(context, this);
 
         if (context != null)

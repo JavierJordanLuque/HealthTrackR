@@ -9,14 +9,15 @@ import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInser
 
 public class Multimedia implements Identifiable {
     private long id;
-    private Step step;
-    private MultimediaType type;
-    private String path;
+    private final Step step;
+    private final MultimediaType type;
+    private final String path;
 
     public Multimedia(Context context, Step step, MultimediaType type, String path) throws DBInsertException {
         this.step = step;
         this.type = type;
         this.path = path;
+
         this.step.addMultimedia(context, this);
     }
 

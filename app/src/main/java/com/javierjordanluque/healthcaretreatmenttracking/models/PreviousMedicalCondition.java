@@ -2,12 +2,13 @@ package com.javierjordanluque.healthcaretreatmenttracking.models;
 
 public class PreviousMedicalCondition implements Identifiable {
     private long id;
-    private User user;
-    private String name;
+    private final User user;
+    private final String name;
 
     public PreviousMedicalCondition(User user, String name) {
         this.user = user;
         this.name = name;
+
         user.addCondition(this);
     }
 

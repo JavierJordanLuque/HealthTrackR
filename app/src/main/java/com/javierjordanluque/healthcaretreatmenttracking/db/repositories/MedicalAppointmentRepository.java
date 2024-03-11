@@ -36,7 +36,7 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
     private final String DATE_TIME_IV = "date_time_iv";
     private final String LATITUDE = "latitude";
     private final String LONGITUDE = "longitude";
-    private Context context;
+    private final Context context;
 
     public MedicalAppointmentRepository(Context context) {
         super(TABLE_NAME, context);
@@ -71,7 +71,8 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
         CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(DATE_TIME)), cursor.getBlob(cursor.getColumnIndex(DATE_TIME_IV)));
-        ZonedDateTime date = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
+        ZonedDateTime date = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)),
+                TimeZone.getDefault().toZoneId());
 
         Location location = null;
         if (!cursor.isNull(cursor.getColumnIndex(LATITUDE)) && !cursor.isNull(cursor.getColumnIndex(LONGITUDE)))

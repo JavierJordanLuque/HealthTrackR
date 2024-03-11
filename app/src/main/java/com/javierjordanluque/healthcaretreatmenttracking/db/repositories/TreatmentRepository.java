@@ -40,7 +40,7 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
     private final String DIAGNOSIS_IV = "diagnosis_iv";
     private final String CATEGORY = "category";
     private final String CATEGORY_IV = "category_iv";
-    private Context context;
+    private final Context context;
 
     public TreatmentRepository(Context context) {
         super(TABLE_NAME, context);
@@ -92,14 +92,16 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         String title = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
 
         cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(START_DATE)), cursor.getBlob(cursor.getColumnIndex(START_DATE_IV)));
-        ZonedDateTime startDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
+        ZonedDateTime startDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)),
+                TimeZone.getDefault().toZoneId());
 
         byte[] endDateBytes = cursor.getBlob(cursor.getColumnIndex(END_DATE));
         byte[] endDateIV = cursor.getBlob(cursor.getColumnIndex(END_DATE_IV));
         ZonedDateTime endDate = null;
         if (endDateBytes != null && endDateIV != null) {
             cipherData = new CipherData(endDateBytes, endDateIV);
-            endDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)), TimeZone.getDefault().toZoneId());
+            endDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)),
+                    TimeZone.getDefault().toZoneId());
         }
 
         byte[] diagnosisBytes = cursor.getBlob(cursor.getColumnIndex(DIAGNOSIS));
