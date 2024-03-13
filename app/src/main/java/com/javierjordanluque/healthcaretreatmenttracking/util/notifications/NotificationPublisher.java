@@ -26,124 +26,181 @@ public class NotificationPublisher extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            String notificationId = intent.getStringExtra(NotificationScheduler.NOTIFICATION_ID);
+        String notificationId = intent.getStringExtra(NotificationScheduler.NOTIFICATION_ID);
 
-            if (notificationId != null) {
-                Notification notification = null;
-                NotificationRepository notificationRepository = new NotificationRepository(context);
+        if (notificationId != null) {
+            Notification notification = null;
+            NotificationRepository notificationRepository = new NotificationRepository(context);
 
+            try {
+                notification = notificationRepository.findById(Long.parseLong(notificationId));
+            } catch (DBFindException exception) {
                 try {
-                    notification = notificationRepository.findById(Long.parseLong(notificationId));
-                } catch (DBFindException exception) {
-                    try {
-                        throw new NotificationException("Failed to send notification with id (" + notificationId + ")", exception);
-                    } catch (NotificationException ignored) {
-                    }
+                    throw new NotificationException("Failed to send notification with id (" + notificationId + ")", exception);
+                } catch (NotificationException ignored) {
                 }
+            }
 
-                NotificationCompat.Builder builder = null;
-                if (notification instanceof MedicationNotification) {
-                    MedicationNotification medicationNotification = (MedicationNotification) notification;
+            if (notification instanceof MedicationNotification) {
+                medicationPublisher(context, notification);
+            } else if (notification instanceof MedicalAppointmentNotification) {
+                appointmentPublisher(context, notification);
+            }
+        }
+    }
 
-                    String medicineName = medicationNotification.getMedicine().getName();
-                    String treatmentTitle = medicationNotification.getMedicine().getTreatment().getTitle();
-                    ZonedDateTime medicineNextDose = medicationNotification.getMedicine().calculateNextDose();
+    private void medicationPublisher(Context context, Notification notification) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            MedicationNotification medicationNotification = (MedicationNotification) notification;
 
-                    String message;
-                    if (!ZonedDateTime.now().isBefore(medicineNextDose.minusMinutes(NOW_MARGIN_MINUTES))) {
-                        message = context.getString(R.string.medication_notification_message_dose) + " " + medicineName + " " + context.getString(R.string.medication_notification_message_treatment) + " " + treatmentTitle + " " + context.getString(R.string.medication_notification_message_schedule_now);
-                    } else {
-                        message = context.getString(R.string.medication_notification_message_dose) + " " + medicineName + " " + context.getString(R.string.medication_notification_message_treatment) + " " + treatmentTitle + " " +
-                                context.getString(R.string.medication_notification_message_scheduled_in) + " " + formatTimeDifference(context, Duration.between(ZonedDateTime.now(), medicineNextDose).toMillis());
-                    }
+            String medicineName = medicationNotification.getMedicine().getName();
+            String treatmentTitle = medicationNotification.getMedicine().getTreatment().getTitle();
+            ZonedDateTime medicineNextDose = medicationNotification.getMedicine().calculateNextDose();
 
-                    // @TODO
-                    // Establish a hierarchy by adding the android:parentActivityName in AndroidManifest.xml
-                    // Replace MyActivity with the activity which shows the medicine's info
-                    /*Intent actionIntent = new Intent(context, MyActivity.class);
-                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                    stackBuilder.addNextIntentWithParentStack(actionIntent);
-                    PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(Integer.parseInt(notificationId),
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);*/
+            String publicMessage;
+            String message;
+            String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), medicineNextDose).toMillis());
+            if (!ZonedDateTime.now().isBefore(medicineNextDose.minusMinutes(NOW_MARGIN_MINUTES))) {
+                publicMessage = context.getString(R.string.notification_public_message_medication_scheduled_now);
+                message = context.getString(R.string.notification_message_medication_dose) + " " + medicineName + " " + context.getString(R.string.notification_message_medication_treatment) + " " +
+                        treatmentTitle + " " + context.getString(R.string.notification_message_medication_schedule_now);
+            } else {
+                publicMessage = context.getString(R.string.notification_public_message_medication_scheduled_in) + " " + formattedTimeDifference;
+                message = context.getString(R.string.notification_message_medication_dose) + " " + medicineName + " " + context.getString(R.string.notification_message_medication_treatment) + " " + treatmentTitle + " " + context.getString(R.string.notification_message_medication_scheduled_in) + " " +
+                        formattedTimeDifference;
+            }
 
-                    if (medicationNotification.getTimestamp() != medicationNotification.getMedicine().getInitialDosingTime().toInstant().toEpochMilli()) {
-                        builder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.PREVIOUS_MEDICATION_CHANNEL_ID)
-                                .setSmallIcon(R.drawable.ic_notification)
-                                .setContentTitle(context.getString(R.string.medication_notification_title))
-                                .setContentText(message)
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                .setAutoCancel(true)
-                                .setCategory(NotificationCompat.CATEGORY_REMINDER);
-                                //.setContentIntent(actionPendingIntent);
-                    } else {
-                        builder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICATION_CHANNEL_ID)
-                                .setSmallIcon(R.drawable.ic_notification)
-                                .setContentTitle(context.getString(R.string.medication_notification_title))
-                                .setContentText(message)
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                .setAutoCancel(true)
-                                .setCategory(NotificationCompat.CATEGORY_ALARM);
-                                //.setContentIntent(actionPendingIntent);
-                    }
-                } else if (notification instanceof MedicalAppointmentNotification) {
-                    MedicalAppointmentNotification appointmentNotification = (MedicalAppointmentNotification) notification;
+            // @TODO
+            // Establish a hierarchy by adding the android:parentActivityName in AndroidManifest.xml
+            // Replace MyActivity with the activity which shows the medicine's info
+            /*
+            Intent actionIntent = new Intent(context, MyActivity.class);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+            stackBuilder.addNextIntentWithParentStack(actionIntent);
+            PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(Integer.parseInt(notificationId),
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+            */
 
-                    String appointmentPurpose = appointmentNotification.getAppointment().getPurpose();
-                    String treatmentTitle = appointmentNotification.getAppointment().getTreatment().getTitle();
-                    double appointmentLocationLatitude = appointmentNotification.getAppointment().getLocation().getLatitude();
-                    double appointmentLocationLongitude = appointmentNotification.getAppointment().getLocation().getLongitude();
-                    ZonedDateTime appointmentDateTime = appointmentNotification.getAppointment().getDateTime();
+            NotificationCompat.Builder publicNotificationBuilder;
+            NotificationCompat.Builder notificationBuilder;
+            if (medicationNotification.getTimestamp() != medicationNotification.getMedicine().getInitialDosingTime().toInstant().toEpochMilli()) {
+                publicNotificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.PREVIOUS_MEDICATION_CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_medication_notification)
+                        .setContentTitle(context.getString(R.string.notification_title_medication))
+                        .setContentText(publicMessage)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true)
+                        .setCategory(NotificationCompat.CATEGORY_REMINDER);
+                        //.setContentIntent(actionPendingIntent);
 
-                    String message;
-                    if (!ZonedDateTime.now().isBefore(appointmentDateTime.minusMinutes(NOW_MARGIN_MINUTES))) {
-                        message = context.getString(R.string.medical_appointment_notification_message_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.medical_appointment_notification_message_treatment) + " " + treatmentTitle + " " +
-                                context.getString(R.string.medical_appointment_notification_scheduled_now) + ". " + context.getString(R.string.medical_appointment_notification_message_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.medical_appointment_notification_message_longitude) + " " +
-                                appointmentLocationLongitude;
-                    } else {
-                        message = context.getString(R.string.medical_appointment_notification_message_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.medical_appointment_notification_message_treatment) + " " + treatmentTitle + " " +
-                                context.getString(R.string.medical_appointment_notification_message_scheduled_in) + " " +
-                                formatTimeDifference(context, Duration.between(ZonedDateTime.now(), appointmentDateTime).toMillis()) + ". " +
-                                context.getString(R.string.medical_appointment_notification_message_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.medical_appointment_notification_message_longitude) + " " + appointmentLocationLongitude;
-                    }
+                notificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.PREVIOUS_MEDICATION_CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_medication_notification)
+                        .setContentTitle(context.getString(R.string.notification_title_medication))
+                        .setContentText(message)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true)
+                        .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                        .setPublicVersion(publicNotificationBuilder.build());
+                        //.setContentIntent(actionPendingIntent);
+            } else {
+                publicNotificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICATION_CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_medication_notification)
+                        .setContentTitle(context.getString(R.string.notification_title_medication))
+                        .setContentText(publicMessage)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true)
+                        .setCategory(NotificationCompat.CATEGORY_ALARM);
+                        //.setContentIntent(actionPendingIntent);
 
-                    // @TODO
-                    // Establish a hierarchy by adding the android:parentActivityName in AndroidManifest.xml
-                    // Replace MyActivity with the activity which shows the appointment's info
-                    /*Intent actionIntent = new Intent(context, MyActivity.class);
-                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                    stackBuilder.addNextIntentWithParentStack(actionIntent);
-                    PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(Integer.parseInt(notificationId),
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);*/
+                notificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICATION_CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_medication_notification)
+                        .setContentTitle(context.getString(R.string.notification_title_medication))
+                        .setContentText(message)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true)
+                        .setCategory(NotificationCompat.CATEGORY_ALARM)
+                        .setPublicVersion(publicNotificationBuilder.build());
+                        //.setContentIntent(actionPendingIntent);
+            }
 
-                    builder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
-                            .setSmallIcon(R.drawable.ic_notification)
-                            .setContentTitle(context.getString(R.string.medical_appointment_notification_title))
-                            .setContentText(message)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setAutoCancel(true)
-                            .setCategory(NotificationCompat.CATEGORY_REMINDER);
-                            //.setContentIntent(actionPendingIntent);
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            notificationManager.notify((int) notification.getId(), notificationBuilder.build());
+            try {
+                NotificationRepository notificationRepository = new NotificationRepository(context);
+                notificationRepository.delete(notification);
+            } catch (DBDeleteException ignored) {
+            } finally {
+                try {
+                    ((MedicationNotification) notification).getMedicine().getNotifications(context).remove(notification);
+                } catch (DBFindException ignored) {
                 }
+            }
+        }
+    }
 
-                if (builder != null) {
-                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-                    notificationManager.notify(Integer.parseInt(notificationId), builder.build());
+    private void appointmentPublisher(Context context, Notification notification) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            MedicalAppointmentNotification appointmentNotification = (MedicalAppointmentNotification) notification;
 
-                    try {
-                        notificationRepository.delete(notification);
-                    } catch (DBDeleteException ignored) {
-                    } finally {
-                        if (notification instanceof MedicationNotification) {
-                            try {
-                                ((MedicationNotification) notification).getMedicine().getNotifications(context).remove(notification);
-                            } catch (DBFindException ignored) {
-                            }
-                        } else if (notification instanceof MedicalAppointmentNotification) {
-                            ((MedicalAppointmentNotification) notification).getAppointment().setNotification(null);
-                        }
-                    }
-                }
+            String appointmentPurpose = appointmentNotification.getAppointment().getPurpose();
+            String treatmentTitle = appointmentNotification.getAppointment().getTreatment().getTitle();
+            double appointmentLocationLatitude = appointmentNotification.getAppointment().getLocation().getLatitude();
+            double appointmentLocationLongitude = appointmentNotification.getAppointment().getLocation().getLongitude();
+            ZonedDateTime appointmentDateTime = appointmentNotification.getAppointment().getDateTime();
+
+            String publicMessage;
+            String message;
+            String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), appointmentDateTime).toMillis());
+            if (!ZonedDateTime.now().isBefore(appointmentDateTime.minusMinutes(NOW_MARGIN_MINUTES))) {
+                publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_now);
+                message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
+                        context.getString(R.string.notification_medical_appointment_scheduled_now) + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " +
+                        appointmentLocationLongitude;
+            } else {
+                publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference;
+                message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
+                        context.getString(R.string.notification_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude +
+                        ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " + appointmentLocationLongitude;
+            }
+
+            // @TODO
+            // Establish a hierarchy by adding the android:parentActivityName in AndroidManifest.xml
+            // Replace MyActivity with the activity which shows the appointment's info
+            /*
+            Intent actionIntent = new Intent(context, MyActivity.class);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+            stackBuilder.addNextIntentWithParentStack(actionIntent);
+            PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(Integer.parseInt(notificationId),
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+            */
+
+            NotificationCompat.Builder publicNotificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_medical_appointment_notification)
+                    .setContentTitle(context.getString(R.string.notification_title_medical_appointment))
+                    .setContentText(publicMessage)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setAutoCancel(true)
+                    .setCategory(NotificationCompat.CATEGORY_REMINDER);
+                    //.setContentIntent(actionPendingIntent);
+
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_medical_appointment_notification)
+                    .setContentTitle(context.getString(R.string.notification_title_medical_appointment))
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setAutoCancel(true)
+                    .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                    .setPublicVersion(publicNotificationBuilder.build());
+                    //.setContentIntent(actionPendingIntent);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            notificationManager.notify((int) notification.getId(), notificationBuilder.build());
+            try {
+                NotificationRepository notificationRepository = new NotificationRepository(context);
+                notificationRepository.delete(notification);
+            } catch (DBDeleteException ignored) {
+            } finally {
+                ((MedicalAppointmentNotification) notification).getAppointment().setNotification(null);
             }
         }
     }
