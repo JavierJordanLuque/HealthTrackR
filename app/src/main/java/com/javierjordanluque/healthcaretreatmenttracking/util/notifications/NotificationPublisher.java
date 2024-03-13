@@ -85,7 +85,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             NotificationCompat.Builder notificationBuilder;
             if (medicationNotification.getTimestamp() != medicationNotification.getMedicine().getInitialDosingTime().toInstant().toEpochMilli()) {
                 publicNotificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.PREVIOUS_MEDICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_medication_notification)
+                        .setSmallIcon(R.drawable.ic_notification_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(publicMessage)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -94,7 +94,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                         //.setContentIntent(actionPendingIntent);
 
                 notificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.PREVIOUS_MEDICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_medication_notification)
+                        .setSmallIcon(R.drawable.ic_notification_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(message)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -104,7 +104,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                         //.setContentIntent(actionPendingIntent);
             } else {
                 publicNotificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_medication_notification)
+                        .setSmallIcon(R.drawable.ic_notification_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(publicMessage)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -113,7 +113,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                         //.setContentIntent(actionPendingIntent);
 
                 notificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_medication_notification)
+                        .setSmallIcon(R.drawable.ic_notification_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(message)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -175,7 +175,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             */
 
             NotificationCompat.Builder publicNotificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_medical_appointment_notification)
+                    .setSmallIcon(R.drawable.ic_notification_medical_appointment)
                     .setContentTitle(context.getString(R.string.notification_title_medical_appointment))
                     .setContentText(publicMessage)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -184,7 +184,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                     //.setContentIntent(actionPendingIntent);
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, HealthcareTreatmentTrackingApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_medical_appointment_notification)
+                    .setSmallIcon(R.drawable.ic_notification_medical_appointment)
                     .setContentTitle(context.getString(R.string.notification_title_medical_appointment))
                     .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
