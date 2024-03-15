@@ -123,9 +123,33 @@ public class Medicine implements Identifiable {
         medicineRepository.update(medicine);
     }
 
-    public void modifyMedicineNotification(Context context, int previousNotificationTimeHours, int previousNotificationTimeMinutes, boolean previousNotificationStatus,
-                                           boolean dosingNotificationStatus) {
-        // @TODO
+    public void modifyMedicineNotifications(Context context, int previousNotificationTimeHours, int previousNotificationTimeMinutes, boolean previousNotificationStatus,
+                                           boolean dosingNotificationStatus) throws DBFindException, DBDeleteException, DBInsertException {
+        notifications = getNotifications(context);
+
+        MedicationNotification previousNotification = null;
+        MedicationNotification exactNotification = null;
+
+        for (MedicationNotification notification : notifications) {
+            if (notification.getTimestamp() != getInitialDosingTime().toInstant().toEpochMilli()) {
+                previousNotification = notification;
+            } else {
+                exactNotification = notification;
+            }
+        }
+
+        int previousMinutes = previousNotificationTimeHours * 60 + previousNotificationTimeMinutes;
+        long previousTimestamp = initialDosingTime.minusHours(previousMinutes).toInstant().toEpochMilli();
+
+        if (previousNotification != null && (!previousNotificationStatus || previousNotification.getTimestamp() != previousTimestamp))
+            NotificationScheduler.cancelNotification(context, previousNotification);
+        if (previousNotificationStatus && (previousNotification == null || previousNotification.getTimestamp() != previousTimestamp))
+            schedulePreviousMedicationNotification(context, previousMinutes);
+
+        if (exactNotification != null && !dosingNotificationStatus)
+            NotificationScheduler.cancelNotification(context, exactNotification);
+        if (dosingNotificationStatus && exactNotification == null)
+            scheduleMedicationNotification(context);
     }
 
     public ZonedDateTime calculateNextDose() {
