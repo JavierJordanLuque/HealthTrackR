@@ -10,7 +10,6 @@ import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindE
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.MedicalAppointmentNotification;
-import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.Notification;
 import com.javierjordanluque.healthcaretreatmenttracking.util.notifications.NotificationScheduler;
 
 import java.time.ZonedDateTime;
@@ -84,10 +83,15 @@ public class MedicalAppointment implements Identifiable {
         medicalAppointmentRepository.update(appointment);
     }
 
-    public void modifyMedicalAppointmentNotification(Context context, int notificationTimeHours, int notificationTimeMinutes, boolean notificationStatus) {
-        // @TODO
-        // If notification time is different from current notification timestamp then delete current notification from NOTIFICATION table and insert the new notification
-        // In that case, call NotificationScheduler's cancelNotification and then scheduleNotification methods
+    public void modifyMedicalAppointmentNotification(Context context, int notificationTimeHours, int notificationTimeMinutes, boolean notificationStatus) throws DBDeleteException, DBFindException, DBInsertException {
+        notification = getNotification(context);
+        int previousMinutes = notificationTimeHours * 60 + notificationTimeMinutes;
+        long timestamp = dateTime.minusHours(previousMinutes).toInstant().toEpochMilli();
+
+        if (notification != null && (!notificationStatus || notification.getTimestamp() != timestamp))
+            NotificationScheduler.cancelNotification(context, notification);
+        if (notificationStatus && (notification == null || notification.getTimestamp() != timestamp))
+            scheduleAppointmentNotification(context, previousMinutes);
     }
 
     public boolean isPending() {
@@ -133,7 +137,7 @@ public class MedicalAppointment implements Identifiable {
         this.location = location;
     }
 
-    public Notification getNotification(Context context) throws DBFindException {
+    public MedicalAppointmentNotification getNotification(Context context) throws DBFindException {
         if (notification == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotification(notificationRepository.findAppointmentNotification(this.id));

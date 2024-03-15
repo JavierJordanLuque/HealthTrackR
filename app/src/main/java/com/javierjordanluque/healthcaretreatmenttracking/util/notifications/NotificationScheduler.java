@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.NotificationRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.NotificationException;
@@ -72,7 +71,7 @@ public class NotificationScheduler {
         return PendingIntent.getBroadcast(context, (int) notification.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    public static void cancelNotification(Context context, Notification notification) {
+    public static void cancelNotification(Context context, Notification notification) throws DBFindException, DBDeleteException {
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) notification.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -81,19 +80,10 @@ public class NotificationScheduler {
             alarmManager.cancel(pendingIntent);
             pendingIntent.cancel();
 
-            NotificationRepository notificationRepository = new NotificationRepository(context);
-            try {
-                notificationRepository.delete(notification);
-            } catch (DBDeleteException ignored) {
-            } finally {
-                if (notification instanceof MedicationNotification) {
-                    try {
-                        ((MedicationNotification) notification).getMedicine().getNotifications(context).remove(notification);
-                    } catch (DBFindException ignored) {
-                    }
-                } else if (notification instanceof MedicalAppointmentNotification) {
-                    ((MedicalAppointmentNotification) notification).getAppointment().setNotification(null);
-                }
+            if (notification instanceof MedicationNotification) {
+                ((MedicationNotification) notification).getMedicine().removeNotification(context, (MedicationNotification) notification);
+            } else if (notification instanceof MedicalAppointmentNotification) {
+                ((MedicalAppointmentNotification) notification).getAppointment().removeNotification(context, (MedicalAppointmentNotification) notification);
             }
         }
     }
