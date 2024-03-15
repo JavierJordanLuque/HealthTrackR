@@ -12,7 +12,7 @@ import com.javierjordanluque.healthcaretreatmenttracking.models.User;
 import com.javierjordanluque.healthcaretreatmenttracking.models.UserCredentials;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.BloodType;
 import com.javierjordanluque.healthcaretreatmenttracking.models.enumerations.Gender;
-import com.javierjordanluque.healthcaretreatmenttracking.util.SerializationUtils;
+import com.javierjordanluque.healthcaretreatmenttracking.util.security.SerializationUtils;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DecryptionException;

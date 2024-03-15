@@ -11,7 +11,7 @@ import com.javierjordanluque.healthcaretreatmenttracking.db.BaseRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Location;
 import com.javierjordanluque.healthcaretreatmenttracking.models.MedicalAppointment;
 import com.javierjordanluque.healthcaretreatmenttracking.models.Treatment;
-import com.javierjordanluque.healthcaretreatmenttracking.util.SerializationUtils;
+import com.javierjordanluque.healthcaretreatmenttracking.util.security.SerializationUtils;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;

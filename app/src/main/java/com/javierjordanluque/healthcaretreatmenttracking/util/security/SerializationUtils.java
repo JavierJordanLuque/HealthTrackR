@@ -1,4 +1,4 @@
-package com.javierjordanluque.healthcaretreatmenttracking.util;
+package com.javierjordanluque.healthcaretreatmenttracking.util.security;
 
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DeserializationException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.SerializationException;

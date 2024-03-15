@@ -14,7 +14,7 @@ import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindE
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DecryptionException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DeserializationException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.EncryptionException;
-import com.javierjordanluque.healthcaretreatmenttracking.util.SerializationUtils;
+import com.javierjordanluque.healthcaretreatmenttracking.util.security.SerializationUtils;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.SerializationException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.CipherData;
 import com.javierjordanluque.healthcaretreatmenttracking.util.security.SecurityService;
