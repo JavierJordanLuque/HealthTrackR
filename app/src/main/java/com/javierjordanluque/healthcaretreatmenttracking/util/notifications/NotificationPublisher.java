@@ -126,14 +126,8 @@ public class NotificationPublisher extends BroadcastReceiver {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             notificationManager.notify((int) notification.getId(), notificationBuilder.build());
             try {
-                NotificationRepository notificationRepository = new NotificationRepository(context);
-                notificationRepository.delete(notification);
-            } catch (DBDeleteException ignored) {
-            } finally {
-                try {
-                    ((MedicationNotification) notification).getMedicine().getNotifications(context).remove(notification);
-                } catch (DBFindException ignored) {
-                }
+                medicationNotification.getMedicine().removeNotification(context, medicationNotification);
+            } catch (DBDeleteException | DBFindException ignored) {
             }
         }
     }
@@ -196,11 +190,8 @@ public class NotificationPublisher extends BroadcastReceiver {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             notificationManager.notify((int) notification.getId(), notificationBuilder.build());
             try {
-                NotificationRepository notificationRepository = new NotificationRepository(context);
-                notificationRepository.delete(notification);
+                appointmentNotification.getAppointment().removeNotification(context, appointmentNotification);
             } catch (DBDeleteException ignored) {
-            } finally {
-                ((MedicalAppointmentNotification) notification).getAppointment().setNotification(null);
             }
         }
     }

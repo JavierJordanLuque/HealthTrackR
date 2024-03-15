@@ -5,6 +5,7 @@ import android.content.Context;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.db.repositories.NotificationRepository;
 import com.javierjordanluque.healthcaretreatmenttracking.util.PermissionManager;
+import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBFindException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthcaretreatmenttracking.util.exceptions.DBUpdateException;
@@ -51,6 +52,12 @@ public class MedicalAppointment implements Identifiable {
             NotificationScheduler.scheduleInexactNotification(context, notification);
             this.notification = notification;
         }
+    }
+
+    public void removeNotification(Context context, MedicalAppointmentNotification notification) throws DBDeleteException {
+        NotificationRepository notificationRepository = new NotificationRepository(context);
+        notificationRepository.delete(notification);
+        setNotification(null);
     }
 
     private MedicalAppointment() {

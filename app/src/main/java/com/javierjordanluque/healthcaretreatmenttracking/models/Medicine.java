@@ -83,6 +83,12 @@ public class Medicine implements Identifiable {
         }
     }
 
+    public void removeNotification(Context context, MedicationNotification notification) throws DBDeleteException, DBFindException {
+        NotificationRepository notificationRepository = new NotificationRepository(context);
+        notificationRepository.delete(notification);
+        this.getNotifications(context).remove(notification);
+    }
+
     private Medicine() {
     }
 
