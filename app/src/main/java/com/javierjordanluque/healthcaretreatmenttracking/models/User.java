@@ -160,11 +160,15 @@ public class User implements Identifiable {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getFullName() {
         return fullName;
     }
 
-    private void setFullName(String fullName) {
+    public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
@@ -201,7 +205,7 @@ public class User implements Identifiable {
         return allergies;
     }
 
-    private void setAllergies(List<Allergy> allergies) {
+    public void setAllergies(List<Allergy> allergies) {
         this.allergies = allergies;
     }
 
@@ -214,7 +218,7 @@ public class User implements Identifiable {
         return conditions;
     }
 
-    private void setConditions(List<PreviousMedicalCondition> conditions) {
+    public void setConditions(List<PreviousMedicalCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -227,7 +231,7 @@ public class User implements Identifiable {
         return treatments;
     }
 
-    private void setTreatments(List<Treatment> treatments) {
+    public void setTreatments(List<Treatment> treatments) {
         this.treatments = treatments;
     }
 }
