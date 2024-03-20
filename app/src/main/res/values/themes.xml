@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.HealthcareTreatmentTracking" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.HealthTrackR" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.HealthcareTreatmentTracking" parent="Base.Theme.HealthcareTreatmentTracking" />
+    <style name="Theme.HealthTrackR" parent="Base.Theme.HealthTrackR" />
 </resources>

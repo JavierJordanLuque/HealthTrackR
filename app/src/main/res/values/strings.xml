@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Healthcare Treatment Tracking</string>
+    <string name="app_name" translatable="false">HealthTrackR</string>
     <string name="notification_channel_group_name_medication">Medication</string>
     <string name="notification_channel_group_name_medical_appointment">Medical Appointments</string>
     <string name="notification_channel_name_previous_medication">Previous Medication Reminders</string>

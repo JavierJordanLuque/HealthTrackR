@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.javierjordanluque.healthcaretreatmenttracking"
+    namespace = "com.javierjordanluque.healthtrackr"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.javierjordanluque.healthcaretreatmenttracking"
+        applicationId = "com.javierjordanluque.healthtrackr"
         minSdk = 28
         targetSdk = 33
         versionCode = 1
