@@ -2,5 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="blue">#FF1294B1</color>
+
+    <color name="primary">#FF1294B1</color>
+    <color name="primaryVariant">#FF0C6F8F</color>
+    <color name="onPrimary">@color/white</color>
+
+    <color name="secondary">#FFA12F</color>
+    <color name="secondaryVariant">#FF7A12</color>
+    <color name="onSecondary">@color/white</color>
 </resources>
