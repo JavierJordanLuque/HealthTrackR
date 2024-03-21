@@ -203,11 +203,11 @@ public class NotificationPublisher extends BroadcastReceiver {
 
         String timeDifferenceString = "";
         if (days > 0)
-            timeDifferenceString += days + " " + context.getString(R.string.notification_message_days) + " ";
+            timeDifferenceString += " " + context.getResources().getQuantityString(R.plurals.notification_message_days, (int) days, days) + " ";
         if (hours > 0)
-            timeDifferenceString += hours + " " + context.getString(R.string.notification_message_hours) + " ";
+            timeDifferenceString += " " + context.getResources().getQuantityString(R.plurals.notification_message_hours, (int) hours, hours) + " ";
         if (minutes > 0)
-            timeDifferenceString += minutes + " " + context.getString(R.string.notification_message_minutes);
+            timeDifferenceString += " " + context.getResources().getQuantityString(R.plurals.notification_message_minutes, (int) minutes, minutes);
 
         return timeDifferenceString.trim();
     }

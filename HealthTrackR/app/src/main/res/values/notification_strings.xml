@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_group_name_medication">Medication</string>
+    <string name="notification_channel_group_name_medical_appointment">Medical Appointments</string>
+    <string name="notification_channel_name_previous_medication">Previous Medication Reminders</string>
+    <string name="notification_channel_description_previous_medication">Receive timely notifications for medication schedules. Stay on track with your medication doses by getting reminders before each scheduled dose.</string>
+    <string name="notification_channel_name_medication">Medication Reminders</string>
+    <string name="notification_channel_description_medication">Receive timely notifications for medication schedules. Stay on track with your medication doses by getting reminders at the time of intake.</string>
+    <string name="notification_channel_name_medical_appointment">Medical Appointment Reminders</string>
+    <string name="notification_channel_description_medical_appointment">Receive timely notifications for upcoming medical appointments. Stay organized and prepared by getting reminders before each scheduled appointment.</string>
+    <string name="notification_title_medication">Medication Dose</string>
+    <string name="notification_message_medication_dose">Next dose of</string>
+    <string name="notification_message_medication_treatment">from treatment</string>
+    <string name="notification_message_medication_schedule_now">is scheduled for now</string>
+    <string name="notification_message_medication_scheduled_in">is scheduled in</string>
+    <string name="notification_public_message_medication_scheduled_now">A medication dose is scheduled for now</string>
+    <string name="notification_public_message_medication_scheduled_in">A medication dose is scheduled in</string>
+    <string name="notification_title_medical_appointment">Medical Appointment</string>
+    <string name="notification_message_medical_appointment_appointment">Medical appointment for</string>
+    <string name="notification_message_medical_appointment_treatment">under treatment</string>
+    <string name="notification_medical_appointment_scheduled_now">scheduled for now</string>
+    <string name="notification_message_medical_appointment_scheduled_in">scheduled in</string>
+    <string name="notification_message_medical_appointment_latitude">Location: Latitude</string>
+    <string name="notification_message_medical_appointment_longitude">Longitude</string>
+    <string name="notification_public_message_medical_appointment_scheduled_now">A medical appointment is scheduled for now</string>
+    <string name="notification_public_message_medical_appointment_scheduled_in">A medical appointment is scheduled in</string>
+    <plurals name="notification_message_days">
+        <item quantity="one">one day</item>
+        <item quantity="many">%d days</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="notification_message_hours">
+        <item quantity="one">one hour</item>
+        <item quantity="many">%d hours</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="notification_message_minutes">
+        <item quantity="one">one minute</item>
+        <item quantity="many">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+</resources>

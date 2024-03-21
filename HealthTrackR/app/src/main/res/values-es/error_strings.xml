@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_initializing_app">Ups, algo salió mal mientras se configuraba la aplicación. Por favor, inténtalo de nuevo más tarde.</string>
+</resources>

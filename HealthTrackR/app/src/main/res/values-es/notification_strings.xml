@@ -24,8 +24,19 @@
     <string name="notification_message_medical_appointment_longitude">Longitud</string>
     <string name="notification_public_message_medical_appointment_scheduled_now">Una cita médica está programada para ahora</string>
     <string name="notification_public_message_medical_appointment_scheduled_in">Una cita médica está programada para dentro de</string>
-    <string name="notification_message_days">días</string>
-    <string name="notification_message_hours">horas</string>
-    <string name="notification_message_minutes">minutos</string>
-    <string name="error_initializing_app">Ups, algo salió mal mientras se configuraba la aplicación. Por favor, inténtalo de nuevo más tarde.</string>
+    <plurals name="notification_message_days">
+        <item quantity="one">un día</item>
+        <item quantity="many">%d días</item>
+        <item quantity="other">%d días</item>
+    </plurals>
+    <plurals name="notification_message_hours">
+        <item quantity="one">una hora</item>
+        <item quantity="many">%d horas</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
+    <plurals name="notification_message_minutes">
+        <item quantity="one">un minuto</item>
+        <item quantity="many">%d minutos</item>
+        <item quantity="other">%d minutos</item>
+    </plurals>
 </resources>
