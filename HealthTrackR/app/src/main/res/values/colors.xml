@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="lightText">#333333</color>
+    <color name="darkText">#CCCCCC</color>
 
     <color name="primary">#FF1294B1</color>
     <color name="primaryVariant">#FF0C6F8F</color>
-    <color name="onPrimary">@color/white</color>
+    <color name="onPrimary">@android:color/white</color>
 
     <color name="secondary">#FFA12F</color>
     <color name="secondaryVariant">#FF7A12</color>
-    <color name="onSecondary">@color/white</color>
+    <color name="onSecondary">@android:color/white</color>
 </resources>

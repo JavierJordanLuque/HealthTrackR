@@ -4,6 +4,10 @@
         <item name="android:windowBackground">@color/cardview_light_background</item>
         <item name="android:colorBackground">@color/cardview_light_background</item>
 
+        <item name="android:textColor">@color/lightText</item>
+    </style>
+
+    <style name="Theme.HealthTrackR" parent="Base.Theme.HealthTrackR">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>
         <item name="colorOnPrimary">@color/onPrimary</item>
@@ -11,10 +15,7 @@
         <item name="colorSecondaryVariant">@color/secondaryVariant</item>
         <item name="colorOnSecondary">@color/onSecondary</item>
 
-        <item name="android:textViewStyle">@style/BaseTextStyle</item>
-        <item name="android:textColorPrimary">@color/black</item>
-        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColorSecondary">@color/primaryVariant</item>
     </style>
-
-    <style name="Theme.HealthTrackR" parent="Base.Theme.HealthTrackR" />
 </resources>
