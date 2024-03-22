@@ -10,4 +10,6 @@
     <color name="secondary">#FFA12F</color>
     <color name="secondaryVariant">#FF7A12</color>
     <color name="onSecondary">@android:color/white</color>
+
+    <color name="mandatoryForm">@android:color/holo_red_dark</color>
 </resources>

@@ -2,4 +2,14 @@
 <resources>
     <string name="authentication_sign_in">Iniciar sesión</string>
     <string name="authentication_sign_up">Registrarse</string>
+    <string name="authentication_email">Correo electrónico</string>
+    <string name="authentication_email_hint">ejemplo@gmail.com</string>
+    <string name="authentication_password">Contraseña</string>
+    <string name="authentication_password_hint">Introduce la contraseña</string>
+    <string name="authentication_password_requirements">La contraseña debe contener al menos 8 caracteres, incluyendo: letras mayúsculas, letras minúsculas, números y caracteres especiales</string>
+    <string name="authentication_repeat_password">Repetir contraseña</string>
+    <string name="authentication_repeat_password_hint">Introduce la misma contraseña</string>
+    <string name="authentication_full_name">Nombre completo</string>
+    <string name="authentication_full_name_hint">Introduce tu nombre completo</string>
+    <string name="authentication_create_account">Crear cuenta</string>
 </resources>
