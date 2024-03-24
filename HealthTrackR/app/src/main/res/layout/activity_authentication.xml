@@ -11,12 +11,12 @@
         android:id="@+id/imageViewAppIcon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/image_description_app_icon"
-        app:layout_constraintBottom_toTopOf="@+id/hIconGuidelineEnd"
+        android:contentDescription="@string/content_description_app_icon"
+        app:layout_constraintBottom_toTopOf="@+id/hAppIconGuidelineEnd"
         app:layout_constraintDimensionRatio="W,1:1"
-        app:layout_constraintEnd_toStartOf="@+id/vButtonGuidelineEnd"
-        app:layout_constraintStart_toStartOf="@+id/vButtonGuidelineStart"
-        app:layout_constraintTop_toTopOf="@+id/hIconGuidelineStart"
+        app:layout_constraintEnd_toStartOf="@+id/vLargeButtonGuidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/vLargeButtonGuidelineStart"
+        app:layout_constraintTop_toTopOf="@+id/hAppIconGuidelineStart"
         app:layout_constraintVertical_bias="0.1"
         app:srcCompat="@mipmap/ic_launcher_foreground" />
 
@@ -25,63 +25,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textAppearance="@style/LargeTextAppearance"
+        android:textAppearance="?attr/textAppearanceDisplayMedium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/hIconGuidelineEnd"
+        app:layout_constraintTop_toTopOf="@+id/hAppIconGuidelineEnd"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonSignIn"
-        style="@style/LargeButtonStyle"
+        style="@style/Widget.HealthTrackR.LargeButton"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         android:text="@string/authentication_sign_in"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vButtonGuidelineEnd"
-        app:layout_constraintStart_toStartOf="@+id/vButtonGuidelineStart"
+        app:layout_constraintEnd_toStartOf="@+id/vLargeButtonGuidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/vLargeButtonGuidelineStart"
         app:layout_constraintTop_toBottomOf="@+id/textViewAppName"
-        app:layout_constraintVertical_bias="0.25"
-        app:layout_constraintWidth_max="320dp" />
+        app:layout_constraintVertical_bias="0.25" />
 
     <Button
         android:id="@+id/buttonSignUp"
-        style="@style/LargeButtonStyle"
+        style="@style/Widget.HealthTrackR.LargeButton"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         android:text="@string/authentication_sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vButtonGuidelineEnd"
-        app:layout_constraintStart_toStartOf="@+id/vButtonGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSignIn"
-        app:layout_constraintVertical_bias="0.25"
-        app:layout_constraintWidth_max="320dp" />
+        app:layout_constraintEnd_toStartOf="@+id/vLargeButtonGuidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/vLargeButtonGuidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAppName"
+        app:layout_constraintVertical_bias="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vButtonGuidelineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
+        android:id="@+id/vLargeButtonGuidelineStart"
+        style="@style/vLargeButtonGuidelineStart"
+        android:orientation="vertical" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vButtonGuidelineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8" />
+        android:id="@+id/vLargeButtonGuidelineEnd"
+        style="@style/vLargeButtonGuidelineEnd"
+        android:orientation="vertical" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/hIconGuidelineStart"
+        android:id="@+id/hAppIconGuidelineStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/hIconGuidelineEnd"
+        android:id="@+id/hAppIconGuidelineEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

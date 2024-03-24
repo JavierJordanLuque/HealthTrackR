@@ -6,235 +6,135 @@
     android:layout_height="match_parent"
     tools:context=".ui.SignUpActivity">
 
-    <TextView
-        android:id="@+id/textViewSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authentication_sign_up"
-        android:textAppearance="@style/TitleTextAppearance"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewEmail"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/signUpFormConstraintLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/authentication_email"
-        android:textAppearance="@style/FormTextAppearance"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/vTextGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSignUp"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
-    <TextView
-        android:id="@+id/textViewMandatoryEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authentication_mandatory_form"
-        android:textAppearance="@style/FormTextAppearance"
-        android:textColor="@color/mandatoryForm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintStart_toEndOf="@+id/textViewEmail"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSignUp"
-        app:layout_constraintVertical_bias="0.05" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/vMarginGuidelineEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:labelFor="@id/textViewEmail"
-        android:inputType="textEmailAddress"
-        android:hint="@string/authentication_email_hint"
-        android:autofillHints="emailAddress"
-        android:textAppearance="@style/NormalTextAppearance"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.00"
-        app:layout_constraintStart_toStartOf="@+id/vTextGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEmail"
-        app:layout_constraintWidth_max="320dp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="emailAddress"
+                android:hint="@string/authentication_email"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/textViewPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authentication_password"
-        android:textAppearance="@style/FormTextAppearance"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/vTextGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-        app:layout_constraintVertical_bias="0.05" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:endIconContentDescription="@string/content_description_show_password"
+            app:endIconMode="password_toggle"
+            app:helperText="@string/authentication_password_requirements"
+            app:helperTextEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/vMarginGuidelineEnd"
+            app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextField">
 
-    <TextView
-        android:id="@+id/textViewMandatoryPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authentication_mandatory_form"
-        android:textAppearance="@style/FormTextAppearance"
-        android:textColor="@color/mandatoryForm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintStart_toEndOf="@+id/textViewPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-        app:layout_constraintVertical_bias="0.05" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="password"
+                android:hint="@string/authentication_password"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:labelFor="@id/textViewPassword"
-        android:inputType="textPassword"
-        android:autofillHints="password"
-        android:hint="@string/authentication_password_hint"
-        android:textAppearance="@style/NormalTextAppearance"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.00"
-        app:layout_constraintStart_toStartOf="@+id/vTextGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPassword"
-        app:layout_constraintWidth_max="320dp"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/repeatPasswordTextField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:endIconContentDescription="@string/content_description_show_password"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toStartOf="@+id/vMarginGuidelineEnd"
+            app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/passwordTextField">
 
-    <TextView
-        android:id="@+id/textViewPasswordRequirements"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/authentication_password_requirements"
-        android:textAppearance="@style/SmallTextAppearance"
-        app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
-        app:layout_constraintStart_toStartOf="@+id/editTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="password"
+                android:hint="@string/authentication_repeat_password"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/textViewRepeatPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authentication_repeat_password"
-        android:textAppearance="@style/FormTextAppearance"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/vTextGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPasswordRequirements"
-        app:layout_constraintVertical_bias="0.05" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fullNameTextField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/vMarginGuidelineEnd"
+            app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextField">
 
-    <TextView
-        android:id="@+id/textViewMandatoryRepeatPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authentication_mandatory_form"
-        android:textAppearance="@style/FormTextAppearance"
-        android:textColor="@color/mandatoryForm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintStart_toEndOf="@+id/textViewRepeatPassword"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPasswordRequirements"
-        app:layout_constraintVertical_bias="0.05" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="name"
+                android:hint="@string/authentication_full_name"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editTextRepeatPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:labelFor="@id/textViewRepeatPassword"
-        android:inputType="textPassword"
-        android:autofillHints="password"
-        android:hint="@string/authentication_repeat_password_hint"
-        android:textAppearance="@style/NormalTextAppearance"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.00"
-        app:layout_constraintStart_toStartOf="@+id/vTextGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRepeatPassword"
-        app:layout_constraintWidth_max="320dp"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vMarginGuidelineStart"
+            style="@style/vMarginGuidelineStart"
+            android:orientation="vertical" />
 
-    <TextView
-        android:id="@+id/textViewFullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authentication_full_name"
-        android:textAppearance="@style/FormTextAppearance"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/vTextGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/editTextRepeatPassword"
-        app:layout_constraintVertical_bias="0.05" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vMarginGuidelineEnd"
+            style="@style/vMarginGuidelineEnd"
+            android:orientation="vertical" />
 
-    <TextView
-        android:id="@+id/textViewMandatoryFullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authentication_mandatory_form"
-        android:textAppearance="@style/FormTextAppearance"
-        android:textColor="@color/mandatoryForm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintStart_toEndOf="@+id/textViewFullName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextRepeatPassword"
-        app:layout_constraintVertical_bias="0.05" />
-
-    <EditText
-        android:id="@+id/editTextFullName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:labelFor="@id/textViewFullName"
-        android:inputType="text"
-        android:autofillHints="name"
-        android:hint="@string/authentication_full_name_hint"
-        android:textAppearance="@style/NormalTextAppearance"
-        app:layout_constraintEnd_toStartOf="@+id/vTextGuidelineEnd"
-        app:layout_constraintHorizontal_bias="0.00"
-        app:layout_constraintStart_toStartOf="@+id/vTextGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFullName"
-        app:layout_constraintWidth_max="320dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/buttonSignUp"
-        style="@style/LargeButtonStyle"
+        style="@style/Widget.HealthTrackR.LargeButton"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:text="@string/authentication_create_account"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vButtonGuidelineEnd"
-        app:layout_constraintStart_toStartOf="@+id/vButtonGuidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFullName"
-        app:layout_constraintVertical_bias="0.6"
-        app:layout_constraintWidth_max="320dp" />
+        app:layout_constraintEnd_toStartOf="@+id/vLargeButtonGuidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/vLargeButtonGuidelineStart"
+        app:layout_constraintTop_toTopOf="@+id/hLargeButtonGuidelineStart"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vTextGuidelineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1" />
+        android:id="@+id/vLargeButtonGuidelineStart"
+        style="@style/vLargeButtonGuidelineStart"
+        android:orientation="vertical" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vTextGuidelineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+        android:id="@+id/vLargeButtonGuidelineEnd"
+        style="@style/vLargeButtonGuidelineEnd"
+        android:orientation="vertical" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vButtonGuidelineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vButtonGuidelineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8" />
+        android:id="@+id/hLargeButtonGuidelineStart"
+        style="@style/hLargeButtonGuidelineStart"
+        android:orientation="horizontal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

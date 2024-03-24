@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_description_app_icon">Icono HealthTrackR</string>
+
+    <string name="content_description_back_icon">Volver</string>
+
+    <string name="content_description_show_password">Mostrar contraseña</string>
+    <string name="content_description_hide_password">Ocultar contraseña</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ThemeOverlay.HealthTrackR.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="navigationIcon">@drawable/ic_back_arrow</item>
+        <item name="navigationIconTint">?attr/colorOnPrimary</item>
+        <item name="navigationContentDescription">@string/content_description_back_icon</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+        <item name="titleCentered">true</item>
+        <item name="android:colorControlNormal">?attr/colorOnPrimary</item>
+    </style>
+</resources>
