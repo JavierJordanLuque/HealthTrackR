@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="toolbar_elevation">4dp</dimen>
+
+    <dimen name="large_btn_width">250dp</dimen>
     <dimen name="large_btn_padding_bottom">10dp</dimen>
     <dimen name="large_btn_padding_top">10dp</dimen>
+    <dimen name="large_btn_elevation">2dp</dimen>
+    <dimen name="large_btn_hGuideline">100dp</dimen>
+
+    <dimen name="text_field_width">300dp</dimen>
+    <dimen name="text_field_margin_top">20dp</dimen>
+    <dimen name="text_field_max_length_long">320</dimen>
+    <dimen name="text_field_max_length_medium">100</dimen>
+    <dimen name="text_field_max_length_short">50</dimen>
+
+    <dimen name="linear_layout_padding_top">20dp</dimen>
+    <dimen name="linear_layout_padding_bottom">125dp</dimen>
 </resources>

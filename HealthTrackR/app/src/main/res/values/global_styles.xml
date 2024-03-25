@@ -8,4 +8,22 @@
         <item name="titleCentered">true</item>
         <item name="android:colorControlNormal">?attr/colorOnPrimary</item>
     </style>
+
+    <style name="Widget.HealthTrackR.LargeButton" parent="Widget.Material3.Button">
+        <item name="android:layout_width">@dimen/large_btn_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadlineSmall</item>
+        <item name="android:paddingBottom">@dimen/large_btn_padding_bottom</item>
+        <item name="android:paddingTop">@dimen/large_btn_padding_top</item>
+        <item name="android:elevation">@dimen/large_btn_elevation</item>
+        <item name="layout_constraintVertical_bias">0.0</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">@dimen/text_field_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/text_field_margin_top</item>
+        <item name="errorEnabled">true</item>
+    </style>
 </resources>

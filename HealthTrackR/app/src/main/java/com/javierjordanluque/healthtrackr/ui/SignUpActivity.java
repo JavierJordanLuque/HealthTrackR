@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.javierjordanluque.healthtrackr.R;
 
@@ -16,8 +15,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
-        MaterialToolbar toolbar = (MaterialToolbar) appBarLayout.getChildAt(0);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 

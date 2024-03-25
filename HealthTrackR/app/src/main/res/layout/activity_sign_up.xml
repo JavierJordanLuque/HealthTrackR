@@ -6,135 +6,115 @@
     android:layout_height="match_parent"
     tools:context=".ui.SignUpActivity">
 
-    <include
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
-        layout="@layout/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/signUpFormConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:descendantFocusability="afterDescendants"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailTextField"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/vMarginGuidelineEnd"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/linear_layout_padding_top"
+            android:paddingBottom="@dimen/linear_layout_padding_bottom">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="emailAddress"
-                android:hint="@string/authentication_email"
-                android:inputType="textEmailAddress" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailTextField"
+                style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordTextField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:endIconContentDescription="@string/content_description_show_password"
-            app:endIconMode="password_toggle"
-            app:helperText="@string/authentication_password_requirements"
-            app:helperTextEnabled="true"
-            app:layout_constraintEnd_toStartOf="@+id/vMarginGuidelineEnd"
-            app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/emailTextField">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="320"
+                    android:autofillHints="emailAddress"
+                    android:hint="@string/authentication_email"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="password"
-                android:hint="@string/authentication_password"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordTextField"
+                style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                app:endIconContentDescription="@string/content_description_show_password"
+                app:endIconMode="password_toggle"
+                app:helperText="@string/authentication_password_requirements"
+                app:helperTextEnabled="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/repeatPasswordTextField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:endIconContentDescription="@string/content_description_show_password"
-            app:endIconMode="password_toggle"
-            app:layout_constraintEnd_toStartOf="@+id/vMarginGuidelineEnd"
-            app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/passwordTextField">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="100"
+                    android:autofillHints="password"
+                    android:hint="@string/authentication_password"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="password"
-                android:hint="@string/authentication_repeat_password"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/repeatPasswordTextField"
+                style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                app:endIconContentDescription="@string/content_description_show_password"
+                app:endIconMode="password_toggle">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/fullNameTextField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toStartOf="@+id/vMarginGuidelineEnd"
-            app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextField">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="100"
+                    android:autofillHints="password"
+                    android:hint="@string/authentication_repeat_password"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="name"
-                android:hint="@string/authentication_full_name"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fullNameTextField"
+                style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/vMarginGuidelineStart"
-            style="@style/vMarginGuidelineStart"
-            android:orientation="vertical" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="100"
+                    android:autofillHints="name"
+                    android:hint="@string/authentication_full_name"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/vMarginGuidelineEnd"
-            style="@style/vMarginGuidelineEnd"
-            android:orientation="vertical" />
+        </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/buttonSignUp"
         style="@style/Widget.HealthTrackR.LargeButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:text="@string/authentication_create_account"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/vLargeButtonGuidelineEnd"
-        app:layout_constraintStart_toStartOf="@+id/vLargeButtonGuidelineStart"
-        app:layout_constraintTop_toTopOf="@+id/hLargeButtonGuidelineStart"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vLargeButtonGuidelineStart"
-        style="@style/vLargeButtonGuidelineStart"
-        android:orientation="vertical" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vLargeButtonGuidelineEnd"
-        style="@style/vLargeButtonGuidelineEnd"
-        android:orientation="vertical" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hLargeButtonGuidelineStart" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/hLargeButtonGuidelineStart"
-        style="@style/hLargeButtonGuidelineStart"
+        style="@style/hLargeButtonGuideline"
         android:orientation="horizontal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

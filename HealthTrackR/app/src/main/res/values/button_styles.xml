@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Widget.HealthTrackR.LargeButton" parent="Widget.Material3.Button">
-        <item name="android:textAppearance">?attr/textAppearanceHeadlineSmall</item>
-        <item name="android:paddingBottom">@dimen/large_btn_padding_bottom</item>
-        <item name="android:paddingTop">@dimen/large_btn_padding_top</item>
-    </style>
-</resources>
