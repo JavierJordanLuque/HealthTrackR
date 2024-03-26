@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="ThemeOverlay.HealthTrackR.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="navigationIcon">@drawable/ic_back_arrow</item>
-        <item name="navigationIconTint">?attr/colorOnPrimary</item>
         <item name="navigationContentDescription">@string/content_description_back_icon</item>
         <item name="titleTextColor">?attr/colorOnPrimary</item>
         <item name="titleCentered">true</item>
         <item name="android:colorControlNormal">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="ThemeOverlay.HealthTrackR.ActionBar.BackNavigation">
+        <item name="navigationIcon">@drawable/ic_back_arrow</item>
+        <item name="navigationIconTint">?attr/colorOnPrimary</item>
     </style>
 
     <style name="Widget.HealthTrackR.LargeButton" parent="Widget.Material3.Button">
@@ -16,14 +19,18 @@
         <item name="android:paddingBottom">@dimen/large_btn_padding_bottom</item>
         <item name="android:paddingTop">@dimen/large_btn_padding_top</item>
         <item name="android:elevation">@dimen/large_btn_elevation</item>
-        <item name="layout_constraintVertical_bias">0.0</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.LargeButton.Form">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/form_margin_top</item>
     </style>
 
     <style name="Widget.HealthTrackR.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">@dimen/text_field_width</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:layout_marginTop">@dimen/text_field_margin_top</item>
+        <item name="android:layout_marginTop">@dimen/form_margin_top</item>
         <item name="errorEnabled">true</item>
     </style>
 </resources>

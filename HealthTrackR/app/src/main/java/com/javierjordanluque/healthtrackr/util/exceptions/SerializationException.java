@@ -5,6 +5,6 @@ public class SerializationException extends Exception {
 
     public SerializationException(String message, Throwable cause) {
         super(message, cause);
-        ExceptionManager.log(ExceptionManager.ERROR, TAG, getClass().getSimpleName(), message, cause.getClass().getSimpleName());
+        ExceptionManager.log(ExceptionManager.ERROR, TAG, getClass().getSimpleName(), message, cause);
     }
 }

@@ -133,10 +133,10 @@ public class SecurityService {
     }
 
     public static boolean meetsPasswordRequirements(String password) {
-        if (password.length() < 8)
+        if (password.length() < 8 || password.length() > 60)
             return false;
 
-        Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$");
+        Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@!#$%^&*()_+={}:;\"|\\[\\]\\\\<>?,./~-]).{8,}$");
         Matcher matcher = pattern.matcher(password);
 
         return matcher.matches();

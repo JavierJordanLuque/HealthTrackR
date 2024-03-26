@@ -16,17 +16,25 @@
         android:theme="@style/Theme.HealthTrackR"
         tools:targetApi="31">
         <activity
+            android:name=".ui.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.LogInActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.AuthenticationActivity" />
+        <activity
+            android:name=".ui.SignUpActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.AuthenticationActivity" />
+        <activity
             android:name=".ui.AuthenticationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.SignUpActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.AuthenticationActivity"/>
 
         <receiver
             android:name=".util.notifications.NotificationPublisher"

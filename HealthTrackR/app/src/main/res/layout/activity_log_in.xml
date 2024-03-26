@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SignUpActivity">
+    tools:context=".ui.LogInActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -52,64 +52,32 @@
                     android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="50"
                     android:autofillHints="emailAddress"
                     android:hint="@string/authentication_email"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:maxLength="50" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordLayout"
                 style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
                 app:endIconContentDescription="@string/content_description_show_password"
-                app:endIconMode="password_toggle"
-                app:helperText="@string/authentication_password_requirements"
-                app:helperTextEnabled="true">
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="60"
                     android:autofillHints="password"
                     android:hint="@string/authentication_password"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/repeatPasswordLayout"
-                style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
-                app:endIconContentDescription="@string/content_description_show_password"
-                app:endIconMode="password_toggle">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/repeatPasswordEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLength="60"
-                    android:autofillHints="password"
-                    android:hint="@string/authentication_repeat_password"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fullNameLayout"
-                style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fullNameEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLength="50"
-                    android:autofillHints="name"
-                    android:hint="@string/authentication_full_name"
-                    android:inputType="text" />
+                    android:inputType="textPassword"
+                    android:maxLength="60" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/buttonSignUp"
+                android:id="@+id/buttonLogIn"
                 style="@style/Widget.HealthTrackR.LargeButton.Form"
-                android:text="@string/authentication_create_account"
+                android:text="@string/authentication_sign_in"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

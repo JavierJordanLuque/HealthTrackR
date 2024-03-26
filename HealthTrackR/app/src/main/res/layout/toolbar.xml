@@ -5,7 +5,6 @@
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     android:elevation="@dimen/toolbar_elevation"
-    android:theme="@style/ThemeOverlay.HealthTrackR.ActionBar"
     android:popupTheme="@style/ThemeOverlay.Material3.Light">
 
 </com.google.android.material.appbar.MaterialToolbar>

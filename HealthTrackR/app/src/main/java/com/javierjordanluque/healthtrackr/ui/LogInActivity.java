@@ -14,16 +14,12 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.util.Objects;
 
-public class SignUpActivity extends BaseActivity {
+public class LogInActivity extends BaseActivity {
     protected User user;
     private TextInputLayout emailLayout;
     private TextInputLayout passwordLayout;
-    private TextInputLayout repeatPasswordLayout;
-    private TextInputLayout fullNameLayout;
     private EditText emailEditText;
     private EditText passwordEditText;
-    private EditText repeatPasswordEditText;
-    private EditText fullNameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,50 +33,34 @@ public class SignUpActivity extends BaseActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         setEditTextListener(passwordLayout, passwordEditText);
 
-        repeatPasswordLayout = findViewById(R.id.repeatPasswordLayout);
-        repeatPasswordEditText = findViewById(R.id.repeatPasswordEditText);
-        setEditTextListener(repeatPasswordLayout, repeatPasswordEditText);
-
-        fullNameLayout = findViewById(R.id.fullNameLayout);
-        fullNameEditText = findViewById(R.id.fullNameEditText);
-        setEditTextListener(fullNameLayout, fullNameEditText);
-
-        Button signUpButton = findViewById(R.id.buttonSignUp);
-        signUpButton.setOnClickListener(this::signUp);
+        Button logInButton = findViewById(R.id.buttonLogIn);
+        logInButton.setOnClickListener(this::logIn);
     }
 
-    public void signUp(View view) {
+    public void logIn(View view) {
         hideKeyboard(this);
 
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-        String repeatPassword = repeatPasswordEditText.getText().toString().trim();
-        String fullName = fullNameEditText.getText().toString().trim();
 
         boolean validEmail = isValidEmail(email);
         boolean validPassword = isValidPassword(password);
-        boolean validRepeatPassword = isValidRepeatPassword(password, repeatPassword);
-        boolean validFullName = isValidFullName(fullName);
 
-        if (!validEmail || !validPassword || !validRepeatPassword || !validFullName) {
+        if (!validEmail || !validPassword) {
             if (!validEmail)
                 emailLayout.setError(getString(R.string.error_invalid_email));
             if (!validPassword)
                 passwordLayout.setError(getString(R.string.error_invalid_password));
-            if (!validRepeatPassword)
-                repeatPasswordLayout.setError(getString(R.string.error_invalid_repeat_password));
-            if (!validFullName)
-                fullNameLayout.setError(getString(R.string.error_invalid_full_name));
 
             return;
         }
 
         try {
-            user = AuthenticationService.register(this, email, password, fullName);
+            user = AuthenticationService.login(this, email, password);
         } catch (AuthenticationException exception) {
-            if (Objects.equals(exception.getMessage(), getString(R.string.error_existing_email))) {
+            if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_email))) {
                 emailLayout.setError(exception.getMessage());
-            } else if (Objects.equals(exception.getMessage(), getString(R.string.authentication_password_requirements))) {
+            } else if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_email))) {
                 passwordLayout.setError(exception.getMessage());
             } else {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
@@ -96,22 +76,14 @@ public class SignUpActivity extends BaseActivity {
         return !password.isEmpty() && password.length() >= 8 && password.length() <= 60;
     }
 
-    private boolean isValidRepeatPassword(String password, String repeatPassword) {
-        return password.equals(repeatPassword);
-    }
-
-    private boolean isValidFullName(String fullName) {
-        return !fullName.isEmpty() && fullName.length() <= 50;
-    }
-
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_sign_up;
+        return R.layout.activity_log_in;
     }
 
     @Override
     protected String getToolbarTitle() {
-        return getString(R.string.authentication_signup);
+        return getString(R.string.authentication_login);
     }
 
     @Override
