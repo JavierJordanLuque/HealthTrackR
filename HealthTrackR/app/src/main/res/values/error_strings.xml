@@ -10,4 +10,6 @@
     <string name="error_invalid_repeat_password">The passwords do not match.</string>
     <string name="error_invalid_first_name">The first name must contain between 5 and 50 characters.</string>
     <string name="error_invalid_last_name">The last name must contain between 5 and 50 characters.</string>
+
+    <string name="error_location_disabled">Please enable location to use this feature.</string>
 </resources>
