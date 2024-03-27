@@ -19,11 +19,13 @@ public class SignUpActivity extends BaseActivity {
     private TextInputLayout emailLayout;
     private TextInputLayout passwordLayout;
     private TextInputLayout repeatPasswordLayout;
-    private TextInputLayout fullNameLayout;
+    private TextInputLayout firstNameLayout;
+    private TextInputLayout lastNameLayout;
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText repeatPasswordEditText;
-    private EditText fullNameEditText;
+    private EditText firstNameEditText;
+    private EditText lastNameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,13 @@ public class SignUpActivity extends BaseActivity {
         repeatPasswordEditText = findViewById(R.id.repeatPasswordEditText);
         setEditTextListener(repeatPasswordLayout, repeatPasswordEditText);
 
-        fullNameLayout = findViewById(R.id.fullNameLayout);
-        fullNameEditText = findViewById(R.id.fullNameEditText);
-        setEditTextListener(fullNameLayout, fullNameEditText);
+        firstNameLayout = findViewById(R.id.firstNameLayout);
+        firstNameEditText = findViewById(R.id.firstNameEditText);
+        setEditTextListener(firstNameLayout, firstNameEditText);
+
+        lastNameLayout = findViewById(R.id.lastNameLayout);
+        lastNameEditText = findViewById(R.id.lastNameEditText);
+        setEditTextListener(lastNameLayout, lastNameEditText);
 
         Button signUpButton = findViewById(R.id.buttonSignUp);
         signUpButton.setOnClickListener(this::signUp);
@@ -55,28 +61,32 @@ public class SignUpActivity extends BaseActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String repeatPassword = repeatPasswordEditText.getText().toString().trim();
-        String fullName = fullNameEditText.getText().toString().trim();
+        String firstName = firstNameEditText.getText().toString().trim();
+        String lastName = lastNameEditText.getText().toString().trim();
 
         boolean validEmail = isValidEmail(email);
         boolean validPassword = isValidPassword(password);
         boolean validRepeatPassword = isValidRepeatPassword(password, repeatPassword);
-        boolean validFullName = isValidFullName(fullName);
+        boolean validFirstName = isValidFirstName(firstName);
+        boolean validLastName = isValidLastName(lastName);
 
-        if (!validEmail || !validPassword || !validRepeatPassword || !validFullName) {
+        if (!validEmail || !validPassword || !validRepeatPassword || !validFirstName || !validLastName) {
             if (!validEmail)
                 emailLayout.setError(getString(R.string.error_invalid_email));
             if (!validPassword)
                 passwordLayout.setError(getString(R.string.error_invalid_password));
             if (!validRepeatPassword)
                 repeatPasswordLayout.setError(getString(R.string.error_invalid_repeat_password));
-            if (!validFullName)
-                fullNameLayout.setError(getString(R.string.error_invalid_full_name));
+            if (!validFirstName)
+                firstNameLayout.setError(getString(R.string.error_invalid_first_name));
+            if (!validLastName)
+                lastNameLayout.setError(getString(R.string.error_invalid_last_name));
 
             return;
         }
 
         try {
-            user = AuthenticationService.register(this, email, password, fullName);
+            user = AuthenticationService.register(this, email, password, firstName, lastName);
         } catch (AuthenticationException exception) {
             if (Objects.equals(exception.getMessage(), getString(R.string.error_existing_email))) {
                 emailLayout.setError(exception.getMessage());
@@ -100,8 +110,12 @@ public class SignUpActivity extends BaseActivity {
         return password.equals(repeatPassword);
     }
 
-    private boolean isValidFullName(String fullName) {
-        return !fullName.isEmpty() && fullName.length() <= 50;
+    private boolean isValidFirstName(String firstName) {
+        return !firstName.isEmpty() && firstName.length() <= 50;
+    }
+
+    private boolean isValidLastName(String lastName) {
+        return !lastName.isEmpty() && lastName.length() <= 50;
     }
 
     @Override

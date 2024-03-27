@@ -8,5 +8,6 @@
     <string name="error_invalid_password">La contraseña debe tener entre 8 y 60 caracteres.</string>
     <string name="error_incorrect_password">Contraseña incorrecta. Por favor, inténtalo de nuevo.</string>
     <string name="error_invalid_repeat_password">Las contraseñas no coinciden.</string>
-    <string name="error_invalid_full_name">El nombre debe tener entre 5 y 50 caracteres.</string>
+    <string name="error_invalid_first_name">El nombre debe tener entre 5 y 50 caracteres.</string>
+    <string name="error_invalid_last_name">Los apellidos deben tener entre 5 y 50 caracteres.</string>
 </resources>

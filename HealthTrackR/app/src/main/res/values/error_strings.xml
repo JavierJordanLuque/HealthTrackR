@@ -8,5 +8,6 @@
     <string name="error_invalid_password">The password must contain between 8 and 60 characters.</string>
     <string name="error_incorrect_password">Incorrect password. Please try again.</string>
     <string name="error_invalid_repeat_password">The passwords do not match.</string>
-    <string name="error_invalid_full_name">Your name must contain between 5 and 50 characters.</string>
+    <string name="error_invalid_first_name">The first name must contain between 5 and 50 characters.</string>
+    <string name="error_invalid_last_name">The last name must contain between 5 and 50 characters.</string>
 </resources>

@@ -22,7 +22,8 @@ import java.util.List;
 public class User implements Identifiable {
     private long id;
     private String email;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private LocalDate birthDate;
     private Gender gender;
     private BloodType bloodType;
@@ -30,22 +31,28 @@ public class User implements Identifiable {
     private List<PreviousMedicalCondition> conditions;
     private List<Treatment> treatments;
 
-    public User(String email, String fullName) {
+    public User(String email, String firstName, String lastName) {
         this.email = email;
-        this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     private User() {
     }
 
-    public void modifyUser(Context context, String fullName, LocalDate birthDate, Gender gender, BloodType bloodType, List<Allergy> allergies,
+    public void modifyUser(Context context, String firstName, String lastName, LocalDate birthDate, Gender gender, BloodType bloodType, List<Allergy> allergies,
                            List<PreviousMedicalCondition> conditions) throws DBDeleteException, DBInsertException, DBUpdateException {
         User user = new User();
         user.setId(this.id);
 
-        if (!this.fullName.equals(fullName)) {
-            setFullName(fullName);
-            user.setFullName(this.fullName);
+        if (!this.firstName.equals(firstName)) {
+            setFirstName(firstName);
+            user.setFirstName(this.firstName);
+        }
+
+        if (!this.lastName.equals(lastName)) {
+            setLastName(lastName);
+            user.setLastName(this.lastName);
         }
 
         if ((this.birthDate == null && birthDate != null ) || (birthDate != null && !this.birthDate.equals(birthDate))) {
@@ -164,12 +171,20 @@ public class User implements Identifiable {
         this.email = email;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public LocalDate getBirthDate() {

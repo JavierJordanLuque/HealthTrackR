@@ -34,8 +34,9 @@ public class UserRepository extends BaseRepository<User> {
     private final String EMAIL_HASH = "email_hash";
     private final String PASSWORD = "password";
     private final String PASSWORD_SALT = "password_salt";
-    private final String FULL_NAME = "full_name";
-    private final String FULL_NAME_IV = "full_name_iv";
+    private final String FIRST_NAME = "first_name";
+    private final String LAST_NAME = "last_name";
+    private final String LAST_NAME_IV = "last_name_iv";
     private final String BIRTH_DATE = "birth_date";
     private final String GENDER = "gender";
     private final String BLOOD_TYPE = "blood_type";
@@ -56,10 +57,13 @@ public class UserRepository extends BaseRepository<User> {
             contentValues.put(EMAIL_IV, cipherData.getInitializationVector());
             contentValues.put(EMAIL_HASH, SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(user.getEmail()))));
         }
-        if (user.getFullName() != null) {
-            cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getFullName()));
-            contentValues.put(FULL_NAME, cipherData.getEncryptedData());
-            contentValues.put(FULL_NAME_IV, cipherData.getInitializationVector());
+        if (user.getFirstName() != null) {
+            contentValues.put(FIRST_NAME, user.getFirstName());
+        }
+        if (user.getLastName() != null) {
+            cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getLastName()));
+            contentValues.put(LAST_NAME, cipherData.getEncryptedData());
+            contentValues.put(LAST_NAME_IV, cipherData.getInitializationVector());
         }
         if (user.getBirthDate() != null)
             contentValues.put(BIRTH_DATE, user.getBirthDate().atStartOfDay(ZoneOffset.UTC).toInstant().getEpochSecond());
@@ -80,10 +84,10 @@ public class UserRepository extends BaseRepository<User> {
         CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(EMAIL)), cursor.getBlob(cursor.getColumnIndex(EMAIL_IV)));
         String email = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
 
-        cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(FULL_NAME)), cursor.getBlob(cursor.getColumnIndex(FULL_NAME_IV)));
-        String fullName = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
+        cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(LAST_NAME)), cursor.getBlob(cursor.getColumnIndex(LAST_NAME_IV)));
+        String lastName = (String) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), String.class);
 
-        User user = new User(email, fullName);
+        User user = new User(email, cursor.getString(cursor.getColumnIndex(FIRST_NAME)), lastName);
         user.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
         if (!cursor.isNull(cursor.getColumnIndex(BIRTH_DATE)))

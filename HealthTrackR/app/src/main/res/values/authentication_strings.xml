@@ -11,5 +11,6 @@
     <string name="authentication_password">Password</string>
     <string name="authentication_password_requirements">The password must contain between 8 and 60 characters, including: uppercase letters, lowercase letters, numbers, and special characters</string>
     <string name="authentication_repeat_password">Repeat password</string>
-    <string name="authentication_full_name">Full name</string>
+    <string name="authentication_first_name">First name</string>
+    <string name="authentication_last_name">Last name</string>
 </resources>

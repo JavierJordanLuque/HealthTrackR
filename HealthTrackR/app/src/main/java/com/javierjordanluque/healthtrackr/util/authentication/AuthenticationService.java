@@ -16,7 +16,7 @@ import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 import com.javierjordanluque.healthtrackr.util.security.SerializationUtils;
 
 public class AuthenticationService {
-    public static User register(Context context, String email, String password, String fullName) throws AuthenticationException {
+    public static User register(Context context, String email, String password, String firstName, String lastName) throws AuthenticationException {
         User user;
 
         try {
@@ -28,7 +28,7 @@ public class AuthenticationService {
             } else if (!SecurityService.meetsPasswordRequirements(password)) {
                 throw new AuthenticationException(context.getString(R.string.authentication_password_requirements), null);
             } else {
-                user = new User(email, fullName);
+                user = new User(email, firstName, lastName);
                 user.setId(userRepository.insert(user));
                 userRepository.updateUserCredentials(new UserCredentials(user.getId(), SecurityService.hashWithSalt(SerializationUtils.serialize(password))));
             }
@@ -64,7 +64,8 @@ public class AuthenticationService {
         if (user != null) {
             user.setId(-1);
             user.setEmail(null);
-            user.setFullName(null);
+            user.setFirstName(null);
+            user.setLastName(null);
             user.setBirthDate(null);
             user.setGender(null);
             user.setBloodType(null);
