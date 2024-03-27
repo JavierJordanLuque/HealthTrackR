@@ -24,7 +24,6 @@ import com.javierjordanluque.healthtrackr.util.security.CipherData;
 import com.javierjordanluque.healthtrackr.util.security.HashData;
 import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZoneOffset;
 
@@ -55,7 +54,7 @@ public class UserRepository extends BaseRepository<User> {
             cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getEmail()));
             contentValues.put(EMAIL, cipherData.getEncryptedData());
             contentValues.put(EMAIL_IV, cipherData.getInitializationVector());
-            contentValues.put(EMAIL_HASH, SecurityService.hash(SerializationUtils.serialize(user.getEmail())));
+            contentValues.put(EMAIL_HASH, SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(user.getEmail()))));
         }
         if (user.getFullName() != null) {
             cipherData = SecurityService.encrypt(SerializationUtils.serialize(user.getFullName()));
@@ -111,10 +110,10 @@ public class UserRepository extends BaseRepository<User> {
 
         try {
             db = open();
-            byte[] emailHash = SecurityService.hash(SerializationUtils.serialize(email));
+            String emailHash = SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(email)));
 
             String selection = EMAIL_HASH + "=?";
-            String[] selectionArgs = {new String(emailHash, StandardCharsets.UTF_8)};
+            String[] selectionArgs = {emailHash};
             cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
             if (cursor != null && cursor.moveToFirst()) {

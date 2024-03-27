@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class SerializationUtils {
     public static byte[] serialize(Object object) throws SerializationException {
@@ -39,6 +40,10 @@ public class SerializationUtils {
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | IllegalArgumentException exception) {
             throw new DeserializationException("Failed to deserialize with class (" + type.getName() + ")", exception);
         }
+    }
+
+    public static String convertToBase64(byte[] data) {
+        return Base64.getEncoder().encodeToString(data);
     }
 
     private static byte[] serializeString(String string) {

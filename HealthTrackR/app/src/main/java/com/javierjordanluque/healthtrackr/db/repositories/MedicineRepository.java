@@ -25,7 +25,6 @@ import com.javierjordanluque.healthtrackr.util.exceptions.SerializationException
 import com.javierjordanluque.healthtrackr.util.security.CipherData;
 import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -66,12 +65,12 @@ public class MedicineRepository extends BaseRepository<Medicine> {
         CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(medicine.getName()));
         contentValues.put(NAME, cipherData.getEncryptedData());
         contentValues.put(NAME_IV, cipherData.getInitializationVector());
-        contentValues.put(NAME_HASH, SecurityService.hash(SerializationUtils.serialize(medicine.getName())));
+        contentValues.put(NAME_HASH, SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getName()))));
 
         cipherData = SecurityService.encrypt(SerializationUtils.serialize(medicine.getActiveSubstance()));
         contentValues.put(ACTIVE_SUBSTANCE, cipherData.getEncryptedData());
         contentValues.put(ACTIVE_SUBSTANCE_IV, cipherData.getInitializationVector());
-        contentValues.put(ACTIVE_SUBSTANCE_HASH, SecurityService.hash(SerializationUtils.serialize(medicine.getActiveSubstance())));
+        contentValues.put(ACTIVE_SUBSTANCE_HASH, SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getActiveSubstance()))));
 
         return contentValues;
     }
@@ -188,11 +187,11 @@ public class MedicineRepository extends BaseRepository<Medicine> {
 
         try {
             db = open();
-            byte[] nameHash = SecurityService.hash(SerializationUtils.serialize(medicine.getName()));
-            byte[] activeSubstanceHash = SecurityService.hash(SerializationUtils.serialize(medicine.getActiveSubstance()));
+            String nameHash = SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getName())));
+            String activeSubstanceHash = SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getActiveSubstance())));
 
             String selection = NAME_HASH + "=? and " + ACTIVE_SUBSTANCE_HASH + "=?";
-            String[] selectionArgs = {new String(nameHash, StandardCharsets.UTF_8), new String(activeSubstanceHash, StandardCharsets.UTF_8)};
+            String[] selectionArgs = {nameHash, activeSubstanceHash};
             cursor = db.query(TABLE_NAME_BASIC_MEDICINE, null, selection, selectionArgs, null, null, null);
 
             if (cursor != null && cursor.moveToFirst())

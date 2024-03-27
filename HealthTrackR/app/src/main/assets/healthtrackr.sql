@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS `USER` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `email` BLOB NOT NULL,
   `email_iv` BLOB NOT NULL,
-  `email_hash` BLOB NOT NULL,
+  `email_hash` TEXT NOT NULL,
   `password` BLOB NULL,
   `password_salt` BLOB NULL,
   `full_name` BLOB NOT NULL,
@@ -35,10 +35,10 @@ CREATE TABLE IF NOT EXISTS `MEDICINE` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `name` BLOB NOT NULL,
   `name_iv` BLOB NOT NULL,
-  `name_hash` BLOB NOT NULL,
+  `name_hash` TEXT NOT NULL,
   `active_substance` BLOB NULL,
   `active_substance_iv` BLOB NULL,
-  `active_substance_hash` BLOB NULL
+  `active_substance_hash` TEXT NULL
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS `name_hash_UNIQUE` ON `MEDICINE` (`name_hash`);
