@@ -132,6 +132,16 @@ public class SecurityService {
         return Arrays.equals(newHash, hashedData);
     }
 
+    public static boolean meetsEmailRequirements(String email) {
+        if (email.length() < 5 || email.length() > 50)
+            return false;
+
+        Pattern pattern = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+        Matcher matcher = pattern.matcher(email);
+
+        return matcher.matches();
+    }
+
     public static boolean meetsPasswordRequirements(String password) {
         if (password.length() < 8 || password.length() > 60)
             return false;

@@ -1,4 +1,4 @@
-package com.javierjordanluque.healthtrackr.util.authentication;
+package com.javierjordanluque.healthtrackr.util;
 
 import android.content.Context;
 
@@ -25,6 +25,8 @@ public class AuthenticationService {
 
             if (userCredentials != null) {
                 throw new AuthenticationException(context.getString(R.string.error_existing_email), null);
+            } else if (!SecurityService.meetsEmailRequirements(email)) {
+                throw new AuthenticationException(context.getString(R.string.error_invalid_email_requirements), null);
             } else if (!SecurityService.meetsPasswordRequirements(password)) {
                 throw new AuthenticationException(context.getString(R.string.authentication_password_requirements), null);
             } else {

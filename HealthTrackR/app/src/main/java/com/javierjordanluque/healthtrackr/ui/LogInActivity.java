@@ -1,5 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,7 +10,7 @@ import android.widget.EditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.User;
-import com.javierjordanluque.healthtrackr.util.authentication.AuthenticationService;
+import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.exceptions.AuthenticationException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
@@ -57,15 +59,32 @@ public class LogInActivity extends BaseActivity {
 
         try {
             user = AuthenticationService.login(this, email, password);
+
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
         } catch (AuthenticationException exception) {
             if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_email))) {
+                showIncorrectEmailDialog();
                 emailLayout.setError(exception.getMessage());
-            } else if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_email))) {
+            } else if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_password))) {
                 passwordLayout.setError(exception.getMessage());
             } else {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
             }
         }
+    }
+
+    private void showIncorrectEmailDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.error_incorrect_email_dialog))
+                .setPositiveButton(getString(R.string.authentication_create_account), (dialog, id) -> {
+                    Intent intent = new Intent(this, SignUpActivity.class);
+                    startActivity(intent);
+                })
+                .setNegativeButton(getString(R.string.error_try_again), (dialog, id) -> {
+                    dialog.dismiss();
+                });
+        builder.create().show();
     }
 
     private boolean isValidEmail(String email) {

@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name" translatable="false">HealthTrackR</string>
-    <string name="snackbar_ok" translatable="false">Ok</string>
+    <string name="snackbar_ok" translatable="false">@android:string/ok</string>
 </resources>

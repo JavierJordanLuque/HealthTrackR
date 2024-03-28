@@ -1,5 +1,6 @@
 package com.javierjordanluque.healthtrackr.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,7 +9,7 @@ import android.widget.EditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.User;
-import com.javierjordanluque.healthtrackr.util.authentication.AuthenticationService;
+import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.exceptions.AuthenticationException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
@@ -87,8 +88,12 @@ public class SignUpActivity extends BaseActivity {
 
         try {
             user = AuthenticationService.register(this, email, password, firstName, lastName);
+
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
         } catch (AuthenticationException exception) {
-            if (Objects.equals(exception.getMessage(), getString(R.string.error_existing_email))) {
+            if (Objects.equals(exception.getMessage(), getString(R.string.error_existing_email)) ||
+                    Objects.equals(exception.getMessage(), getString(R.string.error_invalid_email_requirements))) {
                 emailLayout.setError(exception.getMessage());
             } else if (Objects.equals(exception.getMessage(), getString(R.string.authentication_password_requirements))) {
                 passwordLayout.setError(exception.getMessage());
