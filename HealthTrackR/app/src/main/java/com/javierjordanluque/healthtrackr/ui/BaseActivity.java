@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
-import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.NavigationUtils;
 
 import java.util.Objects;
@@ -26,18 +25,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResource());
-
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle(getToolbarTitle());
     }
 
-    protected abstract int getLayoutResource();
-
-    protected abstract String getToolbarTitle();
-
     protected abstract int getMenu();
+
+    protected void setUpToolbar(String toolbarTitle) {
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(toolbarTitle);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

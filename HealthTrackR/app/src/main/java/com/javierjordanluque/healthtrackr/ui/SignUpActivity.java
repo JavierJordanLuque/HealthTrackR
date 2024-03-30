@@ -31,6 +31,8 @@ public class SignUpActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView( R.layout.activity_sign_up);
+        setUpToolbar(getString(R.string.authentication_signup));
 
         emailLayout = findViewById(R.id.emailLayout);
         emailEditText = findViewById(R.id.emailEditText);
@@ -121,16 +123,6 @@ public class SignUpActivity extends BaseActivity {
 
     private boolean isValidLastName(String lastName) {
         return !lastName.isEmpty() && lastName.length() <= 50;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_sign_up;
-    }
-
-    @Override
-    protected String getToolbarTitle() {
-        return getString(R.string.authentication_signup);
     }
 
     @Override

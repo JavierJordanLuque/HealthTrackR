@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="navigation_elevation">4dp</dimen>
 
     <dimen name="large_btn_width">250dp</dimen>
     <dimen name="large_btn_padding_bottom">10dp</dimen>

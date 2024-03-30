@@ -26,6 +26,8 @@ public class LogInActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_log_in);
+        setUpToolbar(getString(R.string.authentication_login));
 
         emailLayout = findViewById(R.id.emailLayout);
         emailEditText = findViewById(R.id.emailEditText);
@@ -93,16 +95,6 @@ public class LogInActivity extends BaseActivity {
 
     private boolean isValidPassword(String password) {
         return !password.isEmpty() && password.length() >= 8 && password.length() <= 60;
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_log_in;
-    }
-
-    @Override
-    protected String getToolbarTitle() {
-        return getString(R.string.authentication_login);
     }
 
     @Override
