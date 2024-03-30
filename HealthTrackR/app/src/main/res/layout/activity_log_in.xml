@@ -74,6 +74,14 @@
                     android:maxLength="60" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <CheckBox
+                android:id="@+id/rememberCheckBox"
+                android:layout_width="@dimen/text_field_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/form_margin_top"
+                android:text="@string/authentication_remember" />
+
             <Button
                 android:id="@+id/buttonLogIn"
                 style="@style/Widget.HealthTrackR.LargeButton.Form"

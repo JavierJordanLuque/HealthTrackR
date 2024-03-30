@@ -16,7 +16,6 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import java.util.Objects;
 
 public class SignUpActivity extends BaseActivity {
-    protected User user;
     private TextInputLayout emailLayout;
     private TextInputLayout passwordLayout;
     private TextInputLayout repeatPasswordLayout;
@@ -89,10 +88,11 @@ public class SignUpActivity extends BaseActivity {
         }
 
         try {
-            user = AuthenticationService.register(this, email, password, firstName, lastName);
+            User user = AuthenticationService.register(this, email, password, firstName, lastName);
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         } catch (AuthenticationException exception) {
             if (Objects.equals(exception.getMessage(), getString(R.string.error_existing_email)) ||
                     Objects.equals(exception.getMessage(), getString(R.string.error_invalid_email_requirements))) {

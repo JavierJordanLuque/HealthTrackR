@@ -5,6 +5,7 @@
     <string name="authentication_sign_in">Sign in</string>
     <string name="authentication_sign_up">Sign up</string>
     <string name="authentication_signup">Sign up</string>
+    <string name="authentication_remember">Remember me</string>
     <string name="authentication_create_account">Create account</string>
     <string name="authentication_email">Email</string>
     <string name="authentication_email_suffix" translatable="false">/@gmail.com</string>

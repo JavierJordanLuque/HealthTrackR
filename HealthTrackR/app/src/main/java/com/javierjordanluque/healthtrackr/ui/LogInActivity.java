@@ -2,9 +2,11 @@ package com.javierjordanluque.healthtrackr.ui;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -17,11 +19,11 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import java.util.Objects;
 
 public class LogInActivity extends BaseActivity {
-    protected User user;
     private TextInputLayout emailLayout;
     private TextInputLayout passwordLayout;
     private EditText emailEditText;
     private EditText passwordEditText;
+    private CheckBox rememberCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class LogInActivity extends BaseActivity {
         passwordLayout = findViewById(R.id.passwordLayout);
         passwordEditText = findViewById(R.id.passwordEditText);
         setEditTextListener(passwordLayout, passwordEditText);
+
+        rememberCheckBox = findViewById(R.id.rememberCheckBox);
 
         Button logInButton = findViewById(R.id.buttonLogIn);
         logInButton.setOnClickListener(this::logIn);
@@ -60,10 +64,17 @@ public class LogInActivity extends BaseActivity {
         }
 
         try {
-            user = AuthenticationService.login(this, email, password);
+            User user = AuthenticationService.login(this, email, password);
+
+            if (rememberCheckBox.isChecked()) {
+                saveCredentials(email, password);
+            } else {
+                clearCredentials();
+            }
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         } catch (AuthenticationException exception) {
             if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_email))) {
                 showIncorrectEmailDialog();
@@ -74,6 +85,14 @@ public class LogInActivity extends BaseActivity {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
             }
         }
+    }
+
+    private void saveCredentials(String email, String password) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PREFS_EMAIL, email);
+        editor.putString(PREFS_PASSWORD, password);
+        editor.apply();
     }
 
     private void showIncorrectEmailDialog() {

@@ -3,6 +3,7 @@ package com.javierjordanluque.healthtrackr.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +23,10 @@ import com.javierjordanluque.healthtrackr.util.NavigationUtils;
 import java.util.Objects;
 
 public abstract class BaseActivity extends AppCompatActivity {
+    protected static final String PREFS_NAME = "HealthTrackR";
+    protected static final String PREFS_EMAIL = "email";
+    protected static final String PREFS_PASSWORD = "password";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.menuSignOut) {
             //AuthenticationService.logout(user);
+            clearCredentials();
 
             Intent intent = new Intent(this, AuthenticationActivity.class);
             startActivity(intent);
@@ -57,6 +63,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    protected void clearCredentials() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(PREFS_EMAIL);
+        editor.remove(PREFS_PASSWORD);
+        editor.apply();
     }
 
     protected static void hideKeyboard(Activity activity) {

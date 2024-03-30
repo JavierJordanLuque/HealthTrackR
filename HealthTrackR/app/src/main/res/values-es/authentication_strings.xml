@@ -5,6 +5,7 @@
     <string name="authentication_sign_in">Iniciar sesión</string>
     <string name="authentication_sign_up">Registrarse</string>
     <string name="authentication_signup">Registro</string>
+    <string name="authentication_remember">Recuérdame</string>
     <string name="authentication_create_account">Crear cuenta</string>
     <string name="authentication_email">Correo electrónico</string>
     <string name="authentication_password">Contraseña</string>
