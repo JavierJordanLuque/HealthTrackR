@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.javierjordanluque.healthtrackr.R;
 
-public class HomeActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,12 +13,12 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_home;
+        return R.layout.activity_main;
     }
 
     @Override
     protected String getToolbarTitle() {
-        return getString(R.string.home_home);
+        return getString(R.string.home_title);
     }
 
     @Override

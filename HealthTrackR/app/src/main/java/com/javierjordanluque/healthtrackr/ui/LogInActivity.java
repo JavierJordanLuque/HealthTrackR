@@ -60,7 +60,7 @@ public class LogInActivity extends BaseActivity {
         try {
             user = AuthenticationService.login(this, email, password);
 
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } catch (AuthenticationException exception) {
             if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_email))) {

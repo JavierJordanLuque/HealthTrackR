@@ -89,7 +89,7 @@ public class SignUpActivity extends BaseActivity {
         try {
             user = AuthenticationService.register(this, email, password, firstName, lastName);
 
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } catch (AuthenticationException exception) {
             if (Objects.equals(exception.getMessage(), getString(R.string.error_existing_email)) ||
