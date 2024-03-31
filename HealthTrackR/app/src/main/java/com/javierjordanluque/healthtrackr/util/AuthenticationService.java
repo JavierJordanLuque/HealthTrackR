@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.db.repositories.UserRepository;
@@ -16,6 +17,10 @@ import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 import com.javierjordanluque.healthtrackr.util.security.SerializationUtils;
 
 public class AuthenticationService {
+    private static final String PREFS_NAME = "HealthTrackR";
+    private static final String PREFS_EMAIL = "email";
+    private static final String PREFS_PASSWORD = "password";
+
     public static User register(Context context, String email, String password, String firstName, String lastName) throws AuthenticationException {
         User user;
 
@@ -75,5 +80,34 @@ public class AuthenticationService {
             user.setConditions(null);
             user.setTreatments(null);
         }
+    }
+
+    public static void saveCredentials(Context context, String email, String password) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PREFS_EMAIL, email);
+        editor.putString(PREFS_PASSWORD, password);
+        editor.apply();
+    }
+
+    public static void clearCredentials(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(PREFS_EMAIL);
+        editor.remove(PREFS_PASSWORD);
+        editor.apply();
+    }
+
+    public static Object[] getCredentials(Context context) {
+        Object[] credentials = null;
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString(AuthenticationService.PREFS_EMAIL, null);
+        String password = sharedPreferences.getString(AuthenticationService.PREFS_PASSWORD, null);
+
+        if (email != null && password != null)
+            credentials = new Object[]{email, password};
+
+        return credentials;
     }
 }

@@ -1,13 +1,8 @@
 package com.javierjordanluque.healthtrackr.ui;
 
-import static com.javierjordanluque.healthtrackr.ui.BaseActivity.PREFS_EMAIL;
-import static com.javierjordanluque.healthtrackr.ui.BaseActivity.PREFS_NAME;
-import static com.javierjordanluque.healthtrackr.ui.BaseActivity.PREFS_PASSWORD;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -24,9 +19,13 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String email = sharedPreferences.getString(PREFS_EMAIL, null);
-        String password = sharedPreferences.getString(PREFS_PASSWORD, null);
+        Object[] credentials = AuthenticationService.getCredentials(this);
+        String email = null;
+        String password = null;
+        if (credentials != null) {
+            email = (String) credentials[0];
+            password = (String) credentials[1];
+        }
 
         if (email != null && password != null) {
             try {
