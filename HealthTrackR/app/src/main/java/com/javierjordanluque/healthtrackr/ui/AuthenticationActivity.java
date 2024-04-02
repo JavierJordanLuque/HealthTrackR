@@ -39,7 +39,7 @@ public class AuthenticationActivity extends AppCompatActivity {
             }
         }
 
-        Button signUpButton = findViewById(R.id.buttonSignUp);
+        Button signUpButton = findViewById(R.id.buttonModifyAccount);
         signUpButton.setOnClickListener((view) -> {
             Intent intent = new Intent(AuthenticationActivity.this, SignUpActivity.class);
 

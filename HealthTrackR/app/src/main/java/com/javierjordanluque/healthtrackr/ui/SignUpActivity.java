@@ -32,6 +32,7 @@ public class SignUpActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_sign_up);
         setUpToolbar(getString(R.string.authentication_signup));
+        showBackButton(true);
 
         emailLayout = findViewById(R.id.emailLayout);
         emailEditText = findViewById(R.id.emailEditText);
@@ -53,7 +54,7 @@ public class SignUpActivity extends BaseActivity {
         lastNameEditText = findViewById(R.id.lastNameEditText);
         setEditTextListener(lastNameLayout, lastNameEditText);
 
-        Button signUpButton = findViewById(R.id.buttonSignUp);
+        Button signUpButton = findViewById(R.id.buttonModifyAccount);
         signUpButton.setOnClickListener(this::signUp);
     }
 

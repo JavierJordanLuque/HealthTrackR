@@ -13,8 +13,7 @@ import com.javierjordanluque.healthtrackr.ui.calendar.CalendarFragment;
 import com.javierjordanluque.healthtrackr.ui.home.HomeFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentsFragment;
 
-public class MainActivity extends BaseActivity {
-
+public class MainActivity extends BaseActivity implements OnToolbarChangeListener {
     ActivityMainBinding binding;
 
     @Override
@@ -24,6 +23,8 @@ public class MainActivity extends BaseActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setUpToolbar(getString(R.string.home_title));
+        showBackButton(false);
+
         replaceFragment(new HomeFragment());
 
         binding.navigationView.setOnItemSelectedListener(item -> {
@@ -42,11 +43,16 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onTitleChanged(String newTitle) {
+        setToolbarTitle(newTitle);
     }
 
     @Override

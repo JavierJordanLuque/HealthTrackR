@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -37,6 +39,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(toolbarTitle);
     }
 
+    public void setToolbarTitle(String title) {
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(getMenu(), menu);
@@ -46,7 +52,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menuHelp) {
+
+        if (item.getItemId() == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        } else if (itemId == R.id.menuHelp) {
             NavigationUtils.openUserManual(this);
             return true;
         } else if (itemId == R.id.menuSignOut) {
@@ -62,6 +72,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void showBackButton(boolean show) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(show);
+    }
+
     protected static void hideKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         View currentFocus = activity.getCurrentFocus();
@@ -73,7 +89,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void setEditTextListener(TextInputLayout textLayout, EditText editText) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -81,7 +98,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 }

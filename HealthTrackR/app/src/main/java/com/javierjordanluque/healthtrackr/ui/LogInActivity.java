@@ -29,6 +29,7 @@ public class LogInActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         setUpToolbar(getString(R.string.authentication_login));
+        showBackButton(true);
 
         emailLayout = findViewById(R.id.emailLayout);
         emailEditText = findViewById(R.id.emailEditText);

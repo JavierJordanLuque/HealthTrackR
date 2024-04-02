@@ -7,11 +7,6 @@
         <item name="android:colorControlNormal">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="ThemeOverlay.HealthTrackR.ActionBar.BackNavigation">
-        <item name="navigationIcon">@drawable/ic_back_arrow</item>
-        <item name="navigationIconTint">?attr/colorOnPrimary</item>
-    </style>
-
     <style name="Widget.HealthTrackR.LargeButton" parent="Widget.Material3.Button">
         <item name="android:layout_width">@dimen/large_btn_width</item>
         <item name="android:layout_height">wrap_content</item>
