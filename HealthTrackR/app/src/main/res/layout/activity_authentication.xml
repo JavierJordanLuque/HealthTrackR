@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.AuthenticationActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hAppIconGuidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hAppIconGuidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
     <ImageView
         android:id="@+id/imageViewAppIcon"
         android:layout_width="0dp"
@@ -31,38 +45,42 @@
         app:layout_constraintTop_toTopOf="@+id/hAppIconGuidelineEnd"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/buttonLogIn"
-        style="@style/Widget.HealthTrackR.LargeButton"
-        android:text="@string/authentication_log_in"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vLargeButtonGuidelineStart"
+        style="@style/vLargeButtonGuidelineStart">
+
+    </androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vLargeButtonGuidelineEnd"
+        style="@style/vLargeButtonGuidelineEnd">
+
+    </androidx.constraintlayout.widget.Guideline>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/linear_layout_padding_top"
+        android:paddingBottom="@dimen/linear_layout_padding_bottom"
+        app:layout_constraintEnd_toEndOf="@id/vLargeButtonGuidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/vLargeButtonGuidelineStart"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewAppName"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintWidth_max="@dimen/large_btn_max_width">
 
-    <Button
-        android:id="@+id/buttonModifyAccount"
-        style="@style/Widget.HealthTrackR.LargeButton"
-        android:text="@string/authentication_sign_up"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogIn"
-        app:layout_constraintVertical_bias="0.25" />
+        <Button
+            android:id="@+id/buttonLogIn"
+            style="@style/Widget.HealthTrackR.LargeButton"
+            android:text="@string/authentication_log_in" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/hAppIconGuidelineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        <Button
+            android:id="@+id/buttonSignUp"
+            style="@style/Widget.HealthTrackR.LargeButton"
+            android:layout_marginTop="50dp"
+            android:text="@string/authentication_sign_up" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/hAppIconGuidelineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

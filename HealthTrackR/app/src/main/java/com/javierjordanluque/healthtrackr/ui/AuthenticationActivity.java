@@ -39,16 +39,16 @@ public class AuthenticationActivity extends AppCompatActivity {
             }
         }
 
-        Button signUpButton = findViewById(R.id.buttonModifyAccount);
-        signUpButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(AuthenticationActivity.this, SignUpActivity.class);
+        Button logInButton = findViewById(R.id.buttonLogIn);
+        logInButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(AuthenticationActivity.this, LogInActivity.class);
 
             startActivity(intent);
         });
 
-        Button logInButton = findViewById(R.id.buttonLogIn);
-        logInButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(AuthenticationActivity.this, LogInActivity.class);
+        Button signUpButton = findViewById(R.id.buttonSignUp);
+        signUpButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(AuthenticationActivity.this, SignUpActivity.class);
 
             startActivity(intent);
         });

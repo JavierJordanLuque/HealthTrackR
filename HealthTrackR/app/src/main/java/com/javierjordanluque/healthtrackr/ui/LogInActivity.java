@@ -31,15 +31,15 @@ public class LogInActivity extends BaseActivity {
         setUpToolbar(getString(R.string.authentication_login));
         showBackButton(true);
 
-        emailLayout = findViewById(R.id.emailLayout);
-        emailEditText = findViewById(R.id.emailEditText);
+        emailLayout = findViewById(R.id.layoutEmail);
+        emailEditText = findViewById(R.id.editTextEmail);
         setEditTextListener(emailLayout, emailEditText);
 
-        passwordLayout = findViewById(R.id.passwordLayout);
-        passwordEditText = findViewById(R.id.passwordEditText);
+        passwordLayout = findViewById(R.id.layoutPassword);
+        passwordEditText = findViewById(R.id.editTextPassword);
         setEditTextListener(passwordLayout, passwordEditText);
 
-        rememberCheckBox = findViewById(R.id.rememberCheckBox);
+        rememberCheckBox = findViewById(R.id.checkBoxRemember);
 
         Button logInButton = findViewById(R.id.buttonLogIn);
         logInButton.setOnClickListener(this::logIn);

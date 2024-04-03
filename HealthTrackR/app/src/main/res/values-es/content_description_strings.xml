@@ -6,4 +6,6 @@
 
     <string name="content_description_show_password">Mostrar contraseña</string>
     <string name="content_description_hide_password">Ocultar contraseña</string>
+
+    <string name="content_description_modify_account">Modificar cuenta</string>
 </resources>

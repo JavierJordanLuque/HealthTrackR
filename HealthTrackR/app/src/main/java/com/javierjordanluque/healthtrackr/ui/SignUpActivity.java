@@ -34,28 +34,28 @@ public class SignUpActivity extends BaseActivity {
         setUpToolbar(getString(R.string.authentication_signup));
         showBackButton(true);
 
-        emailLayout = findViewById(R.id.emailLayout);
-        emailEditText = findViewById(R.id.emailEditText);
+        emailLayout = findViewById(R.id.layoutEmail);
+        emailEditText = findViewById(R.id.editTextEmail);
         setEditTextListener(emailLayout, emailEditText);
 
-        passwordLayout = findViewById(R.id.passwordLayout);
-        passwordEditText = findViewById(R.id.passwordEditText);
+        passwordLayout = findViewById(R.id.layoutPassword);
+        passwordEditText = findViewById(R.id.editTextPassword);
         setEditTextListener(passwordLayout, passwordEditText);
 
-        repeatPasswordLayout = findViewById(R.id.repeatPasswordLayout);
-        repeatPasswordEditText = findViewById(R.id.repeatPasswordEditText);
+        repeatPasswordLayout = findViewById(R.id.layoutRepeatPassword);
+        repeatPasswordEditText = findViewById(R.id.editTextRepeatPassword);
         setEditTextListener(repeatPasswordLayout, repeatPasswordEditText);
 
-        firstNameLayout = findViewById(R.id.firstNameLayout);
-        firstNameEditText = findViewById(R.id.firstNameEditText);
+        firstNameLayout = findViewById(R.id.layoutFirstName);
+        firstNameEditText = findViewById(R.id.editTextFirstName);
         setEditTextListener(firstNameLayout, firstNameEditText);
 
-        lastNameLayout = findViewById(R.id.lastNameLayout);
-        lastNameEditText = findViewById(R.id.lastNameEditText);
+        lastNameLayout = findViewById(R.id.layoutLastName);
+        lastNameEditText = findViewById(R.id.editTextLastName);
         setEditTextListener(lastNameLayout, lastNameEditText);
 
-        Button signUpButton = findViewById(R.id.buttonModifyAccount);
-        signUpButton.setOnClickListener(this::signUp);
+        Button createAccountButton = findViewById(R.id.buttonCreateAccount);
+        createAccountButton.setOnClickListener(this::signUp);
     }
 
     public void signUp(View view) {

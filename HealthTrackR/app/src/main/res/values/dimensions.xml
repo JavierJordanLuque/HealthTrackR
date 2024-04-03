@@ -3,14 +3,20 @@
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="navigation_elevation">4dp</dimen>
 
-    <dimen name="large_btn_width">250dp</dimen>
+    <dimen name="large_btn_max_width">280dp</dimen>
     <dimen name="large_btn_padding_bottom">10dp</dimen>
     <dimen name="large_btn_padding_top">10dp</dimen>
     <dimen name="large_btn_elevation">2dp</dimen>
-    <dimen name="large_btn_hGuideline">100dp</dimen>
 
-    <dimen name="form_linear_layout_padding_top">0dp</dimen>
-    <dimen name="form_linear_layout_padding_bottom">20dp</dimen>
+    <dimen name="linear_layout_padding_top">20dp</dimen>
+    <dimen name="linear_layout_padding_bottom">20dp</dimen>
+
+    <dimen name="text_field_max_width">320dp</dimen>
     <dimen name="form_margin_top">20dp</dimen>
-    <dimen name="text_field_width">300dp</dimen>
+
+    <dimen name="text_view_max_width">600dp</dimen>
+    <dimen name="text_view_margin_top">10dp</dimen>
+    <dimen name="text_view_value_padding_start">15dp</dimen>
+
+    <dimen name="floating_button_layout_margin">16dp</dimen>
 </resources>

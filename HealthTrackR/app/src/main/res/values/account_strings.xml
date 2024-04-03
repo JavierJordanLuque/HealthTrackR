@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="account_title">My account</string>
+
+    <string name="account_email">Email</string>
+    <string name="account_first_name">First name</string>
+    <string name="account_last_name">Last name</string>
+    <string name="account_birth_date">Birth date</string>
+    <string name="account_gender">Gender</string>
+    <string name="account_blood_type">Blood type</string>
+    <string name="account_allergies">Allergies</string>
+    <string name="account_previous_medical_conditions">Previous medical conditions</string>
+    <string name="account_sign_out">Sign out</string>
+    <string name="account_delete">Delete account</string>
+
+    <string name="account_unspecified">Unspecified</string>
+
+    <string name="account_modify_title">Modify account</string>
 </resources>

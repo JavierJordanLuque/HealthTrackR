@@ -6,8 +6,7 @@
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     android:elevation="@dimen/toolbar_elevation"
-    android:popupTheme="@style/ThemeOverlay.Material3.Light"
-    app:layout_scrollFlags="scroll|enterAlways">
+    android:popupTheme="@style/ThemeOverlay.Material3.Light">
 
 </com.google.android.material.appbar.MaterialToolbar>
 

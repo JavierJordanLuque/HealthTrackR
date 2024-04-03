@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ThemeOverlay.HealthTrackR.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="navigationContentDescription">@string/content_description_back_icon</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+        <item name="titleCentered">true</item>
+        <item name="android:colorControlNormal">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.LargeButton" parent="Widget.Material3.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadlineSmall</item>
+        <item name="android:paddingBottom">@dimen/large_btn_padding_bottom</item>
+        <item name="android:paddingTop">@dimen/large_btn_padding_top</item>
+        <item name="android:elevation">@dimen/large_btn_elevation</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.LargeButton.Form">
+        <item name="android:layout_marginTop">@dimen/form_margin_top</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.LargeButton.Form.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadlineSmall</item>
+        <item name="android:paddingBottom">@dimen/large_btn_padding_bottom</item>
+        <item name="android:paddingTop">@dimen/large_btn_padding_top</item>
+        <item name="android:elevation">@dimen/large_btn_elevation</item>
+        <item name="android:layout_marginTop">@dimen/form_margin_top</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.TextInputLayout.OutlinedBox" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/form_margin_top</item>
+        <item name="errorEnabled">true</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.TextView" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/text_view_margin_top</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.TextView.Value">
+        <item name="android:paddingStart">@dimen/text_view_value_padding_start</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+</resources>
