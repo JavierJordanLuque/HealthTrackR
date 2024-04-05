@@ -58,16 +58,15 @@
     </androidx.constraintlayout.widget.Guideline>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="@dimen/linear_layout_padding_top"
-        android:paddingBottom="@dimen/linear_layout_padding_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/vLargeButtonGuidelineEnd"
         app:layout_constraintStart_toStartOf="@id/vLargeButtonGuidelineStart"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewAppName"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintVertical_bias="0.25"
         app:layout_constraintWidth_max="@dimen/large_btn_max_width">
 
         <Button
@@ -75,10 +74,22 @@
             style="@style/Widget.HealthTrackR.LargeButton"
             android:text="@string/authentication_log_in" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/vLargeButtonGuidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/vLargeButtonGuidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintWidth_max="@dimen/large_btn_max_width">
+
         <Button
             android:id="@+id/buttonSignUp"
             style="@style/Widget.HealthTrackR.LargeButton"
-            android:layout_marginTop="50dp"
             android:text="@string/authentication_sign_up" />
 
     </LinearLayout>

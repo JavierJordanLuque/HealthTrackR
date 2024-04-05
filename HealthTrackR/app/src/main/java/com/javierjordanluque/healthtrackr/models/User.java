@@ -108,6 +108,11 @@ public class User implements Identifiable {
         // @TODO
     }
 
+    public void deleteUser(Context context) throws DBDeleteException {
+        UserRepository userRepository = new UserRepository(context);
+        userRepository.delete(this);
+    }
+
     protected void addAllergy(Allergy allergy) {
         allergies.add(allergy);
     }
