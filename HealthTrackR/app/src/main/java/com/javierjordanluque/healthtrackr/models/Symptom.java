@@ -1,10 +1,12 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 
-public class Symptom implements Identifiable {
+public class Symptom implements Identifiable, Parcelable {
     private long id;
     private final Treatment treatment;
     private final String description;
@@ -31,5 +33,35 @@ public class Symptom implements Identifiable {
 
     public String getDescription() {
         return description;
+    }
+
+    protected Symptom(Parcel in) {
+        id = in.readLong();
+        treatment = in.readParcelable(Treatment.class.getClassLoader());
+        description = in.readString();
+    }
+
+    public static final Creator<Symptom> CREATOR = new Creator<Symptom>() {
+        @Override
+        public Symptom createFromParcel(Parcel in) {
+            return new Symptom(in);
+        }
+
+        @Override
+        public Symptom[] newArray(int size) {
+            return new Symptom[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeParcelable(treatment, flags);
+        dest.writeString(description);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

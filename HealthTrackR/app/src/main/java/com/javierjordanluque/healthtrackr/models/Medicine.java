@@ -1,6 +1,8 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.db.repositories.MedicineRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
@@ -18,7 +20,7 @@ import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public class Medicine implements Identifiable {
+public class Medicine implements Identifiable, Parcelable {
     private long id;
     private Treatment treatment;
     private String name;
@@ -245,5 +247,49 @@ public class Medicine implements Identifiable {
 
     private void setNotifications(List<MedicationNotification> notifications) {
         this.notifications = notifications;
+    }
+
+    protected Medicine(Parcel in) {
+        id = in.readLong();
+        treatment = in.readParcelable(Treatment.class.getClassLoader());
+        name = in.readString();
+        activeSubstance = in.readString();
+        dose = (Integer) in.readSerializable();
+        administrationRoute = in.readParcelable(AdministrationRoute.class.getClassLoader());
+        initialDosingTime = ZonedDateTime.parse(in.readString());
+        dosageFrequencyHours = in.readInt();
+        dosageFrequencyMinutes = in.readInt();
+        notifications = in.createTypedArrayList(MedicationNotification.CREATOR);
+    }
+
+    public static final Creator<Medicine> CREATOR = new Creator<Medicine>() {
+        @Override
+        public Medicine createFromParcel(Parcel in) {
+            return new Medicine(in);
+        }
+
+        @Override
+        public Medicine[] newArray(int size) {
+            return new Medicine[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeParcelable(treatment, flags);
+        dest.writeString(name);
+        dest.writeString(activeSubstance);
+        dest.writeSerializable(dose);
+        dest.writeParcelable(administrationRoute, flags);
+        dest.writeString(initialDosingTime.toString());
+        dest.writeInt(dosageFrequencyHours);
+        dest.writeInt(dosageFrequencyMinutes);
+        dest.writeTypedList(notifications);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

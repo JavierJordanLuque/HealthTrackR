@@ -1,6 +1,8 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.db.repositories.MultimediaRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.StepRepository;
@@ -11,7 +13,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 
 import java.util.List;
 
-public class Step implements Identifiable {
+public class Step implements Identifiable, Parcelable {
     private long id;
     private Treatment treatment;
     private String title;
@@ -114,5 +116,41 @@ public class Step implements Identifiable {
 
     private void setMultimedias(List<Multimedia> multimedias) {
         this.multimedias = multimedias;
+    }
+
+    protected Step(Parcel in) {
+        id = in.readLong();
+        treatment = in.readParcelable(Treatment.class.getClassLoader());
+        title = in.readString();
+        description = in.readString();
+        numOrder = in.readInt();
+        multimedias = in.createTypedArrayList(Multimedia.CREATOR);
+    }
+
+    public static final Creator<Step> CREATOR = new Creator<Step>() {
+        @Override
+        public Step createFromParcel(Parcel in) {
+            return new Step(in);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeParcelable(treatment, flags);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeInt(numOrder);
+        dest.writeTypedList(multimedias);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

@@ -1,6 +1,8 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.db.repositories.AllergyRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.PreviousMedicalConditionRepository;
@@ -19,7 +21,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements Identifiable {
+public class User implements Identifiable, Parcelable {
     private long id;
     private String email;
     private String firstName;
@@ -253,5 +255,49 @@ public class User implements Identifiable {
 
     public void setTreatments(List<Treatment> treatments) {
         this.treatments = treatments;
+    }
+
+    protected User(Parcel in) {
+        id = in.readLong();
+        email = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        birthDate = (LocalDate) in.readSerializable();
+        gender = in.readParcelable(Gender.class.getClassLoader());
+        bloodType = in.readParcelable(BloodType.class.getClassLoader());
+        allergies = in.createTypedArrayList(Allergy.CREATOR);
+        conditions = in.createTypedArrayList(PreviousMedicalCondition.CREATOR);
+        treatments = in.createTypedArrayList(Treatment.CREATOR);
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(email);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeSerializable(birthDate);
+        dest.writeParcelable(gender, flags);
+        dest.writeParcelable(bloodType, flags);
+        dest.writeTypedList(allergies);
+        dest.writeTypedList(conditions);
+        dest.writeTypedList(treatments);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

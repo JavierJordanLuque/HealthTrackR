@@ -1,6 +1,8 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.MedicineRepository;
@@ -18,7 +20,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Treatment implements Identifiable {
+public class Treatment implements Identifiable, Parcelable {
     private long id;
     private User user;
     private String title;
@@ -274,5 +276,53 @@ public class Treatment implements Identifiable {
 
     private void setAppointments(List<MedicalAppointment> appointments) {
         this.appointments = appointments;
+    }
+
+    protected Treatment(Parcel in) {
+        id = in.readLong();
+        user = in.readParcelable(User.class.getClassLoader());
+        title = in.readString();
+        startDate = (ZonedDateTime) in.readSerializable();
+        endDate = (ZonedDateTime) in.readSerializable();
+        diagnosis = in.readString();
+        category = TreatmentCategory.valueOf(in.readString());
+        medicines = in.createTypedArrayList(Medicine.CREATOR);
+        steps = in.createTypedArrayList(Step.CREATOR);
+        symptoms = in.createTypedArrayList(Symptom.CREATOR);
+        questions = in.createTypedArrayList(Question.CREATOR);
+        appointments = in.createTypedArrayList(MedicalAppointment.CREATOR);
+    }
+
+    public static final Creator<Treatment> CREATOR = new Creator<Treatment>() {
+        @Override
+        public Treatment createFromParcel(Parcel in) {
+            return new Treatment(in);
+        }
+
+        @Override
+        public Treatment[] newArray(int size) {
+            return new Treatment[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeParcelable(user, flags);
+        dest.writeString(title);
+        dest.writeSerializable(startDate);
+        dest.writeSerializable(endDate);
+        dest.writeString(diagnosis);
+        dest.writeString(category.name());
+        dest.writeTypedList(medicines);
+        dest.writeTypedList(steps);
+        dest.writeTypedList(symptoms);
+        dest.writeTypedList(questions);
+        dest.writeTypedList(appointments);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

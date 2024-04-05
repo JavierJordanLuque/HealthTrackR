@@ -1,6 +1,9 @@
 package com.javierjordanluque.healthtrackr.models;
 
-public class PreviousMedicalCondition implements Identifiable {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PreviousMedicalCondition implements Identifiable, Parcelable {
     private long id;
     private final User user;
     private final String name;
@@ -27,5 +30,35 @@ public class PreviousMedicalCondition implements Identifiable {
 
     public String getName() {
         return name;
+    }
+
+    protected PreviousMedicalCondition(Parcel in) {
+        id = in.readLong();
+        user = in.readParcelable(User.class.getClassLoader());
+        name = in.readString();
+    }
+
+    public static final Creator<PreviousMedicalCondition> CREATOR = new Creator<PreviousMedicalCondition>() {
+        @Override
+        public PreviousMedicalCondition createFromParcel(Parcel in) {
+            return new PreviousMedicalCondition(in);
+        }
+
+        @Override
+        public PreviousMedicalCondition[] newArray(int size) {
+            return new PreviousMedicalCondition[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeParcelable(user, flags);
+        dest.writeString(name);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

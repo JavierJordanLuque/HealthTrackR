@@ -1,6 +1,8 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
@@ -14,7 +16,7 @@ import com.javierjordanluque.healthtrackr.util.notifications.NotificationSchedul
 
 import java.time.ZonedDateTime;
 
-public class MedicalAppointment implements Identifiable {
+public class MedicalAppointment implements Identifiable, Parcelable {
     private long id;
     private Treatment treatment;
     private String purpose;
@@ -148,5 +150,41 @@ public class MedicalAppointment implements Identifiable {
 
     public void setNotification(MedicalAppointmentNotification notification) {
         this.notification = notification;
+    }
+
+    protected MedicalAppointment(Parcel in) {
+        id = in.readLong();
+        treatment = in.readParcelable(Treatment.class.getClassLoader());
+        purpose = in.readString();
+        dateTime = ZonedDateTime.parse(in.readString());
+        location = in.readParcelable(Location.class.getClassLoader());
+        notification = in.readParcelable(MedicalAppointmentNotification.class.getClassLoader());
+    }
+
+    public static final Creator<MedicalAppointment> CREATOR = new Creator<MedicalAppointment>() {
+        @Override
+        public MedicalAppointment createFromParcel(Parcel in) {
+            return new MedicalAppointment(in);
+        }
+
+        @Override
+        public MedicalAppointment[] newArray(int size) {
+            return new MedicalAppointment[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeParcelable(treatment, flags);
+        dest.writeString(purpose);
+        dest.writeString(dateTime.toString());
+        dest.writeParcelable(location, flags);
+        dest.writeParcelable(notification, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }
