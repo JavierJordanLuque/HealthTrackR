@@ -32,6 +32,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                 User user = AuthenticationService.login(this, email, password);
 
                 Intent intent = new Intent(AuthenticationActivity.this, MainActivity.class);
+                intent.putExtra(User.class.getSimpleName(), user);
                 startActivity(intent);
                 finish();
             } catch (AuthenticationException exception) {
@@ -42,14 +43,12 @@ public class AuthenticationActivity extends AppCompatActivity {
         Button logInButton = findViewById(R.id.buttonLogIn);
         logInButton.setOnClickListener((view) -> {
             Intent intent = new Intent(AuthenticationActivity.this, LogInActivity.class);
-
             startActivity(intent);
         });
 
         Button signUpButton = findViewById(R.id.buttonSignUp);
         signUpButton.setOnClickListener((view) -> {
             Intent intent = new Intent(AuthenticationActivity.this, SignUpActivity.class);
-
             startActivity(intent);
         });
     }

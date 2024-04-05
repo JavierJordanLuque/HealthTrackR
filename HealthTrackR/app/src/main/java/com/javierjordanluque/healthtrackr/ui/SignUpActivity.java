@@ -94,6 +94,7 @@ public class SignUpActivity extends BaseActivity {
             User user = AuthenticationService.register(this, email, password, firstName, lastName);
 
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(User.class.getSimpleName(), user);
             startActivity(intent);
             finish();
         } catch (AuthenticationException exception) {

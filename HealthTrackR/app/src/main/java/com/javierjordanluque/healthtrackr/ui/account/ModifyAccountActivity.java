@@ -14,6 +14,9 @@ public class ModifyAccountActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        user = getIntent().getParcelableExtra(User.class.getSimpleName());
+
         setContentView(R.layout.activity_modify_account);
         setUpToolbar(getString(R.string.account_modify_title));
         showBackButton(true);

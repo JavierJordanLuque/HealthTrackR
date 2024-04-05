@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.databinding.ActivityMainBinding;
+import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.ui.account.AccountFragment;
 import com.javierjordanluque.healthtrackr.ui.calendar.CalendarFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentsFragment;
@@ -17,10 +18,13 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
     ActivityMainBinding binding;
     private Fragment currentFragment;
     private final String CURRENT_FRAGMENT = "currentFragment";
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        user = getIntent().getParcelableExtra(User.class.getSimpleName());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -76,6 +80,10 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
     }
 
     public void replaceFragment(Fragment fragment) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(User.class.getSimpleName(), user);
+        fragment.setArguments(bundle);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);

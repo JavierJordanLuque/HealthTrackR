@@ -42,15 +42,14 @@ public class AccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null)
+            user = getArguments().getParcelable(User.class.getSimpleName());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_account, container, false);
-
-        Bundle bundle = getArguments();
-        if (bundle != null)
-            user = (User) bundle.getSerializable("user");
 
         if (user != null) {
             TextView textViewEmail = fragmentView.findViewById(R.id.textViewEmail);
@@ -125,12 +124,13 @@ public class AccountFragment extends Fragment {
             fragmentTransaction.commit();
 
             Intent intent = new Intent(requireActivity(), ModifyAccountActivity.class);
+            intent.putExtra(User.class.getSimpleName(), user);
             startActivity(intent);
         });
 
         Button buttonSignOut = fragmentView.findViewById(R.id.buttonSignOut);
         buttonSignOut.setOnClickListener(view -> {
-            //AuthenticationService.logout(user);
+            AuthenticationService.logout(user);
             AuthenticationService.clearCredentials(requireActivity());
 
             Intent intent = new Intent(requireActivity(), AuthenticationActivity.class);
@@ -141,6 +141,8 @@ public class AccountFragment extends Fragment {
         buttonDeleteAccount.setOnClickListener(view -> {
             try {
                 user.deleteUser(requireActivity());
+                AuthenticationService.logout(user);
+                AuthenticationService.clearCredentials(requireActivity());
 
                 Intent intent = new Intent(requireActivity(), AuthenticationActivity.class);
                 startActivity(intent);

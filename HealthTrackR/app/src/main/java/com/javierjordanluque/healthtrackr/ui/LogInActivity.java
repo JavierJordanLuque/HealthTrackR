@@ -75,7 +75,7 @@ public class LogInActivity extends BaseActivity {
             }
 
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(User.class.getSimpleName(), (CharSequence) user);
+            intent.putExtra(User.class.getSimpleName(), user);
             startActivity(intent);
             finish();
         } catch (AuthenticationException exception) {
