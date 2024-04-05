@@ -37,6 +37,13 @@
         <item name="errorEnabled">true</item>
     </style>
 
+    <style name="Widget.HealthTrackR.TextInputLayout.FilledBox" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/form_margin_top</item>
+        <item name="errorEnabled">true</item>
+    </style>
+
     <style name="Widget.HealthTrackR.TextView" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

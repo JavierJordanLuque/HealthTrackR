@@ -14,7 +14,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -32,6 +31,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract int getMenu();
+
+    protected abstract void handleBackButtonAction();
 
     protected void setUpToolbar(String toolbarTitle) {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
@@ -54,7 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         if (item.getItemId() == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
+            handleBackButtonAction();
             return true;
         } else if (itemId == R.id.menuHelp) {
             NavigationUtils.openUserManual(this);

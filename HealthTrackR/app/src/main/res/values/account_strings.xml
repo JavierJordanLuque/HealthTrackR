@@ -15,5 +15,6 @@
 
     <string name="account_unspecified">Unspecified</string>
 
-    <string name="account_modify_title">Modify account</string>
+    <string name="account_modify_title">Account modification</string>
+    <string name="account_save">Save</string>
 </resources>

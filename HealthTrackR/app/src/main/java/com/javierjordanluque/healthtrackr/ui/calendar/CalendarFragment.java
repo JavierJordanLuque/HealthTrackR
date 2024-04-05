@@ -14,7 +14,7 @@ import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
 
 public class CalendarFragment extends Fragment {
-    private OnToolbarChangeListener mListener;
+    private OnToolbarChangeListener listener;
 
     public CalendarFragment() {
     }
@@ -33,20 +33,20 @@ public class CalendarFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ((MainActivity) requireActivity()).showBackButton(false);
-        if (mListener != null)
-            mListener.onTitleChanged(getString(R.string.calendar_title));
+        if (listener != null)
+            listener.onTitleChanged(getString(R.string.calendar_title));
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnToolbarChangeListener)
-            mListener = (OnToolbarChangeListener) context;
+            listener = (OnToolbarChangeListener) context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener = null;
     }
 }

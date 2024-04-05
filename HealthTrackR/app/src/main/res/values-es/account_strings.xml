@@ -15,5 +15,6 @@
 
     <string name="account_unspecified">Sin especificar</string>
 
-    <string name="account_modify_title">Modificar cuenta</string>
+    <string name="account_modify_title">Modificación de cuenta</string>
+    <string name="account_save">Guardar</string>
 </resources>

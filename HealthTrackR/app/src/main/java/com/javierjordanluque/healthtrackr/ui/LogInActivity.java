@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import androidx.core.app.NavUtils;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.User;
@@ -73,6 +75,7 @@ public class LogInActivity extends BaseActivity {
             }
 
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(User.class.getSimpleName(), (CharSequence) user);
             startActivity(intent);
             finish();
         } catch (AuthenticationException exception) {
@@ -111,5 +114,10 @@ public class LogInActivity extends BaseActivity {
     @Override
     protected int getMenu() {
         return R.menu.toolbar_basic_menu;
+    }
+
+    @Override
+    protected void handleBackButtonAction() {
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

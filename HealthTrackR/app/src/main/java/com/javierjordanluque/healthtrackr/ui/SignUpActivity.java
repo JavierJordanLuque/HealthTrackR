@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.core.app.NavUtils;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.User;
@@ -129,5 +131,10 @@ public class SignUpActivity extends BaseActivity {
     @Override
     protected int getMenu() {
         return R.menu.toolbar_basic_menu;
+    }
+
+    @Override
+    protected void handleBackButtonAction() {
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

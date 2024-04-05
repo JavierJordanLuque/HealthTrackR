@@ -123,7 +123,7 @@
                         android:text="@string/account_previous_medical_conditions" />
 
                     <TextView
-                        android:id="@+id/textMedicalConditions"
+                        android:id="@+id/textViewPreviousMedicalConditions"
                         style="@style/Widget.HealthTrackR.TextView.Value"
                         android:text="@string/account_unspecified" />
 

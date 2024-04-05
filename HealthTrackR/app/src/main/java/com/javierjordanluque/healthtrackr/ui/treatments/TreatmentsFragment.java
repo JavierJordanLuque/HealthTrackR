@@ -14,7 +14,7 @@ import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
 
 public class TreatmentsFragment extends Fragment {
-    private OnToolbarChangeListener mListener;
+    private OnToolbarChangeListener listener;
 
     public TreatmentsFragment() {
     }
@@ -32,8 +32,8 @@ public class TreatmentsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mListener != null)
-            mListener.onTitleChanged(getString(R.string.treatments_title));
+        if (listener != null)
+            listener.onTitleChanged(getString(R.string.treatments_title));
     }
 
     @Override
@@ -41,12 +41,12 @@ public class TreatmentsFragment extends Fragment {
         super.onAttach(context);
         ((MainActivity) requireActivity()).showBackButton(false);
         if (context instanceof OnToolbarChangeListener)
-            mListener = (OnToolbarChangeListener) context;
+            listener = (OnToolbarChangeListener) context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener = null;
     }
 }
