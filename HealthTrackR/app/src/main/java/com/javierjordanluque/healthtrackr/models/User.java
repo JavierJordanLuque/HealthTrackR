@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.db.repositories.AllergyRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.PreviousMedicalConditionRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.TreatmentRepository;
@@ -15,6 +16,10 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
+import com.javierjordanluque.healthtrackr.util.exceptions.HashException;
+import com.javierjordanluque.healthtrackr.util.exceptions.SerializationException;
+import com.javierjordanluque.healthtrackr.util.security.SecurityService;
+import com.javierjordanluque.healthtrackr.util.security.SerializationUtils;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -112,8 +117,22 @@ public class User implements Identifiable, Parcelable {
         }
     }
 
-    public void changePassword(Context context, String currentPassword, String newPassword) {
-        // @TODO
+    public void changePassword(Context context, String currentPassword, String newPassword) throws Exception {
+        try {
+            UserRepository userRepository = new UserRepository(context);
+            UserCredentials userCredentials = userRepository.findUserCredentials(email);
+
+            if (userCredentials != null) {
+                if (!SecurityService.meetsPasswordRequirements(newPassword))
+                    throw new Exception(context.getString(R.string.authentication_password_requirements));
+                if (!userCredentials.equalsPassword(currentPassword))
+                    throw new Exception(context.getString(R.string.error_incorrect_password));
+
+                userRepository.updateUserCredentials(new UserCredentials(getId(), SecurityService.hashWithSalt(SerializationUtils.serialize(newPassword))));
+            }
+        } catch (DBFindException | SerializationException | HashException | DBUpdateException exception) {
+            throw new Exception("Failed to change password with the following credentials: Email (" + email + "), Password (" + currentPassword + ")", exception);
+        }
     }
 
     public void deleteUser(Context context) throws DBDeleteException {

@@ -38,4 +38,11 @@
     <string name="account_allergies_helper">Introduce tus alergias separadas por comas (,)</string>
     <string name="account_previous_medical_condition_helper">Introduce tus condiciones médicas previas separadas por comas (,)</string>
     <string name="account_save">Guardar</string>
+
+    <string name="account_change_password">Cambiar contraseña</string>
+    <string name="account_change_password_confirmation">¿Estás seguro de cambiar tu contraseña?</string>
+    <string name="account_password_change">Cambio de contraseña</string>
+    <string name="account_current_password">Contraseña actual *</string>
+    <string name="account_new_password">Contraseña nueva *</string>
+    <string name="account_repeat_new_password">Repetir contraseña nueva *</string>
 </resources>

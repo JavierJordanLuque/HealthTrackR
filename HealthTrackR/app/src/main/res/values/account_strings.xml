@@ -38,4 +38,11 @@
     <string name="account_allergies_helper">Enter your allergies separated by commas (,)</string>
     <string name="account_previous_medical_condition_helper">Enter your previous medical conditions separated by commas (,)</string>
     <string name="account_save">Save</string>
+
+    <string name="account_change_password">Change password</string>
+    <string name="account_change_password_confirmation">Are you sure you want to change your password?</string>
+    <string name="account_password_change">Password change</string>
+    <string name="account_current_password">Current password *</string>
+    <string name="account_new_password">New password *</string>
+    <string name="account_repeat_new_password">Repeat new password *</string>
 </resources>

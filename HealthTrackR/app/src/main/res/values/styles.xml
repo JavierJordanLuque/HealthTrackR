@@ -41,6 +41,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/form_margin_top</item>
+        <item name="android:background">?attr/backgroundColor</item>
     </style>
 
     <style name="Widget.HealthTrackR.TextView" parent="Widget.AppCompat.TextView">
@@ -60,5 +61,13 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/spinner_height</item>
         <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.SmallButton" parent="Widget.Material3.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+        <item name="android:elevation">@dimen/small_btn_elevation</item>
+        <item name="android:layout_marginVertical">@dimen/form_margin_top</item>
     </style>
 </resources>

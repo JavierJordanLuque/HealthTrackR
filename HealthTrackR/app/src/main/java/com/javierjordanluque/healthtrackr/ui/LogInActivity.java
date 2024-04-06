@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import androidx.core.app.NavUtils;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.User;
@@ -47,7 +45,7 @@ public class LogInActivity extends BaseActivity {
         buttonLogIn.setOnClickListener(this::logIn);
     }
 
-    public void logIn(View view) {
+    private void logIn(View view) {
         hideKeyboard(this);
 
         String email = editTextEmail.getText().toString().trim();
@@ -123,6 +121,6 @@ public class LogInActivity extends BaseActivity {
 
     @Override
     protected void handleBackButtonAction() {
-        NavUtils.navigateUpFromSameTask(this);
+        finish();
     }
 }

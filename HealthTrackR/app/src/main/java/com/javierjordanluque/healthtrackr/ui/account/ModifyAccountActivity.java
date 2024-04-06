@@ -50,12 +50,11 @@ public class ModifyAccountActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        user = getIntent().getParcelableExtra(User.class.getSimpleName());
-
         setContentView(R.layout.activity_modify_account);
         setUpToolbar(getString(R.string.account_modify_title));
         showBackButton(true);
+
+        user = getIntent().getParcelableExtra(User.class.getSimpleName());
 
         layoutFirstName = findViewById(R.id.layoutFirstName);
         editTextFirstName = findViewById(R.id.editTextFirstName);
@@ -103,6 +102,14 @@ public class ModifyAccountActivity extends BaseActivity {
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(this, exception.getMessage());
         }
+
+        Button buttonChangePassword = findViewById(R.id.buttonChangePassword);
+        buttonChangePassword.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ChangePasswordActivity.class);
+            intent.putExtra(User.class.getSimpleName(), user);
+            startActivity(intent);
+            finish();
+        });
 
         Button buttonSave = findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(this::modifyAccount);

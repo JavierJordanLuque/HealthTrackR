@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.core.app.NavUtils;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.User;
@@ -60,7 +58,7 @@ public class SignUpActivity extends BaseActivity {
         buttonCreateAccount.setOnClickListener(this::signUp);
     }
 
-    public void signUp(View view) {
+    private void signUp(View view) {
         hideKeyboard(this);
 
         String email = editTextEmail.getText().toString().trim();
@@ -141,6 +139,6 @@ public class SignUpActivity extends BaseActivity {
 
     @Override
     protected void handleBackButtonAction() {
-        NavUtils.navigateUpFromSameTask(this);
+        finish();
     }
 }
