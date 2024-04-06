@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public enum AdministrationRoute implements Parcelable {
-    ORAL, TOPICAL, PARENTERAL, INHALATION, OPHTHALMIC, OTIC, NASAL, RECTAL;
+    ORAL, TOPICAL, PARENTERAL, INHALATION, OPHTHALMIC, OTIC, NASAL, RECTAL, UNSPECIFIED;
 
     public static final Creator<AdministrationRoute> CREATOR = new Creator<AdministrationRoute>() {
         @Override

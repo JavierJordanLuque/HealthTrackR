@@ -19,4 +19,6 @@
     <dimen name="text_view_value_padding_start">15dp</dimen>
 
     <dimen name="floating_button_layout_margin">16dp</dimen>
+
+    <dimen name="spinner_height">55dp</dimen>
 </resources>

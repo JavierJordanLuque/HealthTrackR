@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public enum Gender implements Parcelable {
-    MALE, FEMALE;
+    MALE, FEMALE, UNSPECIFIED;
 
     public static final Creator<Gender> CREATOR = new Creator<Gender>() {
         @Override

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_yes">Sí</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_accept">Aceptar</string>
+    <string name="dialog_cancel">Cancelar</string>
+
+    <string name="unspecified">Sin especificar</string>
+</resources>

@@ -19,7 +19,9 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class User implements Identifiable, Parcelable {
     private long id;
@@ -61,49 +63,53 @@ public class User implements Identifiable, Parcelable {
             setBirthDate(birthDate);
             user.setBirthDate(this.birthDate);
         }
+
         if ((this.gender == null && gender != null ) || (gender != null && !this.gender.equals(gender))) {
             setGender(gender);
             user.setGender(this.gender);
         }
+
         if ((this.bloodType == null && bloodType != null ) || (bloodType != null && !this.bloodType.equals(bloodType))) {
             setBloodType(bloodType);
             user.setBloodType(this.bloodType);
         }
 
+        if (!(user.firstName == null && user.lastName == null && user.birthDate == null && user.gender == null && user.bloodType == null)) {
+            UserRepository userRepository = new UserRepository(context);
+            userRepository.update(user);
+        }
+
         AllergyRepository allergyRepository = new AllergyRepository(context);
-        for (Allergy allergy : this.allergies) {
+        Iterator<Allergy> allergyIterator = this.allergies.iterator();
+        while (allergyIterator.hasNext()) {
+            Allergy allergy = allergyIterator.next();
             if (!allergies.contains(allergy)) {
                 allergyRepository.delete(allergy);
-                removeAllergy(allergy);
+                allergyIterator.remove();
             }
         }
         for (Allergy allergy : allergies) {
             if (!this.allergies.contains(allergy)) {
                 allergy.setId(allergyRepository.insert(allergy));
                 addAllergy(allergy);
-                user.setAllergies(new ArrayList<>());
-                user.addAllergy(allergy);
             }
         }
 
         PreviousMedicalConditionRepository previousMedicalConditionRepository = new PreviousMedicalConditionRepository(context);
-        for (PreviousMedicalCondition condition : this.conditions) {
+        Iterator<PreviousMedicalCondition> conditionIterator = this.conditions.iterator();
+        while (conditionIterator.hasNext()) {
+            PreviousMedicalCondition condition = conditionIterator.next();
             if (!conditions.contains(condition)) {
                 previousMedicalConditionRepository.delete(condition);
-                removeCondition(condition);
+                conditionIterator.remove();
             }
         }
         for (PreviousMedicalCondition condition : conditions) {
             if (!this.conditions.contains(condition)) {
                 condition.setId(previousMedicalConditionRepository.insert(condition));
                 addCondition(condition);
-                user.setConditions(new ArrayList<>());
-                user.addCondition(condition);
             }
         }
-
-        UserRepository userRepository = new UserRepository(context);
-        userRepository.update(user);
     }
 
     public void changePassword(Context context, String currentPassword, String newPassword) {
@@ -232,7 +238,7 @@ public class User implements Identifiable, Parcelable {
     }
 
     public List<PreviousMedicalCondition> getConditions(Context context) throws DBFindException {
-        if (allergies == null) {
+        if (conditions == null) {
             PreviousMedicalConditionRepository previousMedicalConditionRepository = new PreviousMedicalConditionRepository(context);
             setConditions(previousMedicalConditionRepository.findUserConditions(this.id));
         }
@@ -257,6 +263,24 @@ public class User implements Identifiable, Parcelable {
         this.treatments = treatments;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        return id == user.id &&
+                email.equals(user.email) &&
+                firstName.equals(user.firstName) &&
+                lastName.equals(user.lastName) &&
+                Objects.equals(birthDate, user.birthDate) &&
+                gender == user.gender &&
+                bloodType == user.bloodType;
+    }
+
     protected User(Parcel in) {
         id = in.readLong();
         email = in.readString();
@@ -265,9 +289,6 @@ public class User implements Identifiable, Parcelable {
         birthDate = (LocalDate) in.readSerializable();
         gender = in.readParcelable(Gender.class.getClassLoader());
         bloodType = in.readParcelable(BloodType.class.getClassLoader());
-        allergies = in.createTypedArrayList(Allergy.CREATOR);
-        conditions = in.createTypedArrayList(PreviousMedicalCondition.CREATOR);
-        treatments = in.createTypedArrayList(Treatment.CREATOR);
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
@@ -291,9 +312,6 @@ public class User implements Identifiable, Parcelable {
         dest.writeSerializable(birthDate);
         dest.writeParcelable(gender, flags);
         dest.writeParcelable(bloodType, flags);
-        dest.writeTypedList(allergies);
-        dest.writeTypedList(conditions);
-        dest.writeTypedList(treatments);
     }
 
     @Override

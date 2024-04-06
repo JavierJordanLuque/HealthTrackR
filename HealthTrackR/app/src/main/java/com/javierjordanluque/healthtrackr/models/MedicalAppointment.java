@@ -15,6 +15,7 @@ import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentN
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 public class MedicalAppointment implements Identifiable, Parcelable {
     private long id;
@@ -152,13 +153,26 @@ public class MedicalAppointment implements Identifiable, Parcelable {
         this.notification = notification;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        MedicalAppointment medicalAppointment = (MedicalAppointment) obj;
+        return id == medicalAppointment.id &&
+                Objects.equals(treatment, medicalAppointment.treatment) &&
+                Objects.equals(purpose, medicalAppointment.purpose) &&
+                Objects.equals(dateTime, medicalAppointment.dateTime) &&
+                Objects.equals(location, medicalAppointment.location);
+    }
+
     protected MedicalAppointment(Parcel in) {
         id = in.readLong();
         treatment = in.readParcelable(Treatment.class.getClassLoader());
         purpose = in.readString();
         dateTime = ZonedDateTime.parse(in.readString());
         location = in.readParcelable(Location.class.getClassLoader());
-        notification = in.readParcelable(MedicalAppointmentNotification.class.getClassLoader());
     }
 
     public static final Creator<MedicalAppointment> CREATOR = new Creator<MedicalAppointment>() {
@@ -180,7 +194,6 @@ public class MedicalAppointment implements Identifiable, Parcelable {
         dest.writeString(purpose);
         dest.writeString(dateTime.toString());
         dest.writeParcelable(location, flags);
-        dest.writeParcelable(notification, flags);
     }
 
     @Override

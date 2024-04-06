@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">HealthTrackR</string>
     <string name="snackbar_ok" translatable="false">@android:string/ok</string>
+
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_accept">Accept</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <string name="unspecified">Unspecified</string>
 </resources>

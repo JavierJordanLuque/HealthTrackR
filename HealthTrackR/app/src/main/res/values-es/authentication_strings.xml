@@ -7,10 +7,10 @@
     <string name="authentication_signup">Registro</string>
     <string name="authentication_remember">Recuérdame</string>
     <string name="authentication_create_account">Crear cuenta</string>
-    <string name="authentication_email">Correo electrónico</string>
-    <string name="authentication_password">Contraseña</string>
+    <string name="authentication_email">Correo electrónico *</string>
+    <string name="authentication_password">Contraseña *</string>
     <string name="authentication_password_requirements">La contraseña debe tener entre 8 y 60 caracteres, incluyendo: letras mayúsculas, letras minúsculas, números y caracteres especiales</string>
-    <string name="authentication_repeat_password">Repetir contraseña</string>
-    <string name="authentication_first_name">Nombre</string>
-    <string name="authentication_last_name">Apellidos</string>
+    <string name="authentication_repeat_password">Repetir contraseña *</string>
+    <string name="authentication_first_name">Nombre *</string>
+    <string name="authentication_last_name">Apellidos *</string>
 </resources>

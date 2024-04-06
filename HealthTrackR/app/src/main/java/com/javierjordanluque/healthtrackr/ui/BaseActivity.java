@@ -18,9 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
+import com.javierjordanluque.healthtrackr.models.PreviousMedicalCondition;
+import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.NavigationUtils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -31,6 +36,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract int getMenu();
+
+    protected abstract User getUser();
 
     protected abstract void handleBackButtonAction();
 
@@ -61,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             NavigationUtils.openUserManual(this);
             return true;
         } else if (itemId == R.id.menuSignOut) {
-            //AuthenticationService.logout(user);
+            AuthenticationService.logout(getUser());
             AuthenticationService.clearCredentials(this);
 
             Intent intent = new Intent(this, AuthenticationActivity.class);
@@ -102,5 +109,22 @@ public abstract class BaseActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+
+    public String showFormattedList(List<String> list) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < list.size(); i++) {
+            stringBuilder.append(list.get(i));
+            if (i < list.size() - 1)
+                stringBuilder.append(", ");
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public String showFormattedDate(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatter);
     }
 }

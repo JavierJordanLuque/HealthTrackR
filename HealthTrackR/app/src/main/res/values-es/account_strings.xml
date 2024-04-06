@@ -4,17 +4,38 @@
 
     <string name="account_email">Correo electrónico</string>
     <string name="account_first_name">Nombre</string>
+    <string name="account_first_name_form">Nombre *</string>
     <string name="account_last_name">Apellidos</string>
+    <string name="account_last_name_form">Apellidos *</string>
     <string name="account_birth_date">Fecha de nacimiento</string>
     <string name="account_gender">Género</string>
     <string name="account_blood_type">Grupo sanguíneo</string>
     <string name="account_allergies">Alergias</string>
     <string name="account_previous_medical_conditions">Condiciones médicas previas</string>
     <string name="account_sign_out">Cerrar sesión</string>
-    <string name="account_delete">Eliminar cuenta</string>
 
-    <string name="account_unspecified">Sin especificar</string>
+    <string name="account_delete">Eliminar cuenta</string>
+    <string name="account_delete_confirmation">¿Estás seguro de eliminar tu cuenta?</string>
 
     <string name="account_modify_title">Modificación de cuenta</string>
+    <string name="account_modify_select_birth_date">Seleccionar fecha de nacimiento</string>
+    <string-array name="gender_options">
+        <item>Masculino</item>
+        <item>Femenino</item>
+        <item>Sin especificar</item>
+    </string-array>
+    <string-array name="blood_type_options">
+    <item>A+</item>
+    <item>A-</item>
+    <item>B+</item>
+    <item>B-</item>
+    <item>AB+</item>
+    <item>AB-</item>
+    <item>O+</item>
+    <item>O-</item>
+    <item>Sin especificar</item>
+    </string-array>
+    <string name="account_allergies_helper">Introduce tus alergias separadas por comas (,)</string>
+    <string name="account_previous_medical_condition_helper">Introduce tus condiciones médicas previas separadas por comas (,)</string>
     <string name="account_save">Guardar</string>
 </resources>

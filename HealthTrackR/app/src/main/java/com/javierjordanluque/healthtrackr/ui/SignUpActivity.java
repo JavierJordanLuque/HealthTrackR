@@ -18,16 +18,16 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import java.util.Objects;
 
 public class SignUpActivity extends BaseActivity {
-    private TextInputLayout emailLayout;
-    private TextInputLayout passwordLayout;
-    private TextInputLayout repeatPasswordLayout;
-    private TextInputLayout firstNameLayout;
-    private TextInputLayout lastNameLayout;
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    private EditText repeatPasswordEditText;
-    private EditText firstNameEditText;
-    private EditText lastNameEditText;
+    private TextInputLayout layoutEmail;
+    private TextInputLayout layoutPassword;
+    private TextInputLayout layoutRepeatPassword;
+    private TextInputLayout layoutFirstName;
+    private TextInputLayout layoutLastName;
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private EditText editTextRepeatPassword;
+    private EditText editTextFirstName;
+    private EditText editTextLastName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,38 +36,38 @@ public class SignUpActivity extends BaseActivity {
         setUpToolbar(getString(R.string.authentication_signup));
         showBackButton(true);
 
-        emailLayout = findViewById(R.id.layoutEmail);
-        emailEditText = findViewById(R.id.editTextEmail);
-        setEditTextListener(emailLayout, emailEditText);
+        layoutEmail = findViewById(R.id.layoutEmail);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        setEditTextListener(layoutEmail, editTextEmail);
 
-        passwordLayout = findViewById(R.id.layoutPassword);
-        passwordEditText = findViewById(R.id.editTextPassword);
-        setEditTextListener(passwordLayout, passwordEditText);
+        layoutPassword = findViewById(R.id.layoutPassword);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        setEditTextListener(layoutPassword, editTextPassword);
 
-        repeatPasswordLayout = findViewById(R.id.layoutRepeatPassword);
-        repeatPasswordEditText = findViewById(R.id.editTextRepeatPassword);
-        setEditTextListener(repeatPasswordLayout, repeatPasswordEditText);
+        layoutRepeatPassword = findViewById(R.id.layoutRepeatPassword);
+        editTextRepeatPassword = findViewById(R.id.editTextRepeatPassword);
+        setEditTextListener(layoutRepeatPassword, editTextRepeatPassword);
 
-        firstNameLayout = findViewById(R.id.layoutFirstName);
-        firstNameEditText = findViewById(R.id.editTextFirstName);
-        setEditTextListener(firstNameLayout, firstNameEditText);
+        layoutFirstName = findViewById(R.id.layoutFirstName);
+        editTextFirstName = findViewById(R.id.editTextFirstName);
+        setEditTextListener(layoutFirstName, editTextFirstName);
 
-        lastNameLayout = findViewById(R.id.layoutLastName);
-        lastNameEditText = findViewById(R.id.editTextLastName);
-        setEditTextListener(lastNameLayout, lastNameEditText);
+        layoutLastName = findViewById(R.id.layoutLastName);
+        editTextLastName = findViewById(R.id.editTextLastName);
+        setEditTextListener(layoutLastName, editTextLastName);
 
-        Button createAccountButton = findViewById(R.id.buttonCreateAccount);
-        createAccountButton.setOnClickListener(this::signUp);
+        Button buttonCreateAccount = findViewById(R.id.buttonCreateAccount);
+        buttonCreateAccount.setOnClickListener(this::signUp);
     }
 
     public void signUp(View view) {
         hideKeyboard(this);
 
-        String email = emailEditText.getText().toString().trim();
-        String password = passwordEditText.getText().toString().trim();
-        String repeatPassword = repeatPasswordEditText.getText().toString().trim();
-        String firstName = firstNameEditText.getText().toString().trim();
-        String lastName = lastNameEditText.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        String repeatPassword = editTextRepeatPassword.getText().toString().trim();
+        String firstName = editTextFirstName.getText().toString().trim();
+        String lastName = editTextLastName.getText().toString().trim();
 
         boolean validEmail = isValidEmail(email);
         boolean validPassword = isValidPassword(password);
@@ -77,15 +77,15 @@ public class SignUpActivity extends BaseActivity {
 
         if (!validEmail || !validPassword || !validRepeatPassword || !validFirstName || !validLastName) {
             if (!validEmail)
-                emailLayout.setError(getString(R.string.error_invalid_email));
+                layoutEmail.setError(getString(R.string.error_invalid_email));
             if (!validPassword)
-                passwordLayout.setError(getString(R.string.error_invalid_password));
+                layoutPassword.setError(getString(R.string.error_invalid_password));
             if (!validRepeatPassword)
-                repeatPasswordLayout.setError(getString(R.string.error_invalid_repeat_password));
+                layoutRepeatPassword.setError(getString(R.string.error_invalid_repeat_password));
             if (!validFirstName)
-                firstNameLayout.setError(getString(R.string.error_invalid_first_name));
+                layoutFirstName.setError(getString(R.string.error_invalid_first_name));
             if (!validLastName)
-                lastNameLayout.setError(getString(R.string.error_invalid_last_name));
+                layoutLastName.setError(getString(R.string.error_invalid_last_name));
 
             return;
         }
@@ -100,9 +100,9 @@ public class SignUpActivity extends BaseActivity {
         } catch (AuthenticationException exception) {
             if (Objects.equals(exception.getMessage(), getString(R.string.error_existing_email)) ||
                     Objects.equals(exception.getMessage(), getString(R.string.error_invalid_email_requirements))) {
-                emailLayout.setError(exception.getMessage());
+                layoutEmail.setError(exception.getMessage());
             } else if (Objects.equals(exception.getMessage(), getString(R.string.authentication_password_requirements))) {
-                passwordLayout.setError(exception.getMessage());
+                layoutPassword.setError(exception.getMessage());
             } else {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
             }
@@ -132,6 +132,11 @@ public class SignUpActivity extends BaseActivity {
     @Override
     protected int getMenu() {
         return R.menu.toolbar_basic_menu;
+    }
+
+    @Override
+    protected User getUser() {
+        return null;
     }
 
     @Override

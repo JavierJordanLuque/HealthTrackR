@@ -67,7 +67,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutFirstName"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        app:errorEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextFirstName"
@@ -75,13 +76,14 @@
                             android:layout_height="wrap_content"
                             android:maxLength="50"
                             android:autofillHints="name"
-                            android:hint="@string/account_first_name"
+                            android:hint="@string/account_first_name_form"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutLastName"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        app:errorEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextLastName"
@@ -89,7 +91,7 @@
                             android:layout_height="wrap_content"
                             android:maxLength="50"
                             android:autofillHints="name"
-                            android:hint="@string/account_last_name"
+                            android:hint="@string/account_last_name_form"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,38 +104,47 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/account_birth_date"
-                            android:focusable="false"
-                            android:clickable="true"
-                            android:inputType="none"
-                            android:focusableInTouchMode="false"
-                            android:onClick="showDatePickerDialog" />
+                            android:inputType="date"
+                            android:focusableInTouchMode="false" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutGender"
                         style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
 
-                        <Spinner
-                            android:id="@+id/spinnerGender"
+                        <TextView
+                            android:id="@+id/textViewGenderLabel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/account_gender" />
+                            android:text="@string/account_gender"/>
+
+                        <Spinner
+                            android:id="@+id/spinnerGender"
+                            style="@style/Widget.HealthTrackR.Spinner.Filled"/>
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutBloodType"
                         style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
 
-                        <Spinner
-                            android:id="@+id/spinnerBloodType"
+                        <TextView
+                            android:id="@+id/textViewBloodTypeLabel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/account_blood_type" />
+                            android:text="@string/account_blood_type"/>
+
+                        <Spinner
+                            android:id="@+id/spinnerBloodType"
+                            style="@style/Widget.HealthTrackR.Spinner.Filled"/>
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutAllergies"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        app:helperText="@string/account_allergies_helper"
+                        app:helperTextEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextAllergies"
@@ -146,7 +157,9 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutPreviousMedicalConditions"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        app:helperText="@string/account_previous_medical_condition_helper"
+                        app:helperTextEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextPreviousMedicalConditions"
@@ -183,7 +196,7 @@
                     app:layout_constraintWidth_max="@dimen/large_btn_max_width">
 
                     <Button
-                        android:id="@+id/buttonCreateAccount"
+                        android:id="@+id/buttonSave"
                         style="@style/Widget.HealthTrackR.LargeButton.Form"
                         android:layout_marginTop="0dp"
                         android:text="@string/account_save" />

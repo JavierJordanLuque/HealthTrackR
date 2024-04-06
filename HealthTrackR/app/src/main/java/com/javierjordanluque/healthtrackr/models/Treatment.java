@@ -19,6 +19,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Treatment implements Identifiable, Parcelable {
     private long id;
@@ -278,6 +279,24 @@ public class Treatment implements Identifiable, Parcelable {
         this.appointments = appointments;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Treatment treatment = (Treatment) obj;
+        return id == treatment.id &&
+                Objects.equals(user, treatment.user) &&
+                Objects.equals(title, treatment.title) &&
+                Objects.equals(startDate, treatment.startDate) &&
+                Objects.equals(endDate, treatment.endDate) &&
+                Objects.equals(diagnosis, treatment.diagnosis) &&
+                category == treatment.category;
+    }
+
     protected Treatment(Parcel in) {
         id = in.readLong();
         user = in.readParcelable(User.class.getClassLoader());
@@ -285,12 +304,7 @@ public class Treatment implements Identifiable, Parcelable {
         startDate = (ZonedDateTime) in.readSerializable();
         endDate = (ZonedDateTime) in.readSerializable();
         diagnosis = in.readString();
-        category = TreatmentCategory.valueOf(in.readString());
-        medicines = in.createTypedArrayList(Medicine.CREATOR);
-        steps = in.createTypedArrayList(Step.CREATOR);
-        symptoms = in.createTypedArrayList(Symptom.CREATOR);
-        questions = in.createTypedArrayList(Question.CREATOR);
-        appointments = in.createTypedArrayList(MedicalAppointment.CREATOR);
+        category = in.readParcelable(TreatmentCategory.class.getClassLoader());
     }
 
     public static final Creator<Treatment> CREATOR = new Creator<Treatment>() {
@@ -313,12 +327,7 @@ public class Treatment implements Identifiable, Parcelable {
         dest.writeSerializable(startDate);
         dest.writeSerializable(endDate);
         dest.writeString(diagnosis);
-        dest.writeString(category.name());
-        dest.writeTypedList(medicines);
-        dest.writeTypedList(steps);
-        dest.writeTypedList(symptoms);
-        dest.writeTypedList(questions);
-        dest.writeTypedList(appointments);
+        dest.writeParcelable(category, flags);
     }
 
     @Override

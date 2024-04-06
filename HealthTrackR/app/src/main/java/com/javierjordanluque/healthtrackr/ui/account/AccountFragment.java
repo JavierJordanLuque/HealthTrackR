@@ -1,5 +1,6 @@
 package com.javierjordanluque.healthtrackr.ui.account;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountFragment extends Fragment {
@@ -64,34 +66,35 @@ public class AccountFragment extends Fragment {
             LocalDate birthDate = user.getBirthDate();
             if (birthDate != null) {
                 TextView textViewBirthDate = fragmentView.findViewById(R.id.textViewBirthDate);
-                textViewBirthDate.setText(birthDate.toString());
+                textViewBirthDate.setText(((MainActivity) requireActivity()).showFormattedDate(birthDate));
             }
 
             Gender gender = user.getGender();
             if (gender != null) {
+                String[] genderOptions = getResources().getStringArray(R.array.gender_options);
+                String genderString = genderOptions[gender.ordinal()];
                 TextView textViewGender = fragmentView.findViewById(R.id.textViewGender);
-                textViewGender.setText(gender.name());
+                textViewGender.setText(genderString);
             }
 
             BloodType bloodType = user.getBloodType();
             if (bloodType != null) {
+                String[] bloodTypeOptions = getResources().getStringArray(R.array.blood_type_options);
+                String bloodTypeString = bloodTypeOptions[bloodType.ordinal()];
                 TextView textViewBloodType = fragmentView.findViewById(R.id.textViewBloodType);
-                textViewBloodType.setText(bloodType.name());
+                textViewBloodType.setText(bloodTypeString);
             }
 
             try {
                 List<Allergy> allergies = user.getAllergies(requireActivity());
 
                 if (allergies != null && !allergies.isEmpty()) {
-                    StringBuilder allergiesStringBuilder = new StringBuilder();
-
+                    List<String> allergiesNames = new ArrayList<>();
                     for (Allergy allergy : allergies)
-                        allergiesStringBuilder.append(allergy.getName()).append(", ");
-
-                    allergiesStringBuilder.deleteCharAt(allergiesStringBuilder.length() - 2);
+                        allergiesNames.add(allergy.getName());
 
                     TextView textViewAllergies = fragmentView.findViewById(R.id.textViewAllergies);
-                    textViewAllergies.setText(allergiesStringBuilder.toString());
+                    textViewAllergies.setText(((MainActivity) requireActivity()).showFormattedList(allergiesNames));
                 }
             } catch (DBFindException exception) {
                 ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
@@ -101,15 +104,12 @@ public class AccountFragment extends Fragment {
                 List<PreviousMedicalCondition> conditions = user.getConditions(requireActivity());
 
                 if (conditions != null && !conditions.isEmpty()) {
-                    StringBuilder conditionsStringBuilder = new StringBuilder();
-
+                    List<String> conditionsNames = new ArrayList<>();
                     for (PreviousMedicalCondition condition : conditions)
-                        conditionsStringBuilder.append(condition.getName()).append(", ");
-
-                    conditionsStringBuilder.deleteCharAt(conditionsStringBuilder.length() - 2);
+                        conditionsNames.add(condition.getName());
 
                     TextView textViewPreviousMedicalConditions = fragmentView.findViewById(R.id.textViewPreviousMedicalConditions);
-                    textViewPreviousMedicalConditions.setText(conditionsStringBuilder.toString());
+                    textViewPreviousMedicalConditions.setText(((MainActivity) requireActivity()).showFormattedList(conditionsNames));
                 }
             } catch (DBFindException exception) {
                 ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
@@ -139,19 +139,31 @@ public class AccountFragment extends Fragment {
 
         Button buttonDeleteAccount = fragmentView.findViewById(R.id.buttonDeleteAccount);
         buttonDeleteAccount.setOnClickListener(view -> {
-            try {
-                user.deleteUser(requireActivity());
-                AuthenticationService.logout(user);
-                AuthenticationService.clearCredentials(requireActivity());
-
-                Intent intent = new Intent(requireActivity(), AuthenticationActivity.class);
-                startActivity(intent);
-            } catch (DBDeleteException exception) {
-                ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
-            }
+            showConfirmationDialog();
         });
 
         return fragmentView;
+    }
+
+    private void showConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setMessage(getString(R.string.account_delete_confirmation))
+                .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
+                    try {
+                        user.deleteUser(requireActivity());
+                        AuthenticationService.logout(user);
+                        AuthenticationService.clearCredentials(requireActivity());
+
+                        Intent intent = new Intent(requireActivity(), AuthenticationActivity.class);
+                        startActivity(intent);
+                    } catch (DBDeleteException exception) {
+                        ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
+                    }
+                })
+                .setNegativeButton(getString(R.string.dialog_no), (dialog, id) -> {
+                    dialog.dismiss();
+                });
+        builder.create().show();
     }
 
     @Override

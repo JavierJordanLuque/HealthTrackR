@@ -101,6 +101,11 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
     }
 
     @Override
+    protected User getUser() {
+        return user;
+    }
+
+    @Override
     protected void handleBackButtonAction() {
     }
 }

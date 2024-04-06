@@ -19,6 +19,7 @@ import com.javierjordanluque.healthtrackr.util.notifications.NotificationSchedul
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class Medicine implements Identifiable, Parcelable {
     private long id;
@@ -249,6 +250,24 @@ public class Medicine implements Identifiable, Parcelable {
         this.notifications = notifications;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Medicine medicine = (Medicine) obj;
+        return id == medicine.id &&
+                Objects.equals(treatment, medicine.treatment) &&
+                Objects.equals(name, medicine.name) &&
+                Objects.equals(activeSubstance, medicine.activeSubstance) &&
+                Objects.equals(dose, medicine.dose) &&
+                administrationRoute == medicine.administrationRoute &&
+                Objects.equals(initialDosingTime, medicine.initialDosingTime) &&
+                Objects.equals(dosageFrequencyHours, medicine.dosageFrequencyHours) &&
+                Objects.equals(dosageFrequencyMinutes, medicine.dosageFrequencyMinutes);
+    }
+
     protected Medicine(Parcel in) {
         id = in.readLong();
         treatment = in.readParcelable(Treatment.class.getClassLoader());
@@ -256,10 +275,9 @@ public class Medicine implements Identifiable, Parcelable {
         activeSubstance = in.readString();
         dose = (Integer) in.readSerializable();
         administrationRoute = in.readParcelable(AdministrationRoute.class.getClassLoader());
-        initialDosingTime = ZonedDateTime.parse(in.readString());
+        initialDosingTime = (ZonedDateTime) in.readSerializable();
         dosageFrequencyHours = in.readInt();
         dosageFrequencyMinutes = in.readInt();
-        notifications = in.createTypedArrayList(MedicationNotification.CREATOR);
     }
 
     public static final Creator<Medicine> CREATOR = new Creator<Medicine>() {
@@ -282,10 +300,9 @@ public class Medicine implements Identifiable, Parcelable {
         dest.writeString(activeSubstance);
         dest.writeSerializable(dose);
         dest.writeParcelable(administrationRoute, flags);
-        dest.writeString(initialDosingTime.toString());
+        dest.writeSerializable(initialDosingTime);
         dest.writeInt(dosageFrequencyHours);
         dest.writeInt(dosageFrequencyMinutes);
-        dest.writeTypedList(notifications);
     }
 
     @Override

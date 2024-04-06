@@ -7,11 +7,10 @@
     <string name="authentication_signup">Sign up</string>
     <string name="authentication_remember">Remember me</string>
     <string name="authentication_create_account">Create account</string>
-    <string name="authentication_email">Email</string>
-    <string name="authentication_email_suffix" translatable="false">/@gmail.com</string>
-    <string name="authentication_password">Password</string>
+    <string name="authentication_email">Email *</string>
+    <string name="authentication_password">Password *</string>
     <string name="authentication_password_requirements">The password must contain between 8 and 60 characters, including: uppercase letters, lowercase letters, numbers, and special characters</string>
-    <string name="authentication_repeat_password">Repeat password</string>
-    <string name="authentication_first_name">First name</string>
-    <string name="authentication_last_name">Last name</string>
+    <string name="authentication_repeat_password">Repeat password *</string>
+    <string name="authentication_first_name">First name *</string>
+    <string name="authentication_last_name">Last name *</string>
 </resources>

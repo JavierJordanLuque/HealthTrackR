@@ -12,6 +12,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Step implements Identifiable, Parcelable {
     private long id;
@@ -118,13 +119,26 @@ public class Step implements Identifiable, Parcelable {
         this.multimedias = multimedias;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Step step = (Step) obj;
+        return id == step.id &&
+                Objects.equals(treatment, step.treatment) &&
+                Objects.equals(title, step.title) &&
+                Objects.equals(description, step.description) &&
+                Objects.equals(numOrder, step.numOrder);
+    }
+
     protected Step(Parcel in) {
         id = in.readLong();
         treatment = in.readParcelable(Treatment.class.getClassLoader());
         title = in.readString();
         description = in.readString();
         numOrder = in.readInt();
-        multimedias = in.createTypedArrayList(Multimedia.CREATOR);
     }
 
     public static final Creator<Step> CREATOR = new Creator<Step>() {
@@ -146,7 +160,6 @@ public class Step implements Identifiable, Parcelable {
         dest.writeString(title);
         dest.writeString(description);
         dest.writeInt(numOrder);
-        dest.writeTypedList(multimedias);
     }
 
     @Override

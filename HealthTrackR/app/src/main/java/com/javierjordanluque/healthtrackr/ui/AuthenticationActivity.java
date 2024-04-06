@@ -40,14 +40,14 @@ public class AuthenticationActivity extends AppCompatActivity {
             }
         }
 
-        Button logInButton = findViewById(R.id.buttonLogIn);
-        logInButton.setOnClickListener((view) -> {
+        Button buttonLogIn = findViewById(R.id.buttonLogIn);
+        buttonLogIn.setOnClickListener((view) -> {
             Intent intent = new Intent(AuthenticationActivity.this, LogInActivity.class);
             startActivity(intent);
         });
 
-        Button signUpButton = findViewById(R.id.buttonSignUp);
-        signUpButton.setOnClickListener((view) -> {
+        Button buttonSignUp = findViewById(R.id.buttonSignUp);
+        buttonSignUp.setOnClickListener((view) -> {
             Intent intent = new Intent(AuthenticationActivity.this, SignUpActivity.class);
             startActivity(intent);
         });

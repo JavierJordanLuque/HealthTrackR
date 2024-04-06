@@ -20,6 +20,17 @@ public class Location implements Parcelable {
         return longitude;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Location location = (Location) obj;
+        return Double.compare(location.latitude, latitude) == 0 &&
+                Double.compare(location.longitude, longitude) == 0;
+    }
+
     protected Location(Parcel in) {
         latitude = in.readDouble();
         longitude = in.readDouble();

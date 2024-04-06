@@ -20,11 +20,11 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import java.util.Objects;
 
 public class LogInActivity extends BaseActivity {
-    private TextInputLayout emailLayout;
-    private TextInputLayout passwordLayout;
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    private CheckBox rememberCheckBox;
+    private TextInputLayout layoutEmail;
+    private TextInputLayout layoutPassword;
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private CheckBox checkBoxRemember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,34 +33,34 @@ public class LogInActivity extends BaseActivity {
         setUpToolbar(getString(R.string.authentication_login));
         showBackButton(true);
 
-        emailLayout = findViewById(R.id.layoutEmail);
-        emailEditText = findViewById(R.id.editTextEmail);
-        setEditTextListener(emailLayout, emailEditText);
+        layoutEmail = findViewById(R.id.layoutEmail);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        setEditTextListener(layoutEmail, editTextEmail);
 
-        passwordLayout = findViewById(R.id.layoutPassword);
-        passwordEditText = findViewById(R.id.editTextPassword);
-        setEditTextListener(passwordLayout, passwordEditText);
+        layoutPassword = findViewById(R.id.layoutPassword);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        setEditTextListener(layoutPassword, editTextPassword);
 
-        rememberCheckBox = findViewById(R.id.checkBoxRemember);
+        checkBoxRemember = findViewById(R.id.checkBoxRemember);
 
-        Button logInButton = findViewById(R.id.buttonLogIn);
-        logInButton.setOnClickListener(this::logIn);
+        Button buttonLogIn = findViewById(R.id.buttonLogIn);
+        buttonLogIn.setOnClickListener(this::logIn);
     }
 
     public void logIn(View view) {
         hideKeyboard(this);
 
-        String email = emailEditText.getText().toString().trim();
-        String password = passwordEditText.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
 
         boolean validEmail = isValidEmail(email);
         boolean validPassword = isValidPassword(password);
 
         if (!validEmail || !validPassword) {
             if (!validEmail)
-                emailLayout.setError(getString(R.string.error_invalid_email));
+                layoutEmail.setError(getString(R.string.error_invalid_email));
             if (!validPassword)
-                passwordLayout.setError(getString(R.string.error_invalid_password));
+                layoutPassword.setError(getString(R.string.error_invalid_password));
 
             return;
         }
@@ -68,7 +68,7 @@ public class LogInActivity extends BaseActivity {
         try {
             User user = AuthenticationService.login(this, email, password);
 
-            if (rememberCheckBox.isChecked()) {
+            if (checkBoxRemember.isChecked()) {
                 AuthenticationService.saveCredentials(this, email, password);
             } else {
                 AuthenticationService.clearCredentials(this);
@@ -81,9 +81,9 @@ public class LogInActivity extends BaseActivity {
         } catch (AuthenticationException exception) {
             if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_email))) {
                 showIncorrectEmailDialog();
-                emailLayout.setError(exception.getMessage());
+                layoutEmail.setError(exception.getMessage());
             } else if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_password))) {
-                passwordLayout.setError(exception.getMessage());
+                layoutPassword.setError(exception.getMessage());
             } else {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
             }
@@ -114,6 +114,11 @@ public class LogInActivity extends BaseActivity {
     @Override
     protected int getMenu() {
         return R.menu.toolbar_basic_menu;
+    }
+
+    @Override
+    protected User getUser() {
+        return null;
     }
 
     @Override
