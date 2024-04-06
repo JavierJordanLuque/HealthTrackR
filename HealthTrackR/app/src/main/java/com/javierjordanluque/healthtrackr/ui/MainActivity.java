@@ -18,6 +18,10 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
     ActivityMainBinding binding;
     private Fragment currentFragment;
     private final String CURRENT_FRAGMENT = "currentFragment";
+    public static final String FRAGMENT_ID = "fragmentId";
+    public static final int TREATMENTS_FRAGMENT_ID = 1;
+    public static final int CALENDAR_FRAGMENT_ID = 2;
+    public static final int ACCOUNT_FRAGMENT_ID = 3;
     private User user;
 
     @Override
@@ -34,9 +38,30 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
         if (savedInstanceState != null) {
             currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, CURRENT_FRAGMENT);
         } else {
-            currentFragment = new TreatmentsFragment();
+            int fragmentId = getIntent().getIntExtra(FRAGMENT_ID, TREATMENTS_FRAGMENT_ID);
+            switch (fragmentId) {
+                case CALENDAR_FRAGMENT_ID:
+                    currentFragment = new CalendarFragment();
+                    break;
+                case ACCOUNT_FRAGMENT_ID:
+                    currentFragment = new AccountFragment();
+                    break;
+                default:
+                    currentFragment = new TreatmentsFragment();
+                    break;
+            }
         }
         replaceFragment(currentFragment);
+
+        int selectedItem;
+        if (currentFragment instanceof CalendarFragment) {
+            selectedItem = R.id.navigation_calendar;
+        } else if (currentFragment instanceof AccountFragment) {
+            selectedItem = R.id.navigation_account;
+        } else {
+            selectedItem = R.id.navigation_treatments;
+        }
+        binding.navigationView.setSelectedItemId(selectedItem);
 
         binding.navigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();

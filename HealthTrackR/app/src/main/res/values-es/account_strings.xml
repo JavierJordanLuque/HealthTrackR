@@ -15,7 +15,7 @@
     <string name="account_sign_out">Cerrar sesión</string>
 
     <string name="account_delete">Eliminar cuenta</string>
-    <string name="account_delete_confirmation">¿Estás seguro de eliminar tu cuenta?</string>
+    <string name="account_delete_dialog">¿Estás seguro de eliminar tu cuenta?</string>
 
     <string name="account_modify_title">Modificación de cuenta</string>
     <string name="account_modify_select_birth_date">Seleccionar fecha de nacimiento</string>
@@ -38,9 +38,11 @@
     <string name="account_allergies_helper">Introduce tus alergias separadas por comas (,)</string>
     <string name="account_previous_medical_condition_helper">Introduce tus condiciones médicas previas separadas por comas (,)</string>
     <string name="account_save">Guardar</string>
+    <string name="account_save_confirmation">¡Cambios guardados!</string>
 
     <string name="account_change_password">Cambiar contraseña</string>
-    <string name="account_change_password_confirmation">¿Estás seguro de cambiar tu contraseña?</string>
+    <string name="account_change_password_dialog">¿Estás seguro de cambiar tu contraseña?</string>
+    <string name="account_change_password_confirmation">¡Contraseña actualizada!</string>
     <string name="account_password_change">Cambio de contraseña</string>
     <string name="account_current_password">Contraseña actual *</string>
     <string name="account_new_password">Contraseña nueva *</string>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
@@ -77,11 +78,13 @@ public class ChangePasswordActivity extends BaseActivity {
 
     private void showConfirmationDialog(String currentPassword, String newPassword) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.account_change_password_confirmation))
+        builder.setMessage(getString(R.string.account_change_password_dialog))
                 .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
                     try {
                         user.changePassword(this, currentPassword, newPassword);
                         AuthenticationService.clearCredentials(this);
+
+                        Toast.makeText(this, getString(R.string.account_change_password_confirmation), Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(this, ModifyAccountActivity.class);
                         intent.putExtra(User.class.getSimpleName(), user);

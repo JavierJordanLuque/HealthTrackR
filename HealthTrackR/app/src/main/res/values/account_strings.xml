@@ -15,7 +15,7 @@
     <string name="account_sign_out">Sign out</string>
 
     <string name="account_delete">Delete account</string>
-    <string name="account_delete_confirmation">Are you sure you want to delete your account?</string>
+    <string name="account_delete_dialog">Are you sure you want to delete your account?</string>
 
     <string name="account_modify_title">Account modification</string>
     <string name="account_modify_select_birth_date">Select birth date</string>
@@ -38,9 +38,11 @@
     <string name="account_allergies_helper">Enter your allergies separated by commas (,)</string>
     <string name="account_previous_medical_condition_helper">Enter your previous medical conditions separated by commas (,)</string>
     <string name="account_save">Save</string>
+    <string name="account_save_confirmation">Changes applied successfully!</string>
 
     <string name="account_change_password">Change password</string>
-    <string name="account_change_password_confirmation">Are you sure you want to change your password?</string>
+    <string name="account_change_password_dialog">Are you sure you want to change your password?</string>
+    <string name="account_change_password_confirmation">Password updated successfully!</string>
     <string name="account_password_change">Password change</string>
     <string name="account_current_password">Current password *</string>
     <string name="account_new_password">New password *</string>

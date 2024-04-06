@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedDispatcher;
 
@@ -108,7 +109,6 @@ public class ModifyAccountActivity extends BaseActivity {
             Intent intent = new Intent(this, ChangePasswordActivity.class);
             intent.putExtra(User.class.getSimpleName(), user);
             startActivity(intent);
-            finish();
         });
 
         Button buttonSave = findViewById(R.id.buttonSave);
@@ -142,7 +142,10 @@ public class ModifyAccountActivity extends BaseActivity {
         try {
             user.modifyUser(this, firstName, lastName, birthDate, gender, bloodType, allergies, conditions);
 
+            Toast.makeText(this, getString(R.string.account_save_confirmation), Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(MainActivity.FRAGMENT_ID, MainActivity.ACCOUNT_FRAGMENT_ID);
             intent.putExtra(User.class.getSimpleName(), user);
             startActivity(intent);
             finish();
