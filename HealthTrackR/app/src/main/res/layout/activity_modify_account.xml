@@ -118,12 +118,12 @@
                             android:inputType="date" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <FrameLayout
                         android:id="@+id/layoutGender"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
+                        style="@style/SpinnerFrameLayout">
 
                         <TextView
-                            android:id="@+id/textViewGenderLabel"
+                            android:id="@+id/textViewGender"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/account_gender" />
@@ -132,14 +132,14 @@
                             android:id="@+id/spinnerGender"
                             style="@style/Widget.HealthTrackR.Spinner.Filled" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </FrameLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <FrameLayout
                         android:id="@+id/layoutBloodType"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
+                        style="@style/SpinnerFrameLayout">
 
                         <TextView
-                            android:id="@+id/textViewBloodTypeLabel"
+                            android:id="@+id/textViewBloodType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/account_blood_type" />
@@ -148,7 +148,7 @@
                             android:id="@+id/spinnerBloodType"
                             style="@style/Widget.HealthTrackR.Spinner.Filled" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </FrameLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutAllergies"

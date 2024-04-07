@@ -41,7 +41,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/form_margin_top</item>
-        <item name="android:background">?attr/backgroundColor</item>
+        <item name="boxBackgroundColor">?attr/colorSurfaceVariant</item>
     </style>
 
     <style name="Widget.HealthTrackR.TextView" parent="Widget.AppCompat.TextView">
@@ -61,6 +61,17 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/spinner_height</item>
         <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+        <item name="backgroundColor">?attr/colorSurfaceVariant</item>
+        <item name="android:layout_marginTop">@dimen/spinner_layout_margin_top</item>
+    </style>
+
+    <style name="SpinnerFrameLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/form_margin_top</item>
+        <item name="android:paddingTop">@dimen/spinner_layout_padding_top</item>
+        <item name="android:paddingHorizontal">@dimen/spinner_layout_padding_horizontal</item>
+        <item name="android:background">@drawable/spinner_container</item>
     </style>
 
     <style name="Widget.HealthTrackR.SmallButton" parent="Widget.Material3.Button">

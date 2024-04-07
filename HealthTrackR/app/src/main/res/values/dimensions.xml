@@ -21,5 +21,8 @@
 
     <dimen name="floating_button_layout_margin">16dp</dimen>
 
-    <dimen name="spinner_height">55dp</dimen>
+    <dimen name="spinner_height">48dp</dimen>
+    <dimen name="spinner_layout_padding_top">5dp</dimen>
+    <dimen name="spinner_layout_padding_horizontal">10dp</dimen>
+    <dimen name="spinner_layout_margin_top">20dp</dimen>
 </resources>
