@@ -18,12 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
-import com.javierjordanluque.healthtrackr.models.PreviousMedicalCondition;
 import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.NavigationUtils;
+import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
@@ -123,8 +124,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         return stringBuilder.toString();
     }
 
-    public String showFormattedDate(LocalDate date) {
+    public String showFormattedDate(Object date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return date.format(formatter);
+
+        String formattedDate = null;
+        if (date instanceof LocalDate) {
+            LocalDate localDate = (LocalDate) date;
+            formattedDate = localDate.format(formatter);
+        } else if (date instanceof ZonedDateTime) {
+            ZonedDateTime zonedDateTime = (ZonedDateTime) date;
+            formattedDate = zonedDateTime.format(formatter);
+        } else {
+            try {
+                throw new IllegalArgumentException("Failed to format date of an object of type (" + date.getClass().getSimpleName() + ")");
+            } catch (IllegalArgumentException exception) {
+                ExceptionManager.advertiseUI(this, exception.getMessage());
+            }
+        }
+
+        return formattedDate;
     }
 }

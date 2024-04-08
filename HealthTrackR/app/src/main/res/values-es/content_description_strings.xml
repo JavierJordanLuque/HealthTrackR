@@ -8,4 +8,9 @@
     <string name="content_description_hide_password">Ocultar contraseña</string>
 
     <string name="content_description_modify_account">Modificar cuenta</string>
+    <string name="content_description_add_treatment">Añadir tratamiento</string>
+    <string name="content_description_access_treatment">Acceder al tratamiento</string>
+    <string name="content_description_pending_treatment_status">Estado de tratamiento pendiente</string>
+    <string name="content_description_in_progress_treatment_status">Estado de tratamiento en progreso</string>
+    <string name="content_description_finished_treatment_status">Estado de tratamiento terminado</string>
 </resources>

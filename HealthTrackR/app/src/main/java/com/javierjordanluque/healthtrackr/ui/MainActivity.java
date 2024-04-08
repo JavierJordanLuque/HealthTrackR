@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
@@ -51,7 +52,7 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
                     break;
             }
         }
-        replaceFragment(currentFragment);
+        replaceFragment(currentFragment, User.class.getSimpleName(), user);
 
         int selectedItem;
         if (currentFragment instanceof CalendarFragment) {
@@ -72,7 +73,7 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
             } else if (itemId == R.id.navigation_account) {
                 currentFragment = new AccountFragment();
             }
-            replaceFragment(currentFragment);
+            replaceFragment(currentFragment, User.class.getSimpleName(), user);
 
             return true;
         });
@@ -87,7 +88,7 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
                     String fragmentTag = backStackEntry.getName();
                     Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
                     if (fragment != null) {
-                        replaceFragment(fragment);
+                        replaceFragment(fragment, User.class.getSimpleName(), user);
                         fragmentManager.popBackStack();
                         return;
                     }
@@ -104,14 +105,21 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
         getSupportFragmentManager().putFragment(outState, CURRENT_FRAGMENT, currentFragment);
     }
 
-    public void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment fragment, String key, Parcelable parcelable) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(User.class.getSimpleName(), user);
+        bundle.putParcelable(key, parcelable);
         fragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
+    }
+
+    public void addFragmentToBackStack(String backStackName) {
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(backStackName);
         fragmentTransaction.commit();
     }
 

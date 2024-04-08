@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public enum TreatmentCategory implements Parcelable {
-    MEDICAL, PHARMACOLOGICAL, PHYSIOTHERAPY, REHABILITATION, PSYCHOLOGICAL, PREVENTIVE, CHRONIC, ALTERNATIVE, UNSPECIFIED;
+    MEDICAL, PHARMACOLOGICAL, PHYSIOTHERAPY, REHABILITATION, PSYCHOLOGICAL, PREVENTIVE, CHRONIC, ALTERNATIVE;
 
     public static final Creator<TreatmentCategory> CREATOR = new Creator<TreatmentCategory>() {
         @Override

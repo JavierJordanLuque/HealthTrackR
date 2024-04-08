@@ -19,12 +19,12 @@
 
     <string name="account_modify_title">Account modification</string>
     <string name="account_modify_select_birth_date">Select birth date</string>
-    <string-array name="gender_options">
+    <string-array name="account_gender_options">
         <item>Male</item>
         <item>Female</item>
         <item>Unspecified</item>
     </string-array>
-    <string-array name="blood_type_options">
+    <string-array name="account_blood_type_options">
         <item>A+</item>
         <item>A-</item>
         <item>B+</item>

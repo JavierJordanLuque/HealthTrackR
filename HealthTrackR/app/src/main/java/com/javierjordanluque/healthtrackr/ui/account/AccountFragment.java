@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +69,7 @@ public class AccountFragment extends Fragment {
 
             Gender gender = user.getGender();
             if (gender != null) {
-                String[] genderOptions = getResources().getStringArray(R.array.gender_options);
+                String[] genderOptions = getResources().getStringArray(R.array.account_gender_options);
                 String genderString = genderOptions[gender.ordinal()];
                 TextView textViewGender = fragmentView.findViewById(R.id.textViewGender);
                 textViewGender.setText(genderString);
@@ -79,7 +77,7 @@ public class AccountFragment extends Fragment {
 
             BloodType bloodType = user.getBloodType();
             if (bloodType != null) {
-                String[] bloodTypeOptions = getResources().getStringArray(R.array.blood_type_options);
+                String[] bloodTypeOptions = getResources().getStringArray(R.array.account_blood_type_options);
                 String bloodTypeString = bloodTypeOptions[bloodType.ordinal()];
                 TextView textViewBloodType = fragmentView.findViewById(R.id.textViewBloodType);
                 textViewBloodType.setText(bloodTypeString);
@@ -118,10 +116,7 @@ public class AccountFragment extends Fragment {
 
         FloatingActionButton buttonModifyAccount = fragmentView.findViewById(R.id.buttonModifyAccount);
         buttonModifyAccount.setOnClickListener(view -> {
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.addToBackStack(this.getClass().getSimpleName());
-            fragmentTransaction.commit();
+            ((MainActivity) requireActivity()).addFragmentToBackStack(this.getClass().getSimpleName());
 
             Intent intent = new Intent(requireActivity(), ModifyAccountActivity.class);
             intent.putExtra(User.class.getSimpleName(), user);

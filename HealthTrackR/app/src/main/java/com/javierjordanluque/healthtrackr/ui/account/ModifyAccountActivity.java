@@ -169,7 +169,7 @@ public class ModifyAccountActivity extends BaseActivity {
     }
 
     private Gender getGenderFromSpinner() {
-        String[] genderOptions = getResources().getStringArray(R.array.gender_options);
+        String[] genderOptions = getResources().getStringArray(R.array.account_gender_options);
         String selectedGender = spinnerGender.getSelectedItem().toString();
 
         if (selectedGender.equals(genderOptions[0])) {
@@ -182,7 +182,7 @@ public class ModifyAccountActivity extends BaseActivity {
     }
 
     private BloodType getBloodTypeFromSpinner() {
-        String[] bloodTypeOptions = getResources().getStringArray(R.array.blood_type_options);
+        String[] bloodTypeOptions = getResources().getStringArray(R.array.account_blood_type_options);
         String selectedBloodType = spinnerBloodType.getSelectedItem().toString();
 
         if (selectedBloodType.equals(bloodTypeOptions[0])) {
@@ -291,7 +291,7 @@ public class ModifyAccountActivity extends BaseActivity {
     private void configureGenderSpinner() {
         spinnerGender = findViewById(R.id.spinnerGender);
 
-        String[] genderOptions = getResources().getStringArray(R.array.gender_options);
+        String[] genderOptions = getResources().getStringArray(R.array.account_gender_options);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genderOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -308,7 +308,7 @@ public class ModifyAccountActivity extends BaseActivity {
     private void configureBloodTypeSpinner() {
         spinnerBloodType = findViewById(R.id.spinnerBloodType);
 
-        String[] bloodTypeOptions = getResources().getStringArray(R.array.blood_type_options);
+        String[] bloodTypeOptions = getResources().getStringArray(R.array.account_blood_type_options);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypeOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -57,6 +57,14 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="Widget.HealthTrackR.TextView.NoElements" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+        <item name="android:textAlignment">center</item>
+        <item name="layout_constraintWidth_max">@dimen/text_view_max_width</item>
+    </style>
+
     <style name="Widget.HealthTrackR.Spinner.Filled" parent="Widget.AppCompat.Spinner.DropDown">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/spinner_height</item>

@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="treatments_title">Treatments</string>
+    <string name="treatments_empty">You don`t have active treatments. Please add a new treatment</string>
+
+    <string name="treatments_start_date">Start date:</string>
+    <string name="treatments_end_date">End date:</string>
+    <string name="treatments_category">Category:</string>
+    <string-array name="treatments_category_options">
+        <item>Medical</item>
+        <item>Pharmacological</item>
+        <item>Physiotherapy</item>
+        <item>Rehabilitation</item>
+        <item>Psychological</item>
+        <item>Preventive</item>
+        <item>Chronic</item>
+        <item>Alternative</item>
+    </string-array>
+
+    <string name="treatments_pending">Pending</string>
+    <string name="treatments_in_progress">In progress</string>
+    <string name="treatments_finished">Finished</string>
 </resources>

@@ -19,12 +19,12 @@
 
     <string name="account_modify_title">Modificación de cuenta</string>
     <string name="account_modify_select_birth_date">Seleccionar fecha de nacimiento</string>
-    <string-array name="gender_options">
+    <string-array name="account_gender_options">
         <item>Masculino</item>
         <item>Femenino</item>
         <item>Sin especificar</item>
     </string-array>
-    <string-array name="blood_type_options">
+    <string-array name="account_blood_type_options">
     <item>A+</item>
     <item>A-</item>
     <item>B+</item>
