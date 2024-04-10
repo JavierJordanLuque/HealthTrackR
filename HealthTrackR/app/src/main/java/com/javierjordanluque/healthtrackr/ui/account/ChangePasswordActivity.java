@@ -1,7 +1,6 @@
 package com.javierjordanluque.healthtrackr.ui.account;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -85,10 +84,6 @@ public class ChangePasswordActivity extends BaseActivity {
                         AuthenticationService.clearCredentials(this);
 
                         Toast.makeText(this, getString(R.string.account_change_password_confirmation), Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(this, ModifyAccountActivity.class);
-                        intent.putExtra(User.class.getSimpleName(), user);
-                        startActivity(intent);
                         finish();
                     } catch (Exception exception) {
                         dialog.dismiss();

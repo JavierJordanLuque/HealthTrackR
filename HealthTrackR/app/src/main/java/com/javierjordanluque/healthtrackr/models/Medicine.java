@@ -44,9 +44,8 @@ public class Medicine implements Identifiable, Parcelable {
         this.dosageFrequencyHours = dosageFrequencyHours;
         this.dosageFrequencyMinutes = dosageFrequencyMinutes;
 
-        this.treatment.addMedicine(context, this);
-
         if (context != null) {
+            this.treatment.addMedicine(context, this);
             schedulePreviousMedicationNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
             scheduleMedicationNotification(context);
         }
@@ -177,7 +176,7 @@ public class Medicine implements Identifiable, Parcelable {
         return treatment;
     }
 
-    private void setTreatment(Treatment treatment) {
+    public void setTreatment(Treatment treatment) {
         this.treatment = treatment;
     }
 
@@ -241,6 +240,9 @@ public class Medicine implements Identifiable, Parcelable {
         if (notifications == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotifications(notificationRepository.findMedicineNotifications(this.treatment.getId(), this.id));
+        } else {
+            for (MedicationNotification notification : notifications)
+                notification.setMedicine(this);
         }
 
         return notifications;
@@ -270,7 +272,6 @@ public class Medicine implements Identifiable, Parcelable {
 
     protected Medicine(Parcel in) {
         id = in.readLong();
-        treatment = in.readParcelable(Treatment.class.getClassLoader());
         name = in.readString();
         activeSubstance = in.readString();
         dose = (Integer) in.readSerializable();
@@ -278,6 +279,7 @@ public class Medicine implements Identifiable, Parcelable {
         initialDosingTime = (ZonedDateTime) in.readSerializable();
         dosageFrequencyHours = in.readInt();
         dosageFrequencyMinutes = in.readInt();
+        notifications = in.createTypedArrayList(MedicationNotification.CREATOR);
     }
 
     public static final Creator<Medicine> CREATOR = new Creator<Medicine>() {
@@ -295,7 +297,6 @@ public class Medicine implements Identifiable, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
-        dest.writeParcelable(treatment, flags);
         dest.writeString(name);
         dest.writeString(activeSubstance);
         dest.writeSerializable(dose);
@@ -303,6 +304,7 @@ public class Medicine implements Identifiable, Parcelable {
         dest.writeSerializable(initialDosingTime);
         dest.writeInt(dosageFrequencyHours);
         dest.writeInt(dosageFrequencyMinutes);
+        dest.writeTypedList(notifications);
     }
 
     @Override

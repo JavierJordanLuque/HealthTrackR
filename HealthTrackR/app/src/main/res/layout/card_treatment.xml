@@ -29,53 +29,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/vStatusGuideline"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                app:layout_constraintGuide_percent="0.8"
-                android:orientation="vertical">
-
-            </androidx.constraintlayout.widget.Guideline>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/hStatusGuideline"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                app:layout_constraintGuide_percent="0.3"
-                android:orientation="horizontal">
-
-            </androidx.constraintlayout.widget.Guideline>
-
-            <ImageView
-                android:id="@+id/imageViewStatus"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:padding="10dp"
-                app:tint="?attr/colorAccent"
-                app:layout_constraintBottom_toBottomOf="@+id/hStatusGuideline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/vStatusGuideline"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textViewStatus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceLabelLarge"
-                android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@id/imageViewStatus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/vStatusGuideline" />
-
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/vStatusGuideline"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -85,84 +44,49 @@
                     android:textAppearance="?attr/textAppearanceHeadlineMedium"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.HealthTrackR.TextView"
                         android:text="@string/treatments_start_date"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewStartDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:textAppearance="?attr/textAppearanceBodyLarge" />
-                </LinearLayout>
+                        style="@style/Widget.HealthTrackR.TextView.Value"
+                        android:textStyle="normal" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
+                <TextView
+                    style="@style/Widget.HealthTrackR.TextView"
+                    android:text="@string/treatments_end_date"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/treatments_end_date"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textViewEndDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:text="@string/unspecified" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/textViewEndDate"
+                    style="@style/Widget.HealthTrackR.TextView.Value"
+                    android:text="@string/unspecified"
+                    android:textStyle="normal" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="@dimen/text_view_margin_top"
                     android:background="?attr/colorOutlineVariant" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
+                <TextView
+                    style="@style/Widget.HealthTrackR.TextView"
+                    android:text="@string/treatments_category"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/treatments_category"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textViewCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:textAppearance="?attr/textAppearanceBodyLarge" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/textViewCategory"
+                    style="@style/Widget.HealthTrackR.TextView.Value"
+                    android:textStyle="normal" />
 
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageButton
-            android:id="@+id/buttonTreatment"
+            android:id="@+id/imageButtonTreatment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="?attr/colorPrimary"

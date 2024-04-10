@@ -28,7 +28,8 @@ public class Step implements Identifiable, Parcelable {
         this.description = description;
         this.numOrder = numOrder;
 
-        this.treatment.addStep(context, this);
+        if (context != null)
+            this.treatment.addStep(context, this);
     }
 
     private Step(){
@@ -56,10 +57,8 @@ public class Step implements Identifiable, Parcelable {
     }
 
     protected void addMultimedia(Context context, Multimedia multimedia) throws DBInsertException {
-        if (context != null) {
-            MultimediaRepository multimediaRepository = new MultimediaRepository(context);
-            multimedia.setId(multimediaRepository.insert(multimedia));
-        }
+        MultimediaRepository multimediaRepository = new MultimediaRepository(context);
+        multimedia.setId(multimediaRepository.insert(multimedia));
         multimedias.add(multimedia);
     }
 
@@ -80,6 +79,10 @@ public class Step implements Identifiable, Parcelable {
 
     public Treatment getTreatment() {
         return treatment;
+    }
+
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
     }
 
     public String getTitle() {
@@ -110,6 +113,9 @@ public class Step implements Identifiable, Parcelable {
         if (multimedias == null) {
             MultimediaRepository multimediaRepository = new MultimediaRepository(context);
             setMultimedias(multimediaRepository.findStepMultimedias(this.id));
+        } else {
+            for (Multimedia multimedia : multimedias)
+                multimedia.setStep(this);
         }
 
         return multimedias;
@@ -135,10 +141,10 @@ public class Step implements Identifiable, Parcelable {
 
     protected Step(Parcel in) {
         id = in.readLong();
-        treatment = in.readParcelable(Treatment.class.getClassLoader());
         title = in.readString();
         description = in.readString();
         numOrder = in.readInt();
+        multimedias = in.createTypedArrayList(Multimedia.CREATOR);
     }
 
     public static final Creator<Step> CREATOR = new Creator<Step>() {
@@ -156,10 +162,10 @@ public class Step implements Identifiable, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
-        dest.writeParcelable(treatment, flags);
         dest.writeString(title);
         dest.writeString(description);
         dest.writeInt(numOrder);
+        dest.writeTypedList(multimedias);
     }
 
     @Override

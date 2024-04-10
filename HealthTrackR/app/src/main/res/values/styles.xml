@@ -52,9 +52,8 @@
     </style>
 
     <style name="Widget.HealthTrackR.TextView.Value">
-        <item name="android:paddingStart">@dimen/text_view_value_padding_start</item>
+        <item name="android:layout_marginStart">@dimen/text_view_value_margin_start</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="Widget.HealthTrackR.TextView.NoElements" parent="Widget.AppCompat.TextView">
@@ -79,7 +78,14 @@
         <item name="android:layout_marginTop">@dimen/form_margin_top</item>
         <item name="android:paddingTop">@dimen/spinner_layout_padding_top</item>
         <item name="android:paddingHorizontal">@dimen/spinner_layout_padding_horizontal</item>
-        <item name="android:background">@drawable/spinner_container</item>
+    </style>
+
+    <style name="SpinnerFrameLayout.Outlined">
+        <item name="android:background">@drawable/spinner_container_outlined</item>
+    </style>
+
+    <style name="SpinnerFrameLayout.Filled">
+        <item name="android:background">@drawable/spinner_container_filled</item>
     </style>
 
     <style name="Widget.HealthTrackR.SmallButton" parent="Widget.Material3.Button">

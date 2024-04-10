@@ -78,6 +78,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutFirstName"
                         style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        android:layout_marginTop="0dp"
                         app:errorEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -120,7 +121,7 @@
 
                     <FrameLayout
                         android:id="@+id/layoutGender"
-                        style="@style/SpinnerFrameLayout">
+                        style="@style/SpinnerFrameLayout.Filled">
 
                         <TextView
                             android:id="@+id/textViewGender"
@@ -136,7 +137,7 @@
 
                     <FrameLayout
                         android:id="@+id/layoutBloodType"
-                        style="@style/SpinnerFrameLayout">
+                        style="@style/SpinnerFrameLayout.Filled">
 
                         <TextView
                             android:id="@+id/textViewBloodType"
@@ -209,7 +210,7 @@
                         android:id="@+id/buttonSave"
                         style="@style/Widget.HealthTrackR.LargeButton.Form"
                         android:layout_marginTop="0dp"
-                        android:text="@string/account_save" />
+                        android:text="@string/save" />
 
                 </LinearLayout>
 

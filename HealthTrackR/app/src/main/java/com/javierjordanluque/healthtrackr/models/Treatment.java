@@ -43,7 +43,8 @@ public class Treatment implements Identifiable, Parcelable {
         this.diagnosis = diagnosis;
         this.category = category;
 
-        this.user.addTreatment(context, this);
+        if (context != null)
+            this.user.addTreatment(context, this);
     }
 
     private Treatment() {
@@ -79,10 +80,8 @@ public class Treatment implements Identifiable, Parcelable {
     }
 
     protected void addMedicine(Context context, Medicine medicine) throws DBInsertException {
-        if (context != null) {
-            MedicineRepository medicineRepository = new MedicineRepository(context);
-            medicine.setId(medicineRepository.insert(medicine));
-        }
+        MedicineRepository medicineRepository = new MedicineRepository(context);
+        medicine.setId(medicineRepository.insert(medicine));
         medicines.add(medicine);
     }
 
@@ -93,10 +92,8 @@ public class Treatment implements Identifiable, Parcelable {
     }
 
     protected void addStep(Context context, Step step) throws DBInsertException {
-        if (context != null) {
-            StepRepository stepRepository = new StepRepository(context);
-            step.setId(stepRepository.insert(step));
-        }
+        StepRepository stepRepository = new StepRepository(context);
+        step.setId(stepRepository.insert(step));
         steps.add(step);
     }
 
@@ -107,10 +104,8 @@ public class Treatment implements Identifiable, Parcelable {
     }
 
     protected void addSymptom(Context context, Symptom symptom) throws DBInsertException {
-        if (context != null) {
-            SymptomRepository symptomRepository = new SymptomRepository(context);
-            symptom.setId(symptomRepository.insert(symptom));
-        }
+        SymptomRepository symptomRepository = new SymptomRepository(context);
+        symptom.setId(symptomRepository.insert(symptom));
         symptoms.add(symptom);
     }
 
@@ -121,10 +116,8 @@ public class Treatment implements Identifiable, Parcelable {
     }
 
     protected void addQuestion(Context context, Question question) throws DBInsertException {
-        if (context != null) {
-            QuestionRepository questionRepository = new QuestionRepository(context);
-            question.setId(questionRepository.insert(question));
-        }
+        QuestionRepository questionRepository = new QuestionRepository(context);
+        question.setId(questionRepository.insert(question));
         questions.add(question);
     }
 
@@ -135,10 +128,8 @@ public class Treatment implements Identifiable, Parcelable {
     }
 
     protected void addAppointment(Context context, MedicalAppointment appointment) throws DBInsertException {
-        if (context != null) {
-            MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
-            appointment.setId(medicalAppointmentRepository.insert(appointment));
-        }
+        MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
+        appointment.setId(medicalAppointmentRepository.insert(appointment));
         appointments.add(appointment);
     }
 
@@ -172,6 +163,10 @@ public class Treatment implements Identifiable, Parcelable {
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getTitle() {
@@ -218,6 +213,9 @@ public class Treatment implements Identifiable, Parcelable {
         if (medicines == null) {
             MedicineRepository medicineRepository = new MedicineRepository(context);
             setMedicines(medicineRepository.findTreatmentMedicines(this.id));
+        } else {
+            for (Medicine medicine : medicines)
+                medicine.setTreatment(this);
         }
 
         return medicines;
@@ -231,6 +229,9 @@ public class Treatment implements Identifiable, Parcelable {
         if (steps == null) {
             StepRepository stepRepository = new StepRepository(context);
             setSteps(stepRepository.findTreatmentSteps(this.id));
+        } else {
+            for (Step step : steps)
+                step.setTreatment(this);
         }
 
         return steps;
@@ -244,6 +245,9 @@ public class Treatment implements Identifiable, Parcelable {
         if (symptoms == null) {
             SymptomRepository symptomRepository = new SymptomRepository(context);
             setSymptoms(symptomRepository.findTreatmentSymptoms(this.id));
+        } else {
+            for (Symptom symptom : symptoms)
+                symptom.setTreatment(this);
         }
 
         return symptoms;
@@ -257,6 +261,9 @@ public class Treatment implements Identifiable, Parcelable {
         if (questions == null) {
             QuestionRepository questionRepository = new QuestionRepository(context);
             setQuestions(questionRepository.findTreatmentQuestions(this.id));
+        } else {
+            for (Question question : questions)
+                question.setTreatment(this);
         }
 
         return questions;
@@ -270,6 +277,9 @@ public class Treatment implements Identifiable, Parcelable {
         if (appointments == null) {
             MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
             setAppointments(medicalAppointmentRepository.findTreatmentAppointments(this.id));
+        } else {
+            for (MedicalAppointment appointment : appointments)
+                appointment.setTreatment(this);
         }
 
         return appointments;
@@ -299,12 +309,16 @@ public class Treatment implements Identifiable, Parcelable {
 
     protected Treatment(Parcel in) {
         id = in.readLong();
-        user = in.readParcelable(User.class.getClassLoader());
         title = in.readString();
         startDate = (ZonedDateTime) in.readSerializable();
         endDate = (ZonedDateTime) in.readSerializable();
         diagnosis = in.readString();
         category = in.readParcelable(TreatmentCategory.class.getClassLoader());
+        medicines = in.createTypedArrayList(Medicine.CREATOR);
+        steps = in.createTypedArrayList(Step.CREATOR);
+        symptoms = in.createTypedArrayList(Symptom.CREATOR);
+        questions = in.createTypedArrayList(Question.CREATOR);
+        appointments = in.createTypedArrayList(MedicalAppointment.CREATOR);
     }
 
     public static final Creator<Treatment> CREATOR = new Creator<Treatment>() {
@@ -322,12 +336,16 @@ public class Treatment implements Identifiable, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
-        dest.writeParcelable(user, flags);
         dest.writeString(title);
         dest.writeSerializable(startDate);
         dest.writeSerializable(endDate);
         dest.writeString(diagnosis);
         dest.writeParcelable(category, flags);
+        dest.writeTypedList(medicines);
+        dest.writeTypedList(steps);
+        dest.writeTypedList(symptoms);
+        dest.writeTypedList(questions);
+        dest.writeTypedList(appointments);
     }
 
     @Override

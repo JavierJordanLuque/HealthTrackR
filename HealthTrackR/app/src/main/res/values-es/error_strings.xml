@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="error_initializing_app">Ups, algo salió mal mientras se configuraba la aplicación. Por favor, inténtalo de nuevo más tarde.</string>
+    <string name="error_try_again">Volver a intentar</string>
 
     <string name="error_invalid_email">El correo electrónico debe tener entre 5 y 50 caracteres.</string>
     <string name="error_invalid_email_requirements">El correo electrónico no es válido. Por favor, introduce un correo electrónico válido.</string>
@@ -10,10 +11,13 @@
     <string name="error_invalid_password">La contraseña debe tener entre 8 y 60 caracteres.</string>
     <string name="error_incorrect_password">Contraseña incorrecta. Por favor, inténtalo de nuevo.</string>
     <string name="error_invalid_repeat_password">Las contraseñas no coinciden.</string>
-    <string name="error_invalid_first_name">El nombre debe tener entre 5 y 50 caracteres.</string>
-    <string name="error_invalid_last_name">Los apellidos deben tener entre 5 y 50 caracteres.</string>
+    <string name="error_invalid_first_name">El nombre debe tener entre 1 y 50 caracteres.</string>
+    <string name="error_invalid_last_name">Los apellidos deben tener entre 1 y 50 caracteres.</string>
 
-    <string name="error_try_again">Volver a intentar</string>
+    <string name="error_invalid_treatment_title">El título debe contener entre 1 y 50 caracteres.</string>
+    <string name="error_invalid_treatment_start_date">La fecha de inicio no debe estar vacía.</string>
+    <string name="error_invalid_treatment_end_date">La fecha de finalización debe ser posterior a la fecha de inicio.</string>
+    <string name="error_invalid_treatment_diagnosis">El diagnóstico debe contener menos de 200 caracteres.</string>
 
     <string name="error_location_disabled">Por favor, habilita la ubicación para usar esta función</string>
 </resources>

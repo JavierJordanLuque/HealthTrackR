@@ -157,10 +157,8 @@ public class User implements Identifiable, Parcelable {
     }
 
     protected void addTreatment(Context context, Treatment treatment) throws DBInsertException {
-        if (context != null) {
-            TreatmentRepository treatmentRepository = new TreatmentRepository(context);
-            treatment.setId(treatmentRepository.insert(treatment));
-        }
+        TreatmentRepository treatmentRepository = new TreatmentRepository(context);
+        treatment.setId(treatmentRepository.insert(treatment));
         treatments.add(treatment);
     }
 
@@ -247,6 +245,9 @@ public class User implements Identifiable, Parcelable {
         if (allergies == null) {
             AllergyRepository allergyRepository = new AllergyRepository(context);
             setAllergies(allergyRepository.findUserAllergies(this.id));
+        } else {
+            for (Allergy allergy : allergies)
+                allergy.setUser(this);
         }
 
         return allergies;
@@ -260,6 +261,9 @@ public class User implements Identifiable, Parcelable {
         if (conditions == null) {
             PreviousMedicalConditionRepository previousMedicalConditionRepository = new PreviousMedicalConditionRepository(context);
             setConditions(previousMedicalConditionRepository.findUserConditions(this.id));
+        } else {
+            for (PreviousMedicalCondition condition : conditions)
+                condition.setUser(this);
         }
 
         return conditions;
@@ -273,6 +277,9 @@ public class User implements Identifiable, Parcelable {
         if (treatments == null) {
             TreatmentRepository treatmentRepository = new TreatmentRepository(context);
             setTreatments(treatmentRepository.findUserTreatments(this.id));
+        } else {
+            for (Treatment treatment : treatments)
+                treatment.setUser(this);
         }
 
         return treatments;
@@ -308,6 +315,9 @@ public class User implements Identifiable, Parcelable {
         birthDate = (LocalDate) in.readSerializable();
         gender = in.readParcelable(Gender.class.getClassLoader());
         bloodType = in.readParcelable(BloodType.class.getClassLoader());
+        allergies = in.createTypedArrayList(Allergy.CREATOR);
+        conditions = in.createTypedArrayList(PreviousMedicalCondition.CREATOR);
+        treatments = in.createTypedArrayList(Treatment.CREATOR);
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
@@ -331,6 +341,9 @@ public class User implements Identifiable, Parcelable {
         dest.writeSerializable(birthDate);
         dest.writeParcelable(gender, flags);
         dest.writeParcelable(bloodType, flags);
+        dest.writeTypedList(allergies);
+        dest.writeTypedList(conditions);
+        dest.writeTypedList(treatments);
     }
 
     @Override

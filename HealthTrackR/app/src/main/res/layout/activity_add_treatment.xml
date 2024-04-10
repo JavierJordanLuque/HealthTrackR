@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.account.ChangePasswordActivity">
+    tools:context=".ui.treatments.AddTreatmentActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -66,54 +66,76 @@
                     app:layout_constraintWidth_max="@dimen/text_field_max_width">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutCurrentPassword"
+                        android:id="@+id/layoutTitle"
                         style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
-                        android:layout_marginTop="0dp"
-                        app:endIconContentDescription="@string/content_description_show_password"
-                        app:endIconMode="password_toggle">
+                        android:layout_marginTop="0dp">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextCurrentPassword"
+                            android:id="@+id/editTextTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLength="60"
-                            android:autofillHints="password"
-                            android:hint="@string/account_current_password"
-                            android:inputType="textPassword" />
+                            android:autofillHints="text"
+                            android:hint="@string/treatments_title_form"
+                            android:inputType="text"
+                            android:maxLength="50" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutNewPassword"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
-                        app:endIconContentDescription="@string/content_description_show_password"
-                        app:endIconMode="password_toggle"
-                        app:helperText="@string/authentication_password_requirements"
-                        app:helperTextEnabled="true">
+                        android:id="@+id/layoutStartDate"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextNewPassword"
+                            android:id="@+id/editTextStartDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLength="60"
-                            android:autofillHints="password"
-                            android:hint="@string/account_new_password"
-                            android:inputType="textPassword" />
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/treatments_start_date_form"
+                            android:inputType="date" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutRepeatNewPassword"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
-                        app:endIconContentDescription="@string/content_description_show_password"
-                        app:endIconMode="password_toggle">
+                        android:id="@+id/layoutEndDate"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextRepeatNewPassword"
+                            android:id="@+id/editTextEndDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLength="60"
-                            android:autofillHints="password"
-                            android:hint="@string/account_repeat_new_password"
-                            android:inputType="textPassword" />
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/treatments_end_date_form"
+                            android:inputType="date" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <FrameLayout
+                        android:id="@+id/layoutCategory"
+                        style="@style/SpinnerFrameLayout.Outlined">
+
+                        <TextView
+                            android:id="@+id/textViewCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/treatments_category_form" />
+
+                        <Spinner
+                            android:id="@+id/spinnerCategory"
+                            style="@style/Widget.HealthTrackR.Spinner.Filled" />
+
+                    </FrameLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutDiagnosis"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="200">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextDiagnosis"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="text"
+                            android:hint="@string/treatments_diagnosis_form"
+                            android:inputType="textMultiLine"
+                            android:maxLength="200" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -142,10 +164,10 @@
                     app:layout_constraintWidth_max="@dimen/large_btn_max_width">
 
                     <Button
-                        android:id="@+id/buttonChangePassword"
+                        android:id="@+id/buttonAddTreatment"
                         style="@style/Widget.HealthTrackR.LargeButton.Form"
                         android:layout_marginTop="0dp"
-                        android:text="@string/account_change_password" />
+                        android:text="@string/treatments_add_treatment" />
 
                 </LinearLayout>
 

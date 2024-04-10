@@ -1,14 +1,11 @@
 package com.javierjordanluque.healthtrackr.ui.account;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,10 +27,8 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class ModifyAccountActivity extends BaseActivity {
@@ -69,7 +64,7 @@ public class ModifyAccountActivity extends BaseActivity {
         LocalDate birthDate = user.getBirthDate();
         if (birthDate != null)
             editTextBirthDate.setText(showFormattedDate(birthDate));
-        editTextBirthDate.setOnClickListener(view -> showDatePickerDialog());
+        editTextBirthDate.setOnClickListener(view -> showDatePickerDialog(editTextBirthDate, getString(R.string.account_select_birth_date_dialog), true));
 
         configureGenderSpinner();
         configureBloodTypeSpinner();
@@ -133,7 +128,7 @@ public class ModifyAccountActivity extends BaseActivity {
             return;
         }
 
-        LocalDate birthDate = getBirthDateFromEditText();
+        LocalDate birthDate = (LocalDate) getDateFromEditText(editTextBirthDate, LocalDate.class);
         Gender gender = getGenderFromSpinner();
         BloodType bloodType = getBloodTypeFromSpinner();
         List<Allergy> allergies = getAllergiesFromEditText();
@@ -142,7 +137,7 @@ public class ModifyAccountActivity extends BaseActivity {
         try {
             user.modifyUser(this, firstName, lastName, birthDate, gender, bloodType, allergies, conditions);
 
-            Toast.makeText(this, getString(R.string.account_save_confirmation), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.save_confirmation), Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(MainActivity.FRAGMENT_ID, MainActivity.ACCOUNT_FRAGMENT_ID);
@@ -152,20 +147,6 @@ public class ModifyAccountActivity extends BaseActivity {
         } catch (DBDeleteException | DBInsertException | DBUpdateException exception) {
             ExceptionManager.advertiseUI(this, exception.getMessage());
         }
-    }
-
-    private LocalDate getBirthDateFromEditText() {
-        String dateString = editTextBirthDate.getText().toString();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        LocalDate localDate;
-        if (!dateString.isEmpty()) {
-            localDate = LocalDate.parse(dateString, formatter);
-        } else {
-            localDate = null;
-        }
-
-        return localDate;
     }
 
     private Gender getGenderFromSpinner() {
@@ -238,54 +219,6 @@ public class ModifyAccountActivity extends BaseActivity {
         }
 
         return conditions;
-    }
-
-    public void showDatePickerDialog() {
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_date_picker, null);
-
-        NumberPicker numberPickerDay = dialogView.findViewById(R.id.numberPickerDay);
-        NumberPicker numberPickerMonth = dialogView.findViewById(R.id.numberPickerMonth);
-        NumberPicker numberPickerYear = dialogView.findViewById(R.id.numberPickerYear);
-
-        numberPickerDay.setMinValue(1);
-        numberPickerDay.setMaxValue(31);
-
-        numberPickerMonth.setMinValue(1);
-        numberPickerMonth.setMaxValue(12);
-
-        Calendar calendar = Calendar.getInstance();
-        numberPickerYear.setMinValue(1900);
-        numberPickerYear.setMaxValue(calendar.get(Calendar.YEAR));
-
-        String dateString = editTextBirthDate.getText().toString();
-
-        int dayOfMonth, monthOfYear, year;
-        if (dateString.isEmpty()) {
-            dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-            monthOfYear = calendar.get(Calendar.MONTH) + 1;
-            year = calendar.get(Calendar.YEAR);
-        } else {
-            String[] dateParts = dateString.split("/");
-
-            dayOfMonth = Integer.parseInt(dateParts[0]);
-            monthOfYear = Integer.parseInt(dateParts[1]) - 1;
-            year = Integer.parseInt(dateParts[2]);
-        }
-
-        numberPickerDay.setValue(dayOfMonth);
-        numberPickerMonth.setValue(monthOfYear);
-        numberPickerYear.setValue(year);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(dialogView);
-        builder.setTitle(getString(R.string.account_modify_select_birth_date));
-        builder.setPositiveButton(getString(R.string.dialog_accept), (dialog, which) -> {
-            editTextBirthDate.setText(showFormattedDate(LocalDate.of(numberPickerYear.getValue(), numberPickerMonth.getValue(), numberPickerDay.getValue())));
-        });
-        builder.setNegativeButton(getString(R.string.dialog_cancel), null);
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     private void configureGenderSpinner() {

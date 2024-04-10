@@ -3,15 +3,17 @@ package com.javierjordanluque.healthtrackr.models;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.models.enumerations.MultimediaType;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 
 import java.util.Objects;
 
-public class Multimedia implements Identifiable {
+public class Multimedia implements Identifiable, Parcelable {
     private long id;
-    private final Step step;
+    private Step step;
     private final MultimediaType type;
     private final String path;
 
@@ -20,7 +22,8 @@ public class Multimedia implements Identifiable {
         this.type = type;
         this.path = path;
 
-        this.step.addMultimedia(context, this);
+        if (context != null)
+            this.step.addMultimedia(context, this);
     }
 
     public Object getMedia() {
@@ -47,6 +50,10 @@ public class Multimedia implements Identifiable {
         return step;
     }
 
+    public void setStep(Step step) {
+        this.step = step;
+    }
+
     public MultimediaType getType() {
         return type;
     }
@@ -66,5 +73,35 @@ public class Multimedia implements Identifiable {
                 Objects.equals(step, multimedia.step) &&
                 type == multimedia.type &&
                 Objects.equals(path, multimedia.path);
+    }
+
+    protected Multimedia(Parcel in) {
+        id = in.readLong();
+        type = in.readParcelable(MultimediaType.class.getClassLoader());
+        path = in.readString();
+    }
+
+    public static final Creator<Multimedia> CREATOR = new Creator<Multimedia>() {
+        @Override
+        public Multimedia createFromParcel(Parcel in) {
+            return new Multimedia(in);
+        }
+
+        @Override
+        public Multimedia[] newArray(int size) {
+            return new Multimedia[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeParcelable(type, flags);
+        dest.writeString(path);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

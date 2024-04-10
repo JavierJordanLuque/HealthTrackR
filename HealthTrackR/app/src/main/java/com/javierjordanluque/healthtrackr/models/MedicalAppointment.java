@@ -12,6 +12,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentNotification;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
 import java.time.ZonedDateTime;
@@ -31,10 +32,10 @@ public class MedicalAppointment implements Identifiable, Parcelable {
         this.dateTime = dateTime;
         this.location = location;
 
-        this.treatment.addAppointment(context, this);
-
-        if (context != null)
+        if (context != null) {
+            this.treatment.addAppointment(context, this);
             scheduleAppointmentNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
+        }
     }
 
     public void scheduleAppointmentNotification(Context context, int previousMinutes) throws DBInsertException {
@@ -116,6 +117,10 @@ public class MedicalAppointment implements Identifiable, Parcelable {
         return treatment;
     }
 
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
+    }
+
     public String getPurpose() {
         return purpose;
     }
@@ -144,6 +149,8 @@ public class MedicalAppointment implements Identifiable, Parcelable {
         if (notification == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotification(notificationRepository.findAppointmentNotification(this.id));
+        } else {
+            notification.setAppointment(this);
         }
 
         return notification;
@@ -169,10 +176,10 @@ public class MedicalAppointment implements Identifiable, Parcelable {
 
     protected MedicalAppointment(Parcel in) {
         id = in.readLong();
-        treatment = in.readParcelable(Treatment.class.getClassLoader());
         purpose = in.readString();
         dateTime = ZonedDateTime.parse(in.readString());
         location = in.readParcelable(Location.class.getClassLoader());
+        notification = in.readParcelable(MedicationNotification.class.getClassLoader());
     }
 
     public static final Creator<MedicalAppointment> CREATOR = new Creator<MedicalAppointment>() {
@@ -190,10 +197,10 @@ public class MedicalAppointment implements Identifiable, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
-        dest.writeParcelable(treatment, flags);
         dest.writeString(purpose);
         dest.writeString(dateTime.toString());
         dest.writeParcelable(location, flags);
+        dest.writeParcelable(notification, flags);
     }
 
     @Override

@@ -8,4 +8,7 @@
     <string name="dialog_cancel">Cancel</string>
 
     <string name="unspecified">Unspecified</string>
+
+    <string name="save">Save</string>
+    <string name="save_confirmation">Changes applied successfully!</string>
 </resources>

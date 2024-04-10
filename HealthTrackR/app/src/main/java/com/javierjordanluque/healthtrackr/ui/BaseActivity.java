@@ -1,16 +1,19 @@
 package com.javierjordanluque.healthtrackr.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +27,13 @@ import com.javierjordanluque.healthtrackr.util.NavigationUtils;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -143,5 +149,72 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         return formattedDate;
+    }
+
+    protected Object getDateFromEditText(EditText editTextDate, Class<?> type) {
+        String dateString = editTextDate.getText().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        Object date = null;
+        if (!dateString.isEmpty()) {
+            date = LocalDate.parse(dateString, formatter);
+
+            if (type.equals(ZonedDateTime.class))
+                date = ZonedDateTime.ofLocal(((LocalDate) date).atStartOfDay(), TimeZone.getDefault().toZoneId(), null);
+        }
+
+        return date;
+    }
+
+    protected void showDatePickerDialog(EditText editTextDate, String title, boolean setCurrentYear) {
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_date_picker, null);
+
+        NumberPicker numberPickerDay = dialogView.findViewById(R.id.numberPickerDay);
+        NumberPicker numberPickerMonth = dialogView.findViewById(R.id.numberPickerMonth);
+        NumberPicker numberPickerYear = dialogView.findViewById(R.id.numberPickerYear);
+
+        numberPickerDay.setMinValue(1);
+        numberPickerDay.setMaxValue(31);
+
+        numberPickerMonth.setMinValue(1);
+        numberPickerMonth.setMaxValue(12);
+
+        Calendar calendar = Calendar.getInstance();
+        numberPickerYear.setMinValue(1900);
+        if (setCurrentYear) {
+            numberPickerYear.setMaxValue(calendar.get(Calendar.YEAR));
+        } else {
+            numberPickerYear.setMaxValue(calendar.get(Calendar.YEAR) + 10);
+        }
+
+        String dateString = editTextDate.getText().toString().trim();
+
+        int dayOfMonth, monthOfYear, year;
+        if (dateString.isEmpty()) {
+            dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            monthOfYear = calendar.get(Calendar.MONTH) + 1;
+            year = calendar.get(Calendar.YEAR);
+        } else {
+            String[] dateParts = dateString.split("/");
+
+            dayOfMonth = Integer.parseInt(dateParts[0]);
+            monthOfYear = Integer.parseInt(dateParts[1]) - 1;
+            year = Integer.parseInt(dateParts[2]);
+        }
+
+        numberPickerDay.setValue(dayOfMonth);
+        numberPickerMonth.setValue(monthOfYear);
+        numberPickerYear.setValue(year);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+        builder.setTitle(title);
+        builder.setPositiveButton(getString(R.string.dialog_accept), (dialog, which) -> {
+            editTextDate.setText(showFormattedDate(LocalDate.of(numberPickerYear.getValue(), numberPickerMonth.getValue(), numberPickerDay.getValue())));
+        });
+        builder.setNegativeButton(getString(R.string.dialog_cancel), null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

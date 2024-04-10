@@ -6,4 +6,7 @@
     <string name="dialog_cancel">Cancelar</string>
 
     <string name="unspecified">Sin especificar</string>
+
+    <string name="save">Guardar</string>
+    <string name="save_confirmation">¡Cambios guardados!</string>
 </resources>

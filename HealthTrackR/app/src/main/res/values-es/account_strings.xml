@@ -8,6 +8,7 @@
     <string name="account_last_name">Apellidos</string>
     <string name="account_last_name_form">Apellidos *</string>
     <string name="account_birth_date">Fecha de nacimiento</string>
+    <string name="account_select_birth_date_dialog">Selecciona tu fecha de nacimiento:</string>
     <string name="account_gender">Género</string>
     <string name="account_blood_type">Grupo sanguíneo</string>
     <string name="account_allergies">Alergias</string>
@@ -18,7 +19,6 @@
     <string name="account_delete_dialog">¿Estás seguro de eliminar tu cuenta?</string>
 
     <string name="account_modify_title">Modificación de cuenta</string>
-    <string name="account_modify_select_birth_date">Seleccionar fecha de nacimiento</string>
     <string-array name="account_gender_options">
         <item>Masculino</item>
         <item>Femenino</item>
@@ -37,8 +37,6 @@
     </string-array>
     <string name="account_allergies_helper">Introduce tus alergias separadas por comas (,)</string>
     <string name="account_previous_medical_condition_helper">Introduce tus condiciones médicas previas separadas por comas (,)</string>
-    <string name="account_save">Guardar</string>
-    <string name="account_save_confirmation">¡Cambios guardados!</string>
 
     <string name="account_change_password">Cambiar contraseña</string>
     <string name="account_change_password_dialog">¿Estás seguro de cambiar tu contraseña?</string>
