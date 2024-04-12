@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -35,6 +36,15 @@ import java.util.List;
 public class AccountFragment extends Fragment {
     private OnToolbarChangeListener listener;
     private User user;
+    private NestedScrollView nestedScrollView;
+    private TextView textViewEmail;
+    private TextView textViewFirstName;
+    private TextView textViewLastName;
+    private TextView textViewBirthDate;
+    private TextView textViewGender;
+    private TextView textViewBloodType;
+    private TextView textViewAllergies;
+    private TextView textViewPreviousMedicalConditions;
 
     public AccountFragment() {
     }
@@ -42,94 +52,36 @@ public class AccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null)
-            user = getArguments().getParcelable(User.class.getSimpleName());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_account, container, false);
 
-        if (user != null) {
-            TextView textViewEmail = fragmentView.findViewById(R.id.textViewEmail);
-            textViewEmail.setText(user.getEmail());
-
-            TextView textViewFirstName = fragmentView.findViewById(R.id.textViewFirstName);
-            textViewFirstName.setText(user.getFirstName());
-
-            TextView textViewLastName = fragmentView.findViewById(R.id.textViewLastName);
-            textViewLastName.setText(user.getLastName());
-
-            LocalDate birthDate = user.getBirthDate();
-            if (birthDate != null) {
-                TextView textViewBirthDate = fragmentView.findViewById(R.id.textViewBirthDate);
-                textViewBirthDate.setText(((MainActivity) requireActivity()).showFormattedDate(birthDate));
-            }
-
-            Gender gender = user.getGender();
-            if (gender != null) {
-                String[] genderOptions = getResources().getStringArray(R.array.account_gender_options);
-                String genderString = genderOptions[gender.ordinal()];
-                TextView textViewGender = fragmentView.findViewById(R.id.textViewGender);
-                textViewGender.setText(genderString);
-            }
-
-            BloodType bloodType = user.getBloodType();
-            if (bloodType != null) {
-                String[] bloodTypeOptions = getResources().getStringArray(R.array.account_blood_type_options);
-                String bloodTypeString = bloodTypeOptions[bloodType.ordinal()];
-                TextView textViewBloodType = fragmentView.findViewById(R.id.textViewBloodType);
-                textViewBloodType.setText(bloodTypeString);
-            }
-
-            try {
-                List<Allergy> allergies = user.getAllergies(requireActivity());
-
-                if (allergies != null && !allergies.isEmpty()) {
-                    List<String> allergiesNames = new ArrayList<>();
-                    for (Allergy allergy : allergies)
-                        allergiesNames.add(allergy.getName());
-
-                    TextView textViewAllergies = fragmentView.findViewById(R.id.textViewAllergies);
-                    textViewAllergies.setText(((MainActivity) requireActivity()).showFormattedList(allergiesNames));
-                }
-            } catch (DBFindException exception) {
-                ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
-            }
-
-            try {
-                List<PreviousMedicalCondition> conditions = user.getConditions(requireActivity());
-
-                if (conditions != null && !conditions.isEmpty()) {
-                    List<String> conditionsNames = new ArrayList<>();
-                    for (PreviousMedicalCondition condition : conditions)
-                        conditionsNames.add(condition.getName());
-
-                    TextView textViewPreviousMedicalConditions = fragmentView.findViewById(R.id.textViewPreviousMedicalConditions);
-                    textViewPreviousMedicalConditions.setText(((MainActivity) requireActivity()).showFormattedList(conditionsNames));
-                }
-            } catch (DBFindException exception) {
-                ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
-            }
-        }
+        nestedScrollView = fragmentView.findViewById(R.id.nestedScrollView);
+        textViewEmail = fragmentView.findViewById(R.id.textViewEmail);
+        textViewFirstName = fragmentView.findViewById(R.id.textViewFirstName);
+        textViewLastName = fragmentView.findViewById(R.id.textViewLastName);
+        textViewBirthDate = fragmentView.findViewById(R.id.textViewBirthDate);
+        textViewGender = fragmentView.findViewById(R.id.textViewGender);
+        textViewBloodType = fragmentView.findViewById(R.id.textViewBloodType);
+        textViewAllergies = fragmentView.findViewById(R.id.textViewAllergies);
+        textViewPreviousMedicalConditions = fragmentView.findViewById(R.id.textViewPreviousMedicalConditions);
 
         FloatingActionButton buttonModifyAccount = fragmentView.findViewById(R.id.buttonModifyAccount);
         buttonModifyAccount.setOnClickListener(view -> {
-            ((MainActivity) requireActivity()).addFragmentToBackStack(this.getClass().getSimpleName());
-
             Intent intent = new Intent(requireActivity(), ModifyAccountActivity.class);
-            intent.putExtra(User.class.getSimpleName(), user);
             startActivity(intent);
         });
 
         Button buttonSignOut = fragmentView.findViewById(R.id.buttonSignOut);
         buttonSignOut.setOnClickListener(view -> {
-            AuthenticationService.logout(user);
+            AuthenticationService.logout(requireActivity(), user);
             AuthenticationService.clearCredentials(requireActivity());
 
             Intent intent = new Intent(requireActivity(), AuthenticationActivity.class);
             startActivity(intent);
+            requireActivity().finish();
         });
 
         Button buttonDeleteAccount = fragmentView.findViewById(R.id.buttonDeleteAccount);
@@ -146,11 +98,12 @@ public class AccountFragment extends Fragment {
                 .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
                     try {
                         user.deleteUser(requireActivity());
-                        AuthenticationService.logout(user);
+                        AuthenticationService.logout(requireActivity(), user);
                         AuthenticationService.clearCredentials(requireActivity());
 
                         Intent intent = new Intent(requireActivity(), AuthenticationActivity.class);
                         startActivity(intent);
+                        requireActivity().finish();
                     } catch (DBDeleteException exception) {
                         ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
                     }
@@ -164,9 +117,73 @@ public class AccountFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        user = ((MainActivity) requireActivity()).sessionViewModel.getUserSession();
         ((MainActivity) requireActivity()).showBackButton(false);
+
         if (listener != null)
             listener.onTitleChanged(getString(R.string.account_title));
+
+        textViewEmail.setText(user.getEmail());
+        textViewFirstName.setText(user.getFirstName());
+        textViewLastName.setText(user.getLastName());
+
+        LocalDate birthDate = user.getBirthDate();
+        if (birthDate != null) {
+            textViewBirthDate.setText(((MainActivity) requireActivity()).showFormattedDate(birthDate));
+        } else {
+            textViewBirthDate.setText(R.string.unspecified);
+        }
+
+        Gender gender = user.getGender();
+        if (gender != null) {
+            String[] genderOptions = getResources().getStringArray(R.array.account_gender_options);
+            String genderString = genderOptions[gender.ordinal()];
+            textViewGender.setText(genderString);
+        } else {
+            textViewGender.setText(R.string.unspecified);
+        }
+
+        BloodType bloodType = user.getBloodType();
+        if (bloodType != null) {
+            String[] bloodTypeOptions = getResources().getStringArray(R.array.account_blood_type_options);
+            String bloodTypeString = bloodTypeOptions[bloodType.ordinal()];
+            textViewBloodType.setText(bloodTypeString);
+        } else {
+            textViewBloodType.setText(R.string.unspecified);
+        }
+
+        try {
+            List<Allergy> allergies = user.getAllergies(requireActivity());
+
+            if (allergies != null && !allergies.isEmpty()) {
+                List<String> allergiesNames = new ArrayList<>();
+                for (Allergy allergy : allergies)
+                    allergiesNames.add(allergy.getName());
+
+                textViewAllergies.setText(((MainActivity) requireActivity()).showFormattedList(allergiesNames));
+            } else {
+                textViewAllergies.setText(R.string.unspecified);
+            }
+        } catch (DBFindException exception) {
+            ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
+        }
+
+        try {
+            List<PreviousMedicalCondition> conditions = user.getConditions(requireActivity());
+
+            if (conditions != null && !conditions.isEmpty()) {
+                List<String> conditionsNames = new ArrayList<>();
+                for (PreviousMedicalCondition condition : conditions)
+                    conditionsNames.add(condition.getName());
+
+                textViewPreviousMedicalConditions.setText(((MainActivity) requireActivity()).showFormattedList(conditionsNames));
+            } else {
+                textViewPreviousMedicalConditions.setText(R.string.unspecified);
+            }
+        } catch (DBFindException exception) {
+            ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
+        }
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.db.repositories.AllergyRepository;
@@ -28,7 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-public class User implements Identifiable, Parcelable {
+public class User implements Identifiable {
     private long id;
     private String email;
     private String firstName;
@@ -245,9 +243,6 @@ public class User implements Identifiable, Parcelable {
         if (allergies == null) {
             AllergyRepository allergyRepository = new AllergyRepository(context);
             setAllergies(allergyRepository.findUserAllergies(this.id));
-        } else {
-            for (Allergy allergy : allergies)
-                allergy.setUser(this);
         }
 
         return allergies;
@@ -261,9 +256,6 @@ public class User implements Identifiable, Parcelable {
         if (conditions == null) {
             PreviousMedicalConditionRepository previousMedicalConditionRepository = new PreviousMedicalConditionRepository(context);
             setConditions(previousMedicalConditionRepository.findUserConditions(this.id));
-        } else {
-            for (PreviousMedicalCondition condition : conditions)
-                condition.setUser(this);
         }
 
         return conditions;
@@ -277,9 +269,6 @@ public class User implements Identifiable, Parcelable {
         if (treatments == null) {
             TreatmentRepository treatmentRepository = new TreatmentRepository(context);
             setTreatments(treatmentRepository.findUserTreatments(this.id));
-        } else {
-            for (Treatment treatment : treatments)
-                treatment.setUser(this);
         }
 
         return treatments;
@@ -305,49 +294,5 @@ public class User implements Identifiable, Parcelable {
                 Objects.equals(birthDate, user.birthDate) &&
                 gender == user.gender &&
                 bloodType == user.bloodType;
-    }
-
-    protected User(Parcel in) {
-        id = in.readLong();
-        email = in.readString();
-        firstName = in.readString();
-        lastName = in.readString();
-        birthDate = (LocalDate) in.readSerializable();
-        gender = in.readParcelable(Gender.class.getClassLoader());
-        bloodType = in.readParcelable(BloodType.class.getClassLoader());
-        allergies = in.createTypedArrayList(Allergy.CREATOR);
-        conditions = in.createTypedArrayList(PreviousMedicalCondition.CREATOR);
-        treatments = in.createTypedArrayList(Treatment.CREATOR);
-    }
-
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel source) {
-            return new User(source);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(email);
-        dest.writeString(firstName);
-        dest.writeString(lastName);
-        dest.writeSerializable(birthDate);
-        dest.writeParcelable(gender, flags);
-        dest.writeParcelable(bloodType, flags);
-        dest.writeTypedList(allergies);
-        dest.writeTypedList(conditions);
-        dest.writeTypedList(treatments);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 }

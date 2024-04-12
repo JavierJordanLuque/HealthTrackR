@@ -163,7 +163,7 @@
                             android:layout_height="wrap_content"
                             android:autofillHints="text"
                             android:hint="@string/account_allergies"
-                            android:inputType="text" />
+                            android:inputType="textMultiLine" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -178,7 +178,7 @@
                             android:layout_height="wrap_content"
                             android:autofillHints="text"
                             android:hint="@string/account_previous_medical_conditions"
-                            android:inputType="text" />
+                            android:inputType="textMultiLine" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>

@@ -1,8 +1,5 @@
 package com.javierjordanluque.healthtrackr.ui.treatments;
 
-import androidx.activity.OnBackPressedDispatcher;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,7 +13,6 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
-import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
@@ -41,7 +37,7 @@ public class AddTreatmentActivity extends BaseActivity {
         setUpToolbar(getString(R.string.treatments_treatment_addition));
         showBackButton(true);
 
-        user = getIntent().getParcelableExtra(User.class.getSimpleName());
+        user = sessionViewModel.getUserSession();
 
         layoutTitle = findViewById(R.id.layoutTitle);
         editTextTitle = findViewById(R.id.editTextTitle);
@@ -107,11 +103,6 @@ public class AddTreatmentActivity extends BaseActivity {
 
         try {
             new Treatment(this, user, title, startDate, endDate, diagnosis, category);
-
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(MainActivity.FRAGMENT_ID, MainActivity.TREATMENTS_FRAGMENT_ID);
-            intent.putExtra(User.class.getSimpleName(), user);
-            startActivity(intent);
             finish();
         } catch (DBInsertException exception) {
             ExceptionManager.advertiseUI(this, exception.getMessage());
@@ -171,16 +162,5 @@ public class AddTreatmentActivity extends BaseActivity {
     @Override
     protected int getMenu() {
         return R.menu.toolbar_menu;
-    }
-
-    @Override
-    protected User getUser() {
-        return user;
-    }
-
-    @Override
-    protected void handleBackButtonAction() {
-        OnBackPressedDispatcher onBackPressedDispatcher = getOnBackPressedDispatcher();
-        onBackPressedDispatcher.onBackPressed();
     }
 }

@@ -1,8 +1,6 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.db.repositories.MultimediaRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.StepRepository;
@@ -14,7 +12,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import java.util.List;
 import java.util.Objects;
 
-public class Step implements Identifiable, Parcelable {
+public class Step implements Identifiable {
     private long id;
     private Treatment treatment;
     private String title;
@@ -81,10 +79,6 @@ public class Step implements Identifiable, Parcelable {
         return treatment;
     }
 
-    public void setTreatment(Treatment treatment) {
-        this.treatment = treatment;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -113,9 +107,6 @@ public class Step implements Identifiable, Parcelable {
         if (multimedias == null) {
             MultimediaRepository multimediaRepository = new MultimediaRepository(context);
             setMultimedias(multimediaRepository.findStepMultimedias(this.id));
-        } else {
-            for (Multimedia multimedia : multimedias)
-                multimedia.setStep(this);
         }
 
         return multimedias;
@@ -137,39 +128,5 @@ public class Step implements Identifiable, Parcelable {
                 Objects.equals(title, step.title) &&
                 Objects.equals(description, step.description) &&
                 Objects.equals(numOrder, step.numOrder);
-    }
-
-    protected Step(Parcel in) {
-        id = in.readLong();
-        title = in.readString();
-        description = in.readString();
-        numOrder = in.readInt();
-        multimedias = in.createTypedArrayList(Multimedia.CREATOR);
-    }
-
-    public static final Creator<Step> CREATOR = new Creator<Step>() {
-        @Override
-        public Step createFromParcel(Parcel in) {
-            return new Step(in);
-        }
-
-        @Override
-        public Step[] newArray(int size) {
-            return new Step[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeInt(numOrder);
-        dest.writeTypedList(multimedias);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 }

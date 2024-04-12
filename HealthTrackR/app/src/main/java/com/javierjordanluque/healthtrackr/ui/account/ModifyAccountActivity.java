@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedDispatcher;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Allergy;
@@ -19,7 +17,6 @@ import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.models.enumerations.BloodType;
 import com.javierjordanluque.healthtrackr.models.enumerations.Gender;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
-import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
@@ -50,7 +47,7 @@ public class ModifyAccountActivity extends BaseActivity {
         setUpToolbar(getString(R.string.account_modify_title));
         showBackButton(true);
 
-        user = getIntent().getParcelableExtra(User.class.getSimpleName());
+        user = sessionViewModel.getUserSession();
 
         layoutFirstName = findViewById(R.id.layoutFirstName);
         editTextFirstName = findViewById(R.id.editTextFirstName);
@@ -102,7 +99,6 @@ public class ModifyAccountActivity extends BaseActivity {
         Button buttonChangePassword = findViewById(R.id.buttonChangePassword);
         buttonChangePassword.setOnClickListener(view -> {
             Intent intent = new Intent(this, ChangePasswordActivity.class);
-            intent.putExtra(User.class.getSimpleName(), user);
             startActivity(intent);
         });
 
@@ -136,13 +132,7 @@ public class ModifyAccountActivity extends BaseActivity {
 
         try {
             user.modifyUser(this, firstName, lastName, birthDate, gender, bloodType, allergies, conditions);
-
             Toast.makeText(this, getString(R.string.save_confirmation), Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(MainActivity.FRAGMENT_ID, MainActivity.ACCOUNT_FRAGMENT_ID);
-            intent.putExtra(User.class.getSimpleName(), user);
-            startActivity(intent);
             finish();
         } catch (DBDeleteException | DBInsertException | DBUpdateException exception) {
             ExceptionManager.advertiseUI(this, exception.getMessage());
@@ -266,16 +256,5 @@ public class ModifyAccountActivity extends BaseActivity {
     @Override
     protected int getMenu() {
         return R.menu.toolbar_menu;
-    }
-
-    @Override
-    protected User getUser() {
-        return user;
-    }
-
-    @Override
-    protected void handleBackButtonAction() {
-        OnBackPressedDispatcher onBackPressedDispatcher = getOnBackPressedDispatcher();
-        onBackPressedDispatcher.onBackPressed();
     }
 }

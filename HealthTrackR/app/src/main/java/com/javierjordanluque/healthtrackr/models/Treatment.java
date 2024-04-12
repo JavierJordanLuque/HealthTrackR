@@ -1,8 +1,6 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.MedicineRepository;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Treatment implements Identifiable, Parcelable {
+public class Treatment implements Identifiable {
     private long id;
     private User user;
     private String title;
@@ -165,10 +163,6 @@ public class Treatment implements Identifiable, Parcelable {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -213,9 +207,6 @@ public class Treatment implements Identifiable, Parcelable {
         if (medicines == null) {
             MedicineRepository medicineRepository = new MedicineRepository(context);
             setMedicines(medicineRepository.findTreatmentMedicines(this.id));
-        } else {
-            for (Medicine medicine : medicines)
-                medicine.setTreatment(this);
         }
 
         return medicines;
@@ -229,9 +220,6 @@ public class Treatment implements Identifiable, Parcelable {
         if (steps == null) {
             StepRepository stepRepository = new StepRepository(context);
             setSteps(stepRepository.findTreatmentSteps(this.id));
-        } else {
-            for (Step step : steps)
-                step.setTreatment(this);
         }
 
         return steps;
@@ -245,9 +233,6 @@ public class Treatment implements Identifiable, Parcelable {
         if (symptoms == null) {
             SymptomRepository symptomRepository = new SymptomRepository(context);
             setSymptoms(symptomRepository.findTreatmentSymptoms(this.id));
-        } else {
-            for (Symptom symptom : symptoms)
-                symptom.setTreatment(this);
         }
 
         return symptoms;
@@ -261,9 +246,6 @@ public class Treatment implements Identifiable, Parcelable {
         if (questions == null) {
             QuestionRepository questionRepository = new QuestionRepository(context);
             setQuestions(questionRepository.findTreatmentQuestions(this.id));
-        } else {
-            for (Question question : questions)
-                question.setTreatment(this);
         }
 
         return questions;
@@ -277,9 +259,6 @@ public class Treatment implements Identifiable, Parcelable {
         if (appointments == null) {
             MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
             setAppointments(medicalAppointmentRepository.findTreatmentAppointments(this.id));
-        } else {
-            for (MedicalAppointment appointment : appointments)
-                appointment.setTreatment(this);
         }
 
         return appointments;
@@ -305,51 +284,5 @@ public class Treatment implements Identifiable, Parcelable {
                 Objects.equals(endDate, treatment.endDate) &&
                 Objects.equals(diagnosis, treatment.diagnosis) &&
                 category == treatment.category;
-    }
-
-    protected Treatment(Parcel in) {
-        id = in.readLong();
-        title = in.readString();
-        startDate = (ZonedDateTime) in.readSerializable();
-        endDate = (ZonedDateTime) in.readSerializable();
-        diagnosis = in.readString();
-        category = in.readParcelable(TreatmentCategory.class.getClassLoader());
-        medicines = in.createTypedArrayList(Medicine.CREATOR);
-        steps = in.createTypedArrayList(Step.CREATOR);
-        symptoms = in.createTypedArrayList(Symptom.CREATOR);
-        questions = in.createTypedArrayList(Question.CREATOR);
-        appointments = in.createTypedArrayList(MedicalAppointment.CREATOR);
-    }
-
-    public static final Creator<Treatment> CREATOR = new Creator<Treatment>() {
-        @Override
-        public Treatment createFromParcel(Parcel in) {
-            return new Treatment(in);
-        }
-
-        @Override
-        public Treatment[] newArray(int size) {
-            return new Treatment[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(title);
-        dest.writeSerializable(startDate);
-        dest.writeSerializable(endDate);
-        dest.writeString(diagnosis);
-        dest.writeParcelable(category, flags);
-        dest.writeTypedList(medicines);
-        dest.writeTypedList(steps);
-        dest.writeTypedList(symptoms);
-        dest.writeTypedList(questions);
-        dest.writeTypedList(appointments);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 }

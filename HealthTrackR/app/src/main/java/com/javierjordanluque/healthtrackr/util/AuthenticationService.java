@@ -3,6 +3,7 @@ package com.javierjordanluque.healthtrackr.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.db.repositories.UserRepository;
 import com.javierjordanluque.healthtrackr.models.User;
@@ -67,7 +68,8 @@ public class AuthenticationService {
         return user;
     }
 
-    public static void logout(User user) {
+    public static void logout(Context context, User user) {
+        ((HealthTrackRApp) context.getApplicationContext()).getSessionViewModel().setUserSession(null);
         if (user != null) {
             user.setId(-1);
             user.setEmail(null);

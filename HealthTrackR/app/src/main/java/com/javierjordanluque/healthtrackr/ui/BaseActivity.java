@@ -15,19 +15,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
-import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.NavigationUtils;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -36,17 +36,29 @@ import java.util.Objects;
 import java.util.TimeZone;
 
 public abstract class BaseActivity extends AppCompatActivity {
+    public SessionViewModel sessionViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        HealthTrackRApp healthTrackRApp = (HealthTrackRApp) getApplication();
+        sessionViewModel = healthTrackRApp.getSessionViewModel();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    finish();
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     protected abstract int getMenu();
-
-    protected abstract User getUser();
-
-    protected abstract void handleBackButtonAction();
 
     protected void setUpToolbar(String toolbarTitle) {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
@@ -69,17 +81,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         if (item.getItemId() == android.R.id.home) {
-            handleBackButtonAction();
+            onBackPressed();
             return true;
         } else if (itemId == R.id.menuHelp) {
             NavigationUtils.openUserManual(this);
             return true;
         } else if (itemId == R.id.menuSignOut) {
-            AuthenticationService.logout(getUser());
+            AuthenticationService.logout(this, sessionViewModel.getUserSession());
             AuthenticationService.clearCredentials(this);
 
             Intent intent = new Intent(this, AuthenticationActivity.class);
             startActivity(intent);
+            finish();
 
             return true;
         } else {

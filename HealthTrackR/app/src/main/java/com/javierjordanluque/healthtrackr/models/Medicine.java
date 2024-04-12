@@ -1,8 +1,6 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.db.repositories.MedicineRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
@@ -21,7 +19,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
-public class Medicine implements Identifiable, Parcelable {
+public class Medicine implements Identifiable {
     private long id;
     private Treatment treatment;
     private String name;
@@ -176,7 +174,7 @@ public class Medicine implements Identifiable, Parcelable {
         return treatment;
     }
 
-    public void setTreatment(Treatment treatment) {
+    private void setTreatment(Treatment treatment) {
         this.treatment = treatment;
     }
 
@@ -240,9 +238,6 @@ public class Medicine implements Identifiable, Parcelable {
         if (notifications == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotifications(notificationRepository.findMedicineNotifications(this.treatment.getId(), this.id));
-        } else {
-            for (MedicationNotification notification : notifications)
-                notification.setMedicine(this);
         }
 
         return notifications;
@@ -268,47 +263,5 @@ public class Medicine implements Identifiable, Parcelable {
                 Objects.equals(initialDosingTime, medicine.initialDosingTime) &&
                 Objects.equals(dosageFrequencyHours, medicine.dosageFrequencyHours) &&
                 Objects.equals(dosageFrequencyMinutes, medicine.dosageFrequencyMinutes);
-    }
-
-    protected Medicine(Parcel in) {
-        id = in.readLong();
-        name = in.readString();
-        activeSubstance = in.readString();
-        dose = (Integer) in.readSerializable();
-        administrationRoute = in.readParcelable(AdministrationRoute.class.getClassLoader());
-        initialDosingTime = (ZonedDateTime) in.readSerializable();
-        dosageFrequencyHours = in.readInt();
-        dosageFrequencyMinutes = in.readInt();
-        notifications = in.createTypedArrayList(MedicationNotification.CREATOR);
-    }
-
-    public static final Creator<Medicine> CREATOR = new Creator<Medicine>() {
-        @Override
-        public Medicine createFromParcel(Parcel in) {
-            return new Medicine(in);
-        }
-
-        @Override
-        public Medicine[] newArray(int size) {
-            return new Medicine[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(name);
-        dest.writeString(activeSubstance);
-        dest.writeSerializable(dose);
-        dest.writeParcelable(administrationRoute, flags);
-        dest.writeSerializable(initialDosingTime);
-        dest.writeInt(dosageFrequencyHours);
-        dest.writeInt(dosageFrequencyMinutes);
-        dest.writeTypedList(notifications);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 }

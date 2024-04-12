@@ -62,7 +62,6 @@
                 <TextView
                     android:id="@+id/textViewEndDate"
                     style="@style/Widget.HealthTrackR.TextView.Value"
-                    android:text="@string/unspecified"
                     android:textStyle="normal" />
 
                 <View

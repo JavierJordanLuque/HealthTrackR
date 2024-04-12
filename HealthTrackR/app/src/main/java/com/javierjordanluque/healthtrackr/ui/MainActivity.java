@@ -1,58 +1,39 @@
 package com.javierjordanluque.healthtrackr.ui;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.databinding.ActivityMainBinding;
-import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.ui.account.AccountFragment;
 import com.javierjordanluque.healthtrackr.ui.calendar.CalendarFragment;
+import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentsFragment;
 
 public class MainActivity extends BaseActivity implements OnToolbarChangeListener {
     ActivityMainBinding binding;
-    private Fragment currentFragment;
     private final String CURRENT_FRAGMENT = "currentFragment";
-    public static final String FRAGMENT_ID = "fragmentId";
-    public static final int TREATMENTS_FRAGMENT_ID = 1;
-    public static final int CALENDAR_FRAGMENT_ID = 2;
-    public static final int ACCOUNT_FRAGMENT_ID = 3;
-    private User user;
+    public Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        user = getIntent().getParcelableExtra(User.class.getSimpleName());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setUpToolbar(getString(R.string.treatments_title));
         showBackButton(false);
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null)
             currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, CURRENT_FRAGMENT);
-        } else {
-            int fragmentId = getIntent().getIntExtra(FRAGMENT_ID, TREATMENTS_FRAGMENT_ID);
-            switch (fragmentId) {
-                case CALENDAR_FRAGMENT_ID:
-                    currentFragment = new CalendarFragment();
-                    break;
-                case ACCOUNT_FRAGMENT_ID:
-                    currentFragment = new AccountFragment();
-                    break;
-                default:
-                    currentFragment = new TreatmentsFragment();
-                    break;
-            }
+
+        if (currentFragment == null) {
+            currentFragment = new TreatmentsFragment();
+            replaceFragment(currentFragment);
         }
-        replaceFragment(currentFragment, User.class.getSimpleName(), user);
 
         int selectedItem;
         if (currentFragment instanceof CalendarFragment) {
@@ -65,62 +46,56 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
         binding.navigationView.setSelectedItemId(selectedItem);
 
         binding.navigationView.setOnItemSelectedListener(item -> {
+            boolean swappedFragment = false;
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_treatments) {
-                currentFragment = new TreatmentsFragment();
+                if (!(currentFragment instanceof TreatmentsFragment)) {
+                    currentFragment = new TreatmentsFragment();
+                    swappedFragment = true;
+                }
             } else if (itemId == R.id.navigation_calendar) {
-                currentFragment = new CalendarFragment();
+                if (!(currentFragment instanceof CalendarFragment)) {
+                    currentFragment = new CalendarFragment();
+                    swappedFragment = true;
+                }
             } else if (itemId == R.id.navigation_account) {
-                currentFragment = new AccountFragment();
+                if (!(currentFragment instanceof AccountFragment)) {
+                    currentFragment = new AccountFragment();
+                    swappedFragment = true;
+                }
             }
-            replaceFragment(currentFragment, User.class.getSimpleName(), user);
+
+            if (swappedFragment) {
+                getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                replaceFragment(currentFragment);
+            }
 
             return true;
         });
+    }
 
-        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                int backStackEntryCount = fragmentManager.getBackStackEntryCount();
-                if (backStackEntryCount > 0) {
-                    FragmentManager.BackStackEntry backStackEntry = fragmentManager.getBackStackEntryAt(backStackEntryCount - 1);
-                    String fragmentTag = backStackEntry.getName();
-                    Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
-                    if (fragment != null) {
-                        replaceFragment(fragment, User.class.getSimpleName(), user);
-                        fragmentManager.popBackStack();
-                        return;
-                    }
-                }
-                finish();
-            }
-        };
-        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        getSupportFragmentManager().putFragment(outState, CURRENT_FRAGMENT, currentFragment);
-    }
-
-    public void replaceFragment(Fragment fragment, String key, Parcelable parcelable) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(key, parcelable);
-        fragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
-        fragmentTransaction.commit();
-    }
-
-    public void addFragmentToBackStack(String backStackName) {
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.addToBackStack(backStackName);
-        fragmentTransaction.commit();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            Fragment lastFragment = fragmentManager.findFragmentById(R.id.frameLayout);
+            currentFragment = lastFragment;
+            if (lastFragment != null) {
+                getSupportFragmentManager().putFragment(outState, CURRENT_FRAGMENT, currentFragment);
+            } else {
+                currentFragment = new TreatmentFragment();
+            }
+        }
     }
 
     @Override
@@ -134,11 +109,10 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
     }
 
     @Override
-    protected User getUser() {
-        return user;
-    }
-
-    @Override
-    protected void handleBackButtonAction() {
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
+        if (!(currentFragment instanceof TreatmentsFragment || currentFragment instanceof CalendarFragment || currentFragment instanceof AccountFragment)) {
+            super.onBackPressed();
+        }
     }
 }

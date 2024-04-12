@@ -1,8 +1,6 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.javierjordanluque.healthtrackr.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
@@ -12,13 +10,12 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentNotification;
-import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-public class MedicalAppointment implements Identifiable, Parcelable {
+public class MedicalAppointment implements Identifiable {
     private long id;
     private Treatment treatment;
     private String purpose;
@@ -117,10 +114,6 @@ public class MedicalAppointment implements Identifiable, Parcelable {
         return treatment;
     }
 
-    public void setTreatment(Treatment treatment) {
-        this.treatment = treatment;
-    }
-
     public String getPurpose() {
         return purpose;
     }
@@ -149,8 +142,6 @@ public class MedicalAppointment implements Identifiable, Parcelable {
         if (notification == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotification(notificationRepository.findAppointmentNotification(this.id));
-        } else {
-            notification.setAppointment(this);
         }
 
         return notification;
@@ -172,39 +163,5 @@ public class MedicalAppointment implements Identifiable, Parcelable {
                 Objects.equals(purpose, medicalAppointment.purpose) &&
                 Objects.equals(dateTime, medicalAppointment.dateTime) &&
                 Objects.equals(location, medicalAppointment.location);
-    }
-
-    protected MedicalAppointment(Parcel in) {
-        id = in.readLong();
-        purpose = in.readString();
-        dateTime = ZonedDateTime.parse(in.readString());
-        location = in.readParcelable(Location.class.getClassLoader());
-        notification = in.readParcelable(MedicationNotification.class.getClassLoader());
-    }
-
-    public static final Creator<MedicalAppointment> CREATOR = new Creator<MedicalAppointment>() {
-        @Override
-        public MedicalAppointment createFromParcel(Parcel in) {
-            return new MedicalAppointment(in);
-        }
-
-        @Override
-        public MedicalAppointment[] newArray(int size) {
-            return new MedicalAppointment[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(purpose);
-        dest.writeString(dateTime.toString());
-        dest.writeParcelable(location, flags);
-        dest.writeParcelable(notification, flags);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 }

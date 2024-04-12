@@ -32,7 +32,7 @@ public class ChangePasswordActivity extends BaseActivity {
         setUpToolbar(getString(R.string.account_password_change));
         showBackButton(true);
 
-        user = getIntent().getParcelableExtra(User.class.getSimpleName());
+        user = sessionViewModel.getUserSession();
 
         layoutCurrentPassword = findViewById(R.id.layoutCurrentPassword);
         editTextCurrentPassword = findViewById(R.id.editTextCurrentPassword);
@@ -113,15 +113,5 @@ public class ChangePasswordActivity extends BaseActivity {
     @Override
     protected int getMenu() {
         return R.menu.toolbar_menu;
-    }
-
-    @Override
-    protected User getUser() {
-        return user;
-    }
-
-    @Override
-    protected void handleBackButtonAction() {
-        finish();
     }
 }

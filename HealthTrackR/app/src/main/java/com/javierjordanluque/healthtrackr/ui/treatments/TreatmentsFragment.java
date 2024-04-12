@@ -31,7 +31,9 @@ import java.util.List;
 
 public class TreatmentsFragment extends Fragment {
     private OnToolbarChangeListener listener;
-    private User user;
+    private NestedScrollView nestedScrollView;
+    private ConstraintLayout constraintLayoutEmpty;
+    private LinearLayout linearLayout;
 
     public TreatmentsFragment() {
     }
@@ -39,17 +41,34 @@ public class TreatmentsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null)
-            user = getArguments().getParcelable(User.class.getSimpleName());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_treatments, container, false);
 
-        NestedScrollView nestedScrollView = fragmentView.findViewById(R.id.nestedScrollView);
-        ConstraintLayout constraintLayoutEmpty = fragmentView.findViewById(R.id.constraintLayoutEmpty);
+        nestedScrollView = fragmentView.findViewById(R.id.nestedScrollView);
+        constraintLayoutEmpty = fragmentView.findViewById(R.id.constraintLayoutEmpty);
+        linearLayout = fragmentView.findViewById(R.id.linearLayout);
+
+        FloatingActionButton buttonAddTreatment = fragmentView.findViewById(R.id.buttonAddTreatment);
+        buttonAddTreatment.setOnClickListener(view -> {
+            Intent intent = new Intent(requireActivity(), AddTreatmentActivity.class);
+            startActivity(intent);
+        });
+
+        return fragmentView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        User user = ((MainActivity) requireActivity()).sessionViewModel.getUserSession();
+        ((MainActivity) requireActivity()).showBackButton(false);
+
+        if (listener != null)
+            listener.onTitleChanged(getString(R.string.treatments_title));
 
         List<Treatment> treatments = null;
         try {
@@ -58,14 +77,13 @@ public class TreatmentsFragment extends Fragment {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
 
+        linearLayout.removeAllViews();
         if (treatments == null || treatments.isEmpty()) {
             nestedScrollView.setVisibility(View.GONE);
             constraintLayoutEmpty.setVisibility(View.VISIBLE);
         } else {
             constraintLayoutEmpty.setVisibility(View.GONE);
             nestedScrollView.setVisibility(View.VISIBLE);
-
-            LinearLayout linearLayout = fragmentView.findViewById(R.id.linearLayout);
 
             boolean isFirst = true;
             for (Treatment treatment : treatments) {
@@ -87,9 +105,11 @@ public class TreatmentsFragment extends Fragment {
                 textViewStartDate.setText(((MainActivity) requireActivity()).showFormattedDate(startDate));
 
                 ZonedDateTime endDate = treatment.getEndDate();
+                TextView textViewEndDate = cardView.findViewById(R.id.textViewEndDate);
                 if (endDate != null) {
-                    TextView textViewEndDate = cardView.findViewById(R.id.textViewEndDate);
                     textViewEndDate.setText(((MainActivity) requireActivity()).showFormattedDate(endDate));
+                } else {
+                    textViewEndDate.setText(R.string.unspecified);
                 }
 
                 TreatmentCategory treatmentCategory = treatment.getCategory();
@@ -105,37 +125,19 @@ public class TreatmentsFragment extends Fragment {
                 linearLayout.addView(cardView);
             }
         }
-
-        FloatingActionButton buttonAddTreatment = fragmentView.findViewById(R.id.buttonAddTreatment);
-        buttonAddTreatment.setOnClickListener(view -> {
-            ((MainActivity) requireActivity()).addFragmentToBackStack(this.getClass().getSimpleName());
-
-            Intent intent = new Intent(requireActivity(), AddTreatmentActivity.class);
-            intent.putExtra(User.class.getSimpleName(), user);
-            startActivity(intent);
-        });
-
-        return fragmentView;
     }
 
     private void openTreatment(Treatment treatment) {
-        /*
-        ((MainActivity) requireActivity()).addFragmentToBackStack(this.getClass().getSimpleName());
-        ((MainActivity) requireActivity()).replaceFragment(TreatmentFragment.class, Treatment.class.getSimpleName(), treatment);
-         */
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (listener != null)
-            listener.onTitleChanged(getString(R.string.treatments_title));
+        Fragment fragment = new TreatmentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
+        fragment.setArguments(bundle);
+        ((MainActivity) requireActivity()).replaceFragment(fragment);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ((MainActivity) requireActivity()).showBackButton(false);
         if (context instanceof OnToolbarChangeListener)
             listener = (OnToolbarChangeListener) context;
     }

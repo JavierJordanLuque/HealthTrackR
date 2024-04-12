@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.util.AuthenticationService;
@@ -32,7 +33,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                 User user = AuthenticationService.login(this, email, password);
 
                 Intent intent = new Intent(AuthenticationActivity.this, MainActivity.class);
-                intent.putExtra(User.class.getSimpleName(), user);
+                ((HealthTrackRApp) getApplication()).getSessionViewModel().setUserSession(user);
                 startActivity(intent);
                 finish();
             } catch (AuthenticationException exception) {

@@ -85,8 +85,7 @@
 
                     <TextView
                         android:id="@+id/textViewBirthDate"
-                        style="@style/Widget.HealthTrackR.TextView.Value"
-                        android:text="@string/unspecified" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -94,8 +93,7 @@
 
                     <TextView
                         android:id="@+id/textViewGender"
-                        style="@style/Widget.HealthTrackR.TextView.Value"
-                        android:text="@string/unspecified" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -103,8 +101,7 @@
 
                     <TextView
                         android:id="@+id/textViewBloodType"
-                        style="@style/Widget.HealthTrackR.TextView.Value"
-                        android:text="@string/unspecified" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -112,8 +109,7 @@
 
                     <TextView
                         android:id="@+id/textViewAllergies"
-                        style="@style/Widget.HealthTrackR.TextView.Value"
-                        android:text="@string/unspecified" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -121,8 +117,7 @@
 
                     <TextView
                         android:id="@+id/textViewPreviousMedicalConditions"
-                        style="@style/Widget.HealthTrackR.TextView.Value"
-                        android:text="@string/unspecified" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                 </LinearLayout>
 

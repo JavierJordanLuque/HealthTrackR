@@ -92,7 +92,7 @@ public class SignUpActivity extends BaseActivity {
             User user = AuthenticationService.register(this, email, password, firstName, lastName);
 
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(User.class.getSimpleName(), user);
+            sessionViewModel.setUserSession(user);
             startActivity(intent);
             finish();
         } catch (AuthenticationException exception) {
@@ -130,15 +130,5 @@ public class SignUpActivity extends BaseActivity {
     @Override
     protected int getMenu() {
         return R.menu.toolbar_basic_menu;
-    }
-
-    @Override
-    protected User getUser() {
-        return null;
-    }
-
-    @Override
-    protected void handleBackButtonAction() {
-        finish();
     }
 }
