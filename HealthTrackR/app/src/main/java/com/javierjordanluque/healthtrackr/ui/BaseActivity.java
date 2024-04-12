@@ -187,8 +187,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         NumberPicker numberPickerYear = dialogView.findViewById(R.id.numberPickerYear);
 
         numberPickerDay.setMinValue(1);
-        numberPickerDay.setMaxValue(31);
-
         numberPickerMonth.setMinValue(1);
         numberPickerMonth.setMaxValue(12);
 
@@ -215,9 +213,18 @@ public abstract class BaseActivity extends AppCompatActivity {
             year = Integer.parseInt(dateParts[2]);
         }
 
+        numberPickerDay.setMaxValue(getMaxDayOfMonth(monthOfYear, year));
         numberPickerDay.setValue(dayOfMonth);
         numberPickerMonth.setValue(monthOfYear);
         numberPickerYear.setValue(year);
+
+        numberPickerMonth.setOnValueChangedListener((picker, oldVal, newVal) -> {
+            numberPickerDay.setMaxValue(getMaxDayOfMonth(newVal, numberPickerYear.getValue()));
+        });
+
+        numberPickerYear.setOnValueChangedListener((picker, oldVal, newVal) -> {
+            numberPickerDay.setMaxValue(getMaxDayOfMonth(numberPickerMonth.getValue(), newVal));
+        });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
@@ -229,5 +236,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private int getMaxDayOfMonth(int month, int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 }
