@@ -12,10 +12,8 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/buttonModifyAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/Widget.HealthTrackR.FloatingActionButton.Primary"
             android:layout_gravity="top|end"
-            android:layout_margin="@dimen/floating_button_layout_margin"
             android:contentDescription="@string/content_description_modify_account"
             app:srcCompat="@drawable/ic_modify" />
 
@@ -61,7 +59,7 @@
 
                     <TextView
                         android:id="@+id/textViewEmail"
-                        style="@style/Widget.HealthTrackR.TextView.Value" />
+                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -69,7 +67,7 @@
 
                     <TextView
                         android:id="@+id/textViewFirstName"
-                        style="@style/Widget.HealthTrackR.TextView.Value" />
+                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -77,7 +75,7 @@
 
                     <TextView
                         android:id="@+id/textViewLastName"
-                        style="@style/Widget.HealthTrackR.TextView.Value" />
+                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -85,7 +83,7 @@
 
                     <TextView
                         android:id="@+id/textViewBirthDate"
-                        style="@style/Widget.HealthTrackR.TextView.Value" />
+                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -93,7 +91,7 @@
 
                     <TextView
                         android:id="@+id/textViewGender"
-                        style="@style/Widget.HealthTrackR.TextView.Value" />
+                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -101,7 +99,7 @@
 
                     <TextView
                         android:id="@+id/textViewBloodType"
-                        style="@style/Widget.HealthTrackR.TextView.Value" />
+                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -109,7 +107,7 @@
 
                     <TextView
                         android:id="@+id/textViewAllergies"
-                        style="@style/Widget.HealthTrackR.TextView.Value" />
+                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
 
                     <TextView
                         style="@style/Widget.HealthTrackR.TextView"
@@ -117,7 +115,7 @@
 
                     <TextView
                         android:id="@+id/textViewPreviousMedicalConditions"
-                        style="@style/Widget.HealthTrackR.TextView.Value" />
+                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
 
                 </LinearLayout>
 
@@ -153,7 +151,9 @@
 
                     <Button
                         android:id="@+id/buttonDeleteAccount"
-                        style="@style/Widget.HealthTrackR.LargeButton.Form.Outlined"
+                        style="@style/Widget.HealthTrackR.LargeButton.Form"
+                        android:backgroundTint="?attr/colorErrorContainer"
+                        android:textColor="?attr/colorOnErrorContainer"
                         android:text="@string/account_delete" />
 
                 </LinearLayout>

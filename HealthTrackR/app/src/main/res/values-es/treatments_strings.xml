@@ -22,10 +22,16 @@
         <item>Crónico</item>
         <item>Alternativo</item>
     </string-array>
+    <string name="treatments_diagnosis">Diagnóstico:</string>
     <string name="treatments_diagnosis_form">Diagnóstico</string>
 
     <string name="treatments_treatment_addition">Adición de tratamiento</string>
     <string name="treatments_add_treatment">Añadir tratamiento</string>
+
+    <string name="treatments_steps">Pasos</string>
+    <string name="treatments_medicines">Medicamentos</string>
+    <string name="treatments_symptoms">Síntomas</string>
+    <string name="treatments_calendar">Calendario</string>
 
     <string name="treatments_pending">Pendiente</string>
     <string name="treatments_in_progress">En progreso</string>

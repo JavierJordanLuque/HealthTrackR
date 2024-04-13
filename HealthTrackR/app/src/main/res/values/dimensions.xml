@@ -6,8 +6,7 @@
     <dimen name="large_btn_max_width">280dp</dimen>
     <dimen name="large_btn_padding_bottom">10dp</dimen>
     <dimen name="large_btn_padding_top">10dp</dimen>
-    <dimen name="large_btn_elevation">2dp</dimen>
-    <dimen name="small_btn_elevation">2dp</dimen>
+    <dimen name="btn_elevation">2dp</dimen>
 
     <dimen name="linear_layout_padding_top">20dp</dimen>
     <dimen name="linear_layout_padding_bottom">20dp</dimen>
@@ -25,4 +24,9 @@
     <dimen name="spinner_layout_padding_top">5dp</dimen>
     <dimen name="spinner_layout_padding_horizontal">10dp</dimen>
     <dimen name="spinner_layout_margin_top">20dp</dimen>
+
+    <dimen name="relative_layout_grid_layout_margin">8dp</dimen>
+    <dimen name="relative_layout_grid_padding">2dp</dimen>
+
+    <dimen name="image_btn_grid_layout_margin">6dp</dimen>
 </resources>

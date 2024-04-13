@@ -1,14 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.treatments.TreatmentFragment">
+    tools:context=".ui.account.AccountFragment">
 
-    <TextView
-        android:id="@+id/textView"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonModifyAccount"
+            style="@style/Widget.HealthTrackR.FloatingActionButton.Primary"
+            android:layout_gravity="top|end"
+            android:contentDescription="@string/content_description_modify_treatment"
+            app:srcCompat="@drawable/ic_modify" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMarginGuidelineStart"
+                    style="@style/vMarginGuidelineStart">
+
+                </androidx.constraintlayout.widget.Guideline>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMarginGuidelineEnd"
+                    style="@style/vMarginGuidelineEnd">
+
+                </androidx.constraintlayout.widget.Guideline>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/linear_layout_padding_top"
+                    android:paddingBottom="@dimen/linear_layout_padding_bottom"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintWidth_max="@dimen/text_view_max_width">
+
+                    <TextView
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/treatments_start_date" />
+
+                    <TextView
+                        android:id="@+id/textViewStartDate"
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
+
+                    <TextView
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
+                        android:text="@string/treatments_end_date" />
+
+                    <TextView
+                        android:id="@+id/textViewEndDate"
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
+
+                    <TextView
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
+                        android:text="@string/treatments_category" />
+
+                    <TextView
+                        android:id="@+id/textViewCategory"
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
+
+                    <TextView
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
+                        android:text="@string/treatments_diagnosis" />
+
+                    <TextView
+                        android:id="@+id/textViewDiagnosis"
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
+
+                </LinearLayout>
+
+                <GridLayout
+                    android:id="@+id/gridLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout"
+                    app:layout_constraintWidth_max="@dimen/text_view_max_width"
+                    app:layout_constraintHeight_max="350dp"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    android:alignmentMode="alignMargins"
+                    android:columnOrderPreserved="false"
+                    android:columnCount="2"
+                    android:rowCount="2">
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayoutSteps"
+                        style="@style/RelativeLayoutGrid">
+
+                        <TextView
+                            android:id="@+id/textViewSteps"
+                            style="@style/Widget.HealthTrackR.TextView.Grid"
+                            android:text="@string/treatments_steps" />
+
+                        <ImageButton
+                            style="@style/Widget.HealthTrackR.ImageButton.Grid"
+                            android:layout_below="@+id/textViewSteps"
+                            android:src="@drawable/ic_step"
+                            android:contentDescription="@string/content_description_access_steps"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayoutMedicines"
+                        style="@style/RelativeLayoutGrid">
+
+                        <TextView
+                            android:id="@+id/textViewMedicines"
+                            style="@style/Widget.HealthTrackR.TextView.Grid"
+                            android:text="@string/treatments_medicines" />
+
+                        <ImageButton
+                            style="@style/Widget.HealthTrackR.ImageButton.Grid"
+                            android:layout_below="@+id/textViewMedicines"
+                            android:src="@drawable/ic_medication"
+                            android:contentDescription="@string/content_description_access_medicines" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayoutSymptoms"
+                        style="@style/RelativeLayoutGrid">
+
+                        <TextView
+                            android:id="@+id/textViewSymptoms"
+                            style="@style/Widget.HealthTrackR.TextView.Grid"
+                            android:text="@string/treatments_symptoms" />
+
+                        <ImageButton
+                            style="@style/Widget.HealthTrackR.ImageButton.Grid"
+                            android:layout_below="@+id/textViewSymptoms"
+                            android:src="@drawable/ic_symptom"
+                            android:contentDescription="@string/content_description_access_symptoms" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayoutCalendar"
+                        style="@style/RelativeLayoutGrid">
+
+                        <TextView
+                            android:id="@+id/textViewCalendar"
+                            style="@style/Widget.HealthTrackR.TextView.Grid"
+                            android:text="@string/treatments_calendar" />
+
+                        <ImageButton
+                            style="@style/Widget.HealthTrackR.ImageButton.Grid"
+                            android:layout_below="@+id/textViewCalendar"
+                            android:src="@drawable/ic_calendar"
+                            android:contentDescription="@string/content_description_access_calendar" />
+                    </RelativeLayout>
+
+                </GridLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    app:layout_constraintEnd_toEndOf="@id/gridLayout"
+                    app:layout_constraintStart_toStartOf="@id/gridLayout"
+                    app:layout_constraintTop_toBottomOf="@id/gridLayout"
+                    app:layout_constraintWidth_max="@dimen/text_view_max_width">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/vCenterGuideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5">
+
+                    </androidx.constraintlayout.widget.Guideline>
+
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/buttonQuestion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="?attr/colorSecondaryContainer"
+                        android:src="@drawable/ic_question"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/vCenterGuideline"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="?attr/colorOnSecondaryContainer"
+                        app:elevation="@dimen/btn_elevation"
+                        android:contentDescription="@string/content_description_access_questions">
+
+                    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/buttonDeleteTreatment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="?attr/colorErrorContainer"
+                        android:src="@drawable/ic_delete"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/vCenterGuideline"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="?attr/colorOnErrorContainer"
+                        app:elevation="@dimen/btn_elevation"
+                        android:contentDescription="@string/content_description_delete_treatment">
+
+                    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

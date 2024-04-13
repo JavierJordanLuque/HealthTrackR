@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Treatment;
@@ -21,7 +20,6 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 public class TreatmentFragment extends Fragment {
     private OnToolbarChangeListener listener;
     private Treatment treatment;
-    private TextView textView;
 
     public TreatmentFragment() {
     }
@@ -34,8 +32,6 @@ public class TreatmentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_treatment, container, false);
-
-        textView = fragmentView.findViewById(R.id.textView);
 
         return fragmentView;
     }
@@ -66,8 +62,6 @@ public class TreatmentFragment extends Fragment {
 
         if (listener != null)
             listener.onTitleChanged(getString(R.string.treatments_title));
-
-        textView.setText(treatment.getTitle());
     }
 
     @Override

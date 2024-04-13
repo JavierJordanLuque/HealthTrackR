@@ -45,24 +45,20 @@
                     android:textStyle="bold" />
 
                     <TextView
-                        style="@style/Widget.HealthTrackR.TextView"
-                        android:text="@string/treatments_start_date"
-                        android:textStyle="bold" />
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
+                        android:text="@string/treatments_start_date" />
 
                     <TextView
                         android:id="@+id/textViewStartDate"
-                        style="@style/Widget.HealthTrackR.TextView.Value"
-                        android:textStyle="normal" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                 <TextView
-                    style="@style/Widget.HealthTrackR.TextView"
-                    android:text="@string/treatments_end_date"
-                    android:textStyle="bold" />
+                    style="@style/Widget.HealthTrackR.TextView.Bold"
+                    android:text="@string/treatments_end_date" />
 
                 <TextView
                     android:id="@+id/textViewEndDate"
-                    style="@style/Widget.HealthTrackR.TextView.Value"
-                    android:textStyle="normal" />
+                    style="@style/Widget.HealthTrackR.TextView.Value" />
 
                 <View
                     android:layout_width="match_parent"
@@ -71,14 +67,12 @@
                     android:background="?attr/colorOutlineVariant" />
 
                 <TextView
-                    style="@style/Widget.HealthTrackR.TextView"
-                    android:text="@string/treatments_category"
-                    android:textStyle="bold" />
+                    style="@style/Widget.HealthTrackR.TextView.Bold"
+                    android:text="@string/treatments_category" />
 
                 <TextView
                     android:id="@+id/textViewCategory"
-                    style="@style/Widget.HealthTrackR.TextView.Value"
-                    android:textStyle="normal" />
+                    style="@style/Widget.HealthTrackR.TextView.Value" />
 
             </LinearLayout>
 

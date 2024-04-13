@@ -85,7 +85,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             NotificationCompat.Builder notificationBuilder;
             if (medicationNotification.getTimestamp() != medicationNotification.getMedicine().getInitialDosingTime().toInstant().toEpochMilli()) {
                 publicNotificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.PREVIOUS_MEDICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_notification_medication)
+                        .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(publicMessage)
                         .setStyle(new NotificationCompat.BigTextStyle()
@@ -96,7 +96,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                         //.setContentIntent(actionPendingIntent);
 
                 notificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.PREVIOUS_MEDICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_notification_medication)
+                        .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(message)
                         .setStyle(new NotificationCompat.BigTextStyle()
@@ -108,7 +108,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                         //.setContentIntent(actionPendingIntent);
             } else {
                 publicNotificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_notification_medication)
+                        .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(publicMessage)
                         .setStyle(new NotificationCompat.BigTextStyle()
@@ -119,7 +119,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                         //.setContentIntent(actionPendingIntent);
 
                 notificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_notification_medication)
+                        .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(message)
                         .setStyle(new NotificationCompat.BigTextStyle()
@@ -177,7 +177,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             */
 
             NotificationCompat.Builder publicNotificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_notification_medical_appointment)
+                    .setSmallIcon(R.drawable.ic_medical_appointment)
                     .setContentTitle(context.getString(R.string.notification_title_medical_appointment))
                     .setContentText(publicMessage)
                     .setStyle(new NotificationCompat.BigTextStyle()
@@ -188,7 +188,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                     //.setContentIntent(actionPendingIntent);
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_notification_medical_appointment)
+                    .setSmallIcon(R.drawable.ic_medical_appointment)
                     .setContentTitle(context.getString(R.string.notification_title_medical_appointment))
                     .setContentText(message)
                     .setStyle(new NotificationCompat.BigTextStyle()
