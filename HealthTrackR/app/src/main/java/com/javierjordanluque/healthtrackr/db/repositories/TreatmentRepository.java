@@ -22,6 +22,7 @@ import com.javierjordanluque.healthtrackr.util.security.CipherData;
 import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,14 +65,24 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
             contentValues.put(START_DATE_IV, cipherData.getInitializationVector());
         }
         if (treatment.getEndDate() != null) {
-            CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getEndDate().toEpochSecond()));
-            contentValues.put(END_DATE, cipherData.getEncryptedData());
-            contentValues.put(END_DATE_IV, cipherData.getInitializationVector());
+            if (treatment.getEndDate().equals(ZonedDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC))) {
+                contentValues.putNull(END_DATE);
+                contentValues.putNull(END_DATE_IV);
+            } else {
+                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getEndDate().toEpochSecond()));
+                contentValues.put(END_DATE, cipherData.getEncryptedData());
+                contentValues.put(END_DATE_IV, cipherData.getInitializationVector());
+            }
         }
         if (treatment.getDiagnosis() != null) {
-            CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getDiagnosis()));
-            contentValues.put(DIAGNOSIS, cipherData.getEncryptedData());
-            contentValues.put(DIAGNOSIS_IV, cipherData.getInitializationVector());
+            if (treatment.getDiagnosis().isEmpty()) {
+                contentValues.putNull(DIAGNOSIS);
+                contentValues.putNull(DIAGNOSIS_IV);
+            } else {
+                CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getDiagnosis()));
+                contentValues.put(DIAGNOSIS, cipherData.getEncryptedData());
+                contentValues.put(DIAGNOSIS_IV, cipherData.getInitializationVector());
+            }
         }
         if (treatment.getCategory() != null) {
             CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(treatment.getCategory()));

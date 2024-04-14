@@ -13,7 +13,11 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
+import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +52,8 @@ public class Treatment implements Identifiable {
     private Treatment() {
     }
 
-    public void modifyTreatment(Context context, String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) throws DBUpdateException {
+    public void modifyTreatment(Context context, String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category)
+            throws DBUpdateException, DBFindException, DBInsertException, DBDeleteException {
         Treatment treatment = new Treatment();
         treatment.setId(this.id);
 
@@ -56,18 +61,45 @@ public class Treatment implements Identifiable {
             setTitle(title);
             treatment.setTitle(this.title);
         }
+
         if (!this.startDate.equals(startDate)) {
             setStartDate(startDate);
             treatment.setStartDate(this.startDate);
         }
+
         if ((this.endDate == null && endDate != null ) || (endDate != null && !this.endDate.equals(endDate))) {
+            if (isFinished() && !endDate.isBefore(ZonedDateTime.now())) {
+                for (Medicine medicine : getMedicines(context)) {
+                    medicine.schedulePreviousMedicationNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
+                    medicine.scheduleMedicationNotification(context);
+                }
+            } else if (!isFinished() && endDate.isBefore(ZonedDateTime.now())) {
+                for (Medicine medicine : getMedicines(context)) {
+                    for (MedicationNotification medicationNotification : medicine.getNotifications(context))
+                        NotificationScheduler.cancelNotification(context, medicationNotification);
+                }
+            }
             setEndDate(endDate);
             treatment.setEndDate(this.endDate);
+        } else if (this.endDate != null && endDate == null) {
+            if (isFinished()) {
+                for (Medicine medicine : getMedicines(context)) {
+                    medicine.schedulePreviousMedicationNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
+                    medicine.scheduleMedicationNotification(context);
+                }
+            }
+            setEndDate(null);
+            treatment.setEndDate(ZonedDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC));
         }
+
         if ((this.diagnosis == null && diagnosis != null ) || (diagnosis != null && !this.diagnosis.equals(diagnosis))) {
             setDiagnosis(diagnosis);
             treatment.setDiagnosis(this.diagnosis);
+        } else if (this.diagnosis != null && diagnosis == null) {
+            setDiagnosis(null);
+            treatment.setDiagnosis("");
         }
+
         if ((this.category == null && category != null ) || (category != null && !this.category.equals(category))) {
             setCategory(category);
             treatment.setCategory(this.category);
@@ -75,6 +107,14 @@ public class Treatment implements Identifiable {
 
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         treatmentRepository.update(treatment);
+    }
+
+    public boolean isStarted() {
+        return !startDate.isBefore(ZonedDateTime.now());
+    }
+
+    public boolean isFinished() {
+        return endDate != null && endDate.isAfter(ZonedDateTime.now());
     }
 
     protected void addMedicine(Context context, Medicine medicine) throws DBInsertException {

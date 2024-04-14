@@ -13,6 +13,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
+import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.NotificationException;
@@ -42,9 +43,33 @@ public class NotificationPublisher extends BroadcastReceiver {
             }
 
             if (notification instanceof MedicationNotification) {
-                medicationPublisher(context, notification);
+                Treatment treatment = ((MedicationNotification) notification).getMedicine().getTreatment();
+                if (!treatment.isFinished()) {
+                    medicationPublisher(context, notification);
+                } else {
+                    try {
+                        NotificationScheduler.cancelNotification(context, notification);
+                    } catch (DBFindException | DBDeleteException exception) {
+                        try {
+                            throw new NotificationException("Failed to cancel notification with id (" + notificationId + ") from a finished treatment", exception);
+                        } catch (NotificationException ignored) {
+                        }
+                    }
+                }
             } else if (notification instanceof MedicalAppointmentNotification) {
-                appointmentPublisher(context, notification);
+                Treatment treatment = ((MedicalAppointmentNotification) notification).getAppointment().getTreatment();
+                if (!treatment.isFinished()) {
+                    appointmentPublisher(context, notification);
+                } else {
+                    try {
+                        NotificationScheduler.cancelNotification(context, notification);
+                    } catch (DBFindException | DBDeleteException exception) {
+                        try {
+                            throw new NotificationException("Failed to cancel notification with id (" + notificationId + ") from a finished treatment", exception);
+                        } catch (NotificationException ignored) {
+                        }
+                    }
+                }
             }
         }
     }

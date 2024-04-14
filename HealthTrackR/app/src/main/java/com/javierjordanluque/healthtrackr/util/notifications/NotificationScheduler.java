@@ -37,23 +37,17 @@ public class NotificationScheduler {
                 if (notification instanceof MedicationNotification) {
                     MedicationNotification medicationNotification = (MedicationNotification) notification;
 
-                    long intervalMillis = (medicationNotification.getMedicine().getDosageFrequencyHours() * 60 * 60 * 1000) + (medicationNotification.getMedicine().getDosageFrequencyMinutes() * 60 * 1000);
-                    PendingIntent pendingIntent = buildPendingIntent(context, notification);
-
-                    long currentTimeMillis = System.currentTimeMillis();
-                    long nextNotificationTimeMillis;
-
-                    if (notification.getTimestamp() <= currentTimeMillis) {
-                        long passedIntervals = (currentTimeMillis - notification.getTimestamp()) / intervalMillis;
-                        nextNotificationTimeMillis = notification.getTimestamp() + (passedIntervals + 1) * intervalMillis;
+                    int dosageFrequencyHours = medicationNotification.getMedicine().getDosageFrequencyHours();
+                    int dosageFrequencyMinutes = medicationNotification.getMedicine().getDosageFrequencyMinutes();
+                    if (dosageFrequencyHours == 0 && dosageFrequencyMinutes == 0) {
+                        scheduleInexactNotification(context, notification);
                     } else {
-                        nextNotificationTimeMillis = notification.getTimestamp();
+                        long intervalMillis = (long) dosageFrequencyHours * 60 * 60 * 1000 + (long) dosageFrequencyMinutes * 60 * 1000;
+                        PendingIntent pendingIntent = buildPendingIntent(context, notification);
+                        long nextNotificationTimeMillis = getNextNotificationTimeMillis(notification, System.currentTimeMillis(), intervalMillis);
+
+                        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, nextNotificationTimeMillis, intervalMillis, pendingIntent);
                     }
-
-                    if (nextNotificationTimeMillis - currentTimeMillis < MARGIN_MINUTES * 60 * 1000)
-                        nextNotificationTimeMillis += intervalMillis;
-
-                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, nextNotificationTimeMillis, intervalMillis, pendingIntent);
                 } else {
                     throw new IllegalArgumentException();
                 }
@@ -61,6 +55,22 @@ public class NotificationScheduler {
                 throw new NotificationException("Failed to set notification (" + notification.getClass().getSimpleName() + ") with id (" + notification.getId() + ")", exception);
             }
         }
+    }
+
+    private static long getNextNotificationTimeMillis(Notification notification, long currentTimeMillis, long intervalMillis) {
+        long nextNotificationTimeMillis;
+
+        if (notification.getTimestamp() <= currentTimeMillis) {
+            long passedIntervals = (currentTimeMillis - notification.getTimestamp()) / intervalMillis;
+            nextNotificationTimeMillis = notification.getTimestamp() + (passedIntervals + 1) * intervalMillis;
+        } else {
+            nextNotificationTimeMillis = notification.getTimestamp();
+        }
+
+        if (nextNotificationTimeMillis - currentTimeMillis < MARGIN_MINUTES * 60 * 1000)
+            nextNotificationTimeMillis += intervalMillis;
+
+        return nextNotificationTimeMillis;
     }
 
     private static PendingIntent buildPendingIntent(Context context, Notification notification) {

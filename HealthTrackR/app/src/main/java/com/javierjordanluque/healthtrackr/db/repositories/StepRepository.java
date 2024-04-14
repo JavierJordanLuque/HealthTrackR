@@ -35,10 +35,18 @@ public class StepRepository extends BaseRepository<Step> {
 
         if (step.getTreatment() != null)
             contentValues.put(TREATMENT_ID, step.getTreatment().getId());
+
         if (step.getTitle() != null)
             contentValues.put(TITLE, step.getTitle());
-        if (step.getDescription() != null)
-            contentValues.put(DESCRIPTION, step.getDescription());
+
+        if (step.getDescription() != null) {
+            if (step.getDescription().isEmpty()) {
+                contentValues.putNull(DESCRIPTION);
+            } else {
+                contentValues.put(DESCRIPTION, step.getDescription());
+            }
+        }
+
         if (step.getNumOrder() != null)
             contentValues.put(NUM_ORDER, step.getNumOrder());
 

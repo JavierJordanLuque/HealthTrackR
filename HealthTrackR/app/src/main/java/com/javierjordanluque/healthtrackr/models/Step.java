@@ -33,7 +33,7 @@ public class Step implements Identifiable {
     private Step(){
     }
 
-    public void modifyStep(Context context, String title, String description, int numOrder) throws DBUpdateException {
+    public void modifyStep(Context context, String title, String description, int numOrder) throws DBUpdateException, DBFindException {
         Step step = new Step();
         step.setId(this.id);
 
@@ -41,11 +41,43 @@ public class Step implements Identifiable {
             setTitle(title);
             step.setTitle(this.title);
         }
+
         if ((this.description == null && description != null ) || (description != null && !this.description.equals(description))) {
             setDescription(description);
             step.setDescription(description);
+        } else if (this.description != null && description == null) {
+            setDescription(null);
+            step.setDescription("");
         }
+
         if (this.numOrder != numOrder) {
+            if (numOrder < this.numOrder) {
+                for (Step otherStep : step.getTreatment().getSteps(context)) {
+                    if (!Objects.equals(this.numOrder, otherStep.getNumOrder()) && otherStep.getNumOrder() >= numOrder && otherStep.getNumOrder() < this.numOrder) {
+                        Step newOtherStep = new Step();
+                        newOtherStep.setId(otherStep.getId());
+
+                        otherStep.setNumOrder(otherStep.getNumOrder() + 1);
+                        newOtherStep.setNumOrder(otherStep.getNumOrder() + 1);
+
+                        StepRepository stepRepository = new StepRepository(context);
+                        stepRepository.update(newOtherStep);
+                    }
+                }
+            } else {
+                for (Step otherStep : step.getTreatment().getSteps(context)) {
+                    if (!Objects.equals(this.numOrder, otherStep.getNumOrder()) && otherStep.getNumOrder() <= numOrder && otherStep.getNumOrder() > this.numOrder) {
+                        Step newOtherStep = new Step();
+                        newOtherStep.setId(otherStep.getId());
+
+                        otherStep.setNumOrder(otherStep.getNumOrder() - 1);
+                        newOtherStep.setNumOrder(otherStep.getNumOrder() - 1);
+
+                        StepRepository stepRepository = new StepRepository(context);
+                        stepRepository.update(newOtherStep);
+                    }
+                }
+            }
             setNumOrder(numOrder);
             step.setNumOrder(numOrder);
         }

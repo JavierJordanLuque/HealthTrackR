@@ -179,7 +179,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return date;
     }
 
-    protected void showDatePickerDialog(EditText editTextDate, String title, boolean setCurrentYear) {
+    protected void showDatePickerDialog(EditText editTextDate, String title, boolean setBirthDate) {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_date_picker, null);
 
         NumberPicker numberPickerDay = dialogView.findViewById(R.id.numberPickerDay);
@@ -191,10 +191,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         numberPickerMonth.setMaxValue(12);
 
         Calendar calendar = Calendar.getInstance();
-        numberPickerYear.setMinValue(1900);
-        if (setCurrentYear) {
+        if (setBirthDate) {
+            numberPickerYear.setMinValue(1900);
             numberPickerYear.setMaxValue(calendar.get(Calendar.YEAR));
         } else {
+            numberPickerYear.setMinValue(1970);
             numberPickerYear.setMaxValue(calendar.get(Calendar.YEAR) + 10);
         }
 

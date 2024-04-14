@@ -62,14 +62,12 @@ public class User implements Identifiable {
             user.setLastName(this.lastName);
         }
 
-        if ((this.birthDate == null && birthDate != null ) || (birthDate != null && !this.birthDate.equals(birthDate)) || (this.birthDate != null && birthDate == null)) {
-            if (this.birthDate != null && birthDate == null) {
-                setBirthDate(null);
-                user.setBirthDate(LocalDate.MIN);
-            } else {
-                setBirthDate(birthDate);
-                user.setBirthDate(this.birthDate);
-            }
+        if ((this.birthDate == null && birthDate != null ) || (birthDate != null && !this.birthDate.equals(birthDate))) {
+            setBirthDate(birthDate);
+            user.setBirthDate(this.birthDate);
+        } else if (this.birthDate != null && birthDate == null) {
+            setBirthDate(null);
+            user.setBirthDate(LocalDate.MIN);
         }
 
         if ((this.gender == null && gender != null ) || (gender != null && !this.gender.equals(gender))) {

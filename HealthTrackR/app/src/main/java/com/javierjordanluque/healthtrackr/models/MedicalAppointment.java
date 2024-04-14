@@ -96,9 +96,7 @@ public class MedicalAppointment implements Identifiable {
     }
 
     public boolean isPending() {
-        ZonedDateTime now = ZonedDateTime.now();
-
-        return dateTime.isAfter(now);
+        return dateTime.isAfter(ZonedDateTime.now());
     }
 
     @Override
