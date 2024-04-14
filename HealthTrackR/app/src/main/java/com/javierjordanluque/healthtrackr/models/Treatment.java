@@ -20,6 +20,7 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -248,6 +249,7 @@ public class Treatment implements Identifiable {
             MedicineRepository medicineRepository = new MedicineRepository(context);
             setMedicines(medicineRepository.findTreatmentMedicines(this.id));
         }
+        medicines.sort((medicine1, medicine2) -> medicine2.getInitialDosingTime().compareTo(medicine1.getInitialDosingTime()));
 
         return medicines;
     }
@@ -261,6 +263,7 @@ public class Treatment implements Identifiable {
             StepRepository stepRepository = new StepRepository(context);
             setSteps(stepRepository.findTreatmentSteps(this.id));
         }
+        steps.sort(Comparator.comparingInt(Step::getNumOrder));
 
         return steps;
     }
@@ -300,6 +303,7 @@ public class Treatment implements Identifiable {
             MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
             setAppointments(medicalAppointmentRepository.findTreatmentAppointments(this.id));
         }
+        appointments.sort((appointment1, appointment2) -> appointment2.getDateTime().compareTo(appointment1.getDateTime()));
 
         return appointments;
     }

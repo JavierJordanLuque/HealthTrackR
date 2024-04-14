@@ -273,6 +273,7 @@ public class User implements Identifiable {
             TreatmentRepository treatmentRepository = new TreatmentRepository(context);
             setTreatments(treatmentRepository.findUserTreatments(this.id));
         }
+        treatments.sort((treatment1, treatment2) -> treatment2.getStartDate().compareTo(treatment1.getStartDate()));
 
         return treatments;
     }
