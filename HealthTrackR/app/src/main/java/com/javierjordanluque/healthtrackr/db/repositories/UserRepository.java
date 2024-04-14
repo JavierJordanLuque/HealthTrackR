@@ -25,6 +25,7 @@ import com.javierjordanluque.healthtrackr.util.security.HashData;
 import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneOffset;
 
 public class UserRepository extends BaseRepository<User> {
@@ -65,8 +66,14 @@ public class UserRepository extends BaseRepository<User> {
             contentValues.put(LAST_NAME, cipherData.getEncryptedData());
             contentValues.put(LAST_NAME_IV, cipherData.getInitializationVector());
         }
-        if (user.getBirthDate() != null)
-            contentValues.put(BIRTH_DATE, user.getBirthDate().atStartOfDay(ZoneOffset.UTC).toInstant().getEpochSecond());
+        if (user.getBirthDate() != null) {
+            if (user.getBirthDate().equals(LocalDate.MIN)) {
+                contentValues.putNull(BIRTH_DATE);
+            } else {
+                contentValues.put(BIRTH_DATE, user.getBirthDate().atStartOfDay(ZoneOffset.UTC).toInstant().getEpochSecond());
+            }
+        }
+
         if (user.getGender() != null)
             contentValues.put(GENDER, user.getGender().name());
         if (user.getBloodType() != null) {

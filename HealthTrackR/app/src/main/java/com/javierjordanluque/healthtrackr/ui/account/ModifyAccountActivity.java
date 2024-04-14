@@ -1,7 +1,12 @@
 package com.javierjordanluque.healthtrackr.ui.account;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -59,9 +64,32 @@ public class ModifyAccountActivity extends BaseActivity {
 
         editTextBirthDate = findViewById(R.id.editTextBirthDate);
         LocalDate birthDate = user.getBirthDate();
-        if (birthDate != null)
+        if (birthDate != null) {
+            editTextBirthDate.setFocusableInTouchMode(true);
             editTextBirthDate.setText(showFormattedDate(birthDate));
+        }
         editTextBirthDate.setOnClickListener(view -> showDatePickerDialog(editTextBirthDate, getString(R.string.account_select_birth_date_dialog), true));
+        Activity activity = this;
+        editTextBirthDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    editTextBirthDate.setFocusableInTouchMode(true);
+                } else {
+                    hideKeyboard(activity);
+                    editTextBirthDate.clearFocus();
+                    editTextBirthDate.setFocusableInTouchMode(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         configureGenderSpinner();
         configureBloodTypeSpinner();
@@ -124,7 +152,10 @@ public class ModifyAccountActivity extends BaseActivity {
             return;
         }
 
-        LocalDate birthDate = (LocalDate) getDateFromEditText(editTextBirthDate, LocalDate.class);
+        LocalDate birthDate = null;
+        if (!editTextBirthDate.getText().toString().trim().isEmpty())
+            birthDate = (LocalDate) getDateFromEditText(editTextBirthDate, LocalDate.class);
+
         Gender gender = getGenderFromSpinner();
         BloodType bloodType = getBloodTypeFromSpinner();
         List<Allergy> allergies = getAllergiesFromEditText();

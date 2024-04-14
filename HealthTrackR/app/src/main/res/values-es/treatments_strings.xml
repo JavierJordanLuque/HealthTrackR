@@ -4,13 +4,12 @@
     <string name="treatments_empty">No tienes tratamientos activos. Por favor, añade un nuevo tratamiento</string>
 
     <string name="treatments_title_form">Título *</string>
-    <string name="treatments_start_date">Fecha de inicio:</string>
+    <string name="treatments_start_date">Fecha de inicio</string>
     <string name="treatments_start_date_form">Fecha de inicio *</string>
     <string name="treatments_select_start_date_dialog">Selecciona la fecha de inicio del tratamiento:</string>
-    <string name="treatments_end_date">Fecha de finalización:</string>
-    <string name="treatments_end_date_form">Fecha de finalización</string>
+    <string name="treatments_end_date">Fecha de finalización</string>
     <string name="treatments_select_end_date_dialog">Selecciona la fecha de finalización del tratamiento:</string>
-    <string name="treatments_category">Categoría:</string>
+    <string name="treatments_category">Categoría</string>
     <string name="treatments_category_form">Categoría *</string>
     <string-array name="treatments_category_options">
         <item>Médico</item>
@@ -22,8 +21,7 @@
         <item>Crónico</item>
         <item>Alternativo</item>
     </string-array>
-    <string name="treatments_diagnosis">Diagnóstico:</string>
-    <string name="treatments_diagnosis_form">Diagnóstico</string>
+    <string name="treatments_diagnosis">Diagnóstico</string>
 
     <string name="treatments_treatment_addition">Adición de tratamiento</string>
     <string name="treatments_add_treatment">Añadir tratamiento</string>

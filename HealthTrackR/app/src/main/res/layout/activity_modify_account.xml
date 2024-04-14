@@ -108,7 +108,9 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutBirthDate"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        app:endIconContentDescription="@string/content_description_clear_text"
+                        app:endIconMode="clear_text">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextBirthDate"

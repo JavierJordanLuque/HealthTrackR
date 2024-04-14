@@ -95,14 +95,16 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutEndDate"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox">
+                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                        app:endIconContentDescription="@string/content_description_clear_text"
+                        app:endIconMode="clear_text">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextEndDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusableInTouchMode="false"
-                            android:hint="@string/treatments_end_date_form"
+                            android:hint="@string/treatments_end_date"
                             android:inputType="date" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,14 +128,16 @@
                         android:id="@+id/layoutDiagnosis"
                         style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
                         app:counterEnabled="true"
-                        app:counterMaxLength="200">
+                        app:counterMaxLength="200"
+                        app:endIconContentDescription="@string/content_description_clear_text"
+                        app:endIconMode="clear_text">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextDiagnosis"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:autofillHints="text"
-                            android:hint="@string/treatments_diagnosis_form"
+                            android:hint="@string/treatments_diagnosis"
                             android:inputType="textMultiLine"
                             android:maxLength="200" />
                     </com.google.android.material.textfield.TextInputLayout>

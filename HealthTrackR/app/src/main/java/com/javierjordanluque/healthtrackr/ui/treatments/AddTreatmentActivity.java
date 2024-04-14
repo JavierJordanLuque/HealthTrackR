@@ -1,6 +1,9 @@
 package com.javierjordanluque.healthtrackr.ui.treatments;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -51,7 +54,28 @@ public class AddTreatmentActivity extends BaseActivity {
         layoutEndDate = findViewById(R.id.layoutEndDate);
         editTextEndDate = findViewById(R.id.editTextEndDate);
         editTextEndDate.setOnClickListener(view -> showDatePickerDialog(editTextEndDate, getString(R.string.treatments_select_end_date_dialog), false));
-        setEditTextListener(layoutEndDate, editTextEndDate);
+        Activity activity = this;
+        editTextEndDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                layoutEndDate.setError(null);
+                if (s.length() > 0) {
+                    editTextEndDate.setFocusableInTouchMode(true);
+                } else {
+                    hideKeyboard(activity);
+                    editTextEndDate.clearFocus();
+                    editTextEndDate.setFocusableInTouchMode(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         configureCategorySpinner();
 

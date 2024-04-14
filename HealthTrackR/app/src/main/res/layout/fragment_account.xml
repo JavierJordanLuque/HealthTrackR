@@ -53,69 +53,69 @@
                     app:layout_constraintWidth_max="@dimen/text_view_max_width">
 
                     <TextView
-                        style="@style/Widget.HealthTrackR.TextView"
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
                         android:layout_marginTop="0dp"
                         android:text="@string/account_email" />
 
                     <TextView
                         android:id="@+id/textViewEmail"
-                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
-                        style="@style/Widget.HealthTrackR.TextView"
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
                         android:text="@string/account_first_name" />
 
                     <TextView
                         android:id="@+id/textViewFirstName"
-                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
-                        style="@style/Widget.HealthTrackR.TextView"
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
                         android:text="@string/account_last_name" />
 
                     <TextView
                         android:id="@+id/textViewLastName"
-                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
-                        style="@style/Widget.HealthTrackR.TextView"
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
                         android:text="@string/account_birth_date" />
 
                     <TextView
                         android:id="@+id/textViewBirthDate"
-                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
-                        style="@style/Widget.HealthTrackR.TextView"
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
                         android:text="@string/account_gender" />
 
                     <TextView
                         android:id="@+id/textViewGender"
-                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
-                        style="@style/Widget.HealthTrackR.TextView"
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
                         android:text="@string/account_blood_type" />
 
                     <TextView
                         android:id="@+id/textViewBloodType"
-                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
-                        style="@style/Widget.HealthTrackR.TextView"
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
                         android:text="@string/account_allergies" />
 
                     <TextView
                         android:id="@+id/textViewAllergies"
-                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                     <TextView
-                        style="@style/Widget.HealthTrackR.TextView"
+                        style="@style/Widget.HealthTrackR.TextView.Bold"
                         android:text="@string/account_previous_medical_conditions" />
 
                     <TextView
                         android:id="@+id/textViewPreviousMedicalConditions"
-                        style="@style/Widget.HealthTrackR.TextView.Value.Bold" />
+                        style="@style/Widget.HealthTrackR.TextView.Value" />
 
                 </LinearLayout>
 

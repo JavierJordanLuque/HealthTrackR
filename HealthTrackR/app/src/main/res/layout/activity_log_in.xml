@@ -83,7 +83,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutPassword"
                         style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
-                        app:endIconContentDescription="@string/content_description_show_password"
+                        app:endIconContentDescription="@string/content_description_toggle_password_visibility"
                         app:endIconMode="password_toggle">
 
                         <com.google.android.material.textfield.TextInputEditText
