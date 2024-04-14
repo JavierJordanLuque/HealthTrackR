@@ -15,7 +15,9 @@ import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotificat
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,7 +53,7 @@ public class Medicine implements Identifiable {
 
     public void schedulePreviousMedicationNotification(Context context, int previousMinutes) throws DBInsertException, DBDeleteException {
         if (PermissionManager.hasNotificationPermission(context)) {
-            long timestamp = initialDosingTime.minusHours(previousMinutes).toInstant().toEpochMilli();
+            long timestamp = initialDosingTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
             MedicationNotification previousNotification = new MedicationNotification(this, timestamp);
 
             NotificationRepository notificationRepository = new NotificationRepository(context);
@@ -93,7 +95,7 @@ public class Medicine implements Identifiable {
     }
 
     public void modifyMedicine(Context context, Integer dose, AdministrationRoute administrationRoute, ZonedDateTime initialDosingTime, int dosageFrequencyHours,
-                               int dosageFrequencyMinutes) throws DBUpdateException {
+                               int dosageFrequencyMinutes) throws DBUpdateException, DBFindException, DBDeleteException, DBInsertException {
         Medicine medicine = new Medicine();
         medicine.setId(this.id);
         medicine.setTreatment(this.treatment);
@@ -102,21 +104,41 @@ public class Medicine implements Identifiable {
             setDose(dose);
             medicine.setDose(this.dose);
         }
+
         if ((this.administrationRoute == null && administrationRoute != null ) || (administrationRoute != null && !this.administrationRoute.equals(administrationRoute))) {
             setAdministrationRoute(administrationRoute);
             medicine.setAdministrationRoute(this.administrationRoute);
         }
+
+        ZonedDateTime oldInitialDosingTime = this.initialDosingTime;
         if (!this.initialDosingTime.equals(initialDosingTime)) {
             setInitialDosingTime(initialDosingTime);
             medicine.setInitialDosingTime(this.initialDosingTime);
         }
-        if (!this.dosageFrequencyHours.equals(dosageFrequencyHours)) {
-            setDosageFrequencyHours(dosageFrequencyHours);
-            medicine.setDosageFrequencyHours(this.dosageFrequencyHours);
-        }
-        if (!this.dosageFrequencyMinutes.equals(dosageFrequencyMinutes)) {
-            setDosageFrequencyMinutes(dosageFrequencyMinutes);
-            medicine.setDosageFrequencyMinutes(this.dosageFrequencyMinutes);
+
+        if (!this.dosageFrequencyHours.equals(dosageFrequencyHours) || !this.dosageFrequencyMinutes.equals(dosageFrequencyMinutes)) {
+            if (!this.dosageFrequencyHours.equals(dosageFrequencyHours)) {
+                setDosageFrequencyHours(dosageFrequencyHours);
+                medicine.setDosageFrequencyHours(this.dosageFrequencyHours);
+            }
+
+            if (!this.dosageFrequencyMinutes.equals(dosageFrequencyMinutes)) {
+                setDosageFrequencyMinutes(dosageFrequencyMinutes);
+                medicine.setDosageFrequencyMinutes(this.dosageFrequencyMinutes);
+            }
+
+            for (MedicationNotification medicationNotification : getNotifications(context)) {
+                if (medicationNotification.getTimestamp() != medicationNotification.getMedicine().getInitialDosingTime().toInstant().toEpochMilli()) {
+                    int previousMinutes = (int) ChronoUnit.MINUTES.between(oldInitialDosingTime, Instant.ofEpochMilli(medicationNotification.getTimestamp())
+                            .atZone(oldInitialDosingTime.getZone()));
+
+                    NotificationScheduler.cancelNotification(context, medicationNotification);
+                    schedulePreviousMedicationNotification(context, previousMinutes);
+                } else {
+                    NotificationScheduler.cancelNotification(context, medicationNotification);
+                    scheduleMedicationNotification(context);
+                }
+            }
         }
 
         MedicineRepository medicineRepository = new MedicineRepository(context);
@@ -139,7 +161,7 @@ public class Medicine implements Identifiable {
         }
 
         int previousMinutes = previousNotificationTimeHours * 60 + previousNotificationTimeMinutes;
-        long previousTimestamp = initialDosingTime.minusHours(previousMinutes).toInstant().toEpochMilli();
+        long previousTimestamp = initialDosingTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
 
         if (previousNotification != null && (!previousNotificationStatus || previousNotification.getTimestamp() != previousTimestamp))
             NotificationScheduler.cancelNotification(context, previousNotification);

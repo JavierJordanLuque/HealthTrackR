@@ -12,7 +12,9 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class MedicalAppointment implements Identifiable {
@@ -43,7 +45,7 @@ public class MedicalAppointment implements Identifiable {
         if (previousMinutes >= NotificationScheduler.MARGIN_MINUTES &&
                 dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes + NotificationScheduler.MARGIN_MINUTES)) &&
                 PermissionManager.hasNotificationPermission(context)) {
-            long timestamp = dateTime.minusHours(previousMinutes).toInstant().toEpochMilli();
+            long timestamp = dateTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
             MedicalAppointmentNotification notification = new MedicalAppointmentNotification(this, timestamp);
 
             NotificationRepository notificationRepository = new NotificationRepository(context);
@@ -63,21 +65,39 @@ public class MedicalAppointment implements Identifiable {
     private MedicalAppointment() {
     }
 
-    public void modifyMedicalAppointment(Context context, String purpose, ZonedDateTime dateTime, Location location) throws DBUpdateException {
+    public void modifyMedicalAppointment(Context context, String purpose, ZonedDateTime dateTime, Location location) throws DBUpdateException, DBFindException,
+            DBDeleteException, DBInsertException {
         MedicalAppointment appointment = new MedicalAppointment();
         appointment.setId(this.id);
 
         if ((this.purpose == null && purpose != null ) || (purpose != null && !this.purpose.equals(purpose))) {
             setPurpose(purpose);
             appointment.setPurpose(this.purpose);
+        } else if (this.purpose != null && purpose == null) {
+            setPurpose(null);
+            appointment.setPurpose("");
         }
+
         if (!this.dateTime.equals(dateTime)) {
+            ZonedDateTime oldDateTime = this.dateTime;
+
             setDateTime(dateTime);
             appointment.setDateTime(this.dateTime);
+
+            MedicalAppointmentNotification medicalAppointmentNotification = getNotification(context);
+            int previousMinutes = (int) ChronoUnit.MINUTES.between(oldDateTime, Instant.ofEpochMilli(medicalAppointmentNotification.getTimestamp())
+                    .atZone(oldDateTime.getZone()));
+            NotificationScheduler.cancelNotification(context, medicalAppointmentNotification);
+            scheduleAppointmentNotification(context, previousMinutes);
         }
+
         if ((this.location == null && location != null ) || (location != null && !this.location.equals(location))) {
             setLocation(location);
             appointment.setLocation(this.location);
+        } else if (this.location != null && location == null) {
+            location = new Location(Long.MIN_VALUE, Long.MIN_VALUE);
+            setLocation(null);
+            appointment.setLocation(location);
         }
 
         MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
@@ -87,7 +107,7 @@ public class MedicalAppointment implements Identifiable {
     public void modifyMedicalAppointmentNotification(Context context, int notificationTimeHours, int notificationTimeMinutes, boolean notificationStatus) throws DBDeleteException, DBFindException, DBInsertException {
         notification = getNotification(context);
         int previousMinutes = notificationTimeHours * 60 + notificationTimeMinutes;
-        long timestamp = dateTime.minusHours(previousMinutes).toInstant().toEpochMilli();
+        long timestamp = dateTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
 
         if (notification != null && (!notificationStatus || notification.getTimestamp() != timestamp))
             NotificationScheduler.cancelNotification(context, notification);

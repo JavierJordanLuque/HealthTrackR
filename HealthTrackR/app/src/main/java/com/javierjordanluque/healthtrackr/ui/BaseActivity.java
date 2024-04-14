@@ -195,7 +195,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             numberPickerYear.setMinValue(1900);
             numberPickerYear.setMaxValue(calendar.get(Calendar.YEAR));
         } else {
-            numberPickerYear.setMinValue(1970);
+            numberPickerYear.setMinValue(2000);
             numberPickerYear.setMaxValue(calendar.get(Calendar.YEAR) + 10);
         }
 

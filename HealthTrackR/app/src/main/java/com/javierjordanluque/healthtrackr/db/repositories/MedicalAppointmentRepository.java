@@ -49,16 +49,29 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
 
         if (appointment.getTreatment() != null)
             contentValues.put(TREATMENT_ID, appointment.getTreatment().getId());
-        if (appointment.getPurpose() != null)
-            contentValues.put(PURPOSE, appointment.getPurpose());
+
+        if (appointment.getPurpose() != null) {
+            if (appointment.getPurpose().isEmpty()) {
+                contentValues.putNull(PURPOSE);
+            } else {
+                contentValues.put(PURPOSE, appointment.getPurpose());
+            }
+        }
+
         if (appointment.getDateTime() != null) {
             CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(appointment.getDateTime().toEpochSecond()));
             contentValues.put(DATE_TIME, cipherData.getEncryptedData());
             contentValues.put(DATE_TIME_IV, cipherData.getInitializationVector());
         }
+
         if (appointment.getLocation() != null) {
-            contentValues.put(LATITUDE, appointment.getLocation().getLatitude());
-            contentValues.put(LONGITUDE, appointment.getLocation().getLongitude());
+            if (appointment.getLocation().getLatitude() == Long.MIN_VALUE && appointment.getLocation().getLongitude() == Long.MIN_VALUE) {
+                contentValues.putNull(LATITUDE);
+                contentValues.putNull(LONGITUDE);
+            } else {
+                contentValues.put(LATITUDE, appointment.getLocation().getLatitude());
+                contentValues.put(LONGITUDE, appointment.getLocation().getLongitude());
+            }
         }
 
         return contentValues;
