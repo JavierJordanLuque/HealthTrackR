@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.ActionBar;
@@ -23,8 +24,12 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
+import com.javierjordanluque.healthtrackr.models.Treatment;
+import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.NavigationUtils;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.time.LocalDate;
@@ -64,6 +69,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(toolbarTitle);
+
+        toolbar.setOnLongClickListener(view -> {
+            Toast.makeText(this, getSupportActionBar().getTitle(), Toast.LENGTH_SHORT).show();
+            return true;
+        });
     }
 
     public void setToolbarTitle(String title) {
@@ -87,17 +97,50 @@ public abstract class BaseActivity extends AppCompatActivity {
             NavigationUtils.openUserManual(this);
             return true;
         } else if (itemId == R.id.menuSignOut) {
-            AuthenticationService.logout(this, sessionViewModel.getUserSession());
-            AuthenticationService.clearCredentials(this);
-
-            Intent intent = new Intent(this, AuthenticationActivity.class);
-            startActivity(intent);
-            finish();
-
+            showSignOutConfirmationDialog();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showSignOutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.account_sign_out_dialog))
+                .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
+                    AuthenticationService.logout(this, sessionViewModel.getUserSession());
+                    AuthenticationService.clearCredentials(this);
+
+                    Intent intent = new Intent(this, AuthenticationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                })
+                .setNegativeButton(getString(R.string.dialog_no), (dialog, id) -> {
+                    dialog.dismiss();
+                });
+        builder.create().show();
+    }
+
+    public Treatment getTreatmentFromBundle(Bundle bundle) {
+        User user = sessionViewModel.getUserSession();
+
+        if (user != null) {
+            if (bundle != null) {
+                long treatmentId = bundle.getLong(Treatment.class.getSimpleName());
+                try {
+                    for (Treatment treatment : user.getTreatments(this)) {
+                        if (treatment.getId() == treatmentId) {
+                            return treatment;
+                        }
+                    }
+                } catch (DBFindException exception) {
+                    ExceptionManager.advertiseUI(this, exception.getMessage());
+                }
+            }
+        }
+
+        return null;
     }
 
     public void showBackButton(boolean show) {

@@ -13,7 +13,9 @@
     <string name="account_blood_type">Blood type</string>
     <string name="account_allergies">Allergies</string>
     <string name="account_previous_medical_conditions">Previous medical conditions</string>
+
     <string name="account_sign_out">Sign out</string>
+    <string name="account_sign_out_dialog">Are you sure you want to sign out?</string>
 
     <string name="account_delete">Delete account</string>
     <string name="account_delete_dialog">Are you sure you want to delete your account?</string>

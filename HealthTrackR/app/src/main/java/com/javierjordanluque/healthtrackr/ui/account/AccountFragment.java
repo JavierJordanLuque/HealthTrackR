@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -36,7 +35,6 @@ import java.util.List;
 public class AccountFragment extends Fragment {
     private OnToolbarChangeListener listener;
     private User user;
-    private NestedScrollView nestedScrollView;
     private TextView textViewEmail;
     private TextView textViewFirstName;
     private TextView textViewLastName;
@@ -58,7 +56,6 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_account, container, false);
 
-        nestedScrollView = fragmentView.findViewById(R.id.nestedScrollView);
         textViewEmail = fragmentView.findViewById(R.id.textViewEmail);
         textViewFirstName = fragmentView.findViewById(R.id.textViewFirstName);
         textViewLastName = fragmentView.findViewById(R.id.textViewLastName);
@@ -76,23 +73,18 @@ public class AccountFragment extends Fragment {
 
         Button buttonSignOut = fragmentView.findViewById(R.id.buttonSignOut);
         buttonSignOut.setOnClickListener(view -> {
-            AuthenticationService.logout(requireActivity(), user);
-            AuthenticationService.clearCredentials(requireActivity());
-
-            Intent intent = new Intent(requireActivity(), AuthenticationActivity.class);
-            startActivity(intent);
-            requireActivity().finish();
+            ((MainActivity) requireActivity()).showSignOutConfirmationDialog();
         });
 
         Button buttonDeleteAccount = fragmentView.findViewById(R.id.buttonDeleteAccount);
         buttonDeleteAccount.setOnClickListener(view -> {
-            showConfirmationDialog();
+            showDeleteAccountConfirmationDialog();
         });
 
         return fragmentView;
     }
 
-    private void showConfirmationDialog() {
+    private void showDeleteAccountConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setMessage(getString(R.string.account_delete_dialog))
                 .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
@@ -119,8 +111,8 @@ public class AccountFragment extends Fragment {
         super.onResume();
 
         user = ((MainActivity) requireActivity()).sessionViewModel.getUserSession();
-        ((MainActivity) requireActivity()).showBackButton(false);
 
+        ((MainActivity) requireActivity()).showBackButton(false);
         if (listener != null)
             listener.onTitleChanged(getString(R.string.account_title));
 

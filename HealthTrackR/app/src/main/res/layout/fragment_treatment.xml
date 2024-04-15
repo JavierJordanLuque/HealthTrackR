@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/buttonModifyAccount"
+            android:id="@+id/buttonModifyTreatment"
             style="@style/Widget.HealthTrackR.FloatingActionButton.Primary"
             android:layout_gravity="top|end"
             android:contentDescription="@string/content_description_modify_treatment"
@@ -151,17 +151,17 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/relativeLayoutCalendar"
+                        android:id="@+id/relativeLayoutTreatmentCalendar"
                         style="@style/RelativeLayoutGrid">
 
                         <TextView
-                            android:id="@+id/textViewCalendar"
+                            android:id="@+id/textViewTreatmentCalendar"
                             style="@style/Widget.HealthTrackR.TextView.Grid"
                             android:text="@string/treatments_calendar" />
 
                         <ImageButton
                             style="@style/Widget.HealthTrackR.ImageButton.Grid"
-                            android:layout_below="@+id/textViewCalendar"
+                            android:layout_below="@+id/textViewTreatmentCalendar"
                             android:src="@drawable/ic_calendar"
                             android:contentDescription="@string/content_description_access_calendar" />
                     </RelativeLayout>
@@ -187,7 +187,7 @@
 
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/buttonQuestion"
+                        android:id="@+id/buttonQuestions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="?attr/colorSecondaryContainer"

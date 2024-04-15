@@ -14,7 +14,7 @@
     <string name="content_description_access_steps">Acceder a los pasos</string>
     <string name="content_description_access_medicines">Acceder a los medicamentos</string>
     <string name="content_description_access_symptoms">Acceder a los síntomas</string>
-    <string name="content_description_access_calendar">Acceder al calendario</string>
+    <string name="content_description_access_calendar">Acceder al calendario del tratamiento</string>
     <string name="content_description_access_questions">Acceder a las preguntas</string>
     <string name="content_description_delete_treatment">Eliminar tratamiento</string>
 

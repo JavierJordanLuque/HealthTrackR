@@ -23,6 +23,10 @@
     </string-array>
     <string name="treatments_diagnosis">Diagnosis</string>
 
+    <string name="treatments_pending">Pending</string>
+    <string name="treatments_in_progress">In progress</string>
+    <string name="treatments_finished">Finished</string>
+
     <string name="treatments_treatment_addition">Treatment addition</string>
     <string name="treatments_add_treatment">Add treatment</string>
 
@@ -31,7 +35,5 @@
     <string name="treatments_symptoms">Symptoms</string>
     <string name="treatments_calendar">Calendar</string>
 
-    <string name="treatments_pending">Pending</string>
-    <string name="treatments_in_progress">In progress</string>
-    <string name="treatments_finished">Finished</string>
+    <string name="treatments_delete_dialog">Are you sure you want to delete this treatment?</string>
 </resources>

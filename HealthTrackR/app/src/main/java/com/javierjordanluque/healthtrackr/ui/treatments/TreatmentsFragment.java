@@ -65,8 +65,8 @@ public class TreatmentsFragment extends Fragment {
         super.onResume();
 
         User user = ((MainActivity) requireActivity()).sessionViewModel.getUserSession();
-        ((MainActivity) requireActivity()).showBackButton(false);
 
+        ((MainActivity) requireActivity()).showBackButton(false);
         if (listener != null)
             listener.onTitleChanged(getString(R.string.treatments_title));
 

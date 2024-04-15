@@ -13,7 +13,9 @@
     <string name="account_blood_type">Grupo sanguíneo</string>
     <string name="account_allergies">Alergias</string>
     <string name="account_previous_medical_conditions">Condiciones médicas previas</string>
+
     <string name="account_sign_out">Cerrar sesión</string>
+    <string name="account_sign_out_dialog">¿Estás seguro de cerrar sesión?</string>
 
     <string name="account_delete">Eliminar cuenta</string>
     <string name="account_delete_dialog">¿Estás seguro de eliminar tu cuenta?</string>

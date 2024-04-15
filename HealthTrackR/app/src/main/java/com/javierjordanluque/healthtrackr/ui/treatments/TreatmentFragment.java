@@ -1,5 +1,6 @@
 package com.javierjordanluque.healthtrackr.ui.treatments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -8,18 +9,27 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Treatment;
-import com.javierjordanluque.healthtrackr.models.User;
+import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
-import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
+
+import java.time.ZonedDateTime;
 
 public class TreatmentFragment extends Fragment {
     private OnToolbarChangeListener listener;
     private Treatment treatment;
+    private TextView textViewStartDate;
+    private TextView textViewEndDate;
+    private TextView textViewCategory;
+    private TextView textViewDiagnosis;
 
     public TreatmentFragment() {
     }
@@ -33,35 +43,107 @@ public class TreatmentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_treatment, container, false);
 
+        textViewStartDate = fragmentView.findViewById(R.id.textViewStartDate);
+        textViewEndDate = fragmentView.findViewById(R.id.textViewEndDate);
+        textViewCategory = fragmentView.findViewById(R.id.textViewCategory);
+        textViewDiagnosis = fragmentView.findViewById(R.id.textViewDiagnosis);
+
+        FloatingActionButton buttonModifyTreatment = fragmentView.findViewById(R.id.buttonModifyTreatment);
+        buttonModifyTreatment.setOnClickListener(view -> {
+            //Intent intent = new Intent(requireActivity(), ModifyTreatmentActivity.class);
+            //intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
+            //startActivity(intent);
+        });
+
+        RelativeLayout relativeLayoutSteps = fragmentView.findViewById(R.id.relativeLayoutSteps);
+        relativeLayoutSteps.setOnClickListener(view -> {
+            //openFragmentFromTreatment(new StepsFragment());
+        });
+
+        RelativeLayout relativeLayoutMedicines = fragmentView.findViewById(R.id.relativeLayoutMedicines);
+        relativeLayoutMedicines.setOnClickListener(view -> {
+            //openFragmentFromTreatment(new MedicinesFragment());
+        });
+
+        RelativeLayout relativeLayoutSymptoms = fragmentView.findViewById(R.id.relativeLayoutSymptoms);
+        relativeLayoutSymptoms.setOnClickListener(view -> {
+            //openFragmentFromTreatment(new SymptomsFragment());
+        });
+
+        RelativeLayout relativeLayoutTreatmentCalendar = fragmentView.findViewById(R.id.relativeLayoutTreatmentCalendar);
+        relativeLayoutTreatmentCalendar.setOnClickListener(view -> {
+            //openFragmentFromTreatment(new TreatmentCalendarFragment());
+        });
+
+        FloatingActionButton buttonQuestions = fragmentView.findViewById(R.id.buttonQuestions);
+        buttonQuestions.setOnClickListener(view -> {
+            //openFragmentFromTreatment(new QuestionsFragment());
+        });
+
+        FloatingActionButton buttonDeleteTreatment = fragmentView.findViewById(R.id.buttonDeleteTreatment);
+        buttonDeleteTreatment.setOnClickListener(view -> {
+            showDeleteTreatmentConfirmationDialog();
+        });
+
         return fragmentView;
+    }
+
+    private void openFragmentFromTreatment(Fragment fragment) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
+        fragment.setArguments(bundle);
+        ((MainActivity) requireActivity()).replaceFragment(fragment);
+    }
+
+    private void showDeleteTreatmentConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setMessage(getString(R.string.treatments_delete_dialog))
+                .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
+                    try {
+                        ((MainActivity) requireActivity()).sessionViewModel.getUserSession().removeTreatment(requireActivity(), treatment);
+
+                        requireActivity().onBackPressed();
+                    } catch (DBDeleteException exception) {
+                        ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
+                    }
+                })
+                .setNegativeButton(getString(R.string.dialog_no), (dialog, id) -> {
+                    dialog.dismiss();
+                });
+        builder.create().show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        ((MainActivity) requireActivity()).currentFragment = this;
-        User user = ((MainActivity) requireActivity()).sessionViewModel.getUserSession();
-        if (user != null) {
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                long treatmentId = bundle.getLong(Treatment.class.getSimpleName());
-                try {
-                    for (Treatment treatment : user.getTreatments(requireActivity())) {
-                        if (treatment.getId() == treatmentId) {
-                            this.treatment = treatment;
-                            break;
-                        }
-                    }
-                } catch (DBFindException exception) {
-                    ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
-                }
-            }
-        }
-        ((MainActivity) requireActivity()).showBackButton(true);
+        treatment = ((MainActivity) requireActivity()).getTreatmentFromBundle(getArguments());
 
+        ((MainActivity) requireActivity()).currentFragment = this;
+        ((MainActivity) requireActivity()).showBackButton(true);
         if (listener != null)
-            listener.onTitleChanged(getString(R.string.treatments_title));
+            listener.onTitleChanged(treatment.getTitle());
+
+        textViewStartDate.setText(((MainActivity) requireActivity()).showFormattedDate(treatment.getStartDate()));
+
+        ZonedDateTime endDate = treatment.getEndDate();
+        if (endDate != null) {
+            textViewEndDate.setText(((MainActivity) requireActivity()).showFormattedDate(endDate));
+        } else {
+            textViewEndDate.setText(R.string.unspecified);
+        }
+
+        TreatmentCategory category = treatment.getCategory();
+        String[] categoryOptions = getResources().getStringArray(R.array.treatments_category_options);
+        String categoryString = categoryOptions[category.ordinal()];
+        textViewCategory.setText(categoryString);
+
+        String diagnosis = treatment.getDiagnosis();
+        if (diagnosis != null) {
+            textViewDiagnosis.setText(diagnosis);
+        } else {
+            textViewDiagnosis.setText(R.string.unspecified);
+        }
     }
 
     @Override
