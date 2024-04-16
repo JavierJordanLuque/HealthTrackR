@@ -81,9 +81,7 @@ public class TreatmentFragment extends Fragment {
         });
 
         FloatingActionButton buttonDeleteTreatment = fragmentView.findViewById(R.id.buttonDeleteTreatment);
-        buttonDeleteTreatment.setOnClickListener(view -> {
-            showDeleteTreatmentConfirmationDialog();
-        });
+        buttonDeleteTreatment.setOnClickListener(view -> showDeleteTreatmentConfirmationDialog());
 
         return fragmentView;
     }
@@ -97,8 +95,8 @@ public class TreatmentFragment extends Fragment {
 
     private void showDeleteTreatmentConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setMessage(getString(R.string.treatments_delete_dialog))
-                .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
+        builder.setMessage(getString(R.string.treatments_dialog_message_delete))
+                .setPositiveButton(getString(R.string.dialog_positive_delete), (dialog, id) -> {
                     try {
                         ((MainActivity) requireActivity()).sessionViewModel.getUserSession().removeTreatment(requireActivity(), treatment);
 
@@ -107,9 +105,7 @@ public class TreatmentFragment extends Fragment {
                         ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
                     }
                 })
-                .setNegativeButton(getString(R.string.dialog_no), (dialog, id) -> {
-                    dialog.dismiss();
-                });
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
         builder.create().show();
     }
 
@@ -134,7 +130,7 @@ public class TreatmentFragment extends Fragment {
         }
 
         TreatmentCategory category = treatment.getCategory();
-        String[] categoryOptions = getResources().getStringArray(R.array.treatments_category_options);
+        String[] categoryOptions = getResources().getStringArray(R.array.treatments_array_category);
         String categoryString = categoryOptions[category.ordinal()];
         textViewCategory.setText(categoryString);
 

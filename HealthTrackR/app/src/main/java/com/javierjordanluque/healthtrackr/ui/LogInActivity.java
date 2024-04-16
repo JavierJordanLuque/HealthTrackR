@@ -28,7 +28,7 @@ public class LogInActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        setUpToolbar(getString(R.string.authentication_login));
+        setUpToolbar(getString(R.string.authentication_title_log_in));
         showBackButton(true);
 
         layoutEmail = findViewById(R.id.layoutEmail);
@@ -90,14 +90,12 @@ public class LogInActivity extends BaseActivity {
 
     private void showIncorrectEmailDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.error_incorrect_email_dialog))
+        builder.setMessage(getString(R.string.error_dialog_message_incorrect_email))
                 .setPositiveButton(getString(R.string.authentication_create_account), (dialog, id) -> {
                     Intent intent = new Intent(this, SignUpActivity.class);
                     startActivity(intent);
                 })
-                .setNegativeButton(getString(R.string.error_try_again), (dialog, id) -> {
-                    dialog.dismiss();
-                });
+                .setNegativeButton(getString(R.string.dialog_negative_try_again), (dialog, id) -> dialog.dismiss());
         builder.create().show();
     }
 

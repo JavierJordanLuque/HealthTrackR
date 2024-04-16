@@ -2,15 +2,20 @@
     <string name="app_name" translatable="false">HealthTrackR</string>
     <string name="snackbar_ok" translatable="false">@android:string/ok</string>
 
-    <string name="dialog_yes">Yes</string>
-    <string name="dialog_no">No</string>
-    <string name="dialog_accept">Accept</string>
-    <string name="dialog_cancel">Cancel</string>
-
     <string name="unspecified">Unspecified</string>
 
-    <string name="save">Save</string>
-    <string name="save_confirmation">Changes applied successfully!</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dialog_positive_yes">Yes</string>
+    <string name="dialog_positive_accept">Accept</string>
+    <string name="dialog_positive_confirm">Confirm</string>
+    <string name="dialog_positive_save">Save</string>
+    <string name="dialog_positive_change">Change</string>
+    <string name="dialog_positive_delete">Delete</string>
+
+    <string name="dialog_negative_no">No</string>
+    <string name="dialog_negative_cancel">Cancel</string>
+    <string name="dialog_negative_try_again">Try again</string>
+
+    <string name="dialog_message_save">Are you sure you want to save the changes?</string>
+
+    <string name="toast_confirmation_save">Changes applied successfully!</string>
 </resources>

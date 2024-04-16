@@ -81,7 +81,7 @@
             <TextView
                 android:id="@+id/textViewNoTreatments"
                 style="@style/Widget.HealthTrackR.TextView.NoElements"
-                android:text="@string/treatments_empty"
+                android:text="@string/treatments_empty_message"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEndNoElements"
                 app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStartNoElements"

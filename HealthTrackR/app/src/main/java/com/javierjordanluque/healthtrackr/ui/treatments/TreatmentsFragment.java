@@ -113,7 +113,7 @@ public class TreatmentsFragment extends Fragment {
                 }
 
                 TreatmentCategory treatmentCategory = treatment.getCategory();
-                String[] categoryOptions = getResources().getStringArray(R.array.treatments_category_options);
+                String[] categoryOptions = getResources().getStringArray(R.array.treatments_array_category);
                 String categoryString = categoryOptions[treatmentCategory.ordinal()];
                 TextView textViewCategory = cardView.findViewById(R.id.textViewCategory);
                 textViewCategory.setText(categoryString);

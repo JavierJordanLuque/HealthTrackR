@@ -75,7 +75,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:autofillHints="text"
-                            android:hint="@string/treatments_title_form"
+                            android:hint="@string/treatments_form_title"
                             android:inputType="text"
                             android:maxLength="50" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +89,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusableInTouchMode="false"
-                            android:hint="@string/treatments_start_date_form"
+                            android:hint="@string/treatments_form_start_date"
                             android:inputType="date" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,7 +116,7 @@
                             android:id="@+id/textViewCategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/treatments_category_form" />
+                            android:text="@string/treatments_form_category" />
 
                         <Spinner
                             android:id="@+id/spinnerCategory"

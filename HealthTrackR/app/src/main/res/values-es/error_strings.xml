@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="error_initializing_app">Ups, algo salió mal mientras se configuraba la aplicación. Por favor, inténtalo de nuevo más tarde.</string>
-    <string name="error_try_again">Volver a intentar</string>
 
     <string name="error_invalid_email">El correo electrónico debe tener entre 5 y 50 caracteres.</string>
     <string name="error_invalid_email_requirements">El correo electrónico no es válido. Por favor, introduce un correo electrónico válido.</string>
     <string name="error_incorrect_email">Lo siento, no se encontró ninguna cuenta con esta dirección de correo electrónico. Por favor, inténtalo de nuevo.</string>
-    <string name="error_incorrect_email_dialog">Lo siento, no se encontró ninguna cuenta con esta dirección de correo electrónico. Por favor, vuelve a intentarlo o crea una cuenta nueva.</string>
+    <string name="error_dialog_message_incorrect_email">Lo siento, no se encontró ninguna cuenta con esta dirección de correo electrónico. Por favor, vuelve a intentarlo o crea una cuenta nueva.</string>
     <string name="error_existing_email">Lo siento, esta dirección de correo electrónico ya está en uso. Por favor, utiliza una diferente.</string>
+
     <string name="error_invalid_password">La contraseña debe tener entre 8 y 60 caracteres.</string>
     <string name="error_incorrect_password">Contraseña incorrecta. Por favor, inténtalo de nuevo.</string>
     <string name="error_invalid_repeat_password">Las contraseñas no coinciden.</string>
+
     <string name="error_invalid_first_name">El nombre debe tener entre 1 y 50 caracteres.</string>
     <string name="error_invalid_last_name">Los apellidos deben tener entre 1 y 50 caracteres.</string>
 

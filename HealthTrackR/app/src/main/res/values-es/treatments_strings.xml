@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="treatments_title">Tratamientos</string>
-    <string name="treatments_empty">No tienes tratamientos activos. Por favor, añade un nuevo tratamiento</string>
+    <string name="treatments_title_add_treatment">Adición de tratamiento</string>
 
-    <string name="treatments_title_form">Título *</string>
+    <string name="treatments_empty_message">No tienes tratamientos activos. Por favor, añade un nuevo tratamiento</string>
+
     <string name="treatments_start_date">Fecha de inicio</string>
-    <string name="treatments_start_date_form">Fecha de inicio *</string>
-    <string name="treatments_select_start_date_dialog">Selecciona la fecha de inicio del tratamiento:</string>
     <string name="treatments_end_date">Fecha de finalización</string>
-    <string name="treatments_select_end_date_dialog">Selecciona la fecha de finalización del tratamiento:</string>
     <string name="treatments_category">Categoría</string>
-    <string name="treatments_category_form">Categoría *</string>
-    <string-array name="treatments_category_options">
+    <string name="treatments_diagnosis">Diagnóstico</string>
+    <string name="treatments_add_treatment">Añadir tratamiento</string>
+    <string name="treatments_steps">Pasos</string>
+    <string name="treatments_medicines">Medicamentos</string>
+    <string name="treatments_symptoms">Síntomas</string>
+    <string name="treatments_calendar">Calendario</string>
+
+    <string name="treatments_form_title">Título *</string>
+    <string name="treatments_form_start_date">Fecha de inicio *</string>
+    <string name="treatments_form_category">Categoría *</string>
+
+    <string name="treatments_dialog_message_start_date">Selecciona la fecha de inicio del tratamiento:</string>
+    <string name="treatments_dialog_message_end_date">Selecciona la fecha de finalización del tratamiento:</string>
+    <string name="treatments_dialog_message_delete">¿Estás seguro de eliminar este tratamiento?</string>
+
+    <string name="treatments_status_pending">Pendiente</string>
+    <string name="treatments_status_in_progress">En progreso</string>
+    <string name="treatments_status_finished">Terminado</string>
+
+    <string-array name="treatments_array_category">
         <item>Médico</item>
         <item>Farmacológico</item>
         <item>Fisioterapia</item>
@@ -21,19 +37,4 @@
         <item>Crónico</item>
         <item>Alternativo</item>
     </string-array>
-    <string name="treatments_diagnosis">Diagnóstico</string>
-
-    <string name="treatments_pending">Pendiente</string>
-    <string name="treatments_in_progress">En progreso</string>
-    <string name="treatments_finished">Terminado</string>
-
-    <string name="treatments_treatment_addition">Adición de tratamiento</string>
-    <string name="treatments_add_treatment">Añadir tratamiento</string>
-
-    <string name="treatments_steps">Pasos</string>
-    <string name="treatments_medicines">Medicamentos</string>
-    <string name="treatments_symptoms">Síntomas</string>
-    <string name="treatments_calendar">Calendario</string>
-
-    <string name="treatments_delete_dialog">¿Estás seguro de eliminar este tratamiento?</string>
 </resources>

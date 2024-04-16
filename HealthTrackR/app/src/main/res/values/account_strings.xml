@@ -1,32 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="account_title">My account</string>
+    <string name="account_title_modify">Account modification</string>
+    <string name="account_title_change_password">Password change</string>
 
     <string name="account_email">Email</string>
     <string name="account_first_name">First name</string>
-    <string name="account_first_name_form">First name *</string>
     <string name="account_last_name">Last name</string>
-    <string name="account_last_name_form">Last name *</string>
     <string name="account_birth_date">Birth date</string>
-    <string name="account_select_birth_date_dialog">Select your birth date:</string>
     <string name="account_gender">Gender</string>
     <string name="account_blood_type">Blood type</string>
     <string name="account_allergies">Allergies</string>
     <string name="account_previous_medical_conditions">Previous medical conditions</string>
-
     <string name="account_sign_out">Sign out</string>
-    <string name="account_sign_out_dialog">Are you sure you want to sign out?</string>
-
     <string name="account_delete">Delete account</string>
-    <string name="account_delete_dialog">Are you sure you want to delete your account?</string>
+    <string name="account_change_password">Change password</string>
 
-    <string name="account_modify_title">Account modification</string>
-    <string-array name="account_gender_options">
+    <string name="account_form_first_name">First name *</string>
+    <string name="account_form_last_name">Last name *</string>
+    <string name="account_form_current_password">Current password *</string>
+    <string name="account_form_new_password">New password *</string>
+    <string name="account_form_repeat_new_password">Repeat new password *</string>
+
+    <string name="account_helper_allergies">Enter your allergies separated by commas (,)</string>
+    <string name="account_helper_previous_medical_condition">Enter your previous medical conditions separated by commas (,)</string>
+
+    <string name="account_dialog_message_birth_date">Select your birth date:</string>
+    <string name="account_dialog_message_sign_out">Are you sure you want to sign out?</string>
+    <string name="account_dialog_message_delete">Are you sure you want to delete your account?</string>
+    <string name="account_dialog_message_change_password">Are you sure you want to change your password?</string>
+
+    <string name="account_toast_confirmation_delete">Account deleted successfully!</string>
+    <string name="account_toast_confirmation_change_password">Password updated successfully!</string>
+
+    <string-array name="account_array_gender">
         <item>Male</item>
         <item>Female</item>
         <item>Unspecified</item>
     </string-array>
-    <string-array name="account_blood_type_options">
+    <string-array name="account_array_blood_type">
         <item>A+</item>
         <item>A-</item>
         <item>B+</item>
@@ -37,14 +49,4 @@
         <item>O-</item>
         <item>Unspecified</item>
     </string-array>
-    <string name="account_allergies_helper">Enter your allergies separated by commas (,)</string>
-    <string name="account_previous_medical_condition_helper">Enter your previous medical conditions separated by commas (,)</string>
-
-    <string name="account_change_password">Change password</string>
-    <string name="account_change_password_dialog">Are you sure you want to change your password?</string>
-    <string name="account_change_password_confirmation">Password updated successfully!</string>
-    <string name="account_password_change">Password change</string>
-    <string name="account_current_password">Current password *</string>
-    <string name="account_new_password">New password *</string>
-    <string name="account_repeat_new_password">Repeat new password *</string>
 </resources>

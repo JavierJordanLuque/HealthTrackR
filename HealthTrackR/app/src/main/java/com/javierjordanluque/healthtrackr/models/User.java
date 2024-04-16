@@ -125,7 +125,7 @@ public class User implements Identifiable {
 
             if (userCredentials != null) {
                 if (!SecurityService.meetsPasswordRequirements(newPassword))
-                    throw new Exception(context.getString(R.string.authentication_password_requirements));
+                    throw new Exception(context.getString(R.string.authentication_helper_password));
                 if (!userCredentials.equalsPassword(currentPassword))
                     throw new Exception(context.getString(R.string.error_incorrect_password));
 

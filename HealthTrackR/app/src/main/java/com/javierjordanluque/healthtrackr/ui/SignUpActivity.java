@@ -31,7 +31,7 @@ public class SignUpActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_sign_up);
-        setUpToolbar(getString(R.string.authentication_signup));
+        setUpToolbar(getString(R.string.authentication_title_sign_up));
         showBackButton(true);
 
         layoutEmail = findViewById(R.id.layoutEmail);
@@ -99,7 +99,7 @@ public class SignUpActivity extends BaseActivity {
             if (Objects.equals(exception.getMessage(), getString(R.string.error_existing_email)) ||
                     Objects.equals(exception.getMessage(), getString(R.string.error_invalid_email_requirements))) {
                 layoutEmail.setError(exception.getMessage());
-            } else if (Objects.equals(exception.getMessage(), getString(R.string.authentication_password_requirements))) {
+            } else if (Objects.equals(exception.getMessage(), getString(R.string.authentication_helper_password))) {
                 layoutPassword.setError(exception.getMessage());
             } else {
                 ExceptionManager.advertiseUI(this, exception.getMessage());

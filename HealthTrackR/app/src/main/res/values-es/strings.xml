@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dialog_yes">Sí</string>
-    <string name="dialog_no">No</string>
-    <string name="dialog_accept">Aceptar</string>
-    <string name="dialog_cancel">Cancelar</string>
-
     <string name="unspecified">Sin especificar</string>
 
-    <string name="save">Guardar</string>
-    <string name="save_confirmation">¡Cambios guardados!</string>
+    <string name="dialog_positive_yes">Sí</string>
+    <string name="dialog_positive_accept">Aceptar</string>
+    <string name="dialog_positive_confirm">Confirmar</string>
+    <string name="dialog_positive_save">Guardar</string>
+    <string name="dialog_positive_change">Cambiar</string>
+    <string name="dialog_positive_delete">Eliminar</string>
+
+    <string name="dialog_negative_no">No</string>
+    <string name="dialog_negative_cancel">Cancelar</string>
+    <string name="dialog_negative_try_again">Volver a intentar</string>
+
+    <string name="dialog_message_save">¿Estás seguro de guardar los cambios?</string>
+
+    <string name="toast_confirmation_save">¡Cambios guardados!</string>
 </resources>

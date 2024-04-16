@@ -181,7 +181,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             if (!ZonedDateTime.now().isBefore(appointmentDateTime.minusMinutes(NOW_MARGIN_MINUTES))) {
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_now);
                 message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
-                        context.getString(R.string.notification_medical_appointment_scheduled_now) + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " +
+                        context.getString(R.string.notification_message_medical_appointment_scheduled_now) + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " +
                         appointmentLocationLongitude;
             } else {
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference;

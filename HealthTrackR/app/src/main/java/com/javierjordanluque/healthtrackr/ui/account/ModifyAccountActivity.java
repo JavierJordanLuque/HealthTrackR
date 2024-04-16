@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui.account;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -47,7 +48,7 @@ public class ModifyAccountActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_account);
-        setUpToolbar(getString(R.string.account_modify_title));
+        setUpToolbar(getString(R.string.account_title_modify));
         showBackButton(true);
 
         user = sessionViewModel.getUserSession();
@@ -66,7 +67,7 @@ public class ModifyAccountActivity extends BaseActivity {
             editTextBirthDate.setFocusableInTouchMode(true);
             editTextBirthDate.setText(showFormattedDate(birthDate));
         }
-        editTextBirthDate.setOnClickListener(view -> showDatePickerDialog(editTextBirthDate, getString(R.string.account_select_birth_date_dialog), true));
+        editTextBirthDate.setOnClickListener(view -> showDatePickerDialog(editTextBirthDate, getString(R.string.account_dialog_message_birth_date), true));
         Activity activity = this;
         editTextBirthDate.addTextChangedListener(new TextWatcher() {
             @Override
@@ -159,17 +160,28 @@ public class ModifyAccountActivity extends BaseActivity {
         List<Allergy> allergies = getAllergiesFromEditText();
         List<PreviousMedicalCondition> conditions = getPreviousMedicalConditionsFromEditText();
 
-        try {
-            user.modifyUser(this, firstName, lastName, birthDate, gender, bloodType, allergies, conditions);
-            Toast.makeText(this, getString(R.string.save_confirmation), Toast.LENGTH_SHORT).show();
-            finish();
-        } catch (DBDeleteException | DBInsertException | DBUpdateException exception) {
-            ExceptionManager.advertiseUI(this, exception.getMessage());
-        }
+       showModifyAccountConfirmationDialog(firstName, lastName, birthDate, gender, bloodType, allergies, conditions);
+    }
+
+    private void showModifyAccountConfirmationDialog(String firstName, String lastName, LocalDate birthDate, Gender gender, BloodType bloodType,
+                                                     List<Allergy> allergies, List<PreviousMedicalCondition> conditions) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.dialog_message_save))
+                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
+                    try {
+                        user.modifyUser(this, firstName, lastName, birthDate, gender, bloodType, allergies, conditions);
+                        Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
+                        finish();
+                    } catch (DBDeleteException | DBInsertException | DBUpdateException exception) {
+                        ExceptionManager.advertiseUI(this, exception.getMessage());
+                    }
+                })
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
+        builder.create().show();
     }
 
     private Gender getGenderFromSpinner() {
-        String[] genderOptions = getResources().getStringArray(R.array.account_gender_options);
+        String[] genderOptions = getResources().getStringArray(R.array.account_array_gender);
         String selectedGender = spinnerGender.getSelectedItem().toString();
 
         if (selectedGender.equals(genderOptions[0])) {
@@ -182,7 +194,7 @@ public class ModifyAccountActivity extends BaseActivity {
     }
 
     private BloodType getBloodTypeFromSpinner() {
-        String[] bloodTypeOptions = getResources().getStringArray(R.array.account_blood_type_options);
+        String[] bloodTypeOptions = getResources().getStringArray(R.array.account_array_blood_type);
         String selectedBloodType = spinnerBloodType.getSelectedItem().toString();
 
         if (selectedBloodType.equals(bloodTypeOptions[0])) {
@@ -243,7 +255,7 @@ public class ModifyAccountActivity extends BaseActivity {
     private void configureGenderSpinner() {
         spinnerGender = findViewById(R.id.spinnerGender);
 
-        String[] genderOptions = getResources().getStringArray(R.array.account_gender_options);
+        String[] genderOptions = getResources().getStringArray(R.array.account_array_gender);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genderOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -260,7 +272,7 @@ public class ModifyAccountActivity extends BaseActivity {
     private void configureBloodTypeSpinner() {
         spinnerBloodType = findViewById(R.id.spinnerBloodType);
 
-        String[] bloodTypeOptions = getResources().getStringArray(R.array.account_blood_type_options);
+        String[] bloodTypeOptions = getResources().getStringArray(R.array.account_array_blood_type);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypeOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

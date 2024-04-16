@@ -34,7 +34,7 @@ public class AuthenticationService {
             } else if (!SecurityService.meetsEmailRequirements(email)) {
                 throw new AuthenticationException(context.getString(R.string.error_invalid_email_requirements), null);
             } else if (!SecurityService.meetsPasswordRequirements(password)) {
-                throw new AuthenticationException(context.getString(R.string.authentication_password_requirements), null);
+                throw new AuthenticationException(context.getString(R.string.authentication_helper_password), null);
             } else {
                 user = new User(email, firstName, lastName);
                 user.setId(userRepository.insert(user));

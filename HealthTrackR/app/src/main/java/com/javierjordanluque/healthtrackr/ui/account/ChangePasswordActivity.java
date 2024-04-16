@@ -29,7 +29,7 @@ public class ChangePasswordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
-        setUpToolbar(getString(R.string.account_password_change));
+        setUpToolbar(getString(R.string.account_title_change_password));
         showBackButton(true);
 
         user = sessionViewModel.getUserSession();
@@ -72,22 +72,22 @@ public class ChangePasswordActivity extends BaseActivity {
             return;
         }
 
-        showConfirmationDialog(currentPassword, newPassword);
+        showChangePasswordConfirmationDialog(currentPassword, newPassword);
     }
 
-    private void showConfirmationDialog(String currentPassword, String newPassword) {
+    private void showChangePasswordConfirmationDialog(String currentPassword, String newPassword) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.account_change_password_dialog))
-                .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
+        builder.setMessage(getString(R.string.account_dialog_message_change_password))
+                .setPositiveButton(getString(R.string.dialog_positive_change), (dialog, id) -> {
                     try {
                         user.changePassword(this, currentPassword, newPassword);
                         AuthenticationService.clearCredentials(this);
 
-                        Toast.makeText(this, getString(R.string.account_change_password_confirmation), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.account_toast_confirmation_change_password), Toast.LENGTH_SHORT).show();
                         finish();
                     } catch (Exception exception) {
                         dialog.dismiss();
-                        if (Objects.equals(exception.getMessage(), getString(R.string.authentication_password_requirements))) {
+                        if (Objects.equals(exception.getMessage(), getString(R.string.authentication_helper_password))) {
                             layoutNewPassword.setError(exception.getMessage());
                         } else if (Objects.equals(exception.getMessage(), getString(R.string.error_incorrect_password))) {
                             layoutCurrentPassword.setError(exception.getMessage());
@@ -96,9 +96,7 @@ public class ChangePasswordActivity extends BaseActivity {
                         }
                     }
                 })
-                .setNegativeButton(getString(R.string.dialog_no), (dialog, id) -> {
-                    dialog.dismiss();
-                });
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
         builder.create().show();
     }
 

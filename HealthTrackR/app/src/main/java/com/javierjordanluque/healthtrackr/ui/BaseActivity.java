@@ -28,7 +28,6 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.NavigationUtils;
-import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
@@ -106,8 +105,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showSignOutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.account_sign_out_dialog))
-                .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
+        builder.setMessage(getString(R.string.account_dialog_message_sign_out))
+                .setPositiveButton(getString(R.string.account_sign_out), (dialog, id) -> {
                     AuthenticationService.logout(this, sessionViewModel.getUserSession());
                     AuthenticationService.clearCredentials(this);
 
@@ -116,9 +115,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 })
-                .setNegativeButton(getString(R.string.dialog_no), (dialog, id) -> {
-                    dialog.dismiss();
-                });
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
         builder.create().show();
     }
 
@@ -262,21 +259,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         numberPickerMonth.setValue(monthOfYear);
         numberPickerYear.setValue(year);
 
-        numberPickerMonth.setOnValueChangedListener((picker, oldVal, newVal) -> {
-            numberPickerDay.setMaxValue(getMaxDayOfMonth(newVal, numberPickerYear.getValue()));
-        });
+        numberPickerMonth.setOnValueChangedListener((picker, oldVal, newVal) -> numberPickerDay.setMaxValue(getMaxDayOfMonth(newVal, numberPickerYear.getValue())));
 
-        numberPickerYear.setOnValueChangedListener((picker, oldVal, newVal) -> {
-            numberPickerDay.setMaxValue(getMaxDayOfMonth(numberPickerMonth.getValue(), newVal));
-        });
+        numberPickerYear.setOnValueChangedListener((picker, oldVal, newVal) -> numberPickerDay.setMaxValue(getMaxDayOfMonth(numberPickerMonth.getValue(), newVal)));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
         builder.setTitle(title);
-        builder.setPositiveButton(getString(R.string.dialog_accept), (dialog, which) -> {
-            editTextDate.setText(showFormattedDate(LocalDate.of(numberPickerYear.getValue(), numberPickerMonth.getValue(), numberPickerDay.getValue())));
-        });
-        builder.setNegativeButton(getString(R.string.dialog_cancel), null);
+        builder.setPositiveButton(getString(R.string.dialog_positive_confirm), (dialog, which) ->
+                editTextDate.setText(showFormattedDate(LocalDate.of(numberPickerYear.getValue(), numberPickerMonth.getValue(), numberPickerDay.getValue()))));
+        builder.setNegativeButton(getString(R.string.dialog_negative_cancel), null);
 
         AlertDialog dialog = builder.create();
         dialog.show();

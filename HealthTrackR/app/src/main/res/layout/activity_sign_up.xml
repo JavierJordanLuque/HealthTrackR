@@ -76,7 +76,7 @@
                             android:layout_height="wrap_content"
                             android:maxLength="50"
                             android:autofillHints="emailAddress"
-                            android:hint="@string/authentication_email"
+                            android:hint="@string/authentication_form_email"
                             android:inputType="textEmailAddress" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +85,7 @@
                         style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
                         app:endIconContentDescription="@string/content_description_toggle_password_visibility"
                         app:endIconMode="password_toggle"
-                        app:helperText="@string/authentication_password_requirements"
+                        app:helperText="@string/authentication_helper_password"
                         app:helperTextEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -94,7 +94,7 @@
                             android:layout_height="wrap_content"
                             android:maxLength="60"
                             android:autofillHints="password"
-                            android:hint="@string/authentication_password"
+                            android:hint="@string/authentication_form_password"
                             android:inputType="textPassword" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:maxLength="60"
                             android:autofillHints="password"
-                            android:hint="@string/authentication_repeat_password"
+                            android:hint="@string/authentication_form_repeat_password"
                             android:inputType="textPassword" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,7 +124,7 @@
                             android:layout_height="wrap_content"
                             android:maxLength="50"
                             android:autofillHints="name"
-                            android:hint="@string/authentication_first_name"
+                            android:hint="@string/authentication_form_first_name"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,7 +138,7 @@
                             android:layout_height="wrap_content"
                             android:maxLength="50"
                             android:autofillHints="name"
-                            android:hint="@string/authentication_last_name"
+                            android:hint="@string/authentication_form_last_name"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 

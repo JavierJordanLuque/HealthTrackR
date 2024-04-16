@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="authentication_title_log_in">Login</string>
+    <string name="authentication_title_sign_up">Sign up</string>
+
     <string name="authentication_log_in">Log in</string>
-    <string name="authentication_login">Login</string>
     <string name="authentication_sign_in">Sign in</string>
     <string name="authentication_sign_up">Sign up</string>
-    <string name="authentication_signup">Sign up</string>
-    <string name="authentication_remember">Remember me</string>
+    <string name="authentication_remember_me">Remember me</string>
     <string name="authentication_create_account">Create account</string>
-    <string name="authentication_email">Email *</string>
-    <string name="authentication_password">Password *</string>
-    <string name="authentication_password_requirements">The password must contain between 8 and 60 characters, including: uppercase letters, lowercase letters, numbers, and special characters</string>
-    <string name="authentication_repeat_password">Repeat password *</string>
-    <string name="authentication_first_name">First name *</string>
-    <string name="authentication_last_name">Last name *</string>
+
+    <string name="authentication_form_email">Email *</string>
+    <string name="authentication_form_password">Password *</string>
+    <string name="authentication_form_repeat_password">Repeat password *</string>
+    <string name="authentication_form_first_name">First name *</string>
+    <string name="authentication_form_last_name">Last name *</string>
+
+    <string name="authentication_helper_password">The password must contain between 8 and 60 characters, including: uppercase letters, lowercase letters, numbers, and special characters</string>
 </resources>

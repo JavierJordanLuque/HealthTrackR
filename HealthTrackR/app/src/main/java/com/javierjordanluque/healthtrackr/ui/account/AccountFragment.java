@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.javierjordanluque.healthtrackr.R;
@@ -72,27 +73,24 @@ public class AccountFragment extends Fragment {
         });
 
         Button buttonSignOut = fragmentView.findViewById(R.id.buttonSignOut);
-        buttonSignOut.setOnClickListener(view -> {
-            ((MainActivity) requireActivity()).showSignOutConfirmationDialog();
-        });
+        buttonSignOut.setOnClickListener(view -> ((MainActivity) requireActivity()).showSignOutConfirmationDialog());
 
         Button buttonDeleteAccount = fragmentView.findViewById(R.id.buttonDeleteAccount);
-        buttonDeleteAccount.setOnClickListener(view -> {
-            showDeleteAccountConfirmationDialog();
-        });
+        buttonDeleteAccount.setOnClickListener(view -> showDeleteAccountConfirmationDialog());
 
         return fragmentView;
     }
 
     private void showDeleteAccountConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setMessage(getString(R.string.account_delete_dialog))
-                .setPositiveButton(getString(R.string.dialog_yes), (dialog, id) -> {
+        builder.setMessage(getString(R.string.account_dialog_message_delete))
+                .setPositiveButton(getString(R.string.dialog_positive_delete), (dialog, id) -> {
                     try {
                         user.deleteUser(requireActivity());
                         AuthenticationService.logout(requireActivity(), user);
                         AuthenticationService.clearCredentials(requireActivity());
 
+                        Toast.makeText(requireActivity(), getString(R.string.account_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(requireActivity(), AuthenticationActivity.class);
                         startActivity(intent);
                         requireActivity().finish();
@@ -100,9 +98,7 @@ public class AccountFragment extends Fragment {
                         ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
                     }
                 })
-                .setNegativeButton(getString(R.string.dialog_no), (dialog, id) -> {
-                    dialog.dismiss();
-                });
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
         builder.create().show();
     }
 
@@ -129,7 +125,7 @@ public class AccountFragment extends Fragment {
 
         Gender gender = user.getGender();
         if (gender != null) {
-            String[] genderOptions = getResources().getStringArray(R.array.account_gender_options);
+            String[] genderOptions = getResources().getStringArray(R.array.account_array_gender);
             String genderString = genderOptions[gender.ordinal()];
             textViewGender.setText(genderString);
         } else {
@@ -138,7 +134,7 @@ public class AccountFragment extends Fragment {
 
         BloodType bloodType = user.getBloodType();
         if (bloodType != null) {
-            String[] bloodTypeOptions = getResources().getStringArray(R.array.account_blood_type_options);
+            String[] bloodTypeOptions = getResources().getStringArray(R.array.account_array_blood_type);
             String bloodTypeString = bloodTypeOptions[bloodType.ordinal()];
             textViewBloodType.setText(bloodTypeString);
         } else {

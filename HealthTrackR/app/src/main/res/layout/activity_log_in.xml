@@ -75,7 +75,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:autofillHints="emailAddress"
-                            android:hint="@string/authentication_email"
+                            android:hint="@string/authentication_form_email"
                             android:inputType="textEmailAddress"
                             android:maxLength="50" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -91,7 +91,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:autofillHints="password"
-                            android:hint="@string/authentication_password"
+                            android:hint="@string/authentication_form_password"
                             android:inputType="textPassword"
                             android:maxLength="60" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/form_margin_top"
-                        android:text="@string/authentication_remember" />
+                        android:text="@string/authentication_remember_me" />
 
                 </LinearLayout>
 

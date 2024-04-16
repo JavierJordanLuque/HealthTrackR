@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="treatments_title">Treatments</string>
-    <string name="treatments_empty">You don`t have active treatments. Please add a new treatment</string>
+    <string name="treatments_title_add_treatment">Treatment addition</string>
 
-    <string name="treatments_title_form">Title *</string>
+    <string name="treatments_empty_message">You don`t have active treatments. Please add a new treatment</string>
+
     <string name="treatments_start_date">Start date</string>
-    <string name="treatments_start_date_form">Start date *</string>
-    <string name="treatments_select_start_date_dialog">Select the treatment`s initial date:</string>
     <string name="treatments_end_date">End date</string>
-    <string name="treatments_select_end_date_dialog">Select the treatment`s end date:</string>
     <string name="treatments_category">Category</string>
-    <string name="treatments_category_form">Category *</string>
-    <string-array name="treatments_category_options">
+    <string name="treatments_diagnosis">Diagnosis</string>
+    <string name="treatments_add_treatment">Add treatment</string>
+    <string name="treatments_steps">Steps</string>
+    <string name="treatments_medicines">Medicines</string>
+    <string name="treatments_symptoms">Symptoms</string>
+    <string name="treatments_calendar">Calendar</string>
+
+    <string name="treatments_form_title">Title *</string>
+    <string name="treatments_form_start_date">Start date *</string>
+    <string name="treatments_form_category">Category *</string>
+
+    <string name="treatments_dialog_message_start_date">Select the treatment`s initial date:</string>
+    <string name="treatments_dialog_message_end_date">Select the treatment`s end date:</string>
+    <string name="treatments_dialog_message_delete">Are you sure you want to delete this treatment?</string>
+
+    <string name="treatments_status_pending">Pending</string>
+    <string name="treatments_status_in_progress">In progress</string>
+    <string name="treatments_status_finished">Finished</string>
+
+    <string-array name="treatments_array_category">
         <item>Medical</item>
         <item>Pharmacological</item>
         <item>Physiotherapy</item>
@@ -21,19 +37,4 @@
         <item>Chronic</item>
         <item>Alternative</item>
     </string-array>
-    <string name="treatments_diagnosis">Diagnosis</string>
-
-    <string name="treatments_pending">Pending</string>
-    <string name="treatments_in_progress">In progress</string>
-    <string name="treatments_finished">Finished</string>
-
-    <string name="treatments_treatment_addition">Treatment addition</string>
-    <string name="treatments_add_treatment">Add treatment</string>
-
-    <string name="treatments_steps">Steps</string>
-    <string name="treatments_medicines">Medicines</string>
-    <string name="treatments_symptoms">Symptoms</string>
-    <string name="treatments_calendar">Calendar</string>
-
-    <string name="treatments_delete_dialog">Are you sure you want to delete this treatment?</string>
 </resources>

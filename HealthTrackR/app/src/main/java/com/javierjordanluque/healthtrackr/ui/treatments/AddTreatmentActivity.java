@@ -37,7 +37,7 @@ public class AddTreatmentActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_treatment);
-        setUpToolbar(getString(R.string.treatments_treatment_addition));
+        setUpToolbar(getString(R.string.treatments_title_add_treatment));
         showBackButton(true);
 
         user = sessionViewModel.getUserSession();
@@ -48,12 +48,12 @@ public class AddTreatmentActivity extends BaseActivity {
 
         layoutStartDate = findViewById(R.id.layoutStartDate);
         editTextStartDate = findViewById(R.id.editTextStartDate);
-        editTextStartDate.setOnClickListener(view -> showDatePickerDialog(editTextStartDate, getString(R.string.treatments_select_start_date_dialog), false));
+        editTextStartDate.setOnClickListener(view -> showDatePickerDialog(editTextStartDate, getString(R.string.treatments_dialog_message_start_date), false));
         setEditTextListener(layoutStartDate, editTextStartDate);
 
         layoutEndDate = findViewById(R.id.layoutEndDate);
         editTextEndDate = findViewById(R.id.editTextEndDate);
-        editTextEndDate.setOnClickListener(view -> showDatePickerDialog(editTextEndDate, getString(R.string.treatments_select_end_date_dialog), false));
+        editTextEndDate.setOnClickListener(view -> showDatePickerDialog(editTextEndDate, getString(R.string.treatments_dialog_message_end_date), false));
         Activity activity = this;
         editTextEndDate.addTextChangedListener(new TextWatcher() {
             @Override
@@ -134,7 +134,7 @@ public class AddTreatmentActivity extends BaseActivity {
     }
 
     private TreatmentCategory getCategoryFromSpinner() {
-        String[] categoryOptions = getResources().getStringArray(R.array.treatments_category_options);
+        String[] categoryOptions = getResources().getStringArray(R.array.treatments_array_category);
         String selectedCategory = spinnerCategory.getSelectedItem().toString();
 
         if (selectedCategory.equals(categoryOptions[0])) {
@@ -159,7 +159,7 @@ public class AddTreatmentActivity extends BaseActivity {
     private void configureCategorySpinner() {
         spinnerCategory = findViewById(R.id.spinnerCategory);
 
-        String[] categoryOptions = getResources().getStringArray(R.array.treatments_category_options);
+        String[] categoryOptions = getResources().getStringArray(R.array.treatments_array_category);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
