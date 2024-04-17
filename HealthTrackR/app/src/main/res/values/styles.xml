@@ -136,5 +136,7 @@
         <item name="android:layout_margin">@dimen/image_btn_grid_layout_margin</item>
         <item name="android:background">?attr/colorSecondaryContainer</item>
         <item name="android:tint">?attr/colorOnSecondaryContainer</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
     </style>
 </resources>
