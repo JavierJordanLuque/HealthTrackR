@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.util.exceptions;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -35,7 +36,13 @@ public class ExceptionManager {
             View rootView = ((Activity) context).findViewById(android.R.id.content);
 
             Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.snackbar_ok), view -> snackbar.dismiss());
+            snackbar.setAction(R.string.snackbar_action_more, v -> {
+                snackbar.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(message);
+                builder.setPositiveButton(R.string.dialog_positive_ok, (dialog, which) -> dialog.dismiss());
+                builder.show();
+            });
             snackbar.setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE);
             snackbar.show();
         }

@@ -55,10 +55,12 @@ public class ModifyAccountActivity extends BaseActivity {
 
         layoutFirstName = findViewById(R.id.layoutFirstName);
         editTextFirstName = findViewById(R.id.editTextFirstName);
+        setEditTextListener(layoutFirstName, editTextFirstName);
         editTextFirstName.setText(user.getFirstName());
 
         layoutLastName = findViewById(R.id.layoutLastName);
         editTextLastName = findViewById(R.id.editTextLastName);
+        setEditTextListener(layoutLastName, editTextLastName);
         editTextLastName.setText(user.getLastName());
 
         editTextBirthDate = findViewById(R.id.editTextBirthDate);
@@ -68,6 +70,7 @@ public class ModifyAccountActivity extends BaseActivity {
             editTextBirthDate.setText(showFormattedDate(birthDate));
         }
         editTextBirthDate.setOnClickListener(view -> showDatePickerDialog(editTextBirthDate, getString(R.string.account_dialog_message_birth_date), true));
+
         Activity activity = this;
         editTextBirthDate.addTextChangedListener(new TextWatcher() {
             @Override

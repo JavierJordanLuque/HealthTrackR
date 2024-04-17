@@ -17,7 +17,9 @@
 
     <string name="error_invalid_treatment_title">El título debe contener entre 1 y 50 caracteres.</string>
     <string name="error_invalid_treatment_start_date">La fecha de inicio no debe estar vacía.</string>
+    <string name="error_invalid_treatment_start_date_given_dependencies">La fecha de inicio no debe ser posterior a otras fechas contenidas en el tratamiento.</string>
     <string name="error_invalid_treatment_end_date">La fecha de finalización debe ser posterior a la fecha de inicio.</string>
+    <string name="error_invalid_treatment_end_date_given_dependencies">La fecha de finalización no debe ser anterior a otras fechas contenidas en el tratamiento.</string>
     <string name="error_invalid_treatment_diagnosis">El diagnóstico debe contener menos de 200 caracteres.</string>
 
     <string name="error_location_disabled">Por favor, habilita la ubicación para usar esta función</string>

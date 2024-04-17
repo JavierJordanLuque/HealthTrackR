@@ -140,6 +140,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         return null;
     }
 
+    public Treatment getTreatmentFromIntent(Intent intent) {
+        User user = sessionViewModel.getUserSession();
+
+        if (user != null) {
+            if (intent != null) {
+                long treatmentId = intent.getLongExtra(Treatment.class.getSimpleName(), -1);
+                try {
+                    for (Treatment treatment : user.getTreatments(this)) {
+                        if (treatment.getId() == treatmentId) {
+                            return treatment;
+                        }
+                    }
+                } catch (DBFindException exception) {
+                    ExceptionManager.advertiseUI(this, exception.getMessage());
+                }
+            }
+        }
+
+        return null;
+    }
+
     public void showBackButton(boolean show) {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)

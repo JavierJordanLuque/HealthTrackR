@@ -2,6 +2,7 @@ package com.javierjordanluque.healthtrackr.ui.treatments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -50,9 +51,9 @@ public class TreatmentFragment extends Fragment {
 
         FloatingActionButton buttonModifyTreatment = fragmentView.findViewById(R.id.buttonModifyTreatment);
         buttonModifyTreatment.setOnClickListener(view -> {
-            //Intent intent = new Intent(requireActivity(), ModifyTreatmentActivity.class);
-            //intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
-            //startActivity(intent);
+            Intent intent = new Intent(requireActivity(), ModifyTreatmentActivity.class);
+            intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
+            startActivity(intent);
         });
 
         RelativeLayout relativeLayoutSteps = fragmentView.findViewById(R.id.relativeLayoutSteps);

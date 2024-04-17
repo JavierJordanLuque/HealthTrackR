@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui.treatments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,20 +10,26 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
+import com.javierjordanluque.healthtrackr.models.MedicalAppointment;
+import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.models.Treatment;
-import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 
-public class AddTreatmentActivity extends BaseActivity {
-    private User user;
+public class ModifyTreatmentActivity extends BaseActivity {
+    private Treatment treatment;
     private TextInputLayout layoutTitle;
     private TextInputLayout layoutStartDate;
     private TextInputLayout layoutEndDate;
@@ -36,23 +43,30 @@ public class AddTreatmentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_treatment);
-        setUpToolbar(getString(R.string.treatments_title_add));
+        setContentView(R.layout.activity_modify_treatment);
+        setUpToolbar(getString(R.string.treatments_title_modify));
         showBackButton(true);
 
-        user = sessionViewModel.getUserSession();
+        treatment = getTreatmentFromIntent(getIntent());
 
         layoutTitle = findViewById(R.id.layoutTitle);
         editTextTitle = findViewById(R.id.editTextTitle);
         setEditTextListener(layoutTitle, editTextTitle);
+        editTextTitle.setText(treatment.getTitle());
 
         layoutStartDate = findViewById(R.id.layoutStartDate);
         editTextStartDate = findViewById(R.id.editTextStartDate);
         editTextStartDate.setOnClickListener(view -> showDatePickerDialog(editTextStartDate, getString(R.string.treatments_dialog_message_start_date), false));
         setEditTextListener(layoutStartDate, editTextStartDate);
+        editTextStartDate.setText(showFormattedDate(treatment.getStartDate()));
 
         layoutEndDate = findViewById(R.id.layoutEndDate);
         editTextEndDate = findViewById(R.id.editTextEndDate);
+        ZonedDateTime endDate = treatment.getEndDate();
+        if (endDate != null) {
+            editTextEndDate.setFocusableInTouchMode(true);
+            editTextEndDate.setText(showFormattedDate(endDate));
+        }
         editTextEndDate.setOnClickListener(view -> showDatePickerDialog(editTextEndDate, getString(R.string.treatments_dialog_message_end_date), false));
 
         Activity activity = this;
@@ -83,12 +97,15 @@ public class AddTreatmentActivity extends BaseActivity {
         layoutDiagnosis = findViewById(R.id.layoutDiagnosis);
         editTextDiagnosis = findViewById(R.id.editTextDiagnosis);
         setEditTextListener(layoutDiagnosis, editTextDiagnosis);
+        String diagnosis = treatment.getDiagnosis();
+        if (diagnosis != null)
+            editTextDiagnosis.setText(diagnosis);
 
-        Button buttonAddTreatment = findViewById(R.id.buttonAddTreatment);
-        buttonAddTreatment.setOnClickListener(this::addTreatment);
+        Button buttonSave = findViewById(R.id.buttonSave);
+        buttonSave.setOnClickListener(this::modifyTreatment);
     }
 
-    private void addTreatment(View view) {
+    private void modifyTreatment(View view) {
         hideKeyboard(this);
 
         String title = editTextTitle.getText().toString().trim();
@@ -121,17 +138,51 @@ public class AddTreatmentActivity extends BaseActivity {
             }
         }
 
+        if (!isValidStartDateGivenDependencies(startDate)) {
+            showInvalidStartDateDialog();
+            layoutStartDate.setError(getString(R.string.error_invalid_treatment_start_date_given_dependencies));
+        }
+        if (!isValidEndDateGivenDependencies(endDate)) {
+            showInvalidEndDateDialog();
+            layoutEndDate.setError(getString(R.string.error_invalid_treatment_end_date_given_dependencies));
+        }
+
         TreatmentCategory category = getCategoryFromSpinner();
 
         if (diagnosis.isEmpty())
             diagnosis = null;
 
-        try {
-            new Treatment(this, user, title, startDate, endDate, diagnosis, category);
-            finish();
-        } catch (DBInsertException exception) {
-            ExceptionManager.advertiseUI(this, exception.getMessage());
-        }
+        showModifyTreatmentConfirmationDialog(title, startDate, endDate, diagnosis, category);
+    }
+
+    private void showModifyTreatmentConfirmationDialog(String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.dialog_message_save))
+                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
+                    try {
+                        treatment.modifyTreatment(this, title, startDate, endDate, diagnosis, category);
+                        Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
+                        finish();
+                    } catch (DBFindException | DBDeleteException | DBUpdateException | DBInsertException exception) {
+                        ExceptionManager.advertiseUI(this, exception.getMessage());
+                    }
+                })
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
+        builder.create().show();
+    }
+
+    private void showInvalidStartDateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.treatments_dialog_message_invalid_start_date))
+                .setPositiveButton(getString(R.string.dialog_positive_ok), (dialog, id) -> dialog.dismiss());
+        builder.create().show();
+    }
+
+    private void showInvalidEndDateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.treatments_dialog_message_invalid_end_date))
+                .setPositiveButton(getString(R.string.dialog_positive_ok), (dialog, id) -> dialog.dismiss());
+        builder.create().show();
     }
 
     private TreatmentCategory getCategoryFromSpinner() {
@@ -165,7 +216,13 @@ public class AddTreatmentActivity extends BaseActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
-        spinnerCategory.setSelection(0);
+
+        if (treatment.getCategory() != null) {
+            int index = Arrays.asList(TreatmentCategory.values()).indexOf(treatment.getCategory());
+            spinnerCategory.setSelection(index);
+        } else {
+            spinnerCategory.setSelection(categoryOptions.length - 1);
+        }
     }
 
     private boolean isValidTitle(String title) {
@@ -176,8 +233,44 @@ public class AddTreatmentActivity extends BaseActivity {
         return !startDate.isEmpty();
     }
 
+    private boolean isValidStartDateGivenDependencies(ZonedDateTime startDate) {
+        try {
+            for (Medicine medicine : treatment.getMedicines(this)) {
+                if (medicine.getInitialDosingTime().isBefore(startDate))
+                    return false;
+            }
+
+            for (MedicalAppointment appointment : treatment.getAppointments(this)) {
+                if (appointment.getDateTime().isBefore(startDate))
+                    return false;
+            }
+        } catch (Exception exception) {
+            ExceptionManager.advertiseUI(this, exception.getMessage());
+        }
+
+        return true;
+    }
+
     private boolean isValidEndDate(ZonedDateTime startDate, ZonedDateTime endDate) {
         return endDate.isAfter(startDate);
+    }
+
+    private boolean isValidEndDateGivenDependencies(ZonedDateTime endDate) {
+        try {
+            for (Medicine medicine : treatment.getMedicines(this)) {
+                if (medicine.getInitialDosingTime().isAfter(endDate))
+                    return false;
+            }
+
+            for (MedicalAppointment appointment : treatment.getAppointments(this)) {
+                if (appointment.getDateTime().isAfter(endDate))
+                    return false;
+            }
+        } catch (Exception exception) {
+            ExceptionManager.advertiseUI(this, exception.getMessage());
+        }
+
+        return true;
     }
 
     private boolean isValidDiagnosis(String diagnosis) {

@@ -113,7 +113,6 @@
                         style="@style/SpinnerFrameLayout.Outlined">
 
                         <TextView
-                            android:id="@+id/textViewCategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/treatments_form_category" />

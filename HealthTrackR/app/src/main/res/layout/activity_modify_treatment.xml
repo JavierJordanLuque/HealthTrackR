@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.account.ModifyAccountActivity">
+    tools:context=".ui.treatments.ModifyTreatmentActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -42,15 +43,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <Button
-                    android:id="@+id/buttonChangePassword"
-                    style="@style/Widget.HealthTrackR.SmallButton"
-                    android:text="@string/account_change_password"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                </Button>
-
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
                     style="@style/vMarginGuidelineStart">
@@ -72,113 +64,85 @@
                     android:paddingBottom="@dimen/linear_layout_padding_bottom"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonChangePassword"
                     app:layout_constraintWidth_max="@dimen/text_field_max_width">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutFirstName"
+                        android:id="@+id/layoutTitle"
                         style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
                         android:layout_marginTop="0dp"
                         app:errorEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextFirstName"
+                            android:id="@+id/editTextTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:autofillHints="name"
-                            android:hint="@string/account_form_first_name"
+                            android:hint="@string/treatments_form_title"
                             android:inputType="text"
                             android:maxLength="50" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutLastName"
+                        android:id="@+id/layoutStartDate"
                         style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
                         app:errorEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextLastName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="name"
-                            android:hint="@string/account_form_last_name"
-                            android:inputType="text"
-                            android:maxLength="50" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutBirthDate"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
-                        app:endIconContentDescription="@string/content_description_clear_text"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextBirthDate"
+                            android:id="@+id/editTextStartDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusableInTouchMode="false"
-                            android:hint="@string/account_birth_date"
+                            android:hint="@string/treatments_form_start_date"
+                            android:inputType="date" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutEndDate"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        app:endIconContentDescription="@string/content_description_clear_text"
+                        app:endIconMode="clear_text"
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextEndDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/treatments_end_date"
                             android:inputType="date" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <FrameLayout
-                        android:id="@+id/layoutGender"
+                        android:id="@+id/layoutCategory"
                         style="@style/SpinnerFrameLayout.Filled">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/account_gender" />
+                            android:text="@string/treatments_form_category" />
 
                         <Spinner
-                            android:id="@+id/spinnerGender"
-                            style="@style/Widget.HealthTrackR.Spinner.Filled" />
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/layoutBloodType"
-                        style="@style/SpinnerFrameLayout.Filled">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/account_blood_type" />
-
-                        <Spinner
-                            android:id="@+id/spinnerBloodType"
+                            android:id="@+id/spinnerCategory"
                             style="@style/Widget.HealthTrackR.Spinner.Filled" />
 
                     </FrameLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutAllergies"
+                        android:id="@+id/layoutDiagnosis"
                         style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
-                        app:helperText="@string/account_helper_allergies"
-                        app:helperTextEnabled="true">
+                        app:counterEnabled="true"
+                        app:counterMaxLength="200"
+                        app:endIconContentDescription="@string/content_description_clear_text"
+                        app:endIconMode="clear_text">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextAllergies"
+                            android:id="@+id/editTextDiagnosis"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:autofillHints="text"
-                            android:hint="@string/account_allergies"
-                            android:inputType="textMultiLine" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutPreviousMedicalConditions"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
-                        app:helperText="@string/account_helper_previous_medical_condition"
-                        app:helperTextEnabled="true">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextPreviousMedicalConditions"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="text"
-                            android:hint="@string/account_previous_medical_conditions"
-                            android:inputType="textMultiLine" />
+                            android:hint="@string/treatments_diagnosis"
+                            android:inputType="textMultiLine"
+                            android:maxLength="200" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>

@@ -2,6 +2,8 @@
 <resources>
     <string name="unspecified">Sin especificar</string>
 
+    <string name="snackbar_action_more">Más</string>
+
     <string name="dialog_positive_yes">Sí</string>
     <string name="dialog_positive_accept">Aceptar</string>
     <string name="dialog_positive_confirm">Confirmar</string>
