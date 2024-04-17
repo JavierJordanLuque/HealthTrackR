@@ -31,7 +31,7 @@ public class SignUpActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_sign_up);
-        setUpToolbar(getString(R.string.authentication_title_sign_up));
+        setUpToolbar(getString(R.string.authentication_app_bar_title_sign_up));
         showBackButton(true);
 
         layoutEmail = findViewById(R.id.layoutEmail);

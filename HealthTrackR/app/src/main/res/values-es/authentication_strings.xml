@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="authentication_title_log_in">Inicio de sesión</string>
-    <string name="authentication_title_sign_up">Registro</string>
+    <string name="authentication_app_bar_title_log_in">Inicio de sesión</string>
+    <string name="authentication_app_bar_title_sign_up">Registro</string>
 
     <string name="authentication_log_in">Iniciar sesión</string>
     <string name="authentication_sign_in">Iniciar sesión</string>

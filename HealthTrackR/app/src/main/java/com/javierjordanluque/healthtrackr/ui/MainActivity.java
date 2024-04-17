@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setUpToolbar(getString(R.string.treatments_title));
+        setUpToolbar(getString(R.string.treatments_app_bar_title));
         showBackButton(false);
 
         if (savedInstanceState != null)

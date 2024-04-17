@@ -34,7 +34,7 @@ public class CalendarFragment extends Fragment {
         super.onResume();
         ((MainActivity) requireActivity()).showBackButton(false);
         if (listener != null)
-            listener.onTitleChanged(getString(R.string.calendar_title));
+            listener.onTitleChanged(getString(R.string.calendar_app_bar_title));
     }
 
     @Override

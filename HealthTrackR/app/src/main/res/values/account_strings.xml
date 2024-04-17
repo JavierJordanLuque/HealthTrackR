@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="account_title">My account</string>
-    <string name="account_title_modify">Account modification</string>
-    <string name="account_title_change_password">Password change</string>
+    <string name="account_app_bar_title">My account</string>
+    <string name="account_app_bar_title_modify">Account modification</string>
+    <string name="account_app_bar_title_change_password">Password change</string>
 
     <string name="account_email">Email</string>
     <string name="account_first_name">First name</string>

@@ -3,15 +3,15 @@
     <item
         android:id="@+id/navigation_treatments"
         android:icon="@drawable/ic_treatment"
-        android:title="@string/treatments_title" />
+        android:title="@string/treatments_app_bar_title" />
 
     <item
         android:id="@+id/navigation_calendar"
         android:icon="@drawable/ic_calendar"
-        android:title="@string/calendar_title" />
+        android:title="@string/calendar_app_bar_title" />
 
     <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/ic_account"
-        android:title="@string/account_title" />
+        android:title="@string/account_app_bar_title" />
 </menu>

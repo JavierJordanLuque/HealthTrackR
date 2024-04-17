@@ -44,7 +44,7 @@ public class ModifyTreatmentActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_treatment);
-        setUpToolbar(getString(R.string.treatments_title_modify));
+        setUpToolbar(getString(R.string.treatments_app_bar_title_modify));
         showBackButton(true);
 
         treatment = getTreatmentFromIntent(getIntent());
@@ -217,12 +217,8 @@ public class ModifyTreatmentActivity extends BaseActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
 
-        if (treatment.getCategory() != null) {
-            int index = Arrays.asList(TreatmentCategory.values()).indexOf(treatment.getCategory());
-            spinnerCategory.setSelection(index);
-        } else {
-            spinnerCategory.setSelection(categoryOptions.length - 1);
-        }
+        int index = Arrays.asList(TreatmentCategory.values()).indexOf(treatment.getCategory());
+        spinnerCategory.setSelection(index);
     }
 
     private boolean isValidTitle(String title) {

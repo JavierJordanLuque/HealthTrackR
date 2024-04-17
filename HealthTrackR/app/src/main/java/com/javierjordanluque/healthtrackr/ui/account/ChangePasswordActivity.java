@@ -29,7 +29,7 @@ public class ChangePasswordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
-        setUpToolbar(getString(R.string.account_title_change_password));
+        setUpToolbar(getString(R.string.account_app_bar_title_change_password));
         showBackButton(true);
 
         user = sessionViewModel.getUserSession();

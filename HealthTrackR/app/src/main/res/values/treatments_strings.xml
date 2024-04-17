@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="treatments_title">Treatments</string>
-    <string name="treatments_title_add">Treatment addition</string>
-    <string name="treatments_title_modify">Treatment modification</string>
+    <string name="treatments_app_bar_title">Treatments</string>
+    <string name="treatments_app_bar_title_add">Treatment addition</string>
+    <string name="treatments_app_bar_title_modify">Treatment modification</string>
 
     <string name="treatments_empty_message">You don`t have active treatments. Please add a new treatment</string>
+    <string name="treatments_not_found_message">No treatments found matching the specified filters. Please try different filters.</string>
 
+    <string name="treatments_title">Title</string>
     <string name="treatments_start_date">Start date</string>
     <string name="treatments_end_date">End date</string>
     <string name="treatments_category">Category</string>

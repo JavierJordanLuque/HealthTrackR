@@ -110,7 +110,7 @@ public class AccountFragment extends Fragment {
 
         ((MainActivity) requireActivity()).showBackButton(false);
         if (listener != null)
-            listener.onTitleChanged(getString(R.string.account_title));
+            listener.onTitleChanged(getString(R.string.account_app_bar_title));
 
         textViewEmail.setText(user.getEmail());
         textViewFirstName.setText(user.getFirstName());

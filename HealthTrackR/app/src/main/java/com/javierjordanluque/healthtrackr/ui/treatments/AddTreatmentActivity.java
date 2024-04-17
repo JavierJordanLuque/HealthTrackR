@@ -37,7 +37,7 @@ public class AddTreatmentActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_treatment);
-        setUpToolbar(getString(R.string.treatments_title_add));
+        setUpToolbar(getString(R.string.treatments_app_bar_title_add));
         showBackButton(true);
 
         user = sessionViewModel.getUserSession();

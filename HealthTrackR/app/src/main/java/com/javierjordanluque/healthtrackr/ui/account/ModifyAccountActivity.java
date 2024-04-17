@@ -48,7 +48,7 @@ public class ModifyAccountActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_account);
-        setUpToolbar(getString(R.string.account_title_modify));
+        setUpToolbar(getString(R.string.account_app_bar_title_modify));
         showBackButton(true);
 
         user = sessionViewModel.getUserSession();

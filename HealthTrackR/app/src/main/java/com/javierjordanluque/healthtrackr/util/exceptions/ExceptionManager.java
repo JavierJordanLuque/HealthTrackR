@@ -35,7 +35,7 @@ public class ExceptionManager {
         if (context instanceof Activity) {
             View rootView = ((Activity) context).findViewById(android.R.id.content);
 
-            Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_INDEFINITE);
+            Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
             snackbar.setAction(R.string.snackbar_action_more, v -> {
                 snackbar.dismiss();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);

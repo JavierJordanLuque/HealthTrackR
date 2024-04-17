@@ -28,7 +28,7 @@ public class LogInActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        setUpToolbar(getString(R.string.authentication_title_log_in));
+        setUpToolbar(getString(R.string.authentication_app_bar_title_log_in));
         showBackButton(true);
 
         layoutEmail = findViewById(R.id.layoutEmail);

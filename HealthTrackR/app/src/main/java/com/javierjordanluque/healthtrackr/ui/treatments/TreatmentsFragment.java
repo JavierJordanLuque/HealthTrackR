@@ -31,6 +31,7 @@ import java.util.List;
 
 public class TreatmentsFragment extends Fragment {
     private OnToolbarChangeListener listener;
+    private User user;
     private NestedScrollView nestedScrollView;
     private ConstraintLayout constraintLayoutEmpty;
     private LinearLayout linearLayout;
@@ -64,11 +65,11 @@ public class TreatmentsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        User user = ((MainActivity) requireActivity()).sessionViewModel.getUserSession();
+        user = ((MainActivity) requireActivity()).sessionViewModel.getUserSession();
 
         ((MainActivity) requireActivity()).showBackButton(false);
         if (listener != null)
-            listener.onTitleChanged(getString(R.string.treatments_title));
+            listener.onTitleChanged(getString(R.string.treatments_app_bar_title));
 
         List<Treatment> treatments = null;
         try {

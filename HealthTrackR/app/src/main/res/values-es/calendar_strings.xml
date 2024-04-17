@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="calendar_title">Calendario</string>
+    <string name="calendar_app_bar_title">Calendario</string>
 </resources>
