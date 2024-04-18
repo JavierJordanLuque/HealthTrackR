@@ -8,89 +8,51 @@
     android:clickable="true"
     android:focusable="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/vButtonGuideline"
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            app:layout_constraintGuide_percent="0.85"
-            android:orientation="vertical">
+            android:textAppearance="?attr/textAppearanceHeadlineMedium"
+            android:textStyle="bold" />
 
-        </androidx.constraintlayout.widget.Guideline>
+        <TextView
+            style="@style/Widget.HealthTrackR.TextView.Bold"
+            android:text="@string/treatments_start_date" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/vButtonGuideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/textViewStartDate"
+            style="@style/Widget.HealthTrackR.TextView.Value" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            style="@style/Widget.HealthTrackR.TextView.Bold"
+            android:text="@string/treatments_end_date" />
 
-                <TextView
-                    android:id="@+id/textViewTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceHeadlineMedium"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textViewEndDate"
+            style="@style/Widget.HealthTrackR.TextView.Value" />
 
-                    <TextView
-                        style="@style/Widget.HealthTrackR.TextView.Bold"
-                        android:text="@string/treatments_start_date" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/text_view_margin_top"
+            android:background="?attr/colorOutlineVariant" />
 
-                    <TextView
-                        android:id="@+id/textViewStartDate"
-                        style="@style/Widget.HealthTrackR.TextView.Value" />
+        <TextView
+            style="@style/Widget.HealthTrackR.TextView.Bold"
+            android:text="@string/treatments_category" />
 
-                <TextView
-                    style="@style/Widget.HealthTrackR.TextView.Bold"
-                    android:text="@string/treatments_end_date" />
+        <TextView
+            android:id="@+id/textViewCategory"
+            style="@style/Widget.HealthTrackR.TextView.Value" />
 
-                <TextView
-                    android:id="@+id/textViewEndDate"
-                    style="@style/Widget.HealthTrackR.TextView.Value" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/text_view_margin_top"
-                    android:background="?attr/colorOutlineVariant" />
-
-                <TextView
-                    style="@style/Widget.HealthTrackR.TextView.Bold"
-                    android:text="@string/treatments_category" />
-
-                <TextView
-                    android:id="@+id/textViewCategory"
-                    style="@style/Widget.HealthTrackR.TextView.Value" />
-
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageButton
-            android:id="@+id/imageButtonTreatment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="?attr/colorPrimary"
-            android:contentDescription="@string/content_description_access_treatment"
-            app:srcCompat="@drawable/ic_forward_arrow"
-            app:tint="?attr/colorOnPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vButtonGuideline"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

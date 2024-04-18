@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -120,21 +119,17 @@ public class TreatmentsFragment extends Fragment {
                 TextView textViewCategory = cardView.findViewById(R.id.textViewCategory);
                 textViewCategory.setText(categoryString);
 
-                ImageButton imageButtonTreatment = cardView.findViewById(R.id.imageButtonTreatment);
-                imageButtonTreatment.setOnClickListener(view -> openTreatment(treatment));
-                cardView.setOnClickListener(view -> openTreatment(treatment));
+                cardView.setOnClickListener(view -> {
+                    Fragment fragment = new TreatmentFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
+                    fragment.setArguments(bundle);
+                    ((MainActivity) requireActivity()).replaceFragment(fragment);
+                });
 
                 linearLayout.addView(cardView);
             }
         }
-    }
-
-    private void openTreatment(Treatment treatment) {
-        Fragment fragment = new TreatmentFragment();
-        Bundle bundle = new Bundle();
-        bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
-        fragment.setArguments(bundle);
-        ((MainActivity) requireActivity()).replaceFragment(fragment);
     }
 
     @Override
