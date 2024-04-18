@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,6 +13,8 @@ import com.javierjordanluque.healthtrackr.ui.account.AccountFragment;
 import com.javierjordanluque.healthtrackr.ui.calendar.CalendarFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentsFragment;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends BaseActivity implements OnToolbarChangeListener {
     ActivityMainBinding binding;
@@ -45,6 +48,7 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
         }
         binding.navigationView.setSelectedItemId(selectedItem);
 
+        AtomicInteger easterEggCounter = new AtomicInteger(0);
         binding.navigationView.setOnItemSelectedListener(item -> {
             boolean swappedFragment = false;
             int itemId = item.getItemId();
@@ -52,6 +56,10 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
                 if (!(currentFragment instanceof TreatmentsFragment)) {
                     currentFragment = new TreatmentsFragment();
                     swappedFragment = true;
+                    easterEggCounter.set(0);
+                } else {
+                    easterEggCounter.set(easterEggCounter.get() + 1);
+                    easterEgg(easterEggCounter.get());
                 }
             } else if (itemId == R.id.navigation_calendar) {
                 if (!(currentFragment instanceof CalendarFragment)) {
@@ -113,6 +121,22 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
         if (!(currentFragment instanceof TreatmentsFragment || currentFragment instanceof CalendarFragment || currentFragment instanceof AccountFragment)) {
             super.onBackPressed();
+        }
+    }
+
+    private void easterEgg(int easterEggCounter) {
+        if (easterEggCounter == 5) {
+            Toast.makeText(this, getString(R.string.easter_egg_5_message), Toast.LENGTH_SHORT).show();
+        } else if (easterEggCounter == 10) {
+            Toast.makeText(this, getString(R.string.easter_egg_10_message), Toast.LENGTH_SHORT).show();
+        } else if (easterEggCounter == 15) {
+            Toast.makeText(this, getString(R.string.easter_egg_15_message), Toast.LENGTH_SHORT).show();
+        } else if (easterEggCounter == 20 ) {
+            Toast.makeText(this, getString(R.string.easter_egg_20_message), Toast.LENGTH_SHORT).show();
+        } else if (easterEggCounter == 25) {
+            Toast.makeText(this, getString(R.string.easter_egg_25_message), Toast.LENGTH_SHORT).show();
+        } else if (easterEggCounter > 25 && easterEggCounter % 10 == 0) {
+            Toast.makeText(this, getString(R.string.easter_egg_30_message), Toast.LENGTH_SHORT).show();
         }
     }
 }

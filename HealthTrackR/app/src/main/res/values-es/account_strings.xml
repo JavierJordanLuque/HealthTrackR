@@ -26,9 +26,9 @@
     <string name="account_helper_previous_medical_condition">Introduce tus condiciones médicas previas separadas por comas (,)</string>
 
     <string name="account_dialog_message_birth_date">Selecciona tu fecha de nacimiento:</string>
-    <string name="account_dialog_message_sign_out">¿Estás seguro de cerrar sesión?</string>
-    <string name="account_dialog_message_delete">¿Estás seguro de eliminar tu cuenta?</string>
-    <string name="account_dialog_message_change_password">¿Estás seguro de cambiar tu contraseña?</string>
+    <string name="account_dialog_message_sign_out">¿Estás seguro/a de cerrar sesión?</string>
+    <string name="account_dialog_message_delete">¿Estás seguro/a de eliminar tu cuenta?</string>
+    <string name="account_dialog_message_change_password">¿Estás seguro/a de cambiar tu contraseña?</string>
 
     <string name="account_toast_confirmation_delete">¡Cuenta eliminada!</string>
     <string name="account_toast_confirmation_change_password">¡Contraseña actualizada!</string>
