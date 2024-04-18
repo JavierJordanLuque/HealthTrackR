@@ -11,7 +11,7 @@
     <string name="content_description_add_treatment">Add treatment</string>
     <string name="content_description_access_treatment">Access treatment</string>
     <string name="content_description_modify_treatment">Modify treatment</string>
-    <string name="content_description_access_steps">Access steps</string>
+    <string name="content_description_access_guidelines">Access guidelines</string>
     <string name="content_description_access_medicines">Access medicines</string>
     <string name="content_description_access_symptoms">Access symptoms</string>
     <string name="content_description_access_calendar">Access treatment calendar</string>

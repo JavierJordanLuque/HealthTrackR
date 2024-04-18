@@ -103,19 +103,19 @@
                     android:rowCount="2">
 
                     <RelativeLayout
-                        android:id="@+id/relativeLayoutSteps"
+                        android:id="@+id/relativeLayoutGuidelines"
                         style="@style/RelativeLayoutGrid">
 
                         <TextView
-                            android:id="@+id/textViewSteps"
+                            android:id="@+id/textViewGuidelines"
                             style="@style/Widget.HealthTrackR.TextView.Grid"
-                            android:text="@string/treatments_steps" />
+                            android:text="@string/treatments_guidelines" />
 
                         <ImageButton
                             style="@style/Widget.HealthTrackR.ImageButton.Grid"
-                            android:layout_below="@+id/textViewSteps"
-                            android:src="@drawable/ic_step"
-                            android:contentDescription="@string/content_description_access_steps"/>
+                            android:layout_below="@+id/textViewGuidelines"
+                            android:src="@drawable/ic_guideline"
+                            android:contentDescription="@string/content_description_access_guidelines"/>
                     </RelativeLayout>
 
                     <RelativeLayout

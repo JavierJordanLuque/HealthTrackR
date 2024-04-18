@@ -3,7 +3,7 @@ package com.javierjordanluque.healthtrackr.models;
 import android.content.Context;
 
 import com.javierjordanluque.healthtrackr.db.repositories.MultimediaRepository;
-import com.javierjordanluque.healthtrackr.db.repositories.StepRepository;
+import com.javierjordanluque.healthtrackr.db.repositories.GuidelineRepository;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
@@ -12,7 +12,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import java.util.List;
 import java.util.Objects;
 
-public class Step implements Identifiable {
+public class Guideline implements Identifiable {
     private long id;
     private Treatment treatment;
     private String title;
@@ -20,70 +20,70 @@ public class Step implements Identifiable {
     private Integer numOrder;
     private List<Multimedia> multimedias;
 
-    public Step(Context context, Treatment treatment, String title, String description, int numOrder) throws DBInsertException {
+    public Guideline(Context context, Treatment treatment, String title, String description, int numOrder) throws DBInsertException {
         this.treatment = treatment;
         this.title = title;
         this.description = description;
         this.numOrder = numOrder;
 
         if (context != null)
-            this.treatment.addStep(context, this);
+            this.treatment.addGuideline(context, this);
     }
 
-    private Step(){
+    private Guideline(){
     }
 
-    public void modifyStep(Context context, String title, String description, int numOrder) throws DBUpdateException, DBFindException {
-        Step step = new Step();
-        step.setId(this.id);
+    public void modifyGuideline(Context context, String title, String description, int numOrder) throws DBUpdateException, DBFindException {
+        Guideline guideline = new Guideline();
+        guideline.setId(this.id);
 
         if (!this.title.equals(title)) {
             setTitle(title);
-            step.setTitle(this.title);
+            guideline.setTitle(this.title);
         }
 
         if ((this.description == null && description != null ) || (description != null && !this.description.equals(description))) {
             setDescription(description);
-            step.setDescription(description);
+            guideline.setDescription(description);
         } else if (this.description != null && description == null) {
             setDescription(null);
-            step.setDescription("");
+            guideline.setDescription("");
         }
 
         if (this.numOrder != numOrder) {
             if (numOrder < this.numOrder) {
-                for (Step otherStep : step.getTreatment().getSteps(context)) {
-                    if (!Objects.equals(this.numOrder, otherStep.getNumOrder()) && otherStep.getNumOrder() >= numOrder && otherStep.getNumOrder() < this.numOrder) {
-                        Step newOtherStep = new Step();
-                        newOtherStep.setId(otherStep.getId());
+                for (Guideline otherGuideline : guideline.getTreatment().getGuidelines(context)) {
+                    if (!Objects.equals(this.numOrder, otherGuideline.getNumOrder()) && otherGuideline.getNumOrder() >= numOrder && otherGuideline.getNumOrder() < this.numOrder) {
+                        Guideline newOtherGuideline = new Guideline();
+                        newOtherGuideline.setId(otherGuideline.getId());
 
-                        otherStep.setNumOrder(otherStep.getNumOrder() + 1);
-                        newOtherStep.setNumOrder(otherStep.getNumOrder() + 1);
+                        otherGuideline.setNumOrder(otherGuideline.getNumOrder() + 1);
+                        newOtherGuideline.setNumOrder(otherGuideline.getNumOrder() + 1);
 
-                        StepRepository stepRepository = new StepRepository(context);
-                        stepRepository.update(newOtherStep);
+                        GuidelineRepository guidelineRepository = new GuidelineRepository(context);
+                        guidelineRepository.update(newOtherGuideline);
                     }
                 }
             } else {
-                for (Step otherStep : step.getTreatment().getSteps(context)) {
-                    if (!Objects.equals(this.numOrder, otherStep.getNumOrder()) && otherStep.getNumOrder() <= numOrder && otherStep.getNumOrder() > this.numOrder) {
-                        Step newOtherStep = new Step();
-                        newOtherStep.setId(otherStep.getId());
+                for (Guideline otherGuideline : guideline.getTreatment().getGuidelines(context)) {
+                    if (!Objects.equals(this.numOrder, otherGuideline.getNumOrder()) && otherGuideline.getNumOrder() <= numOrder && otherGuideline.getNumOrder() > this.numOrder) {
+                        Guideline newOtherGuideline = new Guideline();
+                        newOtherGuideline.setId(otherGuideline.getId());
 
-                        otherStep.setNumOrder(otherStep.getNumOrder() - 1);
-                        newOtherStep.setNumOrder(otherStep.getNumOrder() - 1);
+                        otherGuideline.setNumOrder(otherGuideline.getNumOrder() - 1);
+                        newOtherGuideline.setNumOrder(otherGuideline.getNumOrder() - 1);
 
-                        StepRepository stepRepository = new StepRepository(context);
-                        stepRepository.update(newOtherStep);
+                        GuidelineRepository guidelineRepository = new GuidelineRepository(context);
+                        guidelineRepository.update(newOtherGuideline);
                     }
                 }
             }
             setNumOrder(numOrder);
-            step.setNumOrder(numOrder);
+            guideline.setNumOrder(numOrder);
         }
 
-        StepRepository stepRepository = new StepRepository(context);
-        stepRepository.update(step);
+        GuidelineRepository guidelineRepository = new GuidelineRepository(context);
+        guidelineRepository.update(guideline);
     }
 
     protected void addMultimedia(Context context, Multimedia multimedia) throws DBInsertException {
@@ -138,7 +138,7 @@ public class Step implements Identifiable {
     public List<Multimedia> getMultimedias(Context context) throws DBFindException {
         if (multimedias == null) {
             MultimediaRepository multimediaRepository = new MultimediaRepository(context);
-            setMultimedias(multimediaRepository.findStepMultimedias(this.id));
+            setMultimedias(multimediaRepository.findGuidelineMultimedias(this.id));
         }
 
         return multimedias;
@@ -154,11 +154,11 @@ public class Step implements Identifiable {
             return true;
         if (obj == null || getClass() != obj.getClass())
             return false;
-        Step step = (Step) obj;
-        return id == step.id &&
-                Objects.equals(treatment, step.treatment) &&
-                Objects.equals(title, step.title) &&
-                Objects.equals(description, step.description) &&
-                Objects.equals(numOrder, step.numOrder);
+        Guideline guideline = (Guideline) obj;
+        return id == guideline.id &&
+                Objects.equals(treatment, guideline.treatment) &&
+                Objects.equals(title, guideline.title) &&
+                Objects.equals(description, guideline.description) &&
+                Objects.equals(numOrder, guideline.numOrder);
     }
 }

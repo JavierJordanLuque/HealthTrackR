@@ -11,17 +11,17 @@ import java.util.Objects;
 
 public class Multimedia implements Identifiable {
     private long id;
-    private final Step step;
+    private final Guideline guideline;
     private final MultimediaType type;
     private final String path;
 
-    public Multimedia(Context context, Step step, MultimediaType type, String path) throws DBInsertException {
-        this.step = step;
+    public Multimedia(Context context, Guideline guideline, MultimediaType type, String path) throws DBInsertException {
+        this.guideline = guideline;
         this.type = type;
         this.path = path;
 
         if (context != null)
-            this.step.addMultimedia(context, this);
+            this.guideline.addMultimedia(context, this);
     }
 
     public Object getMedia() {
@@ -44,8 +44,8 @@ public class Multimedia implements Identifiable {
         this.id = id;
     }
 
-    public Step getStep() {
-        return step;
+    public Guideline getGuideline() {
+        return guideline;
     }
 
     public MultimediaType getType() {
@@ -64,7 +64,7 @@ public class Multimedia implements Identifiable {
             return false;
         Multimedia multimedia = (Multimedia) obj;
         return id == multimedia.id &&
-                Objects.equals(step, multimedia.step) &&
+                Objects.equals(guideline, multimedia.guideline) &&
                 type == multimedia.type &&
                 Objects.equals(path, multimedia.path);
     }

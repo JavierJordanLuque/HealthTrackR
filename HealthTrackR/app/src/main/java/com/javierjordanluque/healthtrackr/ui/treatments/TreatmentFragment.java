@@ -56,9 +56,9 @@ public class TreatmentFragment extends Fragment {
             startActivity(intent);
         });
 
-        RelativeLayout relativeLayoutSteps = fragmentView.findViewById(R.id.relativeLayoutSteps);
-        relativeLayoutSteps.setOnClickListener(view -> {
-            //openFragmentFromTreatment(new StepsFragment());
+        RelativeLayout relativeLayoutGuidelines = fragmentView.findViewById(R.id.relativeLayoutGuidelines);
+        relativeLayoutGuidelines.setOnClickListener(view -> {
+            //openFragmentFromTreatment(new GuidelinesFragment());
         });
 
         RelativeLayout relativeLayoutMedicines = fragmentView.findViewById(R.id.relativeLayoutMedicines);

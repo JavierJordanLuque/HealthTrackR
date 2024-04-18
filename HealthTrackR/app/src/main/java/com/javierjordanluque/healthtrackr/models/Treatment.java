@@ -5,7 +5,7 @@ import android.content.Context;
 import com.javierjordanluque.healthtrackr.db.repositories.MedicalAppointmentRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.MedicineRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.QuestionRepository;
-import com.javierjordanluque.healthtrackr.db.repositories.StepRepository;
+import com.javierjordanluque.healthtrackr.db.repositories.GuidelineRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.SymptomRepository;
 import com.javierjordanluque.healthtrackr.db.repositories.TreatmentRepository;
 import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
@@ -33,7 +33,7 @@ public class Treatment implements Identifiable {
     private String diagnosis;
     private TreatmentCategory category;
     private List<Medicine> medicines;
-    private List<Step> steps;
+    private List<Guideline> guidelines;
     private List<Symptom> symptoms;
     private List<Question> questions;
     private List<MedicalAppointment> appointments;
@@ -130,16 +130,16 @@ public class Treatment implements Identifiable {
         medicines.remove(medicine);
     }
 
-    protected void addStep(Context context, Step step) throws DBInsertException {
-        StepRepository stepRepository = new StepRepository(context);
-        step.setId(stepRepository.insert(step));
-        steps.add(step);
+    protected void addGuideline(Context context, Guideline guideline) throws DBInsertException {
+        GuidelineRepository guidelineRepository = new GuidelineRepository(context);
+        guideline.setId(guidelineRepository.insert(guideline));
+        guidelines.add(guideline);
     }
 
-    public void removeStep(Context context, Step step) throws DBDeleteException {
-        StepRepository stepRepository = new StepRepository(context);
-        stepRepository.delete(step);
-        steps.remove(step);
+    public void removeGuideline(Context context, Guideline guideline) throws DBDeleteException {
+        GuidelineRepository guidelineRepository = new GuidelineRepository(context);
+        guidelineRepository.delete(guideline);
+        guidelines.remove(guideline);
     }
 
     protected void addSymptom(Context context, Symptom symptom) throws DBInsertException {
@@ -258,18 +258,18 @@ public class Treatment implements Identifiable {
         this.medicines = medicines;
     }
 
-    public List<Step> getSteps(Context context) throws DBFindException {
-        if (steps == null) {
-            StepRepository stepRepository = new StepRepository(context);
-            setSteps(stepRepository.findTreatmentSteps(this.id));
+    public List<Guideline> getGuidelines(Context context) throws DBFindException {
+        if (guidelines == null) {
+            GuidelineRepository guidelineRepository = new GuidelineRepository(context);
+            setGuidelines(guidelineRepository.findTreatmentGuidelines(this.id));
         }
-        steps.sort(Comparator.comparingInt(Step::getNumOrder));
+        guidelines.sort(Comparator.comparingInt(Guideline::getNumOrder));
 
-        return steps;
+        return guidelines;
     }
 
-    private void setSteps(List<Step> steps) {
-        this.steps = steps;
+    private void setGuidelines(List<Guideline> guidelines) {
+        this.guidelines = guidelines;
     }
 
     public List<Symptom> getSymptoms(Context context) throws DBFindException {

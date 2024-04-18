@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import com.javierjordanluque.healthtrackr.db.BaseRepository;
-import com.javierjordanluque.healthtrackr.models.Step;
+import com.javierjordanluque.healthtrackr.models.Guideline;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
@@ -16,60 +16,60 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StepRepository extends BaseRepository<Step> {
-    private static final String TABLE_NAME = "STEP";
+public class GuidelineRepository extends BaseRepository<Guideline> {
+    private static final String TABLE_NAME = "GUIDELINE";
     private final String TREATMENT_ID = "treatment_id";
     private final String TITLE = "title";
     private final String DESCRIPTION = "description";
     private final String NUM_ORDER = "num_order";
     private final Context context;
 
-    public StepRepository(Context context) {
+    public GuidelineRepository(Context context) {
         super(TABLE_NAME, context);
         this.context = context;
     }
 
     @Override
-    protected ContentValues getContentValues(Step step) {
+    protected ContentValues getContentValues(Guideline guideline) {
         ContentValues contentValues = new ContentValues();
 
-        if (step.getTreatment() != null)
-            contentValues.put(TREATMENT_ID, step.getTreatment().getId());
+        if (guideline.getTreatment() != null)
+            contentValues.put(TREATMENT_ID, guideline.getTreatment().getId());
 
-        if (step.getTitle() != null)
-            contentValues.put(TITLE, step.getTitle());
+        if (guideline.getTitle() != null)
+            contentValues.put(TITLE, guideline.getTitle());
 
-        if (step.getDescription() != null) {
-            if (step.getDescription().isEmpty()) {
+        if (guideline.getDescription() != null) {
+            if (guideline.getDescription().isEmpty()) {
                 contentValues.putNull(DESCRIPTION);
             } else {
-                contentValues.put(DESCRIPTION, step.getDescription());
+                contentValues.put(DESCRIPTION, guideline.getDescription());
             }
         }
 
-        if (step.getNumOrder() != null)
-            contentValues.put(NUM_ORDER, step.getNumOrder());
+        if (guideline.getNumOrder() != null)
+            contentValues.put(NUM_ORDER, guideline.getNumOrder());
 
         return contentValues;
     }
 
     @Override
     @SuppressLint("Range")
-    protected Step cursorToItem(Cursor cursor) throws DBFindException, DBInsertException {
+    protected Guideline cursorToItem(Cursor cursor) throws DBFindException, DBInsertException {
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
-        Step step = new Step(null, treatment, cursor.getString(cursor.getColumnIndex(TITLE)), cursor.getString(cursor.getColumnIndex(DESCRIPTION)),
+        Guideline guideline = new Guideline(null, treatment, cursor.getString(cursor.getColumnIndex(TITLE)), cursor.getString(cursor.getColumnIndex(DESCRIPTION)),
                 cursor.getInt(cursor.getColumnIndex(NUM_ORDER)));
-        step.setId(cursor.getLong(cursor.getColumnIndex(ID)));
+        guideline.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
-        return step;
+        return guideline;
     }
 
-    public List<Step> findTreatmentSteps(long treatmentId) throws DBFindException {
+    public List<Guideline> findTreatmentGuidelines(long treatmentId) throws DBFindException {
         SQLiteDatabase db = null;
         Cursor cursor = null;
-        List<Step> steps = new ArrayList<>();
+        List<Guideline> guidelines = new ArrayList<>();
 
         try {
             db = open();
@@ -79,16 +79,16 @@ public class StepRepository extends BaseRepository<Step> {
 
             if (cursor != null) {
                 while (cursor.moveToNext())
-                    steps.add(cursorToItem(cursor));
+                    guidelines.add(cursorToItem(cursor));
             }
         } catch (SQLiteException | DBFindException | DBInsertException exception) {
-            throw new DBFindException("Failed to findTreatmentSteps from treatment with id (" + treatmentId + ")", exception);
+            throw new DBFindException("Failed to findTreatmentGuidelines from treatment with id (" + treatmentId + ")", exception);
         } finally {
             if (cursor != null)
                 cursor.close();
             close(db);
         }
 
-        return steps;
+        return guidelines;
     }
 }

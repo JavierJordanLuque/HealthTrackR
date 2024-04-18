@@ -13,7 +13,7 @@
     <string name="treatments_category">Categoría</string>
     <string name="treatments_diagnosis">Diagnóstico</string>
     <string name="treatments_add_treatment">Añadir tratamiento</string>
-    <string name="treatments_steps">Pasos</string>
+    <string name="treatments_guidelines">Pautas</string>
     <string name="treatments_medicines">Medicamentos</string>
     <string name="treatments_symptoms">Síntomas</string>
     <string name="treatments_calendar">Calendario</string>
