@@ -108,6 +108,7 @@ public class AccountFragment extends Fragment {
 
         user = ((MainActivity) requireActivity()).sessionViewModel.getUserSession();
 
+        ((MainActivity) requireActivity()).currentFragment = this;
         ((MainActivity) requireActivity()).showBackButton(false);
         if (listener != null)
             listener.onTitleChanged(getString(R.string.account_app_bar_title));

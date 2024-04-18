@@ -67,6 +67,7 @@ public class TreatmentsFragment extends Fragment {
 
         user = ((MainActivity) requireActivity()).sessionViewModel.getUserSession();
 
+        ((MainActivity) requireActivity()).currentFragment = this;
         ((MainActivity) requireActivity()).showBackButton(false);
         if (listener != null)
             listener.onTitleChanged(getString(R.string.treatments_app_bar_title));

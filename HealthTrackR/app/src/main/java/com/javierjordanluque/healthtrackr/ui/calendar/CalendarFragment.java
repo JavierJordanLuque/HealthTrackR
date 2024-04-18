@@ -32,6 +32,8 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        ((MainActivity) requireActivity()).currentFragment = this;
         ((MainActivity) requireActivity()).showBackButton(false);
         if (listener != null)
             listener.onTitleChanged(getString(R.string.calendar_app_bar_title));
