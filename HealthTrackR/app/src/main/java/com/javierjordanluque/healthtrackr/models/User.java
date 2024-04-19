@@ -175,7 +175,7 @@ public class User implements Identifiable {
         for (Treatment treatment : treatments) {
             boolean titleMatches = title == null || treatment.getTitle().contains(title);
             boolean startDateMatches = startDate == null || treatment.getStartDate().isAfter(startDate) || treatment.getStartDate().isEqual(startDate);
-            boolean endDateMatches = endDate == null || treatment.getEndDate().isBefore(endDate) || treatment.getEndDate().isEqual(endDate);
+            boolean endDateMatches = endDate == null || (treatment.getEndDate() != null && treatment.getEndDate().isBefore(endDate)) || (treatment.getEndDate() != null && treatment.getEndDate().isEqual(endDate));
             boolean categoryMatches = category == null || treatment.getCategory().equals(category);
 
             if (titleMatches && startDateMatches && endDateMatches && categoryMatches)

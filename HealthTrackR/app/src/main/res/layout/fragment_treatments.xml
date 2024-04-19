@@ -7,23 +7,30 @@
     tools:context=".ui.treatments.TreatmentsFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/buttonAddTreatment"
-            style="@style/Widget.HealthTrackR.FloatingActionButton.Primary"
-            android:layout_gravity="bottom|end"
-            android:contentDescription="@string/content_description_add_treatment"
-            app:srcCompat="@drawable/ic_add" />
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/buttonFilterTreatments"
+            android:layout_width="@dimen/filter_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/floating_button_layout_margin"
+            android:layout_gravity="top|center"
+            android:backgroundTint="?attr/colorSecondaryContainer"
+            android:text="@string/filter_title"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -47,7 +54,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/linear_layout_padding_top"
+                    android:paddingTop="@dimen/filter_linear_layout_padding_top"
                     android:paddingBottom="@dimen/linear_layout_padding_bottom"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
@@ -88,6 +95,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonAddTreatment"
+            style="@style/Widget.HealthTrackR.FloatingActionButton.Primary"
+            android:layout_gravity="bottom|end"
+            android:contentDescription="@string/content_description_add_treatment"
+            app:srcCompat="@drawable/ic_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

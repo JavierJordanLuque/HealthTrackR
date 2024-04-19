@@ -167,7 +167,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(show);
     }
 
-    protected static void hideKeyboard(Activity activity) {
+    public static void hideKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         View currentFocus = activity.getCurrentFocus();
 
@@ -225,7 +225,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return formattedDate;
     }
 
-    protected Object getDateFromEditText(EditText editTextDate, Class<?> type) {
+    public Object getDateFromEditText(EditText editTextDate, Class<?> type) {
         String dateString = editTextDate.getText().toString();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -240,7 +240,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return date;
     }
 
-    protected void showDatePickerDialog(EditText editTextDate, String title, boolean setBirthDate) {
+    public void showDatePickerDialog(EditText editTextDate, String title, boolean setBirthDate) {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_date_picker, null);
 
         NumberPicker numberPickerDay = dialogView.findViewById(R.id.numberPickerDay);
