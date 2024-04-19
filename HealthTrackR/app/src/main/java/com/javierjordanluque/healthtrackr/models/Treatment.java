@@ -19,6 +19,7 @@ import com.javierjordanluque.healthtrackr.util.notifications.NotificationSchedul
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -111,11 +112,11 @@ public class Treatment implements Identifiable {
     }
 
     public boolean isStarted() {
-        return !startDate.isBefore(ZonedDateTime.now());
+        return !ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).isBefore(startDate);
     }
 
     public boolean isFinished() {
-        return endDate != null && endDate.isAfter(ZonedDateTime.now());
+        return endDate != null && ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).isAfter(endDate);
     }
 
     protected void addMedicine(Context context, Medicine medicine) throws DBInsertException {
