@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicines_app_bar_title">Medicamentos</string>
+    <string name="medicines_app_bar_title_add">Adición de medicamento</string>
+    <string name="medicines_app_bar_title_modify">Modificación de medicamento</string>
+
+    <string name="medicines_no_elements">No tienes medicamentos en este tratamiento. Por favor, añade un nuevo medicamento</string>
+
+    <string name="medicines_administration_route">Vía de administración</string>
+    <string name="medicines_dose">Dosis</string>
+    <string name="medicines_next_dose">Próxima toma</string>
+
+    <string-array name="medicines_array_administration_route">
+        <item>Oral</item>
+        <item>Tópica</item>
+        <item>Parenteral</item>
+        <item>Inhalatoria</item>
+        <item>Oftálmica</item>
+        <item>Otica</item>
+        <item>Nasal</item>
+        <item>Rectal</item>
+        <item>Sin especificar</item>
+    </string-array>
+</resources>

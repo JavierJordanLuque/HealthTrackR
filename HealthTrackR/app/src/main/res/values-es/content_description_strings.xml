@@ -21,4 +21,6 @@
     <string name="content_description_status_pending">Estado de tratamiento pendiente</string>
     <string name="content_description_status_in_progress">Estado de tratamiento en progreso</string>
     <string name="content_description_status_finished">Estado de tratamiento terminado</string>
+
+    <string name="content_description_add_medicine">Añadir medicine</string>
 </resources>

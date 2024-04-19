@@ -43,6 +43,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public abstract class BaseActivity extends AppCompatActivity {
     public SessionViewModel sessionViewModel;
@@ -324,5 +325,21 @@ public abstract class BaseActivity extends AppCompatActivity {
             imageViewStatus.setContentDescription(getString(R.string.content_description_status_finished));
             textViewStatus.setText(getString(R.string.treatments_status_finished));
         }
+    }
+
+    public String formatTimeDifference(long timeDifferenceMillis) {
+        long days = TimeUnit.MILLISECONDS.toDays(timeDifferenceMillis);
+        long hours = TimeUnit.MILLISECONDS.toHours(timeDifferenceMillis) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(timeDifferenceMillis) % 60;
+
+        String timeDifferenceString = "";
+        if (days > 0)
+            timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_days, (int) days, days) + " ";
+        if (hours > 0)
+            timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_hours, (int) hours, hours) + " ";
+        if (minutes > 0)
+            timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_minutes, (int) minutes, minutes);
+
+        return timeDifferenceString.trim();
     }
 }

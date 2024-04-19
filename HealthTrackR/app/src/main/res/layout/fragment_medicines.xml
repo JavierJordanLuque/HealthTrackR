@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.treatments.TreatmentsFragment">
+    tools:context=".ui.treatments.medicines.MedicinesFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/buttonFilterTreatments"
-            android:layout_width="@dimen/filter_width"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/floating_button_layout_margin"
-            android:layout_gravity="top|center"
-            android:backgroundTint="?attr/colorSecondaryContainer"
-            android:text="@string/filter_title"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/StatusLayout">
+
+            <ImageView
+                android:id="@+id/imageViewStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_status_in_progress"
+                android:contentDescription="@string/content_description_status_in_progress"
+                app:tint="@color/amber"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/textViewStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/treatments_status_in_progress"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewStatus" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
@@ -49,15 +65,25 @@
 
                 </androidx.constraintlayout.widget.Guideline>
 
+                <TextView
+                    android:id="@+id/textViewTitle"
+                    style="@style/Widget.HealthTrackR.TextView.Title"
+                    android:text="@string/medicines_app_bar_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/filter_linear_layout_padding_top"
+                    android:paddingTop="@dimen/linear_layout_padding_top"
                     android:paddingBottom="@dimen/linear_layout_padding_bottom"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
                     app:layout_constraintWidth_max="@dimen/text_view_max_width">
 
                 </LinearLayout>
@@ -69,7 +95,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutNoElements"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:visibility="visible">
 
@@ -86,9 +112,17 @@
             </androidx.constraintlayout.widget.Guideline>
 
             <TextView
+                style="@style/Widget.HealthTrackR.TextView.Title"
+                android:text="@string/medicines_app_bar_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEndNoElements"
+                app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStartNoElements"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
                 android:id="@+id/textViewNoElements"
                 style="@style/Widget.HealthTrackR.TextView.NoElements"
-                android:text="@string/treatments_no_elements"
+                android:text="@string/medicines_no_elements"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEndNoElements"
                 app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStartNoElements"
@@ -97,12 +131,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/buttonAddTreatment"
+            android:id="@+id/buttonAddMedicine"
             style="@style/Widget.HealthTrackR.FloatingActionButton.Primary"
             android:layout_gravity="bottom|end"
-            android:contentDescription="@string/content_description_add_treatment"
+            android:contentDescription="@string/content_description_add_medicine"
             app:srcCompat="@drawable/ic_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

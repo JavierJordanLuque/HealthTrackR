@@ -2,6 +2,8 @@
 <resources>
     <string name="error_initializing_app">Oops, something went wrong while setting up the app. Please try again later.</string>
 
+    <string name="error_finished_treatment">The treatment has finished. Please modify the end date to proceed with this treatment.</string>
+
     <string name="error_invalid_email">The email must contain between 5 and 50 characters.</string>
     <string name="error_invalid_email_requirements">The email is invalid. Please enter a valid email.</string>
     <string name="error_incorrect_email">Sorry, no account found with this email address. Please try again.</string>

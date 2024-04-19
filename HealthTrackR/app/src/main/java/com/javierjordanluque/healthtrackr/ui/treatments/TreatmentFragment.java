@@ -20,6 +20,7 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
+import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicinesFragment;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
@@ -27,9 +28,9 @@ import java.time.ZonedDateTime;
 
 public class TreatmentFragment extends Fragment {
     private OnToolbarChangeListener listener;
+    private Treatment treatment;
     private ImageView imageViewStatus;
     private TextView textViewStatus;
-    private Treatment treatment;
     private TextView textViewStartDate;
     private TextView textViewEndDate;
     private TextView textViewCategory;
@@ -69,7 +70,7 @@ public class TreatmentFragment extends Fragment {
 
         RelativeLayout relativeLayoutMedicines = fragmentView.findViewById(R.id.relativeLayoutMedicines);
         relativeLayoutMedicines.setOnClickListener(view -> {
-            //openFragmentFromTreatment(new MedicinesFragment());
+            openFragmentFromTreatment(new MedicinesFragment());
         });
 
         RelativeLayout relativeLayoutSymptoms = fragmentView.findViewById(R.id.relativeLayoutSymptoms);

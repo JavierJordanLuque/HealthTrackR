@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicines_app_bar_title">Medicines</string>
+    <string name="medicines_app_bar_title_add">Medicine addition</string>
+    <string name="medicines_app_bar_title_modify">Medicine modification</string>
+
+    <string name="medicines_no_elements">You don`t have medicines in this treatment. Please add a new medicine</string>
+
+    <string name="medicines_mg" translatable="false">mg</string>
+    <plurals name="medicines_days" translatable="false">
+        <item quantity="many">%dd</item>
+        <item quantity="other">%dd</item>
+    </plurals>
+    <plurals name="medicines_hours" translatable="false">
+        <item quantity="many">%dh</item>
+        <item quantity="other">%dh</item>
+    </plurals>
+    <plurals name="medicines_minutes" translatable="false">
+        <item quantity="many">%dmin</item>
+        <item quantity="other">%dmin</item>
+    </plurals>
+
+    <string name="medicines_administration_route">Administration route</string>
+    <string name="medicines_dose">Dose</string>
+    <string name="medicines_next_dose">Next dose</string>
+
+    <string-array name="medicines_array_administration_route">
+        <item>Oral</item>
+        <item>Topical</item>
+        <item>Parenteral</item>
+        <item>Inhalation</item>
+        <item>Ophthalmic</item>
+        <item>Otic</item>
+        <item>Nasal</item>
+        <item>Rectal</item>
+        <item>Unspecified</item>
+    </string-array>
+</resources>

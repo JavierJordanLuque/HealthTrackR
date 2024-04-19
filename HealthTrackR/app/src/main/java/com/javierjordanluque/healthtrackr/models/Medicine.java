@@ -176,9 +176,7 @@ public class Medicine implements Identifiable {
 
     public ZonedDateTime calculateNextDose() {
         Duration frequency = Duration.ofHours(dosageFrequencyHours).plusMinutes(dosageFrequencyMinutes);
-        ZonedDateTime now = ZonedDateTime.now();
-
-        long dosesElapsed = Duration.between(initialDosingTime, now).toMinutes() / frequency.toMinutes();
+        long dosesElapsed = Duration.between(initialDosingTime, ZonedDateTime.now()).toMinutes() / frequency.toMinutes();
 
         return initialDosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
     }

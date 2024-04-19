@@ -45,7 +45,7 @@ public class TreatmentsFragment extends Fragment {
     private OnToolbarChangeListener listener;
     private User user;
     private NestedScrollView nestedScrollView;
-    private ConstraintLayout constraintLayoutEmpty;
+    private ConstraintLayout constraintLayoutNoElements;
     private LinearLayout linearLayout;
 
     public TreatmentsFragment() {
@@ -61,7 +61,7 @@ public class TreatmentsFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_treatments, container, false);
 
         nestedScrollView = fragmentView.findViewById(R.id.nestedScrollView);
-        constraintLayoutEmpty = fragmentView.findViewById(R.id.constraintLayoutEmpty);
+        constraintLayoutNoElements = fragmentView.findViewById(R.id.constraintLayoutNoElements);
         linearLayout = fragmentView.findViewById(R.id.linearLayout);
 
         FloatingActionButton buttonAddTreatment = fragmentView.findViewById(R.id.buttonAddTreatment);
@@ -194,16 +194,16 @@ public class TreatmentsFragment extends Fragment {
         linearLayout.removeAllViews();
         if (treatments == null || treatments.isEmpty()) {
             nestedScrollView.setVisibility(View.GONE);
-            constraintLayoutEmpty.setVisibility(View.VISIBLE);
+            constraintLayoutNoElements.setVisibility(View.VISIBLE);
 
-            TextView textViewNoTreatments = constraintLayoutEmpty.findViewById(R.id.textViewNoTreatments);
+            TextView textViewNoElements = constraintLayoutNoElements.findViewById(R.id.textViewNoElements);
             if (!filter) {
-                textViewNoTreatments.setText(R.string.treatments_empty_message);
+                textViewNoElements.setText(R.string.treatments_no_elements);
             } else {
-                textViewNoTreatments.setText(R.string.treatments_not_found_message);
+                textViewNoElements.setText(R.string.treatments_not_found_message);
             }
         } else {
-            constraintLayoutEmpty.setVisibility(View.GONE);
+            constraintLayoutNoElements.setVisibility(View.GONE);
             nestedScrollView.setVisibility(View.VISIBLE);
 
             boolean isFirst = true;

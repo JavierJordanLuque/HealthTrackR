@@ -36,8 +36,14 @@
     <dimen name="edit_text_layout_height">48dp</dimen>
     <dimen name="filter_linear_layout_padding_top">85dp</dimen>
 
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="card_linear_layout_padding">16dp</dimen>
+
     <dimen name="layout_status_width">100dp</dimen>
     <dimen name="layout_status_padding">10dp</dimen>
     <dimen name="layout_status_elevation">6dp</dimen>
     <dimen name="layout_status_margin">16dp</dimen>
+
+    <dimen name="text_view_title_margin_top">30dp</dimen>
 </resources>
