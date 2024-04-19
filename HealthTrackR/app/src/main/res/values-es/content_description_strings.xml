@@ -18,7 +18,7 @@
     <string name="content_description_access_questions">Acceder a las preguntas</string>
     <string name="content_description_delete_treatment">Eliminar tratamiento</string>
 
-    <string name="content_description_pending_treatment_status">Estado de tratamiento pendiente</string>
-    <string name="content_description_in_progress_treatment_status">Estado de tratamiento en progreso</string>
-    <string name="content_description_finished_treatment_status">Estado de tratamiento terminado</string>
+    <string name="content_description_status_pending">Estado de tratamiento pendiente</string>
+    <string name="content_description_status_in_progress">Estado de tratamiento en progreso</string>
+    <string name="content_description_status_finished">Estado de tratamiento terminado</string>
 </resources>

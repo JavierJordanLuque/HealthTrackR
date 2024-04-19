@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ import java.time.ZonedDateTime;
 
 public class TreatmentFragment extends Fragment {
     private OnToolbarChangeListener listener;
+    private ImageView imageViewStatus;
+    private TextView textViewStatus;
     private Treatment treatment;
     private TextView textViewStartDate;
     private TextView textViewEndDate;
@@ -43,6 +46,9 @@ public class TreatmentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_treatment, container, false);
+
+        imageViewStatus = fragmentView.findViewById(R.id.imageViewStatus);
+        textViewStatus = fragmentView.findViewById(R.id.textViewStatus);
 
         textViewStartDate = fragmentView.findViewById(R.id.textViewStartDate);
         textViewEndDate = fragmentView.findViewById(R.id.textViewEndDate);
@@ -115,6 +121,7 @@ public class TreatmentFragment extends Fragment {
         super.onResume();
 
         treatment = ((MainActivity) requireActivity()).getTreatmentFromBundle(getArguments());
+        ((MainActivity) requireActivity()).setTreatmentLayoutStatus(treatment, imageViewStatus, textViewStatus);
 
         ((MainActivity) requireActivity()).currentFragment = this;
         ((MainActivity) requireActivity()).showBackButton(true);

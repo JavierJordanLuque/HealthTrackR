@@ -109,6 +109,13 @@
         <item name="android:layout_margin">@dimen/floating_button_layout_margin</item>
     </style>
 
+    <style name="Widget.HealthTrackR.FloatingActionButton.Primary.BelowStatus" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/floating_button_layout_margin</item>
+        <item name="android:layout_marginTop">@dimen/floating_button_below_status_layout_margin_top</item>
+    </style>
+
     <style name="RelativeLayoutGrid">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
@@ -138,5 +145,16 @@
         <item name="android:tint">?attr/colorOnSecondaryContainer</item>
         <item name="android:clickable">false</item>
         <item name="android:focusable">false</item>
+    </style>
+
+    <style name="StatusLayout">
+        <item name="android:layout_width">@dimen/layout_status_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/status_container</item>
+        <item name="android:padding">@dimen/layout_status_padding</item>
+        <item name="android:layout_margin">@dimen/layout_status_margin</item>
+        <item name="android:elevation">@dimen/layout_status_elevation</item>
+        <item name="android:layout_gravity">top|end</item>
+        <item name="android:focusable">true</item>
     </style>
 </resources>

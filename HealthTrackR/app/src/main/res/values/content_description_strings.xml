@@ -18,7 +18,7 @@
     <string name="content_description_access_questions">Access questions</string>
     <string name="content_description_delete_treatment">Delete treatment</string>
 
-    <string name="content_description_pending_treatment_status">Pending treatment status</string>
-    <string name="content_description_in_progress_treatment_status">In progress treatment status</string>
-    <string name="content_description_finished_treatment_status">Finished treatment status</string>
+    <string name="content_description_status_pending">Pending treatment status</string>
+    <string name="content_description_status_in_progress">In progress treatment status</string>
+    <string name="content_description_status_finished">Finished treatment status</string>
 </resources>

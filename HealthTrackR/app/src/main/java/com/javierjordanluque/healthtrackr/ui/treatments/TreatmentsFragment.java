@@ -3,12 +3,9 @@ package com.javierjordanluque.healthtrackr.ui.treatments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
@@ -21,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -250,32 +246,10 @@ public class TreatmentsFragment extends Fragment {
                     ((MainActivity) requireActivity()).replaceFragment(fragment);
                 });
 
-                setTreatmentStatus(cardView, treatment);
+                ((MainActivity) requireActivity()).setTreatmentLayoutStatus(treatment, cardView.findViewById(R.id.imageViewStatus), cardView.findViewById(R.id.textViewStatus));
 
                 linearLayout.addView(cardView);
             }
-        }
-    }
-
-    private void setTreatmentStatus(MaterialCardView cardView, Treatment treatment) {
-        ImageView imageViewTreatmentStatus = cardView.findViewById(R.id.imageViewTreatmentStatus);
-        TextView textViewTreatmentStatus = cardView.findViewById(R.id.textViewTreatmentStatus);
-
-        if (!treatment.isStarted()) {
-            imageViewTreatmentStatus.setImageDrawable(AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_treatment_pending));
-            imageViewTreatmentStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.red)));
-            imageViewTreatmentStatus.setContentDescription(getString(R.string.content_description_pending_treatment_status));
-            textViewTreatmentStatus.setText(getString(R.string.treatments_status_pending));
-        } else if (treatment.isStarted() && !treatment.isFinished()) {
-            imageViewTreatmentStatus.setImageDrawable(AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_treatment_in_progress));
-            imageViewTreatmentStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.amber)));
-            imageViewTreatmentStatus.setContentDescription(getString(R.string.content_description_in_progress_treatment_status));
-            textViewTreatmentStatus.setText(getString(R.string.treatments_status_in_progress));
-        } else if (treatment.isFinished()) {
-            imageViewTreatmentStatus.setImageDrawable(AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_treatment_finished));
-            imageViewTreatmentStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.green)));
-            imageViewTreatmentStatus.setContentDescription(getString(R.string.content_description_finished_treatment_status));
-            textViewTreatmentStatus.setText(getString(R.string.treatments_status_finished));
         }
     }
 

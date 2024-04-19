@@ -29,26 +29,25 @@
                 android:textAppearance="?attr/textAppearanceHeadlineMedium"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/relativeLayoutStatus"
+                app:layout_constraintEnd_toStartOf="@+id/constraintLayoutStatus"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/relativeLayoutStatus"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/status_container"
-                android:padding="10dp"
+                android:id="@+id/constraintLayoutStatus"
+                style="@style/StatusLayout"
+                android:layout_margin="0dp"
+                android:focusable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/imageViewTreatmentStatus"
+                    android:id="@+id/imageViewStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_treatment_in_progress"
-                    android:contentDescription="@string/content_description_in_progress_treatment_status"
+                    android:src="@drawable/ic_status_in_progress"
+                    android:contentDescription="@string/content_description_status_in_progress"
                     app:tint="@color/amber"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +56,7 @@
                 </ImageView>
 
                 <TextView
-                    android:id="@+id/textViewTreatmentStatus"
+                    android:id="@+id/textViewStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/treatments_status_in_progress"
@@ -65,7 +64,7 @@
                     android:textAppearance="?attr/textAppearanceLabelLarge"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageViewTreatmentStatus" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewStatus" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
