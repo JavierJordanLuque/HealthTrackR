@@ -160,9 +160,14 @@ public class NotificationPublisher extends BroadcastReceiver {
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             notificationManager.notify((int) notification.getId(), notificationBuilder.build());
+        } else {
             try {
-                medicationNotification.getMedicine().removeNotification(context, medicationNotification);
-            } catch (DBDeleteException | DBFindException ignored) {
+                NotificationScheduler.cancelNotification(context, notification);
+            } catch (DBFindException | DBDeleteException exception) {
+                try {
+                    throw new NotificationException("Failed to cancel notification with id (" + notification.getId() + ") from a finished treatment", exception);
+                } catch (NotificationException ignored) {
+                }
             }
         }
     }
@@ -232,6 +237,15 @@ public class NotificationPublisher extends BroadcastReceiver {
             try {
                 appointmentNotification.getAppointment().removeNotification(context, appointmentNotification);
             } catch (DBDeleteException ignored) {
+            }
+        } else {
+            try {
+                NotificationScheduler.cancelNotification(context, notification);
+            } catch (DBFindException | DBDeleteException exception) {
+                try {
+                    throw new NotificationException("Failed to cancel notification with id (" + notification.getId() + ") from a finished treatment", exception);
+                } catch (NotificationException ignored) {
+                }
             }
         }
     }
