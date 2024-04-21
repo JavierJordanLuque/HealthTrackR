@@ -4,7 +4,9 @@
     <string name="medicines_app_bar_title_add">Medicine addition</string>
     <string name="medicines_app_bar_title_modify">Medicine modification</string>
 
-    <string name="medicines_no_elements">You don`t have medicines in this treatment. Please add a new medicine</string>
+    <string name="medicines_no_elements">You don´t have medicines in this treatment. Please add a new medicine</string>
+    <string name="medicines_none">None</string>
+    <string name="medicines_now">Now</string>
 
     <string name="medicines_mg" translatable="false">mg</string>
     <plurals name="medicines_days" translatable="false">
@@ -19,10 +21,23 @@
         <item quantity="many">%dmin</item>
         <item quantity="other">%dmin</item>
     </plurals>
+    <string name="medicines_hours" translatable="false">h</string>
+    <string name="medicines_minutes" translatable="false">min</string>
 
-    <string name="medicines_administration_route">Administration route</string>
+    <string name="medicines_active_substance">Active substance</string>
     <string name="medicines_dose">Dose</string>
+    <string name="medicines_administration_route">Administration route</string>
     <string name="medicines_next_dose">Next dose</string>
+    <string name="medicines_each">Each:</string>
+    <string name="medicines_add_medicine">Add medicine</string>
+
+    <string name="medicines_form_name">Name *</string>
+    <string name="medicines_form_initial_dosing_time">Initial dosing time *</string>
+    <string name="medicines_form_dosing_frequency">Dosing frequency *</string>
+
+    <string name="medicines_dosing_frequency_helper">A dosing frequency of 0 hours and 0 minutes indicates a single dose. Dosing frequencies less than 20 minutes may cause notification nesting</string>
+
+    <string name="medicines_dialog_message_no_previous_notification">The dosing frequency is less or equal than the time set for the previous notification (default 1 hour). Therefore, the previous notification will not be set. Are you sure you want to add this medication?</string>
 
     <string-array name="medicines_array_administration_route">
         <item>Oral</item>

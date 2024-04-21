@@ -141,10 +141,14 @@ public class ModifyTreatmentActivity extends BaseActivity {
         if (!isValidStartDateGivenDependencies(startDate)) {
             showInvalidStartDateDialog();
             layoutStartDate.setError(getString(R.string.error_invalid_treatment_start_date_given_dependencies));
+
+            return;
         }
         if (!isValidEndDateGivenDependencies(endDate)) {
             showInvalidEndDateDialog();
             layoutEndDate.setError(getString(R.string.error_invalid_treatment_end_date_given_dependencies));
+
+            return;
         }
 
         TreatmentCategory category = getCategoryFromSpinner();
@@ -252,18 +256,20 @@ public class ModifyTreatmentActivity extends BaseActivity {
     }
 
     private boolean isValidEndDateGivenDependencies(ZonedDateTime endDate) {
-        try {
-            for (Medicine medicine : treatment.getMedicines(this)) {
-                if (medicine.getInitialDosingTime().isAfter(endDate))
-                    return false;
-            }
+        if (endDate != null) {
+            try {
+                for (Medicine medicine : treatment.getMedicines(this)) {
+                    if (medicine.getInitialDosingTime().isAfter(endDate))
+                        return false;
+                }
 
-            for (MedicalAppointment appointment : treatment.getAppointments(this)) {
-                if (appointment.getDateTime().isAfter(endDate))
-                    return false;
+                for (MedicalAppointment appointment : treatment.getAppointments(this)) {
+                    if (appointment.getDateTime().isAfter(endDate))
+                        return false;
+                }
+            } catch (Exception exception) {
+                ExceptionManager.advertiseUI(this, exception.getMessage());
             }
-        } catch (Exception exception) {
-            ExceptionManager.advertiseUI(this, exception.getMessage());
         }
 
         return true;

@@ -27,20 +27,10 @@ public class NotificationPublisher extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String notificationId = intent.getStringExtra(NotificationScheduler.NOTIFICATION_ID);
+        long notificationId = intent.getLongExtra(NotificationScheduler.NOTIFICATION_ID, -1);
 
-        if (notificationId != null) {
-            Notification notification = null;
-            NotificationRepository notificationRepository = new NotificationRepository(context);
-
-            try {
-                notification = notificationRepository.findById(Long.parseLong(notificationId));
-            } catch (DBFindException exception) {
-                try {
-                    throw new NotificationException("Failed to send notification with id (" + notificationId + ")", exception);
-                } catch (NotificationException ignored) {
-                }
-            }
+        if (notificationId > 0) {
+            Notification notification = getNotification(context, notificationId);
 
             if (notification instanceof MedicationNotification) {
                 Treatment treatment = ((MedicationNotification) notification).getMedicine().getTreatment();
@@ -74,26 +64,27 @@ public class NotificationPublisher extends BroadcastReceiver {
         }
     }
 
+    private Notification getNotification(Context context, long notificationId) {
+        Notification notification = null;
+        NotificationRepository notificationRepository = new NotificationRepository(context);
+
+        try {
+            notification = notificationRepository.findById(notificationId);
+        } catch (DBFindException exception) {
+            try {
+                throw new NotificationException("Failed to send notification with id (" + notificationId + ")", exception);
+            } catch (NotificationException ignored) {
+            }
+        }
+        return notification;
+    }
+
     private void medicationPublisher(Context context, Notification notification) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             MedicationNotification medicationNotification = (MedicationNotification) notification;
 
             String medicineName = medicationNotification.getMedicine().getName();
             String treatmentTitle = medicationNotification.getMedicine().getTreatment().getTitle();
-            ZonedDateTime medicineNextDose = medicationNotification.getMedicine().calculateNextDose();
-
-            String publicMessage;
-            String message;
-            String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), medicineNextDose).toMillis());
-            if (!ZonedDateTime.now().isBefore(medicineNextDose.minusMinutes(NOW_MARGIN_MINUTES))) {
-                publicMessage = context.getString(R.string.notification_public_message_medication_scheduled_now);
-                message = context.getString(R.string.notification_message_medication_dose) + " " + medicineName + " " + context.getString(R.string.notification_message_medication_treatment) + " " +
-                        treatmentTitle + " " + context.getString(R.string.notification_message_medication_schedule_now);
-            } else {
-                publicMessage = context.getString(R.string.notification_public_message_medication_scheduled_in) + " " + formattedTimeDifference;
-                message = context.getString(R.string.notification_message_medication_dose) + " " + medicineName + " " + context.getString(R.string.notification_message_medication_treatment) + " " + treatmentTitle + " " + context.getString(R.string.notification_message_medication_scheduled_in) + " " +
-                        formattedTimeDifference;
-            }
 
             // @TODO
             // Establish a hierarchy by adding the android:parentActivityName in AndroidManifest.xml
@@ -109,6 +100,13 @@ public class NotificationPublisher extends BroadcastReceiver {
             NotificationCompat.Builder publicNotificationBuilder;
             NotificationCompat.Builder notificationBuilder;
             if (medicationNotification.getTimestamp() != medicationNotification.getMedicine().getInitialDosingTime().toInstant().toEpochMilli()) {
+                ZonedDateTime medicineNextDose = medicationNotification.getMedicine().calculateNextDose();
+                String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), medicineNextDose).toMillis());
+
+                String publicMessage = context.getString(R.string.notification_public_message_medication_scheduled_in) + " " + formattedTimeDifference;
+                String message = context.getString(R.string.notification_message_medication_dose) + " " + medicineName + " " + context.getString(R.string.notification_message_medication_treatment) + " " + treatmentTitle + " " + context.getString(R.string.notification_message_medication_scheduled_in) + " " +
+                        formattedTimeDifference;
+
                 publicNotificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.PREVIOUS_MEDICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
@@ -132,6 +130,10 @@ public class NotificationPublisher extends BroadcastReceiver {
                         .setPublicVersion(publicNotificationBuilder.build());
                         //.setContentIntent(actionPendingIntent);
             } else {
+                String publicMessage = context.getString(R.string.notification_public_message_medication_scheduled_now);
+                String message = context.getString(R.string.notification_message_medication_dose) + " " + medicineName + " " + context.getString(R.string.notification_message_medication_treatment) + " " +
+                        treatmentTitle + " " + context.getString(R.string.notification_message_medication_schedule_now);
+
                 publicNotificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
@@ -177,13 +179,14 @@ public class NotificationPublisher extends BroadcastReceiver {
 
             String publicMessage;
             String message;
-            String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), appointmentDateTime).toMillis());
             if (!ZonedDateTime.now().isBefore(appointmentDateTime.minusMinutes(NOW_MARGIN_MINUTES))) {
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_now);
                 message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
                         context.getString(R.string.notification_message_medical_appointment_scheduled_now) + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " +
                         appointmentLocationLongitude;
             } else {
+                String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), appointmentDateTime).toMillis());
+
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference;
                 message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
                         context.getString(R.string.notification_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude +

@@ -16,6 +16,7 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class MedicalAppointment implements Identifiable {
     private long id;
@@ -39,11 +40,9 @@ public class MedicalAppointment implements Identifiable {
 
     public void scheduleAppointmentNotification(Context context, int previousMinutes) throws DBInsertException {
         // Check if the notification is valid by ensuring:
-        // 1. It's not scheduled to trigger before the margin minutes
-        // 2. It's not already past (considering the margin minutes)
-        // 3. The app has permission to send notifications
-        if (previousMinutes >= NotificationScheduler.MARGIN_MINUTES &&
-                dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes + NotificationScheduler.MARGIN_MINUTES)) &&
+        // 1. It's not already past
+        // 2. The app has permission to send notifications
+        if (dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes)) &&
                 PermissionManager.hasNotificationPermission(context)) {
             long timestamp = dateTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
             MedicalAppointmentNotification notification = new MedicalAppointmentNotification(this, timestamp);
@@ -106,7 +105,7 @@ public class MedicalAppointment implements Identifiable {
 
     public void modifyMedicalAppointmentNotification(Context context, int notificationTimeHours, int notificationTimeMinutes, boolean notificationStatus) throws DBDeleteException, DBFindException, DBInsertException {
         notification = getNotification(context);
-        int previousMinutes = notificationTimeHours * 60 + notificationTimeMinutes;
+        int previousMinutes = (int) (TimeUnit.HOURS.toMinutes(notificationTimeHours) + notificationTimeMinutes);
         long timestamp = dateTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
 
         if (notification != null && (!notificationStatus || notification.getTimestamp() != timestamp))

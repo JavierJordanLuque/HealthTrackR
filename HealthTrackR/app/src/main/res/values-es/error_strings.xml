@@ -14,15 +14,19 @@
     <string name="error_incorrect_password">Contraseña incorrecta. Por favor, inténtalo de nuevo.</string>
     <string name="error_invalid_repeat_password">Las contraseñas no coinciden.</string>
 
-    <string name="error_invalid_first_name">El nombre debe tener entre 1 y 50 caracteres.</string>
-    <string name="error_invalid_last_name">Los apellidos deben tener entre 1 y 50 caracteres.</string>
+    <string name="error_invalid_first_name">El nombre no debe estar vacío.</string>
+    <string name="error_invalid_last_name">Los apellidos deben estar vacíos.</string>
 
-    <string name="error_invalid_treatment_title">El título debe contener entre 1 y 50 caracteres.</string>
+    <string name="error_invalid_treatment_title">El título no debe estar vacío.</string>
     <string name="error_invalid_treatment_start_date">La fecha de inicio no debe estar vacía.</string>
     <string name="error_invalid_treatment_start_date_given_dependencies">La fecha de inicio no debe ser posterior a otras fechas contenidas en el tratamiento.</string>
     <string name="error_invalid_treatment_end_date">La fecha de finalización debe ser posterior a la fecha de inicio.</string>
     <string name="error_invalid_treatment_end_date_given_dependencies">La fecha de finalización no debe ser anterior a otras fechas contenidas en el tratamiento.</string>
     <string name="error_invalid_treatment_diagnosis">El diagnóstico debe contener menos de 200 caracteres.</string>
+
+    <string name="error_invalid_medicine_name">El nombre no debe estar vacío.</string>
+    <string name="error_invalid_medicine_initial_dosing_time_string">La hora de primera toma no debe estar vacía.</string>
+    <string name="error_invalid_medicine_initial_dosing_time">La hora de primera toma debe estar dentro del periodo de tratamiento.</string>
 
     <string name="error_location_disabled">Por favor, habilita la ubicación para usar esta función</string>
 </resources>

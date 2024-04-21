@@ -250,7 +250,22 @@ public class Treatment implements Identifiable {
             MedicineRepository medicineRepository = new MedicineRepository(context);
             setMedicines(medicineRepository.findTreatmentMedicines(this.id));
         }
-        medicines.sort((medicine1, medicine2) -> medicine2.getInitialDosingTime().compareTo(medicine1.getInitialDosingTime()));
+
+        medicines.sort((medicine1, medicine2) -> {
+            ZonedDateTime nextDose1 = medicine1.calculateNextDose();
+            ZonedDateTime nextDose2 = medicine2.calculateNextDose();
+
+            if (nextDose1 == null && nextDose2 == null) {
+                return medicine1.getInitialDosingTime().compareTo(medicine2.getInitialDosingTime());
+            } else if (nextDose1 == null) {
+                return 1;
+            } else if (nextDose2 == null) {
+                return -1;
+            } else {
+                int compareNextDose = nextDose1.compareTo(nextDose2);
+                return compareNextDose != 0 ? compareNextDose : medicine1.getInitialDosingTime().compareTo(medicine2.getInitialDosingTime());
+            }
+        });
 
         return medicines;
     }

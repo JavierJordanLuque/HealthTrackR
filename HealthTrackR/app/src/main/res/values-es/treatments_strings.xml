@@ -30,7 +30,7 @@
 
     <string name="treatments_status_pending">Pendiente</string>
     <string name="treatments_status_in_progress">En progreso</string>
-    <string name="treatments_status_finished">Terminado</string>
+    <string name="treatments_status_finished">Finalizado</string>
 
     <string-array name="treatments_array_category">
         <item>Médico</item>

@@ -4,7 +4,7 @@
     <string name="treatments_app_bar_title_add">Treatment addition</string>
     <string name="treatments_app_bar_title_modify">Treatment modification</string>
 
-    <string name="treatments_no_elements">You don`t have treatments. Please add a new treatment</string>
+    <string name="treatments_no_elements">You don´t have treatments. Please add a new treatment</string>
     <string name="treatments_not_found_message">No treatments found matching the specified filters. Please try different filters.</string>
 
     <string name="treatments_title">Title</string>
@@ -22,9 +22,9 @@
     <string name="treatments_form_start_date">Start date *</string>
     <string name="treatments_form_category">Category *</string>
 
-    <string name="treatments_dialog_message_start_date">Select the treatment`s initial date:</string>
+    <string name="treatments_dialog_message_start_date">Select the treatment´s initial date:</string>
     <string name="treatments_dialog_message_invalid_start_date">The selected start date is after other dates contained in the treatment. Please adjust the dates of medications and medical appointments before modifying the treatment start date.</string>
-    <string name="treatments_dialog_message_end_date">Select the treatment`s end date:</string>
+    <string name="treatments_dialog_message_end_date">Select the treatment´s end date:</string>
     <string name="treatments_dialog_message_invalid_end_date">The selected end date is before other dates contained in the treatment. Please adjust the dates of medications and medical appointments before modifying the treatment end date.</string>
     <string name="treatments_dialog_message_delete">Are you sure you want to delete this treatment?</string>
 

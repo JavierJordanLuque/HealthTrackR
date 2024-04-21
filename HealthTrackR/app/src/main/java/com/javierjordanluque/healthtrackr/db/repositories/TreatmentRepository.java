@@ -22,11 +22,11 @@ import com.javierjordanluque.healthtrackr.util.security.CipherData;
 import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 public class TreatmentRepository extends BaseRepository<Treatment> {
     private static final String TABLE_NAME = "TREATMENT";
@@ -104,7 +104,7 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
 
         cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(START_DATE)), cursor.getBlob(cursor.getColumnIndex(START_DATE_IV)));
         ZonedDateTime startDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)),
-                TimeZone.getDefault().toZoneId());
+                ZoneId.systemDefault());
 
         byte[] endDateBytes = cursor.getBlob(cursor.getColumnIndex(END_DATE));
         byte[] endDateIV = cursor.getBlob(cursor.getColumnIndex(END_DATE_IV));
@@ -112,7 +112,7 @@ public class TreatmentRepository extends BaseRepository<Treatment> {
         if (endDateBytes != null && endDateIV != null) {
             cipherData = new CipherData(endDateBytes, endDateIV);
             endDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)),
-                    TimeZone.getDefault().toZoneId());
+                    ZoneId.systemDefault());
         }
 
         byte[] diagnosisBytes = cursor.getBlob(cursor.getColumnIndex(DIAGNOSIS));

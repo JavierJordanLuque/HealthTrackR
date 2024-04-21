@@ -5,10 +5,23 @@
     <string name="medicines_app_bar_title_modify">Modificación de medicamento</string>
 
     <string name="medicines_no_elements">No tienes medicamentos en este tratamiento. Por favor, añade un nuevo medicamento</string>
+    <string name="medicines_none">Ninguna</string>
+    <string name="medicines_now">Ahora</string>
 
-    <string name="medicines_administration_route">Vía de administración</string>
+    <string name="medicines_active_substance">Principio activo</string>
     <string name="medicines_dose">Dosis</string>
+    <string name="medicines_administration_route">Vía de administración</string>
     <string name="medicines_next_dose">Próxima toma</string>
+    <string name="medicines_each">Cada:</string>
+    <string name="medicines_add_medicine">Añadir medicamento</string>
+
+    <string name="medicines_form_name">Nombre *</string>
+    <string name="medicines_form_initial_dosing_time">Hora de primera toma *</string>
+    <string name="medicines_form_dosing_frequency">Periodicidad de toma *</string>
+
+    <string name="medicines_dosing_frequency_helper">Una frecuencia de toma de 0 horas y 0 minutos indica una única toma. Frecuencias de tomas menores a 20 minutos pueden provocar el anidamiento de las notificaciones</string>
+
+    <string name="medicines_dialog_message_no_previous_notification">La frecuencia de toma es menor o igual que el tiempo establecido para la notificación previa (por defecto 1 hora). Por tanto, la notificación previa no se establecerá. ¿Estás seguro/a de añadir este medicamento?</string>
 
     <string-array name="medicines_array_administration_route">
         <item>Oral</item>

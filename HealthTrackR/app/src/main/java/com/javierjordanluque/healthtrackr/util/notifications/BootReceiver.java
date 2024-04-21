@@ -24,10 +24,15 @@ public class BootReceiver extends BroadcastReceiver {
 
             for (Notification notification : notifications) {
                 if (notification instanceof MedicationNotification) {
-                    try {
-                        NotificationScheduler.scheduleInexactRepeatingNotification(context, notification);
-                    } catch (NotificationException ignored) {
+                    if (((MedicationNotification) notification).getMedicine().getDosageFrequencyHours() != 0 || ((MedicationNotification) notification).getMedicine().getDosageFrequencyMinutes() != 0) {
+                        try {
+                            NotificationScheduler.scheduleInexactRepeatingNotification(context, notification);
+                        } catch (NotificationException ignored) {
+                        }
+                    } else {
+                        NotificationScheduler.scheduleInexactNotification(context, notification);
                     }
+
                 } else if (notification instanceof MedicalAppointmentNotification) {
                     NotificationScheduler.scheduleInexactNotification(context, notification);
                 }

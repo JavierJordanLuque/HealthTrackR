@@ -12,17 +12,21 @@
 
     <string name="error_invalid_password">The password must contain between 8 and 60 characters.</string>
     <string name="error_incorrect_password">Incorrect password. Please try again.</string>
-    <string name="error_invalid_repeat_password">The passwords don`t match.</string>
+    <string name="error_invalid_repeat_password">The passwords don´t match.</string>
 
-    <string name="error_invalid_first_name">The first name must contain between 1 and 50 characters.</string>
-    <string name="error_invalid_last_name">The last name must contain between 1 and 50 characters.</string>
+    <string name="error_invalid_first_name">The first name mustn´t be empty.</string>
+    <string name="error_invalid_last_name">The last name mustn´t be empty.</string>
 
-    <string name="error_invalid_treatment_title">The title must contain between 1 and 50 characters.</string>
-    <string name="error_invalid_treatment_start_date">The start date mustn`t be empty.</string>
-    <string name="error_invalid_treatment_start_date_given_dependencies">The start date mustn`t be after other dates contained in the treatment.</string>
+    <string name="error_invalid_treatment_title">The title mustn´t be empty.</string>
+    <string name="error_invalid_treatment_start_date">The start date mustn´t be empty.</string>
+    <string name="error_invalid_treatment_start_date_given_dependencies">The start date mustn´t be after other dates contained in the treatment.</string>
     <string name="error_invalid_treatment_end_date">The end date must be after the start date.</string>
-    <string name="error_invalid_treatment_end_date_given_dependencies">The end date mustn`t be before other dates contained in the treatment.</string>
+    <string name="error_invalid_treatment_end_date_given_dependencies">The end date mustn´t be before other dates contained in the treatment.</string>
     <string name="error_invalid_treatment_diagnosis">The title must contain less than 200 characters.</string>
+
+    <string name="error_invalid_medicine_name">The name mustn´t be empty.</string>
+    <string name="error_invalid_medicine_initial_dosing_time_string">The initial dosing time mustn´t be empty.</string>
+    <string name="error_invalid_medicine_initial_dosing_time">The initial dosing must be within the treatment period.</string>
 
     <string name="error_location_disabled">Please enable location to use this feature.</string>
 </resources>

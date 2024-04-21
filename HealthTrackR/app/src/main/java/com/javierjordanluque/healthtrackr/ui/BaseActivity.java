@@ -2,6 +2,8 @@ package com.javierjordanluque.healthtrackr.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -29,6 +31,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
+import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.util.AuthenticationService;
@@ -36,13 +39,16 @@ import com.javierjordanluque.healthtrackr.util.NavigationUtils;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -146,6 +152,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         return null;
     }
 
+    public Medicine getMedicineFromBundle(Treatment treatment, Bundle bundle) {
+        if (bundle != null) {
+            long medicineId = bundle.getLong(Medicine.class.getSimpleName());
+            try {
+                for (Medicine medicine : treatment.getMedicines(this)) {
+                    if (medicine.getId() == medicineId) {
+                        return medicine;
+                    }
+                }
+            } catch (DBFindException exception) {
+                ExceptionManager.advertiseUI(this, exception.getMessage());
+            }
+        }
+
+        return null;
+    }
+
     public Treatment getTreatmentFromIntent(Intent intent) {
         User user = sessionViewModel.getUserSession();
 
@@ -231,19 +254,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         return formattedDate;
     }
 
-    public Object getDateFromEditText(EditText editTextDate, Class<?> type) {
-        String dateString = editTextDate.getText().toString();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public String showFormattedDateTime(ZonedDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-        Object date = null;
-        if (!dateString.isEmpty()) {
-            date = LocalDate.parse(dateString, formatter);
-
-            if (type.equals(ZonedDateTime.class))
-                date = ZonedDateTime.ofLocal(((LocalDate) date).atStartOfDay(), TimeZone.getDefault().toZoneId(), null);
-        }
-
-        return date;
+        return dateTime.format(formatter);
     }
 
     public void showDatePickerDialog(EditText editTextDate, String title, boolean setBirthDate) {
@@ -277,7 +291,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             String[] dateParts = dateString.split("/");
 
             dayOfMonth = Integer.parseInt(dateParts[0]);
-            monthOfYear = Integer.parseInt(dateParts[1]) - 1;
+            monthOfYear = Integer.parseInt(dateParts[1]);
             year = Integer.parseInt(dateParts[2]);
         }
 
@@ -299,6 +313,21 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public Object getDateFromEditText(EditText editTextDate, Class<?> type) {
+        String dateString = editTextDate.getText().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        Object date = null;
+        if (!dateString.isEmpty()) {
+            date = LocalDate.parse(dateString, formatter);
+
+            if (type.equals(ZonedDateTime.class))
+                date = ZonedDateTime.ofLocal(((LocalDate) date).atStartOfDay(), ZoneId.systemDefault(), null);
+        }
+
+        return date;
     }
 
     private int getMaxDayOfMonth(int month, int year) {
@@ -331,15 +360,63 @@ public abstract class BaseActivity extends AppCompatActivity {
         long days = TimeUnit.MILLISECONDS.toDays(timeDifferenceMillis);
         long hours = TimeUnit.MILLISECONDS.toHours(timeDifferenceMillis) % 24;
         long minutes = TimeUnit.MILLISECONDS.toMinutes(timeDifferenceMillis) % 60;
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeDifferenceMillis);
+
+        if (seconds >= 30)
+            minutes++;
 
         String timeDifferenceString = "";
-        if (days > 0)
-            timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_days, (int) days, days) + " ";
-        if (hours > 0)
-            timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_hours, (int) hours, hours) + " ";
-        if (minutes > 0)
-            timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_minutes, (int) minutes, minutes);
+        if (days == 0 && hours == 0 && minutes == 0) {
+            timeDifferenceString = getString(R.string.medicines_now);
+        } else {
+            if (days > 0)
+                timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_days, (int) days, days) + " ";
+            if (hours > 0)
+                timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_hours, (int) hours, hours) + " ";
+            if (minutes > 0)
+                timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_minutes, (int) minutes, minutes);
+        }
 
         return timeDifferenceString.trim();
+    }
+
+    public void showTreatmentFinishedDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.error_finished_treatment);
+        builder.setPositiveButton(R.string.dialog_positive_ok, (dialog, which) -> dialog.dismiss());
+        builder.show();
+    }
+
+    protected void showDateTimePicker(EditText editText) {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (DatePickerDialog.OnDateSetListener) (view, year, month, dayOfMonth) -> {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                    (TimePickerDialog.OnTimeSetListener) (view1, hourOfDay, minute) -> {
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                        editText.setText(sdf.format(calendar.getTime()));
+                    }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+            timePickerDialog.show();
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    protected Object getDateTimeFromEditText(EditText editTextDate) {
+        String dateTimeString = editTextDate.getText().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        ZonedDateTime dateTime = null;
+        if (!dateTimeString.isEmpty()) {
+            LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, formatter);
+            dateTime = ZonedDateTime.ofLocal(localDateTime, ZoneId.systemDefault(), null);
+        }
+
+        return dateTime;
     }
 }

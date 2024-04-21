@@ -26,10 +26,10 @@ import com.javierjordanluque.healthtrackr.util.security.CipherData;
 import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 public class MedicineRepository extends BaseRepository<Medicine> {
     private static final String TABLE_NAME_BASIC_MEDICINE = "MEDICINE";
@@ -67,10 +67,16 @@ public class MedicineRepository extends BaseRepository<Medicine> {
         contentValues.put(NAME_IV, cipherData.getInitializationVector());
         contentValues.put(NAME_HASH, SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getName()))));
 
-        cipherData = SecurityService.encrypt(SerializationUtils.serialize(medicine.getActiveSubstance()));
-        contentValues.put(ACTIVE_SUBSTANCE, cipherData.getEncryptedData());
-        contentValues.put(ACTIVE_SUBSTANCE_IV, cipherData.getInitializationVector());
-        contentValues.put(ACTIVE_SUBSTANCE_HASH, SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getActiveSubstance()))));
+        if (medicine.getActiveSubstance() != null) {
+            cipherData = SecurityService.encrypt(SerializationUtils.serialize(medicine.getActiveSubstance()));
+            contentValues.put(ACTIVE_SUBSTANCE, cipherData.getEncryptedData());
+            contentValues.put(ACTIVE_SUBSTANCE_IV, cipherData.getInitializationVector());
+            contentValues.put(ACTIVE_SUBSTANCE_HASH, SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getActiveSubstance()))));
+        } else {
+            contentValues.putNull(ACTIVE_SUBSTANCE);
+            contentValues.putNull(ACTIVE_SUBSTANCE_IV);
+            contentValues.putNull(ACTIVE_SUBSTANCE_HASH);
+        }
 
         return contentValues;
     }
@@ -94,8 +100,13 @@ public class MedicineRepository extends BaseRepository<Medicine> {
     private ContentValues getMedicineContentValuesToUpdate(Medicine medicine) {
         ContentValues contentValues = new ContentValues();
 
-        if (medicine.getDose() != null)
-            contentValues.put(DOSE, medicine.getDose());
+        if (medicine.getDose() != null) {
+            if (medicine.getDose().equals(Integer.MIN_VALUE)) {
+                contentValues.putNull(DOSE);
+            } else {
+                contentValues.put(DOSE, medicine.getDose());
+            }
+        }
         if (medicine.getAdministrationRoute() != null)
             contentValues.put(ADMINISTRATION_ROUTE, medicine.getAdministrationRoute().name());
         if (medicine.getInitialDosingTime() != null)
@@ -147,7 +158,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
 
         Medicine medicine = new Medicine(null, treatment, null, null, dose, administrationRoute,
                 ZonedDateTime.ofInstant(Instant.ofEpochSecond(cursor.getLong(cursor.getColumnIndex(INITIAL_DOSING_TIME))),
-                TimeZone.getDefault().toZoneId()), cursor.getInt(cursor.getColumnIndex(DOSAGE_FREQUENCY_HOURS)),
+                        ZoneId.systemDefault()), cursor.getInt(cursor.getColumnIndex(DOSAGE_FREQUENCY_HOURS)),
                 cursor.getInt(cursor.getColumnIndex(DOSAGE_FREQUENCY_MINUTES)));
         medicine.setId(cursor.getLong(cursor.getColumnIndex(MEDICINE_ID)));
 
@@ -168,6 +179,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
             } else {
                 insertedId = basicMedicine.getId();
             }
+            medicine.setId(insertedId);
             ContentValues values = getMedicineContentValuesToInsert(medicine);
 
             db.insert(TABLE_NAME_MEDICINE, null, values);
@@ -181,17 +193,26 @@ public class MedicineRepository extends BaseRepository<Medicine> {
     }
 
     private BasicMedicine findBasicMedicine(Medicine medicine) throws DBFindException {
-        SQLiteDatabase db = null;
+        SQLiteDatabase db;
         Cursor cursor = null;
         BasicMedicine basicMedicine = null;
 
         try {
             db = open();
             String nameHash = SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getName())));
-            String activeSubstanceHash = SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getActiveSubstance())));
+            String activeSubstanceHash;
+            String selection;
+            String[] selectionArgs;
 
-            String selection = NAME_HASH + "=? and " + ACTIVE_SUBSTANCE_HASH + "=?";
-            String[] selectionArgs = {nameHash, activeSubstanceHash};
+            if (medicine.getActiveSubstance() != null) {
+                activeSubstanceHash = SerializationUtils.convertToBase64(SecurityService.hash(SerializationUtils.serialize(medicine.getActiveSubstance())));
+                selection = NAME_HASH + "=? AND " + ACTIVE_SUBSTANCE_HASH + "=?";
+                selectionArgs = new String[]{nameHash, activeSubstanceHash};
+            } else {
+                selection = NAME_HASH + "=? AND " + ACTIVE_SUBSTANCE_HASH + " IS NULL";
+                selectionArgs = new String[]{nameHash};
+            }
+
             cursor = db.query(TABLE_NAME_BASIC_MEDICINE, null, selection, selectionArgs, null, null, null);
 
             if (cursor != null && cursor.moveToFirst())
@@ -201,7 +222,6 @@ public class MedicineRepository extends BaseRepository<Medicine> {
         } finally {
             if (cursor != null)
                 cursor.close();
-            close(db);
         }
 
         return basicMedicine;

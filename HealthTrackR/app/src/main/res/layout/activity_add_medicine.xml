@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.treatments.medicines.AddMedicineActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:theme="@style/ThemeOverlay.HealthTrackR.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMarginGuidelineStart"
+                    style="@style/vMarginGuidelineStart">
+
+                </androidx.constraintlayout.widget.Guideline>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMarginGuidelineEnd"
+                    style="@style/vMarginGuidelineEnd">
+
+                </androidx.constraintlayout.widget.Guideline>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/linear_layout_padding_top"
+                    android:paddingBottom="@dimen/linear_layout_padding_bottom"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintWidth_max="@dimen/text_field_max_width">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutName"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                        android:layout_marginTop="0dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="text"
+                            android:hint="@string/medicines_form_name"
+                            android:inputType="text"
+                            android:maxLength="50" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutActiveSubstance"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                        app:errorEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextActiveSubstance"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="text"
+                            android:hint="@string/medicines_active_substance"
+                            android:inputType="text"
+                            android:maxLength="50" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutDose"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                        app:errorEnabled="false"
+                        app:suffixText="@string/medicines_mg">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextDose"
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/medicines_dose"
+                            android:autofillHints="number"
+                            android:inputType="number"
+                            android:maxLength="10" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <FrameLayout
+                        android:id="@+id/layoutAdministrationRoute"
+                        style="@style/SpinnerFrameLayout.Outlined">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/medicines_administration_route" />
+
+                        <Spinner
+                            android:id="@+id/spinnerAdministrationRoute"
+                            style="@style/Widget.HealthTrackR.Spinner.Filled" />
+
+                    </FrameLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutInitialDosingTime"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextInitialDosingTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/medicines_form_initial_dosing_time"
+                            android:inputType="datetime" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <FrameLayout
+                        android:id="@+id/layoutDosageFrequency"
+                        style="@style/SpinnerFrameLayout.Outlined">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/medicines_form_dosing_frequency" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp">
+
+                            <TextView
+                                android:id="@+id/textViewDosageFrequencyEach"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:text="@string/medicines_each"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/textViewDosageFrequencyEach"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <EditText
+                                    android:id="@+id/editTextDosageFrequencyHours"
+                                    android:layout_height="48dp"
+                                    android:layout_width="60dp"
+                                    android:inputType="number"
+                                    android:autofillHints="number"
+                                    android:maxLength="4"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/textViewDosageFrequencyHours"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:labelFor="@+id/editTextDosageFrequencyHours"
+                                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                                    android:text="@string/medicines_hours"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/editTextDosageFrequencyHours"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <EditText
+                                    android:id="@+id/editTextDosageFrequencyMinutes"
+                                    android:layout_height="48dp"
+                                    android:layout_width="40dp"
+                                    android:layout_marginTop="0dp"
+                                    android:layout_marginStart="10dp"
+                                    android:inputType="number"
+                                    android:autofillHints="number"
+                                    android:maxLength="2"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/textViewDosageFrequencyHours"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/textViewDosageFrequencyMinutes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:labelFor="@+id/editTextDosageFrequencyMinutes"
+                                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                                    android:text="@string/medicines_minutes"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/editTextDosageFrequencyMinutes"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@+id/editTextDosageFrequencyMinutes"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:paddingTop="2dp"
+                        android:paddingHorizontal="15dp"
+                        android:text="@string/medicines_dosing_frequency_helper" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vLargeButtonGuidelineStart"
+                    style="@style/vLargeButtonGuidelineStart">
+
+                </androidx.constraintlayout.widget.Guideline>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vLargeButtonGuidelineEnd"
+                    style="@style/vLargeButtonGuidelineEnd">
+
+                </androidx.constraintlayout.widget.Guideline>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/linear_layout_padding_top"
+                    android:paddingBottom="@dimen/linear_layout_padding_bottom"
+                    app:layout_constraintEnd_toEndOf="@id/vLargeButtonGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vLargeButtonGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout"
+                    app:layout_constraintWidth_max="@dimen/large_btn_max_width">
+
+                    <Button
+                        android:id="@+id/buttonAddMedicine"
+                        style="@style/Widget.HealthTrackR.LargeButton.Form"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/medicines_add_medicine" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,4 +46,5 @@
     <dimen name="layout_status_margin">16dp</dimen>
 
     <dimen name="text_view_title_margin_top">30dp</dimen>
+    <dimen name="text_view_title_margin_end">100dp</dimen>
 </resources>

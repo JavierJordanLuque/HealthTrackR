@@ -75,6 +75,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/text_view_title_margin_top</item>
+        <item name="android:layout_marginEnd">@dimen/text_view_title_margin_end</item>
         <item name="android:textAppearance">?attr/textAppearanceHeadlineMedium</item>
         <item name="android:textStyle">bold</item>
         <item name="layout_constraintVertical_bias">0.0</item>
@@ -165,6 +166,5 @@
         <item name="android:layout_margin">@dimen/layout_status_margin</item>
         <item name="android:elevation">@dimen/layout_status_elevation</item>
         <item name="android:layout_gravity">top|end</item>
-        <item name="android:focusable">true</item>
     </style>
 </resources>

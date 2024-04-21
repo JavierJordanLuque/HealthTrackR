@@ -23,10 +23,10 @@ import com.javierjordanluque.healthtrackr.util.security.CipherData;
 import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointment> {
     private static final String TABLE_NAME = "MEDICAL_APPOINTMENT";
@@ -85,7 +85,7 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
 
         CipherData cipherData = new CipherData(cursor.getBlob(cursor.getColumnIndex(DATE_TIME)), cursor.getBlob(cursor.getColumnIndex(DATE_TIME_IV)));
         ZonedDateTime date = ZonedDateTime.ofInstant(Instant.ofEpochSecond((Long) SerializationUtils.deserialize(SecurityService.decrypt(cipherData), Long.class)),
-                TimeZone.getDefault().toZoneId());
+                ZoneId.systemDefault());
 
         Location location = null;
         if (!cursor.isNull(cursor.getColumnIndex(LATITUDE)) && !cursor.isNull(cursor.getColumnIndex(LONGITUDE)))

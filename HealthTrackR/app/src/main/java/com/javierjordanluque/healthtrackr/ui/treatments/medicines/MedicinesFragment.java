@@ -1,12 +1,14 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.medicines;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,11 +62,13 @@ public class MedicinesFragment extends Fragment {
 
         FloatingActionButton buttonAddTreatment = fragmentView.findViewById(R.id.buttonAddMedicine);
         buttonAddTreatment.setOnClickListener(view -> {
-            /*
-            Intent intent = new Intent(requireActivity(), AddMedicineActivity.class);
-            intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
-            startActivity(intent);
-             */
+            if (treatment.isFinished()) {
+                ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
+            } else {
+                Intent intent = new Intent(requireActivity(), AddMedicineActivity.class);
+                intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
+                startActivity(intent);
+            }
         });
 
         return fragmentView;
@@ -131,14 +135,19 @@ public class MedicinesFragment extends Fragment {
                 Integer dose = medicine.getDose();
                 TextView textViewDose = cardView.findViewById(R.id.textViewDose);
                 if (dose != null) {
-                    textViewDose.setText(dose + R.string.medicines_mg);
+                    String doseString = dose + getString(R.string.medicines_mg);
+                    textViewDose.setText(doseString);
                 } else {
                     textViewDose.setText(R.string.unspecified);
                 }
 
                 ZonedDateTime nextDose = medicine.calculateNextDose();
                 TextView textViewNextDose = cardView.findViewById(R.id.textViewNextDose);
-                textViewNextDose.setText(((MainActivity) requireActivity()).formatTimeDifference(Duration.between(ZonedDateTime.now(), nextDose).toMillis()));
+                if (nextDose != null) {
+                    textViewNextDose.setText(((MainActivity) requireActivity()).formatTimeDifference(Duration.between(ZonedDateTime.now(), nextDose).toMillis()));
+                } else {
+                    textViewNextDose.setText(R.string.medicines_none);
+                }
 
                 cardView.setOnClickListener(view -> {
                     /*

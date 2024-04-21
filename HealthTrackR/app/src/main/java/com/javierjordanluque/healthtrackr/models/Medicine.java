@@ -18,8 +18,10 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class Medicine implements Identifiable {
     private long id;
@@ -43,6 +45,7 @@ public class Medicine implements Identifiable {
         this.initialDosingTime = initialDosingTime;
         this.dosageFrequencyHours = dosageFrequencyHours;
         this.dosageFrequencyMinutes = dosageFrequencyMinutes;
+        this.notifications = new ArrayList<>();
 
         if (context != null) {
             this.treatment.addMedicine(context, this);
@@ -54,16 +57,25 @@ public class Medicine implements Identifiable {
     public void schedulePreviousMedicationNotification(Context context, int previousMinutes) throws DBInsertException, DBDeleteException {
         if (PermissionManager.hasNotificationPermission(context)) {
             long timestamp = initialDosingTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
-            MedicationNotification previousNotification = new MedicationNotification(this, timestamp);
+            long totalDosageFrequencyMinutes = TimeUnit.HOURS.toMinutes(dosageFrequencyHours) + dosageFrequencyMinutes;
 
-            NotificationRepository notificationRepository = new NotificationRepository(context);
-            previousNotification.setId(notificationRepository.insert(previousNotification));
+            if ((totalDosageFrequencyMinutes == 0 && timestamp > System.currentTimeMillis()) ||
+                    totalDosageFrequencyMinutes > previousMinutes) {
+                MedicationNotification previousNotification = new MedicationNotification(this, timestamp);
+                NotificationRepository notificationRepository = new NotificationRepository(context);
+                previousNotification.setId(notificationRepository.insert(previousNotification));
 
-            try {
-                NotificationScheduler.scheduleInexactRepeatingNotification(context, previousNotification);
+                if (totalDosageFrequencyMinutes != 0) {
+                    try {
+                        NotificationScheduler.scheduleInexactRepeatingNotification(context, previousNotification);
+                    } catch (NotificationException exception) {
+                        notificationRepository.delete(previousNotification);
+                    }
+                } else {
+                    NotificationScheduler.scheduleInexactNotification(context, previousNotification);
+                }
+
                 notifications.add(previousNotification);
-            } catch (NotificationException exception) {
-                notificationRepository.delete(previousNotification);
             }
         }
     }
@@ -71,16 +83,22 @@ public class Medicine implements Identifiable {
     public void scheduleMedicationNotification(Context context) throws DBInsertException, DBDeleteException {
         if (PermissionManager.hasNotificationPermission(context)) {
             long timestamp = initialDosingTime.toInstant().toEpochMilli();
-            MedicationNotification notification = new MedicationNotification(this, timestamp);
 
-            NotificationRepository notificationRepository = new NotificationRepository(context);
-            notification.setId(notificationRepository.insert(notification));
+            if (dosageFrequencyHours != 0 || dosageFrequencyMinutes != 0 || timestamp > System.currentTimeMillis()) {
+                MedicationNotification notification = new MedicationNotification(this, timestamp);
+                NotificationRepository notificationRepository = new NotificationRepository(context);
+                notification.setId(notificationRepository.insert(notification));
 
-            try {
-                NotificationScheduler.scheduleInexactRepeatingNotification(context, notification);
+                if (dosageFrequencyHours != 0 || dosageFrequencyMinutes != 0) {
+                    try {
+                        NotificationScheduler.scheduleInexactRepeatingNotification(context, notification);
+                    } catch (NotificationException exception) {
+                        notificationRepository.delete(notification);
+                    }
+                } else {
+                    NotificationScheduler.scheduleInexactNotification(context, notification);
+                }
                 notifications.add(notification);
-            } catch (NotificationException exception) {
-                notificationRepository.delete(notification);
             }
         }
     }
@@ -160,7 +178,7 @@ public class Medicine implements Identifiable {
             }
         }
 
-        int previousMinutes = previousNotificationTimeHours * 60 + previousNotificationTimeMinutes;
+        int previousMinutes = (int) (TimeUnit.HOURS.toMinutes(previousNotificationTimeHours) + previousNotificationTimeMinutes);
         long previousTimestamp = initialDosingTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
 
         if (previousNotification != null && (!previousNotificationStatus || previousNotification.getTimestamp() != previousTimestamp))
@@ -175,10 +193,17 @@ public class Medicine implements Identifiable {
     }
 
     public ZonedDateTime calculateNextDose() {
+        ZonedDateTime nextDose = null;
         Duration frequency = Duration.ofHours(dosageFrequencyHours).plusMinutes(dosageFrequencyMinutes);
-        long dosesElapsed = Duration.between(initialDosingTime, ZonedDateTime.now()).toMinutes() / frequency.toMinutes();
 
-        return initialDosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
+        if (initialDosingTime.isAfter(ZonedDateTime.now())) {
+            nextDose = initialDosingTime;
+        } else if (!frequency.isZero()) {
+            long dosesElapsed = Duration.between(initialDosingTime, ZonedDateTime.now()).toMinutes() / frequency.toMinutes();
+            nextDose = initialDosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
+        }
+
+        return nextDose;
     }
 
     @Override

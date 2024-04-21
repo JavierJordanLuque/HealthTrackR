@@ -9,21 +9,22 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.NotificationException;
 
+import java.util.concurrent.TimeUnit;
+
 public class NotificationScheduler {
     public static final int PREVIOUS_DEFAULT_MINUTES = 60;
-    public static final int MARGIN_MINUTES = 5;
-    private static final int WINDOW_LENGTH_MINUTES = 10;
+    private static final int WINDOW_LENGTH_MINUTES = 15;
     protected static final String NOTIFICATION_ID = "notification_id";
 
     public static void scheduleInexactNotification(Context context, Notification notification) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
-            long windowLengthInMillis = WINDOW_LENGTH_MINUTES * 60 * 1000;
+            long windowLengthInMillis = TimeUnit.MINUTES.toMillis(WINDOW_LENGTH_MINUTES);
             PendingIntent pendingIntent = buildPendingIntent(context, notification);
 
             // Set the alarm timestamp to approximately ring halfway through the window of time set,
             // ensuring the alarm is triggered approximately at the indicated time
-            long timestamp = notification.getTimestamp() - NotificationScheduler.WINDOW_LENGTH_MINUTES * 60 * 1000 / 2;
+            long timestamp = notification.getTimestamp() - windowLengthInMillis / 2;
 
             alarmManager.setWindow(AlarmManager.RTC_WAKEUP, timestamp, windowLengthInMillis, pendingIntent);
         }
@@ -39,15 +40,12 @@ public class NotificationScheduler {
 
                     int dosageFrequencyHours = medicationNotification.getMedicine().getDosageFrequencyHours();
                     int dosageFrequencyMinutes = medicationNotification.getMedicine().getDosageFrequencyMinutes();
-                    if (dosageFrequencyHours == 0 && dosageFrequencyMinutes == 0) {
-                        scheduleInexactNotification(context, notification);
-                    } else {
-                        long intervalMillis = (long) dosageFrequencyHours * 60 * 60 * 1000 + (long) dosageFrequencyMinutes * 60 * 1000;
-                        PendingIntent pendingIntent = buildPendingIntent(context, notification);
-                        long nextNotificationTimeMillis = getNextNotificationTimeMillis(notification, System.currentTimeMillis(), intervalMillis);
 
-                        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, nextNotificationTimeMillis, intervalMillis, pendingIntent);
-                    }
+                    long intervalMillis = TimeUnit.HOURS.toMillis(dosageFrequencyHours) + TimeUnit.MINUTES.toMillis(dosageFrequencyMinutes);
+                    PendingIntent pendingIntent = buildPendingIntent(context, notification);
+                    long nextNotificationTimeMillis = getNextNotificationTimeMillis(notification, System.currentTimeMillis(), intervalMillis);
+
+                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, nextNotificationTimeMillis, intervalMillis, pendingIntent);
                 } else {
                     throw new IllegalArgumentException();
                 }
@@ -60,15 +58,17 @@ public class NotificationScheduler {
     private static long getNextNotificationTimeMillis(Notification notification, long currentTimeMillis, long intervalMillis) {
         long nextNotificationTimeMillis;
 
-        if (notification.getTimestamp() <= currentTimeMillis) {
-            long passedIntervals = (currentTimeMillis - notification.getTimestamp()) / intervalMillis;
-            nextNotificationTimeMillis = notification.getTimestamp() + (passedIntervals + 1) * intervalMillis;
-        } else {
-            nextNotificationTimeMillis = notification.getTimestamp();
-        }
+        // Set the alarm timestamp to approximately ring halfway through the window of time set,
+        // ensuring the alarm is triggered approximately at the indicated time
+        long timestamp = notification.getTimestamp() - TimeUnit.MINUTES.toMillis(WINDOW_LENGTH_MINUTES) / 2;
+        currentTimeMillis = currentTimeMillis - TimeUnit.MINUTES.toMillis(WINDOW_LENGTH_MINUTES) / 2;
 
-        if (nextNotificationTimeMillis - currentTimeMillis < MARGIN_MINUTES * 60 * 1000)
-            nextNotificationTimeMillis += intervalMillis;
+        if (timestamp <= currentTimeMillis) {
+            long passedIntervals = (currentTimeMillis - timestamp) / intervalMillis;
+            nextNotificationTimeMillis = timestamp + (passedIntervals + 1) * intervalMillis;
+        } else {
+            nextNotificationTimeMillis = timestamp;
+        }
 
         return nextNotificationTimeMillis;
     }
@@ -78,12 +78,12 @@ public class NotificationScheduler {
         notificationIntent.setAction("com.javierjordanluque.healthtrackr.SHOW_NOTIFICATION");
         notificationIntent.putExtra(NOTIFICATION_ID, notification.getId());
 
-        return PendingIntent.getBroadcast(context, (int) notification.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, (int) notification.getId(), notificationIntent, PendingIntent.FLAG_IMMUTABLE);
     }
 
     public static void cancelNotification(Context context, Notification notification) throws DBFindException, DBDeleteException {
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) notification.getId(), notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) notification.getId(), notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
