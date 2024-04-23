@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,14 +149,12 @@ public class MedicinesFragment extends Fragment {
                 }
 
                 cardView.setOnClickListener(view -> {
-                    /*
                     Fragment fragment = new MedicineFragment();
                     Bundle bundle = new Bundle();
                     bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
                     bundle.putLong(Medicine.class.getSimpleName(), medicine.getId());
                     fragment.setArguments(bundle);
                     ((MainActivity) requireActivity()).replaceFragment(fragment);
-                     */
                 });
 
                 linearLayout.addView(cardView);

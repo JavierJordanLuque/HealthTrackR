@@ -291,7 +291,6 @@ public class MedicineRepository extends BaseRepository<Medicine> {
         } finally {
             if (cursor != null)
                 cursor.close();
-            close(db);
         }
 
         return false;

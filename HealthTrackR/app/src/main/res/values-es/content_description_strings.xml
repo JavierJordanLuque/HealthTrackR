@@ -22,5 +22,8 @@
     <string name="content_description_status_in_progress">Estado de tratamiento en progreso</string>
     <string name="content_description_status_finished">Estado de tratamiento finalizado</string>
 
-    <string name="content_description_add_medicine">Añadir medicine</string>
+    <string name="content_description_add_medicine">Añadir medicamento</string>
+    <string name="content_description_modify_medicine">Modificar medicamento</string>
+    <string name="content_description_delete_medicine">Eliminar medicamento</string>
+    <string name="content_description_access_medicine_notifications">Acceder a las notificaciones del medicamento</string>
 </resources>

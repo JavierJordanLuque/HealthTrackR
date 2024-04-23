@@ -97,7 +97,7 @@ public class AddMedicineActivity extends BaseActivity {
 
         ZonedDateTime initialDosingTime = null;
         if (validInitialDosingTimeString) {
-            initialDosingTime = (ZonedDateTime) getDateTimeFromEditText(editTextInitialDosingTime);
+            initialDosingTime = getDateTimeFromEditText(editTextInitialDosingTime);
             validInitialDosingTime = isValidInitialDosingTime(initialDosingTime);
         }
 

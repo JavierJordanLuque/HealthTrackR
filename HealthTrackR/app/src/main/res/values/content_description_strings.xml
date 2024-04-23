@@ -23,4 +23,7 @@
     <string name="content_description_status_finished">Finished treatment status</string>
 
     <string name="content_description_add_medicine">Add medicine</string>
+    <string name="content_description_modify_medicine">Modify medicine</string>
+    <string name="content_description_delete_medicine">Delete medicine</string>
+    <string name="content_description_access_medicine_notifications">Access medicine notifications</string>
 </resources>

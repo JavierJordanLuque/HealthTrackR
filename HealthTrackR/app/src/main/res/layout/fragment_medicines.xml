@@ -112,12 +112,13 @@
             </androidx.constraintlayout.widget.Guideline>
 
             <TextView
+                android:id="@+id/textView"
                 style="@style/Widget.HealthTrackR.TextView.Title"
                 android:text="@string/medicines_app_bar_title"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEndNoElements"
                 app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStartNoElements"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewNoElements"
@@ -126,7 +127,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEndNoElements"
                 app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStartNoElements"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

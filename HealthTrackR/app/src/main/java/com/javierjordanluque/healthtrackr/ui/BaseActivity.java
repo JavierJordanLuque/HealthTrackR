@@ -255,7 +255,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public String showFormattedDateTime(ZonedDateTime dateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy '" + getString(R.string.date_at_time) + "' HH:mm");
 
         return dateTime.format(formatter);
     }
@@ -399,7 +399,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy '" + getString(R.string.date_at_time) + "' HH:mm", Locale.getDefault());
                         editText.setText(sdf.format(calendar.getTime()));
                     }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
             timePickerDialog.show();
@@ -407,9 +407,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    protected Object getDateTimeFromEditText(EditText editTextDate) {
+    protected ZonedDateTime getDateTimeFromEditText(EditText editTextDate) {
         String dateTimeString = editTextDate.getText().toString();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy '" + getString(R.string.date_at_time) + "' HH:mm");
 
         ZonedDateTime dateTime = null;
         if (!dateTimeString.isEmpty()) {

@@ -7,19 +7,20 @@
     <string name="medicines_no_elements">You don´t have medicines in this treatment. Please add a new medicine</string>
     <string name="medicines_none">None</string>
     <string name="medicines_now">Now</string>
+    <string name="medicines_single_dose">Single dose</string>
 
     <string name="medicines_mg" translatable="false">mg</string>
     <plurals name="medicines_days" translatable="false">
-        <item quantity="many">%dd</item>
-        <item quantity="other">%dd</item>
+        <item quantity="many">%d d</item>
+        <item quantity="other">%d d</item>
     </plurals>
     <plurals name="medicines_hours" translatable="false">
-        <item quantity="many">%dh</item>
-        <item quantity="other">%dh</item>
+        <item quantity="many">%d h</item>
+        <item quantity="other">%d h</item>
     </plurals>
     <plurals name="medicines_minutes" translatable="false">
-        <item quantity="many">%dmin</item>
-        <item quantity="other">%dmin</item>
+        <item quantity="many">%d min</item>
+        <item quantity="other">%d min</item>
     </plurals>
     <string name="medicines_hours" translatable="false">h</string>
     <string name="medicines_minutes" translatable="false">min</string>
@@ -27,6 +28,8 @@
     <string name="medicines_active_substance">Active substance</string>
     <string name="medicines_dose">Dose</string>
     <string name="medicines_administration_route">Administration route</string>
+    <string name="medicines_initial_dosing_time">Initial dosing time</string>
+    <string name="medicines_dosing_frequency">Dosing frequency</string>
     <string name="medicines_next_dose">Next dose</string>
     <string name="medicines_each">Each:</string>
     <string name="medicines_add_medicine">Add medicine</string>
@@ -38,6 +41,7 @@
     <string name="medicines_dosing_frequency_helper">A dosing frequency of 0 hours and 0 minutes indicates a single dose. Dosing frequencies less than 20 minutes may cause notification nesting</string>
 
     <string name="medicines_dialog_message_no_previous_notification">The dosing frequency is less or equal than the time set for the previous notification (default 1 hour). Therefore, the previous notification will not be set. Are you sure you want to add this medication?</string>
+    <string name="medicines_dialog_message_delete">Are you sure you want to delete this medicine from the treatment?</string>
 
     <string-array name="medicines_array_administration_route">
         <item>Oral</item>

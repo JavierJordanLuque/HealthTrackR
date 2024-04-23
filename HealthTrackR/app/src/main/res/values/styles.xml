@@ -82,6 +82,17 @@
         <item name="layout_constraintWidth_max">@dimen/text_view_max_width</item>
     </style>
 
+    <style name="Widget.HealthTrackR.TextView.Subtitle" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/text_view_subtitle_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/text_view_subtitle_margin_start</item>
+        <item name="android:layout_marginEnd">@dimen/text_view_subtitle_margin_end</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadlineSmall</item>
+        <item name="android:textStyle">bold</item>
+        <item name="layout_constraintWidth_max">@dimen/text_view_max_width</item>
+    </style>
+
     <style name="Widget.HealthTrackR.Spinner.Filled" parent="Widget.AppCompat.Spinner.DropDown">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/spinner_height</item>
