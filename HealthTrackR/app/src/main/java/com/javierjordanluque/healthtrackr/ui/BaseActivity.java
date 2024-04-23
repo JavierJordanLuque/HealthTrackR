@@ -190,6 +190,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         return null;
     }
 
+    public Medicine getMedicineFromIntent(Treatment treatment, Intent intent) {
+        if (intent != null) {
+            long medicineId = intent.getLongExtra(Medicine.class.getSimpleName(), -1);
+            try {
+                for (Medicine medicine : treatment.getMedicines(this)) {
+                    if (medicine.getId() == medicineId) {
+                        return medicine;
+                    }
+                }
+            } catch (DBFindException exception) {
+                ExceptionManager.advertiseUI(this, exception.getMessage());
+            }
+        }
+
+        return null;
+    }
+
     public void showBackButton(boolean show) {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)

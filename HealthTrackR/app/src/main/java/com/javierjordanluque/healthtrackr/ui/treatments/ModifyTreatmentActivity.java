@@ -109,18 +109,14 @@ public class ModifyTreatmentActivity extends BaseActivity {
         hideKeyboard(this);
 
         String title = editTextTitle.getText().toString().trim();
-        String startDateString = editTextStartDate.getText().toString().trim();
         String diagnosis = editTextDiagnosis.getText().toString().trim();
 
         boolean validTitle = isValidTitle(title);
-        boolean validStartDate = isValidStartDate(startDateString);
         boolean validDiagnosis = isValidDiagnosis(diagnosis);
 
-        if (!validTitle || !validStartDate || !validDiagnosis) {
+        if (!validTitle || !validDiagnosis) {
             if (!validTitle)
                 layoutTitle.setError(getString(R.string.error_invalid_treatment_title));
-            if (!validStartDate)
-                layoutStartDate.setError(getString(R.string.error_invalid_treatment_start_date));
             if (!validDiagnosis)
                 layoutDiagnosis.setError(getString(R.string.error_invalid_treatment_diagnosis));
 
@@ -165,6 +161,7 @@ public class ModifyTreatmentActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
                     try {
                         treatment.modifyTreatment(this, title, startDate, endDate, diagnosis, category);
+
                         Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
                         finish();
                     } catch (DBFindException | DBDeleteException | DBUpdateException | DBInsertException exception) {
@@ -227,10 +224,6 @@ public class ModifyTreatmentActivity extends BaseActivity {
 
     private boolean isValidTitle(String title) {
         return !title.isEmpty() && title.length() <= 50;
-    }
-
-    private boolean isValidStartDate(String startDate) {
-        return !startDate.isEmpty();
     }
 
     private boolean isValidStartDateGivenDependencies(ZonedDateTime startDate) {

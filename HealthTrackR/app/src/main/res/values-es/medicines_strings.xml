@@ -24,8 +24,11 @@
 
     <string name="medicines_dosing_frequency_helper">Una frecuencia de toma de 0 horas y 0 minutos indica una única toma. Frecuencias de tomas menores a 20 minutos pueden provocar el anidamiento de las notificaciones</string>
 
-    <string name="medicines_dialog_message_no_previous_notification">La frecuencia de toma es menor o igual que el tiempo establecido para la notificación previa (por defecto 1 hora). Por tanto, la notificación previa no se establecerá. ¿Estás seguro/a de añadir este medicamento?</string>
+    <string name="medicines_dialog_message_no_previous_notification_add">La frecuencia de toma es menor o igual que el tiempo establecido para la notificación previa (por defecto 1 hora). Por tanto, la notificación previa no se establecerá. ¿Estás seguro/a de añadir este medicamento?</string>
+    <string name="medicines_dialog_message_no_previous_notification_modify">La frecuencia de toma es menor o igual que el tiempo establecido para la notificación previa (por defecto 1 hora). Por tanto, la notificación previa no se establecerá. ¿Estás seguro/a de guardar los cambios?</string>
     <string name="medicines_dialog_message_delete">¿Estás seguro/a de eliminar este medicamento del tratamiento?</string>
+
+    <string name="medicines_toast_confirmation_delete">¡Medicamento eliminado!</string>
 
     <string-array name="medicines_array_administration_route">
         <item>Oral</item>

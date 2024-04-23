@@ -121,6 +121,9 @@ public class Medicine implements Identifiable {
         if ((this.dose == null && dose != null ) || (dose != null && !this.dose.equals(dose))) {
             setDose(dose);
             medicine.setDose(this.dose);
+        } else if (this.dose != null && dose == null) {
+            setDose(null);
+            medicine.setDose(Integer.MIN_VALUE);
         }
 
         if ((this.administrationRoute == null && administrationRoute != null ) || (administrationRoute != null && !this.administrationRoute.equals(administrationRoute))) {
@@ -194,13 +197,16 @@ public class Medicine implements Identifiable {
 
     public ZonedDateTime calculateNextDose() {
         ZonedDateTime nextDose = null;
-        Duration frequency = Duration.ofHours(dosageFrequencyHours).plusMinutes(dosageFrequencyMinutes);
 
-        if (initialDosingTime.isAfter(ZonedDateTime.now())) {
-            nextDose = initialDosingTime;
-        } else if (!frequency.isZero()) {
-            long dosesElapsed = Duration.between(initialDosingTime, ZonedDateTime.now()).toMinutes() / frequency.toMinutes();
-            nextDose = initialDosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
+        if (!treatment.isFinished()) {
+            Duration frequency = Duration.ofHours(dosageFrequencyHours).plusMinutes(dosageFrequencyMinutes);
+
+            if (initialDosingTime.isAfter(ZonedDateTime.now())) {
+                nextDose = initialDosingTime;
+            } else if (!frequency.isZero()) {
+                long dosesElapsed = Duration.between(initialDosingTime, ZonedDateTime.now()).toMinutes() / frequency.toMinutes();
+                nextDose = initialDosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
+            }
         }
 
         return nextDose;

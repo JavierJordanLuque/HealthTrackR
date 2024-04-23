@@ -2,6 +2,7 @@ package com.javierjordanluque.healthtrackr.ui.treatments.medicines;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.javierjordanluque.healthtrackr.R;
@@ -66,18 +68,20 @@ public class MedicineFragment extends Fragment {
 
         FloatingActionButton buttonModifyMedicine = fragmentView.findViewById(R.id.buttonModifyMedicine);
         buttonModifyMedicine.setOnClickListener(view -> {
-            /*
-            Intent intent = new Intent(requireActivity(), ModifyMedicineActivity.class);
-            intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
-            intent.putExtra(Medicine.class.getSimpleName(), medicine.getId());
-            startActivity(intent);
-             */
+            if (treatment.isFinished()) {
+                ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
+            } else {
+                Intent intent = new Intent(requireActivity(), ModifyMedicineActivity.class);
+                intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
+                intent.putExtra(Medicine.class.getSimpleName(), medicine.getId());
+                startActivity(intent);
+            }
         });
 
         FloatingActionButton buttonMedicineNotifications = fragmentView.findViewById(R.id.buttonMedicineNotifications);
         buttonMedicineNotifications.setOnClickListener(view -> {
             /*
-            Intent intent = new Intent(requireActivity(), MedicineNotificationsActivity.class);
+            Intent intent = new Intent(requireActivity(), ModifyMedicineNotificationsActivity.class);
             intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
             intent.putExtra(Medicine.class.getSimpleName(), medicine.getId());
             startActivity(intent);
@@ -97,6 +101,7 @@ public class MedicineFragment extends Fragment {
                     try {
                         treatment.removeMedicine(requireActivity(), medicine);
 
+                        Toast.makeText(requireActivity(), getString(R.string.medicines_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
                         requireActivity().onBackPressed();
                     } catch (DBDeleteException exception) {
                         ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());

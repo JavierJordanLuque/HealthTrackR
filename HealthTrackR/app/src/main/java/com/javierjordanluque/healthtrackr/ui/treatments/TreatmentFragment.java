@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.javierjordanluque.healthtrackr.R;
@@ -108,6 +109,7 @@ public class TreatmentFragment extends Fragment {
                     try {
                         ((MainActivity) requireActivity()).sessionViewModel.getUserSession().removeTreatment(requireActivity(), treatment);
 
+                        Toast.makeText(requireActivity(), getString(R.string.treatments_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
                         requireActivity().onBackPressed();
                     } catch (DBDeleteException exception) {
                         ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());

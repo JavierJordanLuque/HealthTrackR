@@ -40,8 +40,11 @@
 
     <string name="medicines_dosing_frequency_helper">A dosing frequency of 0 hours and 0 minutes indicates a single dose. Dosing frequencies less than 20 minutes may cause notification nesting</string>
 
-    <string name="medicines_dialog_message_no_previous_notification">The dosing frequency is less or equal than the time set for the previous notification (default 1 hour). Therefore, the previous notification will not be set. Are you sure you want to add this medication?</string>
+    <string name="medicines_dialog_message_no_previous_notification_add">The dosing frequency is less or equal than the time set for the previous notification (default 1 hour). Therefore, the previous notification will not be set. Are you sure you want to add this medication?</string>
+    <string name="medicines_dialog_message_no_previous_notification_modify">The dosing frequency is less or equal than the time set for the previous notification (default 1 hour). Therefore, the previous notification will not be set. Are you sure you want to save the changes?</string>
     <string name="medicines_dialog_message_delete">Are you sure you want to delete this medicine from the treatment?</string>
+
+    <string name="medicines_toast_confirmation_delete">Medicine deleted successfully!</string>
 
     <string-array name="medicines_array_administration_route">
         <item>Oral</item>

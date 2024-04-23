@@ -28,6 +28,8 @@
     <string name="treatments_dialog_message_invalid_end_date">La fecha de finalización seleccionada es anterior a otras fechas contenidas en el tratamiento. Por favor, ajusta las fechas de los medicamentos y citas médicas antes de modificar la fecha de finalización del tratamiento.</string>
     <string name="treatments_dialog_message_delete">¿Estás seguro/a de eliminar este tratamiento?</string>
 
+    <string name="treatments_toast_confirmation_delete">¡Tratamiento eliminado!</string>
+
     <string name="treatments_status_pending">Pendiente</string>
     <string name="treatments_status_in_progress">En progreso</string>
     <string name="treatments_status_finished">Finalizado</string>

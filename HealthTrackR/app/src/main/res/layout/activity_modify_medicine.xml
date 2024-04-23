@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.treatments.medicines.AddMedicineActivity">
+    tools:context=".ui.treatments.medicines.ModifyMedicineActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -55,6 +55,17 @@
 
                 </androidx.constraintlayout.widget.Guideline>
 
+                <TextView
+                    android:id="@+id/textViewName"
+                    style="@style/Widget.HealthTrackR.TextView.Subtitle"
+                    android:textAlignment="center"
+                    android:layout_marginTop="@dimen/text_view_title_margin_top"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="0dp"
@@ -64,41 +75,13 @@
                     android:paddingBottom="@dimen/linear_layout_padding_bottom"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewName"
                     app:layout_constraintWidth_max="@dimen/text_field_max_width">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutName"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
-                        android:layout_marginTop="0dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="text"
-                            android:hint="@string/medicines_form_name"
-                            android:inputType="text"
-                            android:maxLength="50" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutActiveSubstance"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
-                        app:errorEnabled="false">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTextActiveSubstance"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="text"
-                            android:hint="@string/medicines_active_substance"
-                            android:inputType="text"
-                            android:maxLength="50" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutDose"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        android:layout_marginTop="0dp"
                         app:errorEnabled="false"
                         app:suffixText="@string/medicines_mg">
 
@@ -114,7 +97,7 @@
 
                     <FrameLayout
                         android:id="@+id/layoutAdministrationRoute"
-                        style="@style/SpinnerFrameLayout.Outlined">
+                        style="@style/SpinnerFrameLayout.Filled">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -129,7 +112,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutInitialDosingTime"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox">
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextInitialDosingTime"
@@ -142,7 +125,7 @@
 
                     <FrameLayout
                         android:id="@+id/layoutDosageFrequency"
-                        style="@style/SpinnerFrameLayout.Outlined">
+                        style="@style/SpinnerFrameLayout.Filled">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -259,10 +242,10 @@
                     app:layout_constraintWidth_max="@dimen/large_btn_max_width">
 
                     <Button
-                        android:id="@+id/buttonAddMedicine"
+                        android:id="@+id/buttonSave"
                         style="@style/Widget.HealthTrackR.LargeButton.Form"
                         android:layout_marginTop="0dp"
-                        android:text="@string/medicines_add_medicine" />
+                        android:text="@string/dialog_positive_save" />
 
                 </LinearLayout>
 

@@ -2,7 +2,7 @@
 <resources>
     <string name="error_initializing_app">Ups, algo salió mal mientras se configuraba la aplicación. Por favor, inténtalo de nuevo más tarde.</string>
 
-    <string name="error_finished_treatment">El tratamiento ha terminado. Por favor, modifica la fecha de finalización para poder continuar con este tratamiento.</string>
+    <string name="error_finished_treatment">El tratamiento ha finalizado. Por favor, modifica la fecha de finalización para poder continuar con este tratamiento.</string>
 
     <string name="error_invalid_email">El correo electrónico debe tener entre 5 y 50 caracteres.</string>
     <string name="error_invalid_email_requirements">El correo electrónico no es válido. Por favor, introduce un correo electrónico válido.</string>

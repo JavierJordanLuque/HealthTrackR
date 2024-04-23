@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
@@ -17,19 +19,22 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.enumerations.AdministrationRoute;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
+import org.w3c.dom.Text;
+
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-public class AddMedicineActivity extends BaseActivity {
+public class ModifyMedicineActivity extends BaseActivity {
     private Treatment treatment;
-    private TextInputLayout layoutName;
+    private Medicine medicine;
     private TextInputLayout layoutInitialDosingTime;
-    private EditText editTextName;
-    private EditText editTextActiveSubstance;
     private EditText editTextDose;
     private Spinner spinnerAdministrationRoute;
     private EditText editTextInitialDosingTime;
@@ -39,18 +44,20 @@ public class AddMedicineActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_medicine);
-        setUpToolbar(getString(R.string.medicines_app_bar_title_add));
+        setContentView(R.layout.activity_modify_medicine);
+        setUpToolbar(getString(R.string.medicines_app_bar_title_modify));
         showBackButton(true);
 
         treatment = getTreatmentFromIntent(getIntent());
+        medicine = getMedicineFromIntent(treatment, getIntent());
 
-        layoutName = findViewById(R.id.layoutName);
-        editTextName = findViewById(R.id.editTextName);
-        setEditTextListener(layoutName, editTextName);
+        TextView textViewName = findViewById(R.id.textViewName);
+        textViewName.setText(medicine.getName());
 
-        editTextActiveSubstance = findViewById(R.id.editTextActiveSubstance);
         editTextDose = findViewById(R.id.editTextDose);
+        Integer dose = medicine.getDose();
+        if (dose != null)
+            editTextDose.setText(String.valueOf(dose));
 
         configureAdministrationRouteSpinner();
 
@@ -58,11 +65,12 @@ public class AddMedicineActivity extends BaseActivity {
         editTextInitialDosingTime = findViewById(R.id.editTextInitialDosingTime);
         editTextInitialDosingTime.setOnClickListener(view -> showDateTimePicker(editTextInitialDosingTime));
         setEditTextListener(layoutInitialDosingTime, editTextInitialDosingTime);
+        editTextInitialDosingTime.setText(showFormattedDateTime(medicine.getInitialDosingTime()));
 
         editTextDosageFrequencyHours = findViewById(R.id.editTextDosageFrequencyHours);
-        editTextDosageFrequencyHours.setText(String.valueOf(0));
+        editTextDosageFrequencyHours.setText(String.valueOf(medicine.getDosageFrequencyHours()));
         editTextDosageFrequencyMinutes = findViewById(R.id.editTextDosageFrequencyMinutes);
-        editTextDosageFrequencyMinutes.setText(String.valueOf(0));
+        editTextDosageFrequencyMinutes.setText(String.valueOf(medicine.getDosageFrequencyMinutes()));
         editTextDosageFrequencyMinutes.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -81,41 +89,21 @@ public class AddMedicineActivity extends BaseActivity {
             }
         });
 
-        Button buttonAddMedicine = findViewById(R.id.buttonAddMedicine);
-        buttonAddMedicine.setOnClickListener(this::addMedicine);
+        Button buttonSave = findViewById(R.id.buttonSave);
+        buttonSave.setOnClickListener(this::modifyMedicine);
     }
 
-    private void addMedicine(View view) {
+    private void modifyMedicine(View view) {
         hideKeyboard(this);
 
-        String name = editTextName.getText().toString().trim();
-        String initialDosingTimeString = editTextInitialDosingTime.getText().toString().trim();
+        ZonedDateTime initialDosingTime = getDateTimeFromEditText(editTextInitialDosingTime);
+        boolean validInitialDosingTime = isValidInitialDosingTime(initialDosingTime);
 
-        boolean validName = isValidName(name);
-        boolean validInitialDosingTimeString = isValidInitialDosingTimeString(initialDosingTimeString);
-        boolean validInitialDosingTime = true;
-
-        ZonedDateTime initialDosingTime = null;
-        if (validInitialDosingTimeString) {
-            initialDosingTime = getDateTimeFromEditText(editTextInitialDosingTime);
-            validInitialDosingTime = isValidInitialDosingTime(initialDosingTime);
-        }
-
-        if (!validName || !validInitialDosingTimeString || !validInitialDosingTime) {
-            if (!validName)
-                layoutName.setError(getString(R.string.error_invalid_medicine_name));
-            if (!validInitialDosingTimeString) {
-                layoutInitialDosingTime.setError(getString(R.string.error_invalid_medicine_initial_dosing_time_string));
-            } else if (!validInitialDosingTime){
-                layoutInitialDosingTime.setError(getString(R.string.error_invalid_medicine_initial_dosing_time));
-            }
+        if (!validInitialDosingTime) {
+            layoutInitialDosingTime.setError(getString(R.string.error_invalid_medicine_initial_dosing_time));
 
             return;
         }
-
-        String activeSubstance = editTextActiveSubstance.getText().toString().trim();
-        if (activeSubstance.isEmpty())
-            activeSubstance = null;
 
         String doseString = editTextDose.getText().toString().trim();
         Integer dose = null;
@@ -135,26 +123,41 @@ public class AddMedicineActivity extends BaseActivity {
             dosageFrequencyMinutes = Integer.parseInt(editTextDosageFrequencyMinutes.getText().toString().trim());
 
         if ((dosageFrequencyHours != 0 || dosageFrequencyMinutes != 0) && TimeUnit.HOURS.toMinutes(dosageFrequencyHours) + dosageFrequencyMinutes <= NotificationScheduler.PREVIOUS_DEFAULT_MINUTES) {
-            showAddMedicineNoPreviousNotificationConfirmationDialog(treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+            showModifyMedicineNoPreviousNotificationConfirmationDialog(dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
         } else {
-            try {
-                new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
-                finish();
-            } catch (DBInsertException | DBDeleteException exception) {
-                ExceptionManager.advertiseUI(this, exception.getMessage());
-            }
+            showModifyMedicineConfirmationDialog(dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
         }
     }
 
-    private void showAddMedicineNoPreviousNotificationConfirmationDialog(Treatment treatment, String name, String activeSubstance, Integer dose, AdministrationRoute administrationRoute,
-                                                              ZonedDateTime initialDosingTime, int dosageFrequencyHours, int dosageFrequencyMinutes) {
+    private void showModifyMedicineNoPreviousNotificationConfirmationDialog(Integer dose, AdministrationRoute administrationRout, ZonedDateTime initialDosingTime,
+                                                              int dosageFrequencyHours, int dosageFrequencyMinutes) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.medicines_dialog_message_no_previous_notification_add))
-                .setPositiveButton(getString(R.string.dialog_positive_add), (dialog, id) -> {
+        builder.setMessage(getString(R.string.medicines_dialog_message_no_previous_notification_modify))
+                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
                     try {
-                        new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+                        medicine.modifyMedicine(this, dose, administrationRout, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+
+                        Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
                         finish();
-                    } catch (DBInsertException | DBDeleteException exception) {
+                    } catch (DBFindException | DBDeleteException | DBUpdateException | DBInsertException exception) {
+                        ExceptionManager.advertiseUI(this, exception.getMessage());
+                    }
+                })
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
+        builder.create().show();
+    }
+
+    private void showModifyMedicineConfirmationDialog(Integer dose, AdministrationRoute administrationRout, ZonedDateTime initialDosingTime,
+                                                      int dosageFrequencyHours, int dosageFrequencyMinutes) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.dialog_message_save))
+                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
+                    try {
+                        medicine.modifyMedicine(this, dose, administrationRout, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+
+                        Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
+                        finish();
+                    } catch (DBFindException | DBDeleteException | DBUpdateException | DBInsertException exception) {
                         ExceptionManager.advertiseUI(this, exception.getMessage());
                     }
                 })
@@ -195,15 +198,9 @@ public class AddMedicineActivity extends BaseActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, administrationRouteOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAdministrationRoute.setAdapter(adapter);
-        spinnerAdministrationRoute.setSelection(adapter.getCount() - 1);
-    }
 
-    private boolean isValidName(String title) {
-        return !title.isEmpty() && title.length() <= 50;
-    }
-
-    private boolean isValidInitialDosingTimeString(String initialDosingTimeString) {
-        return !initialDosingTimeString.isEmpty();
+        int index = Arrays.asList(AdministrationRoute.values()).indexOf(medicine.getAdministrationRoute());
+        spinnerAdministrationRoute.setSelection(index);
     }
 
     private boolean isValidInitialDosingTime(ZonedDateTime initialDosingTime) {

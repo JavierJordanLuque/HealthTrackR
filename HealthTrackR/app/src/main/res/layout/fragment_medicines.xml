@@ -81,6 +81,7 @@
                     android:orientation="vertical"
                     android:paddingTop="@dimen/linear_layout_padding_top"
                     android:paddingBottom="@dimen/linear_layout_padding_bottom"
+                    android:layout_marginTop="@dimen/linear_layout_margin_top_inside_treatments"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
                     app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
