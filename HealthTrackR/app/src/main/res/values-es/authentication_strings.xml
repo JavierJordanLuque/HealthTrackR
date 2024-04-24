@@ -15,5 +15,5 @@
     <string name="authentication_form_first_name">Nombre *</string>
     <string name="authentication_form_last_name">Apellidos *</string>
 
-    <string name="authentication_helper_password">La contraseña debe tener entre 8 y 60 caracteres, incluyendo: letras mayúsculas, letras minúsculas, números y caracteres especiales</string>
+    <string name="authentication_helper_password">La contraseña debe tener entre 8 y 60 caracteres, incluyendo: letras mayúsculas, letras minúsculas, números y caracteres especiales.</string>
 </resources>

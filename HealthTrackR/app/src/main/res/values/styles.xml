@@ -101,7 +101,7 @@
         <item name="android:layout_marginTop">@dimen/spinner_layout_margin_top</item>
     </style>
 
-    <style name="SpinnerFrameLayout">
+    <style name="FrameLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/form_margin_top</item>
@@ -109,12 +109,12 @@
         <item name="android:paddingHorizontal">@dimen/spinner_layout_padding_horizontal</item>
     </style>
 
-    <style name="SpinnerFrameLayout.Outlined">
-        <item name="android:background">@drawable/spinner_container_outlined</item>
+    <style name="FrameLayout.Outlined">
+        <item name="android:background">@drawable/frame_layout_container_outlined</item>
     </style>
 
-    <style name="SpinnerFrameLayout.Filled">
-        <item name="android:background">@drawable/spinner_container_filled</item>
+    <style name="FrameLayout.Filled">
+        <item name="android:background">@drawable/frame_layout_container_filled</item>
     </style>
 
     <style name="Widget.HealthTrackR.SmallButton" parent="Widget.Material3.Button">

@@ -110,7 +110,7 @@
 
                     <FrameLayout
                         android:id="@+id/layoutCategory"
-                        style="@style/SpinnerFrameLayout.Outlined">
+                        style="@style/FrameLayout.Outlined">
 
                         <TextView
                             android:layout_width="match_parent"

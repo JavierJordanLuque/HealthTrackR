@@ -22,8 +22,8 @@
     <string name="account_form_new_password">New password *</string>
     <string name="account_form_repeat_new_password">Repeat new password *</string>
 
-    <string name="account_helper_allergies">Enter your allergies separated by commas (,)</string>
-    <string name="account_helper_previous_medical_condition">Enter your previous medical conditions separated by commas (,)</string>
+    <string name="account_helper_allergies">Enter your allergies separated by commas (,).</string>
+    <string name="account_helper_previous_medical_condition">Enter your previous medical conditions separated by commas (,).</string>
 
     <string name="account_dialog_message_birth_date">Select your birth date:</string>
     <string name="account_dialog_message_sign_out">Are you sure you want to sign out?</string>

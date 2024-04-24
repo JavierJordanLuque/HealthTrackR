@@ -1,0 +1,226 @@
+package com.javierjordanluque.healthtrackr.ui.treatments.medicines;
+
+import android.app.AlertDialog;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.javierjordanluque.healthtrackr.R;
+import com.javierjordanluque.healthtrackr.models.Medicine;
+import com.javierjordanluque.healthtrackr.models.Treatment;
+import com.javierjordanluque.healthtrackr.ui.BaseActivity;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
+import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+public class ModifyMedicineNotificationsActivity extends BaseActivity {
+    private Medicine medicine;
+    private ConstraintLayout layoutPreviousNotificationTime;
+    private EditText editTextPreviousNotificationTimeHours;
+    private EditText editTextPreviousNotificationTimeMinutes;
+    private SwitchMaterial switchPreviousNotificationStatus;
+    private SwitchMaterial switchDosingNotificationStatus;
+    private TextView textViewPreviousNotificationTimeHelper;
+    private TextView textViewPreviousNotificationTimeError;
+    private ImageView imageViewPreviousNotificationTimeError;
+    private FrameLayout frameLayoutPreviousNotificationTime;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_modify_medicine_notifications);
+        setUpToolbar(getString(R.string.medicines_app_bar_title_modify_notifications));
+        showBackButton(true);
+
+        Treatment treatment = getTreatmentFromIntent(getIntent());
+        medicine = getMedicineFromIntent(treatment, getIntent());
+
+        TextView textViewName = findViewById(R.id.textViewName);
+        textViewName.setText(medicine.getName());
+
+        layoutPreviousNotificationTime = findViewById(R.id.layoutPreviousNotificationTime);
+        textViewPreviousNotificationTimeHelper = findViewById(R.id.textViewPreviousNotificationTimeHelper);
+        textViewPreviousNotificationTimeError = findViewById(R.id.textViewPreviousNotificationTimeError);
+        imageViewPreviousNotificationTimeError = findViewById(R.id.imageViewPreviousNotificationTimeError);
+        frameLayoutPreviousNotificationTime = findViewById(R.id.frameLayoutPreviousNotificationTime);
+
+        editTextPreviousNotificationTimeHours = findViewById(R.id.editTextPreviousNotificationTimeHours);
+        editTextPreviousNotificationTimeHours.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                textViewPreviousNotificationTimeError.setVisibility(View.GONE);
+                imageViewPreviousNotificationTimeError.setVisibility(View.GONE);
+                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.frame_layout_container_filled);
+                textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        editTextPreviousNotificationTimeMinutes = findViewById(R.id.editTextPreviousNotificationTimeMinutes);
+        editTextPreviousNotificationTimeMinutes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                textViewPreviousNotificationTimeError.setVisibility(View.GONE);
+                imageViewPreviousNotificationTimeError.setVisibility(View.GONE);
+                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.frame_layout_container_filled);
+                textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 1) {
+                    char firstChar = s.charAt(0);
+                    if (firstChar < '0' || firstChar > '5') {
+                        s.clear();
+                    }
+                }
+            }
+        });
+
+        switchPreviousNotificationStatus = findViewById(R.id.switchPreviousNotificationStatus);
+        switchDosingNotificationStatus = findViewById(R.id.switchDosingNotificationStatus);
+
+        List<MedicationNotification> notifications = new ArrayList<>();
+        try {
+            notifications = medicine.getNotifications(this);
+        } catch (DBFindException exception) {
+            ExceptionManager.advertiseUI(this, exception.getMessage());
+        }
+
+        MedicationNotification previousNotification = null;
+        for (MedicationNotification notification : notifications) {
+            if (notification.getTimestamp() != medicine.getInitialDosingTime().toInstant().toEpochMilli()) {
+                switchPreviousNotificationStatus.setChecked(true);
+
+                previousNotification = notification;
+                setPreviousNotificationTime(notification);
+            } else {
+                switchDosingNotificationStatus.setChecked(true);
+            }
+        }
+
+        MedicationNotification finalPreviousNotification = previousNotification;
+        switchPreviousNotificationStatus.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                layoutPreviousNotificationTime.setVisibility(View.GONE);
+            } else {
+                setPreviousNotificationTime(finalPreviousNotification);
+            }
+        });
+
+        Button buttonSave = findViewById(R.id.buttonSave);
+        buttonSave.setOnClickListener(this::modifyMedicineNotifications);
+    }
+
+    private void modifyMedicineNotifications(View view) {
+        hideKeyboard(this);
+
+        boolean previousNotificationStatus = switchPreviousNotificationStatus.isChecked();
+        boolean dosingNotificationStatus = switchDosingNotificationStatus.isChecked();
+
+        if (previousNotificationStatus) {
+            String previousNotificationTimeHoursString = editTextPreviousNotificationTimeHours.getText().toString().trim();
+            int previousNotificationTimeHours = 0;
+            if (!previousNotificationTimeHoursString.isEmpty())
+                previousNotificationTimeHours = Integer.parseInt(previousNotificationTimeHoursString);
+
+            String previousNotificationTimeMinutesString = editTextPreviousNotificationTimeMinutes.getText().toString().trim();
+            int previousNotificationTimeMinutes = 0;
+            if (!previousNotificationTimeMinutesString.isEmpty())
+                previousNotificationTimeMinutes = Integer.parseInt(previousNotificationTimeMinutesString);
+
+            if (!isValidPreviousNotificationTime(previousNotificationTimeHours, previousNotificationTimeMinutes)) {
+                textViewPreviousNotificationTimeHelper.setVisibility(View.GONE);
+                textViewPreviousNotificationTimeError.setVisibility(View.VISIBLE);
+                imageViewPreviousNotificationTimeError.setVisibility(View.VISIBLE);
+                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.frame_layout_container_filled_error);
+
+                return;
+            }
+
+            showModifyMedicineNotificationsConfirmationDialog(previousNotificationTimeHours, previousNotificationTimeMinutes, true, dosingNotificationStatus);
+        } else {
+            showModifyMedicineNotificationsConfirmationDialog(Integer.MIN_VALUE, Integer.MIN_VALUE, false, dosingNotificationStatus);
+        }
+    }
+
+    private void showModifyMedicineNotificationsConfirmationDialog(int previousNotificationTimeHours, int previousNotificationTimeMinutes,
+                                                                   boolean previousNotificationStatus, boolean dosingNotificationStatus) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.dialog_message_save))
+                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
+                    try {
+                        medicine.modifyMedicineNotifications(this, previousNotificationTimeHours, previousNotificationTimeMinutes, previousNotificationStatus,
+                                dosingNotificationStatus);
+
+                        Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
+                        finish();
+                    } catch (DBFindException | DBDeleteException | DBInsertException exception) {
+                        ExceptionManager.advertiseUI(this, exception.getMessage());
+                    }
+                })
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
+        builder.create().show();
+    }
+
+    private void setPreviousNotificationTime(MedicationNotification previousNotification) {
+        long previousTotalMinutes;
+
+        if (previousNotification != null) {
+            previousTotalMinutes = TimeUnit.MILLISECONDS.toMinutes(medicine.getInitialDosingTime().toInstant().toEpochMilli() -
+                    previousNotification.getTimestamp());
+        } else {
+            previousTotalMinutes = TimeUnit.MILLISECONDS.toMinutes(NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
+        }
+        layoutPreviousNotificationTime.setVisibility(View.VISIBLE);
+
+        long hours = previousTotalMinutes / 60;
+        long minutes = previousTotalMinutes % 60;
+
+        editTextPreviousNotificationTimeHours.setText(String.valueOf(hours));
+        editTextPreviousNotificationTimeMinutes.setText(String.valueOf(minutes));
+    }
+
+    private boolean isValidPreviousNotificationTime(int previousNotificationTimeHours, int previousNotificationTimeMinutes) {
+        int dosageFrequencyHours = medicine.getDosageFrequencyHours();
+        int dosageFrequencyMinutes = medicine.getDosageFrequencyMinutes();
+
+        if (dosageFrequencyHours == 0 && dosageFrequencyMinutes == 0)
+            return true;
+
+        int totalPreviousNotificationTimeMinutes = (int) (TimeUnit.HOURS.toMinutes(previousNotificationTimeHours) + previousNotificationTimeMinutes);
+        int totalDosageFrequencyMinutes = (int) (TimeUnit.HOURS.toMinutes(dosageFrequencyHours) + dosageFrequencyMinutes);
+
+        return totalPreviousNotificationTimeMinutes < totalDosageFrequencyMinutes;
+    }
+
+    @Override
+    protected int getMenu() {
+        return R.menu.toolbar_menu;
+    }
+}

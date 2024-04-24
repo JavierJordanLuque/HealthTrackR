@@ -123,7 +123,7 @@
 
                     <FrameLayout
                         android:id="@+id/layoutGender"
-                        style="@style/SpinnerFrameLayout.Filled">
+                        style="@style/FrameLayout.Filled">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -138,7 +138,7 @@
 
                     <FrameLayout
                         android:id="@+id/layoutBloodType"
-                        style="@style/SpinnerFrameLayout.Filled">
+                        style="@style/FrameLayout.Filled">
 
                         <TextView
                             android:layout_width="match_parent"

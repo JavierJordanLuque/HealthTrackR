@@ -25,8 +25,6 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
-import org.w3c.dom.Text;
-
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -115,12 +113,12 @@ public class ModifyMedicineActivity extends BaseActivity {
         String dosageFrequencyHoursString = editTextDosageFrequencyHours.getText().toString().trim();
         int dosageFrequencyHours = 0;
         if (!dosageFrequencyHoursString.isEmpty())
-            dosageFrequencyHours = Integer.parseInt(editTextDosageFrequencyHours.getText().toString().trim());
+            dosageFrequencyHours = Integer.parseInt(dosageFrequencyHoursString);
 
         String dosageFrequencyMinutesString = editTextDosageFrequencyMinutes.getText().toString().trim();
         int dosageFrequencyMinutes = 0;
         if (!dosageFrequencyMinutesString.isEmpty())
-            dosageFrequencyMinutes = Integer.parseInt(editTextDosageFrequencyMinutes.getText().toString().trim());
+            dosageFrequencyMinutes = Integer.parseInt(dosageFrequencyMinutesString);
 
         if ((dosageFrequencyHours != 0 || dosageFrequencyMinutes != 0) && TimeUnit.HOURS.toMinutes(dosageFrequencyHours) + dosageFrequencyMinutes <= NotificationScheduler.PREVIOUS_DEFAULT_MINUTES) {
             showModifyMedicineNoPreviousNotificationConfirmationDialog(dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);

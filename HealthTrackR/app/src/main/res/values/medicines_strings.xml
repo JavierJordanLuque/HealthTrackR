@@ -3,6 +3,7 @@
     <string name="medicines_app_bar_title">Medicines</string>
     <string name="medicines_app_bar_title_add">Medicine addition</string>
     <string name="medicines_app_bar_title_modify">Medicine modification</string>
+    <string name="medicines_app_bar_title_modify_notifications">Notifications modification</string>
 
     <string name="medicines_no_elements">You don´t have medicines in this treatment. Please add a new medicine</string>
     <string name="medicines_none">None</string>
@@ -33,15 +34,20 @@
     <string name="medicines_next_dose">Next dose</string>
     <string name="medicines_each">Each:</string>
     <string name="medicines_add_medicine">Add medicine</string>
+    <string name="medicines_before">before</string>
+    <string name="medicines_previous_notification_status">Previous notification status</string>
+    <string name="medicines_dosing_notification_status">Dosing notification status</string>
 
     <string name="medicines_form_name">Name *</string>
     <string name="medicines_form_initial_dosing_time">Initial dosing time *</string>
     <string name="medicines_form_dosing_frequency">Dosing frequency *</string>
+    <string name="medicines_form_previous_notification_time">Previous notification time *</string>
 
-    <string name="medicines_dosing_frequency_helper">A dosing frequency of 0 hours and 0 minutes indicates a single dose. Dosing frequencies less than 20 minutes may cause notification nesting</string>
+    <string name="medicines_dosing_frequency_helper">A dosing frequency of 0 hours and 0 minutes indicates a single dose. Dosing frequencies less than 20 minutes may cause notification nesting.</string>
+    <string name="medicines_previous_notification_time_helper">A previous notification time of 0 hours and 0 minutes indicates no previous notification. Previous notification times less than 20 minutes may cause notification nesting with the dosing notification.</string>
 
-    <string name="medicines_dialog_message_no_previous_notification_add">The dosing frequency is less or equal than the time set for the previous notification (default 1 hour). Therefore, the previous notification will not be set. Are you sure you want to add this medication?</string>
-    <string name="medicines_dialog_message_no_previous_notification_modify">The dosing frequency is less or equal than the time set for the previous notification (default 1 hour). Therefore, the previous notification will not be set. Are you sure you want to save the changes?</string>
+    <string name="medicines_dialog_message_no_previous_notification_add">The dosing frequency is less than or equal to the time set for the previous notification (default 1 hour). Therefore, the previous notification will not be set. Are you sure you want to add this medication?</string>
+    <string name="medicines_dialog_message_no_previous_notification_modify">The dosing frequency is less than or equal to the time set for the previous notification (default 1 hour). Therefore, the previous notification will not be set. Are you sure you want to save the changes?</string>
     <string name="medicines_dialog_message_delete">Are you sure you want to delete this medicine from the treatment?</string>
 
     <string name="medicines_toast_confirmation_delete">Medicine deleted successfully!</string>

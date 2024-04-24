@@ -377,21 +377,30 @@ public abstract class BaseActivity extends AppCompatActivity {
         long days = TimeUnit.MILLISECONDS.toDays(timeDifferenceMillis);
         long hours = TimeUnit.MILLISECONDS.toHours(timeDifferenceMillis) % 24;
         long minutes = TimeUnit.MILLISECONDS.toMinutes(timeDifferenceMillis) % 60;
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeDifferenceMillis);
 
-        if (seconds >= 30)
+        if (TimeUnit.MILLISECONDS.toSeconds(timeDifferenceMillis) % 60 >= 30)
             minutes++;
+
+        if (minutes == 60) {
+            minutes = 0;
+            hours++;
+        }
+
+        if (hours == 24) {
+            hours = 0;
+            days++;
+        }
 
         String timeDifferenceString = "";
         if (days == 0 && hours == 0 && minutes == 0) {
             timeDifferenceString = getString(R.string.medicines_now);
         } else {
             if (days > 0)
-                timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_days, (int) days, days) + " ";
+                timeDifferenceString += getResources().getQuantityString(R.plurals.medicines_days, (int) days, days) + " ";
             if (hours > 0)
-                timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_hours, (int) hours, hours) + " ";
+                timeDifferenceString += getResources().getQuantityString(R.plurals.medicines_hours, (int) hours, hours) + " ";
             if (minutes > 0)
-                timeDifferenceString += " " + getResources().getQuantityString(R.plurals.medicines_minutes, (int) minutes, minutes);
+                timeDifferenceString += getResources().getQuantityString(R.plurals.medicines_minutes, (int) minutes, minutes);
         }
 
         return timeDifferenceString.trim();

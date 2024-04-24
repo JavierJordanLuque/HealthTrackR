@@ -22,8 +22,8 @@
     <string name="account_form_new_password">Contraseña nueva *</string>
     <string name="account_form_repeat_new_password">Repetir contraseña nueva *</string>
 
-    <string name="account_helper_allergies">Introduce tus alergias separadas por comas (,)</string>
-    <string name="account_helper_previous_medical_condition">Introduce tus condiciones médicas previas separadas por comas (,)</string>
+    <string name="account_helper_allergies">Introduce tus alergias separadas por comas (,).</string>
+    <string name="account_helper_previous_medical_condition">Introduce tus condiciones médicas previas separadas por comas (,).</string>
 
     <string name="account_dialog_message_birth_date">Selecciona tu fecha de nacimiento:</string>
     <string name="account_dialog_message_sign_out">¿Estás seguro/a de cerrar sesión?</string>

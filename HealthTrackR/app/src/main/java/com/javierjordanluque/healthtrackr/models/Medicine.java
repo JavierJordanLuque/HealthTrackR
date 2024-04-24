@@ -168,8 +168,6 @@ public class Medicine implements Identifiable {
 
     public void modifyMedicineNotifications(Context context, int previousNotificationTimeHours, int previousNotificationTimeMinutes, boolean previousNotificationStatus,
                                            boolean dosingNotificationStatus) throws DBFindException, DBDeleteException, DBInsertException {
-        notifications = getNotifications(context);
-
         MedicationNotification previousNotification = null;
         MedicationNotification exactNotification = null;
 
@@ -286,7 +284,7 @@ public class Medicine implements Identifiable {
     }
 
     public List<MedicationNotification> getNotifications(Context context) throws DBFindException {
-        if (notifications == null) {
+        if (notifications == null || notifications.isEmpty()) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotifications(notificationRepository.findMedicineNotifications(this.treatment.getId(), this.id));
         }

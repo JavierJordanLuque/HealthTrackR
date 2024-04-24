@@ -15,5 +15,5 @@
     <string name="authentication_form_first_name">First name *</string>
     <string name="authentication_form_last_name">Last name *</string>
 
-    <string name="authentication_helper_password">The password must contain between 8 and 60 characters, including: uppercase letters, lowercase letters, numbers, and special characters</string>
+    <string name="authentication_helper_password">The password must contain between 8 and 60 characters, including: uppercase letters, lowercase letters, numbers, and special characters.</string>
 </resources>

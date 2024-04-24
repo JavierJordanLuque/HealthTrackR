@@ -114,7 +114,7 @@
 
                     <FrameLayout
                         android:id="@+id/layoutAdministrationRoute"
-                        style="@style/SpinnerFrameLayout.Outlined">
+                        style="@style/FrameLayout.Outlined">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -142,7 +142,7 @@
 
                     <FrameLayout
                         android:id="@+id/layoutDosageFrequency"
-                        style="@style/SpinnerFrameLayout.Outlined">
+                        style="@style/FrameLayout.Outlined">
 
                         <TextView
                             android:layout_width="match_parent"

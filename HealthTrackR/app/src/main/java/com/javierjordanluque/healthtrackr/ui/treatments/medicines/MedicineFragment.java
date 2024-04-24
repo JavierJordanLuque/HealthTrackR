@@ -80,18 +80,27 @@ public class MedicineFragment extends Fragment {
 
         FloatingActionButton buttonMedicineNotifications = fragmentView.findViewById(R.id.buttonMedicineNotifications);
         buttonMedicineNotifications.setOnClickListener(view -> {
-            /*
-            Intent intent = new Intent(requireActivity(), ModifyMedicineNotificationsActivity.class);
-            intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
-            intent.putExtra(Medicine.class.getSimpleName(), medicine.getId());
-            startActivity(intent);
-             */
+            if (medicine.calculateNextDose() == null) {
+                showNoMedicineNotificationsDialog();
+            } else {
+                Intent intent = new Intent(requireActivity(), ModifyMedicineNotificationsActivity.class);
+                intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
+                intent.putExtra(Medicine.class.getSimpleName(), medicine.getId());
+                startActivity(intent);
+            }
         });
 
         FloatingActionButton buttonDeleteMedicine = fragmentView.findViewById(R.id.buttonDeleteMedicine);
         buttonDeleteMedicine.setOnClickListener(view -> showDeleteMedicineConfirmationDialog());
 
         return fragmentView;
+    }
+
+    public void showNoMedicineNotificationsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setMessage(R.string.error_no_medicine_notifications);
+        builder.setPositiveButton(R.string.dialog_positive_ok, (dialog, which) -> dialog.dismiss());
+        builder.show();
     }
 
     private void showDeleteMedicineConfirmationDialog() {
