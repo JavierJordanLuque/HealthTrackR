@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="unspecified">Sin especificar</string>
+
     <string name="easter_egg_5_message">¿Tienes un tic nervioso?</string>
     <string name="easter_egg_10_message">¿Qué te pasa?</string>
     <string name="easter_egg_15_message">Estás tentando a la suerte…</string>

@@ -173,7 +173,7 @@ public class User implements Identifiable {
         List<Treatment> filteredTreatments = new ArrayList<>();
 
         for (Treatment treatment : treatments) {
-            boolean titleMatches = title == null || treatment.getTitle().contains(title);
+            boolean titleMatches = title == null || treatment.getTitle().toLowerCase().contains(title.toLowerCase());
             boolean startDateMatches = startDate == null || treatment.getStartDate().isAfter(startDate) || treatment.getStartDate().isEqual(startDate);
             boolean endDateMatches = endDate == null || (treatment.getEndDate() != null && treatment.getEndDate().isBefore(endDate)) || (treatment.getEndDate() != null && treatment.getEndDate().isEqual(endDate));
             boolean categoryMatches = category == null || treatment.getCategory().equals(category);

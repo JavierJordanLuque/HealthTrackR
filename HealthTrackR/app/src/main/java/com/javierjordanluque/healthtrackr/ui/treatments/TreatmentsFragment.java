@@ -1,6 +1,5 @@
 package com.javierjordanluque.healthtrackr.ui.treatments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,6 +46,10 @@ public class TreatmentsFragment extends Fragment {
     private NestedScrollView nestedScrollView;
     private ConstraintLayout constraintLayoutNoElements;
     private LinearLayout linearLayout;
+    private String titleFilter;
+    private ZonedDateTime startDateFilter;
+    private ZonedDateTime endDateFilter;
+    private TreatmentCategory categoryFilter;
 
     public TreatmentsFragment() {
     }
@@ -81,10 +84,19 @@ public class TreatmentsFragment extends Fragment {
             popupWindow.showAtLocation(buttonFilterTreatments, Gravity.START | Gravity.TOP, location[0], location[1] + buttonFilterTreatments.getHeight());
 
             EditText editTextTitle = popupView.findViewById(R.id.editTextTitle);
+            if (titleFilter != null) {
+                editTextTitle.setText(titleFilter);
+            } else {
+                editTextTitle.setText("");
+            }
 
             EditText editTextStartDate = popupView.findViewById(R.id.editTextStartDate);
+            if (startDateFilter != null) {
+                editTextStartDate.setText(((MainActivity) requireActivity()).showFormattedDate(startDateFilter));
+            } else {
+                editTextStartDate.setText("");
+            }
             editTextStartDate.setOnClickListener(startDateView -> ((MainActivity) requireActivity()).showDatePickerDialog(editTextStartDate, getString(R.string.treatments_dialog_message_start_date), false));
-            Activity activity = requireActivity();
             editTextStartDate.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -107,6 +119,11 @@ public class TreatmentsFragment extends Fragment {
             });
 
             EditText editTextEndDate = popupView.findViewById(R.id.editTextEndDate);
+            if (endDateFilter != null) {
+                editTextEndDate.setText(((MainActivity) requireActivity()).showFormattedDate(endDateFilter));
+            } else {
+                editTextEndDate.setText("");
+            }
             editTextEndDate.setOnClickListener(endDateView -> ((MainActivity) requireActivity()).showDatePickerDialog(editTextEndDate, getString(R.string.treatments_dialog_message_end_date), false));
             editTextEndDate.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -133,19 +150,19 @@ public class TreatmentsFragment extends Fragment {
 
             Button buttonFilter = popupView.findViewById(R.id.buttonFilter);
             buttonFilter.setOnClickListener(v -> {
-                String titleFilter = editTextTitle.getText().toString().trim();
+                titleFilter = editTextTitle.getText().toString().trim();
                 if (titleFilter.isEmpty())
                     titleFilter = null;
 
-                ZonedDateTime startDateFilter = null;
+                startDateFilter = null;
                 if (!editTextStartDate.getText().toString().isEmpty())
                     startDateFilter = (ZonedDateTime) ((MainActivity) requireActivity()).getDateFromEditText(editTextStartDate, ZonedDateTime.class);
 
-                ZonedDateTime endDateFilter = null;
+                endDateFilter = null;
                 if (!editTextEndDate.getText().toString().isEmpty())
                     endDateFilter = (ZonedDateTime) ((MainActivity) requireActivity()).getDateFromEditText(editTextEndDate, ZonedDateTime.class);
 
-                TreatmentCategory categoryFilter = getCategoryFromSpinner(spinnerCategory);
+                categoryFilter = getCategoryFromSpinner(spinnerCategory);
 
                 List<Treatment> filteredTreatments = user.filterTreatments(titleFilter, startDateFilter, endDateFilter, categoryFilter);
                 showTreatments(filteredTreatments, true);
@@ -156,6 +173,11 @@ public class TreatmentsFragment extends Fragment {
             Button buttonClearFilter = popupView.findViewById(R.id.buttonClearFilter);
             buttonClearFilter.setOnClickListener(v -> {
                 try {
+                    titleFilter = null;
+                    startDateFilter = null;
+                    endDateFilter = null;
+                    categoryFilter = null;
+
                     List<Treatment> unfilteredTreatments = user.getTreatments(requireActivity());
                     showTreatments(unfilteredTreatments, false);
                 } catch (DBFindException exception) {
@@ -285,7 +307,12 @@ public class TreatmentsFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, categoryOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
-        spinnerCategory.setSelection(categoryOptions.size() -1);
+        if (categoryFilter != null) {
+            int index = Arrays.asList(TreatmentCategory.values()).indexOf(categoryFilter);
+            spinnerCategory.setSelection(index);
+        } else {
+            spinnerCategory.setSelection(categoryOptions.size() -1);
+        }
 
         return spinnerCategory;
     }
