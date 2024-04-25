@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.medicines;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,7 @@ import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.enumerations.AdministrationRoute;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
+import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
@@ -138,7 +140,18 @@ public class AddMedicineActivity extends BaseActivity {
             showAddMedicineNoPreviousNotificationConfirmationDialog(treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
         } else {
             try {
-                new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+                Medicine medicine = new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+
+                Intent intent = new Intent();
+                intent.putExtra(MainActivity.class.getSimpleName(), MedicineFragment.class.getName());
+
+                Bundle bundle = new Bundle();
+                bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
+                bundle.putLong(Medicine.class.getSimpleName(), medicine.getId());
+                intent.putExtras(bundle);
+
+                setResult(RESULT_OK, intent);
+
                 finish();
             } catch (DBInsertException | DBDeleteException exception) {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
@@ -152,7 +165,18 @@ public class AddMedicineActivity extends BaseActivity {
         builder.setMessage(getString(R.string.medicines_dialog_message_no_previous_notification_add))
                 .setPositiveButton(getString(R.string.dialog_positive_add), (dialog, id) -> {
                     try {
-                        new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+                        Medicine medicine = new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+
+                        Intent intent = new Intent();
+                        intent.putExtra(MainActivity.class.getSimpleName(), MedicineFragment.class.getName());
+
+                        Bundle bundle = new Bundle();
+                        bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
+                        bundle.putLong(Medicine.class.getSimpleName(), medicine.getId());
+                        intent.putExtras(bundle);
+
+                        setResult(RESULT_OK, intent);
+
                         finish();
                     } catch (DBInsertException | DBDeleteException exception) {
                         ExceptionManager.advertiseUI(this, exception.getMessage());

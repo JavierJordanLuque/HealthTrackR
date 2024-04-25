@@ -66,7 +66,8 @@ public class MedicinesFragment extends Fragment {
             } else {
                 Intent intent = new Intent(requireActivity(), AddMedicineActivity.class);
                 intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
-                startActivity(intent);
+
+                ((MainActivity) requireActivity()).fragmentLauncher.launch(intent);
             }
         });
 

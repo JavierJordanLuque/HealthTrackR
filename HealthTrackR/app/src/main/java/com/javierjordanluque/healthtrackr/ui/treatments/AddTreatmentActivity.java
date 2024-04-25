@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui.treatments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,7 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
+import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
@@ -127,7 +129,17 @@ public class AddTreatmentActivity extends BaseActivity {
             diagnosis = null;
 
         try {
-            new Treatment(this, user, title, startDate, endDate, diagnosis, category);
+            Treatment treatment = new Treatment(this, user, title, startDate, endDate, diagnosis, category);
+
+            Intent intent = new Intent();
+            intent.putExtra(MainActivity.class.getSimpleName(), TreatmentFragment.class.getName());
+
+            Bundle bundle = new Bundle();
+            bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
+            intent.putExtras(bundle);
+
+            setResult(RESULT_OK, intent);
+
             finish();
         } catch (DBInsertException exception) {
             ExceptionManager.advertiseUI(this, exception.getMessage());

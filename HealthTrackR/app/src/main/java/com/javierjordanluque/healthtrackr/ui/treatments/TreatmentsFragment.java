@@ -70,7 +70,7 @@ public class TreatmentsFragment extends Fragment {
         FloatingActionButton buttonAddTreatment = fragmentView.findViewById(R.id.buttonAddTreatment);
         buttonAddTreatment.setOnClickListener(view -> {
             Intent intent = new Intent(requireActivity(), AddTreatmentActivity.class);
-            startActivity(intent);
+            ((MainActivity) requireActivity()).fragmentLauncher.launch(intent);
         });
 
         ExtendedFloatingActionButton buttonFilterTreatments = fragmentView.findViewById(R.id.buttonFilterTreatments);

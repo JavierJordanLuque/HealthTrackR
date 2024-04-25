@@ -1,8 +1,11 @@
 package com.javierjordanluque.healthtrackr.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,6 +16,7 @@ import com.javierjordanluque.healthtrackr.ui.account.AccountFragment;
 import com.javierjordanluque.healthtrackr.ui.calendar.CalendarFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentsFragment;
+import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -89,6 +93,28 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+    public ActivityResultLauncher<Intent> fragmentLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+
+                    if (data != null && data.hasExtra(this.getClass().getSimpleName())) {
+                        String fragmentClassName = data.getStringExtra(this.getClass().getSimpleName());
+
+                        if (fragmentClassName != null) {
+                            try {
+                                Fragment fragment = (Fragment) Class.forName(fragmentClassName).newInstance();
+                                fragment.setArguments(data.getExtras());
+
+                                replaceFragment(fragment);
+                            } catch (IllegalAccessException | InstantiationException | ClassNotFoundException exception) {
+                                ExceptionManager.advertiseUI(this, exception.getMessage());
+                            }
+                        }
+                    }
+                }
+            });
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
