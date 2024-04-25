@@ -45,7 +45,6 @@ public class Medicine implements Identifiable {
         this.initialDosingTime = initialDosingTime;
         this.dosageFrequencyHours = dosageFrequencyHours;
         this.dosageFrequencyMinutes = dosageFrequencyMinutes;
-        this.notifications = new ArrayList<>();
 
         if (context != null) {
             this.treatment.addMedicine(context, this);
@@ -55,7 +54,7 @@ public class Medicine implements Identifiable {
     }
 
     public void schedulePreviousMedicationNotification(Context context, int previousMinutes) throws DBInsertException, DBDeleteException {
-        if (PermissionManager.hasNotificationPermission(context)) {
+        if (PermissionManager.hasNotificationPermission(context) && previousMinutes > 0) {
             long timestamp = initialDosingTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
             long totalDosageFrequencyMinutes = TimeUnit.HOURS.toMinutes(dosageFrequencyHours) + dosageFrequencyMinutes;
 
@@ -75,6 +74,8 @@ public class Medicine implements Identifiable {
                     NotificationScheduler.scheduleInexactNotification(context, previousNotification);
                 }
 
+                if (notifications == null)
+                    this.setNotifications(new ArrayList<>());
                 notifications.add(previousNotification);
             }
         }
@@ -98,6 +99,9 @@ public class Medicine implements Identifiable {
                 } else {
                     NotificationScheduler.scheduleInexactNotification(context, notification);
                 }
+
+                if (notifications == null)
+                    this.setNotifications(new ArrayList<>());
                 notifications.add(notification);
             }
         }
@@ -284,7 +288,7 @@ public class Medicine implements Identifiable {
     }
 
     public List<MedicationNotification> getNotifications(Context context) throws DBFindException {
-        if (notifications == null || notifications.isEmpty()) {
+        if (notifications == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotifications(notificationRepository.findMedicineNotifications(this.treatment.getId(), this.id));
         }
