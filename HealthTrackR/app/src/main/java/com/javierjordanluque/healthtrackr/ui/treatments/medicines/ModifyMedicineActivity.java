@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.models.Treatment;
@@ -23,16 +22,17 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
-import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 public class ModifyMedicineActivity extends BaseActivity {
     private Treatment treatment;
     private Medicine medicine;
-    private TextInputLayout layoutInitialDosingTime;
     private EditText editTextDose;
     private Spinner spinnerAdministrationRoute;
     private EditText editTextInitialDosingTime;
@@ -59,10 +59,8 @@ public class ModifyMedicineActivity extends BaseActivity {
 
         configureAdministrationRouteSpinner();
 
-        layoutInitialDosingTime = findViewById(R.id.layoutInitialDosingTime);
         editTextInitialDosingTime = findViewById(R.id.editTextInitialDosingTime);
-        editTextInitialDosingTime.setOnClickListener(view -> showDateTimePicker(editTextInitialDosingTime));
-        setEditTextListener(layoutInitialDosingTime, editTextInitialDosingTime);
+        editTextInitialDosingTime.setOnClickListener(view -> showDateTimePicker(editTextInitialDosingTime, medicine.getInitialDosingTime(), treatment.getStartDate(), treatment.getEndDate()));
         editTextInitialDosingTime.setText(showFormattedDateTime(medicine.getInitialDosingTime()));
 
         editTextDosageFrequencyHours = findViewById(R.id.editTextDosageFrequencyHours);
@@ -94,21 +92,14 @@ public class ModifyMedicineActivity extends BaseActivity {
     private void modifyMedicine(View view) {
         hideKeyboard(this);
 
-        ZonedDateTime initialDosingTime = getDateTimeFromEditText(editTextInitialDosingTime);
-        boolean validInitialDosingTime = isValidInitialDosingTime(initialDosingTime);
-
-        if (!validInitialDosingTime) {
-            layoutInitialDosingTime.setError(getString(R.string.error_invalid_medicine_initial_dosing_time));
-
-            return;
-        }
-
         String doseString = editTextDose.getText().toString().trim();
         Integer dose = null;
         if (!doseString.isEmpty())
             dose = Integer.parseInt(doseString);
 
         AdministrationRoute administrationRoute = getAdministrationRouteFromSpinner();
+
+        ZonedDateTime initialDosingTime = getDateTimeFromEditText(editTextInitialDosingTime);
 
         String dosageFrequencyHoursString = editTextDosageFrequencyHours.getText().toString().trim();
         int dosageFrequencyHours = 0;
@@ -120,7 +111,7 @@ public class ModifyMedicineActivity extends BaseActivity {
         if (!dosageFrequencyMinutesString.isEmpty())
             dosageFrequencyMinutes = Integer.parseInt(dosageFrequencyMinutesString);
 
-        if ((dosageFrequencyHours != 0 || dosageFrequencyMinutes != 0) && TimeUnit.HOURS.toMinutes(dosageFrequencyHours) + dosageFrequencyMinutes <= NotificationScheduler.PREVIOUS_DEFAULT_MINUTES) {
+        if ((dosageFrequencyHours != 0 || dosageFrequencyMinutes != 0) && !isValidDosingFrequency(dosageFrequencyHours, dosageFrequencyMinutes)) {
             showModifyMedicineNoPreviousNotificationConfirmationDialog(dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
         } else {
             showModifyMedicineConfirmationDialog(dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
@@ -201,8 +192,20 @@ public class ModifyMedicineActivity extends BaseActivity {
         spinnerAdministrationRoute.setSelection(index);
     }
 
-    private boolean isValidInitialDosingTime(ZonedDateTime initialDosingTime) {
-        return !initialDosingTime.isBefore(treatment.getStartDate()) && (treatment.getEndDate() == null || !initialDosingTime.isAfter(treatment.getEndDate()));
+    private boolean isValidDosingFrequency(int dosageFrequencyHours, int dosageFrequencyMinutes) {
+        int previousMinutes = Integer.MIN_VALUE;
+        try {
+            for (MedicationNotification medicationNotification : medicine.getNotifications(this)) {
+                if (medicationNotification.getTimestamp() != medicine.getInitialDosingTime().toInstant().toEpochMilli()) {
+                    previousMinutes = (int) ChronoUnit.MINUTES.between(Instant.ofEpochMilli(medicationNotification.getTimestamp())
+                            .atZone(medicine.getInitialDosingTime().getZone()), medicine.getInitialDosingTime());
+                }
+            }
+        } catch (DBFindException exception) {
+            ExceptionManager.advertiseUI(this, exception.getMessage());
+        }
+
+        return TimeUnit.HOURS.toMinutes(dosageFrequencyHours) + dosageFrequencyMinutes > previousMinutes;
     }
 
     @Override

@@ -25,8 +25,7 @@
     <string name="error_invalid_treatment_diagnosis">The title must contain less than 200 characters.</string>
 
     <string name="error_invalid_medicine_name">The name mustn´t be empty.</string>
-    <string name="error_invalid_medicine_initial_dosing_time_string">The initial dosing time mustn´t be empty.</string>
-    <string name="error_invalid_medicine_initial_dosing_time">The initial dosing must be within the treatment period.</string>
+    <string name="error_invalid_medicine_initial_dosing_time">The initial dosing time mustn´t be empty.</string>
     <string name="error_invalid_medicine_previous_notification_time">The previous notification time must be less than the dosage frequency.</string>
 
     <string name="error_no_medicine_notifications"> The medicine has no more doses. Please, modify its dosing frequency or the treatment end date to continue with this medicine.</string>

@@ -413,23 +413,46 @@ public abstract class BaseActivity extends AppCompatActivity {
         builder.show();
     }
 
-    protected void showDateTimePicker(EditText editText) {
+    protected void showDateTimePicker(EditText editText, ZonedDateTime defaultDateTime, ZonedDateTime minDateTime, ZonedDateTime maxDateTime) {
         Calendar calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (DatePickerDialog.OnDateSetListener) (view, year, month, dayOfMonth) -> {
+
+        int defaultYear, defaultMonth, defaultDayOfMonth, defaultHourOfDay, defaultMinute;
+
+        if (defaultDateTime == null)
+            defaultDateTime = ZonedDateTime.now();
+
+        defaultYear = defaultDateTime.getYear();
+        defaultMonth = defaultDateTime.getMonthValue() - 1;
+        defaultDayOfMonth = defaultDateTime.getDayOfMonth();
+        defaultHourOfDay = defaultDateTime.getHour();
+        defaultMinute = defaultDateTime.getMinute();
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (datePickerDialogView, year, month, dayOfMonth) -> {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
             TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                    (TimePickerDialog.OnTimeSetListener) (view1, hourOfDay, minute) -> {
+                    (timePickerDialogView, hourOfDay, minute) -> {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
 
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy '" + getString(R.string.date_at_time) + "' HH:mm", Locale.getDefault());
                         editText.setText(sdf.format(calendar.getTime()));
-                    }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+                    }, defaultHourOfDay, defaultMinute, true);
             timePickerDialog.show();
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        }, defaultYear, defaultMonth, defaultDayOfMonth);
+
+        if (minDateTime != null) {
+            long minMillis = minDateTime.toInstant().toEpochMilli();
+            datePickerDialog.getDatePicker().setMinDate(minMillis);
+        }
+
+        if (maxDateTime != null) {
+            long maxMillis = maxDateTime.toInstant().toEpochMilli();
+            datePickerDialog.getDatePicker().setMaxDate(maxMillis);
+        }
+
         datePickerDialog.show();
     }
 

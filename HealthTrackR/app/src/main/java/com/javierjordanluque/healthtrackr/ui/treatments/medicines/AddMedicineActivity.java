@@ -58,7 +58,7 @@ public class AddMedicineActivity extends BaseActivity {
 
         layoutInitialDosingTime = findViewById(R.id.layoutInitialDosingTime);
         editTextInitialDosingTime = findViewById(R.id.editTextInitialDosingTime);
-        editTextInitialDosingTime.setOnClickListener(view -> showDateTimePicker(editTextInitialDosingTime));
+        editTextInitialDosingTime.setOnClickListener(view -> showDateTimePicker(editTextInitialDosingTime, null, treatment.getStartDate(), treatment.getEndDate()));
         setEditTextListener(layoutInitialDosingTime, editTextInitialDosingTime);
 
         editTextDosageFrequencyHours = findViewById(R.id.editTextDosageFrequencyHours);
@@ -91,29 +91,20 @@ public class AddMedicineActivity extends BaseActivity {
         hideKeyboard(this);
 
         String name = editTextName.getText().toString().trim();
-        String initialDosingTimeString = editTextInitialDosingTime.getText().toString().trim();
 
         boolean validName = isValidName(name);
-        boolean validInitialDosingTimeString = isValidInitialDosingTimeString(initialDosingTimeString);
-        boolean validInitialDosingTime = true;
+        boolean validInitialDosingTime = isValidInitialDosingTime(editTextInitialDosingTime.getText().toString().trim());
 
-        ZonedDateTime initialDosingTime = null;
-        if (validInitialDosingTimeString) {
-            initialDosingTime = getDateTimeFromEditText(editTextInitialDosingTime);
-            validInitialDosingTime = isValidInitialDosingTime(initialDosingTime);
-        }
-
-        if (!validName || !validInitialDosingTimeString || !validInitialDosingTime) {
+        if (!validName || !validInitialDosingTime) {
             if (!validName)
                 layoutName.setError(getString(R.string.error_invalid_medicine_name));
-            if (!validInitialDosingTimeString) {
-                layoutInitialDosingTime.setError(getString(R.string.error_invalid_medicine_initial_dosing_time_string));
-            } else if (!validInitialDosingTime){
+            if (!validInitialDosingTime)
                 layoutInitialDosingTime.setError(getString(R.string.error_invalid_medicine_initial_dosing_time));
-            }
 
             return;
         }
+
+        ZonedDateTime initialDosingTime = getDateTimeFromEditText(editTextInitialDosingTime);
 
         String activeSubstance = editTextActiveSubstance.getText().toString().trim();
         if (activeSubstance.isEmpty())
@@ -226,12 +217,8 @@ public class AddMedicineActivity extends BaseActivity {
         return !title.isEmpty() && title.length() <= 50;
     }
 
-    private boolean isValidInitialDosingTimeString(String initialDosingTimeString) {
-        return !initialDosingTimeString.isEmpty();
-    }
-
-    private boolean isValidInitialDosingTime(ZonedDateTime initialDosingTime) {
-        return !initialDosingTime.isBefore(treatment.getStartDate()) && (treatment.getEndDate() == null || !initialDosingTime.isAfter(treatment.getEndDate()));
+    private boolean isValidInitialDosingTime(String initialDosingTime) {
+        return !initialDosingTime.isEmpty();
     }
 
     @Override

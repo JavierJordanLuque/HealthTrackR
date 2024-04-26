@@ -136,11 +136,15 @@ public class Medicine implements Identifiable {
         }
 
         ZonedDateTime oldInitialDosingTime = this.initialDosingTime;
+        boolean modifiedInitialDosingTime = false;
         if (!this.initialDosingTime.equals(initialDosingTime)) {
             setInitialDosingTime(initialDosingTime);
             medicine.setInitialDosingTime(this.initialDosingTime);
+
+            modifiedInitialDosingTime = true;
         }
 
+        boolean modifiedDosingFrequency = false;
         if (!this.dosageFrequencyHours.equals(dosageFrequencyHours) || !this.dosageFrequencyMinutes.equals(dosageFrequencyMinutes)) {
             if (!this.dosageFrequencyHours.equals(dosageFrequencyHours)) {
                 setDosageFrequencyHours(dosageFrequencyHours);
@@ -152,10 +156,16 @@ public class Medicine implements Identifiable {
                 medicine.setDosageFrequencyMinutes(this.dosageFrequencyMinutes);
             }
 
-            for (MedicationNotification medicationNotification : getNotifications(context)) {
-                if (medicationNotification.getTimestamp() != medicationNotification.getMedicine().getInitialDosingTime().toInstant().toEpochMilli()) {
-                    int previousMinutes = (int) ChronoUnit.MINUTES.between(oldInitialDosingTime, Instant.ofEpochMilli(medicationNotification.getTimestamp())
-                            .atZone(oldInitialDosingTime.getZone()));
+            modifiedDosingFrequency = true;
+        }
+
+        if (modifiedInitialDosingTime || modifiedDosingFrequency) {
+            List<MedicationNotification> medicationNotifications = new ArrayList<>(getNotifications(context));
+
+            for (MedicationNotification medicationNotification : medicationNotifications) {
+                if (medicationNotification.getTimestamp() != oldInitialDosingTime.toInstant().toEpochMilli()) {
+                    int previousMinutes = (int) ChronoUnit.MINUTES.between(Instant.ofEpochMilli(medicationNotification.getTimestamp())
+                            .atZone(oldInitialDosingTime.getZone()), oldInitialDosingTime);
 
                     NotificationScheduler.cancelNotification(context, medicationNotification);
                     schedulePreviousMedicationNotification(context, previousMinutes);
