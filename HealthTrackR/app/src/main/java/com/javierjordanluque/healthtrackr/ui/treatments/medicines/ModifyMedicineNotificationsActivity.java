@@ -1,6 +1,10 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.medicines;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,13 +16,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
+import com.javierjordanluque.healthtrackr.util.PermissionManager;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
@@ -41,6 +50,10 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
     private TextView textViewPreviousNotificationTimeError;
     private ImageView imageViewPreviousNotificationTimeError;
     private FrameLayout frameLayoutPreviousNotificationTime;
+    private int previousNotificationTimeHours;
+    private int previousNotificationTimeMinutes;
+    private boolean previousNotificationStatus;
+    private boolean dosingNotificationStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,21 +184,81 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
 
     private void showModifyMedicineNotificationsConfirmationDialog(int previousNotificationTimeHours, int previousNotificationTimeMinutes,
                                                                    boolean previousNotificationStatus, boolean dosingNotificationStatus) {
+        this.previousNotificationTimeHours = previousNotificationTimeHours;
+        this.previousNotificationTimeMinutes = previousNotificationTimeMinutes;
+        this.previousNotificationStatus = previousNotificationStatus;
+        this.dosingNotificationStatus = dosingNotificationStatus;
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.dialog_message_save))
                 .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
-                    try {
-                        medicine.modifyMedicineNotifications(this, previousNotificationTimeHours, previousNotificationTimeMinutes, previousNotificationStatus,
-                                dosingNotificationStatus);
-
-                        Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
-                        finish();
-                    } catch (DBFindException | DBDeleteException | DBInsertException exception) {
-                        ExceptionManager.advertiseUI(this, exception.getMessage());
+                    if (previousNotificationStatus || dosingNotificationStatus) {
+                        if (PermissionManager.hasNotificationPermission(this)) {
+                            makeMedicineNotificationsModification(previousNotificationStatus, dosingNotificationStatus);
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionManager.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
+                            } else {
+                                showNotificationPermissionDeniedDialog();
+                            }
+                        }
+                    } else {
+                        makeMedicineNotificationsModification(false, false);
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
         builder.create().show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PermissionManager.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                makeMedicineNotificationsModification(previousNotificationStatus, dosingNotificationStatus);
+            } else {
+                showNotificationPermissionDeniedDialog();
+            }
+        }
+    }
+
+    private final ActivityResultLauncher<Intent> notificationPermissionLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                    makeMedicineNotificationsModification(previousNotificationStatus, dosingNotificationStatus);
+                } else {
+                    makeMedicineNotificationsModification(false, false);
+                }
+            });
+
+    private void showNotificationPermissionDeniedDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.medicines_dialog_notification_permission))
+                .setPositiveButton(getString(R.string.snackbar_action_more), (dialog, id) -> {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.setData(android.net.Uri.parse("package:" + getPackageName()));
+                    notificationPermissionLauncher.launch(intent);
+                })
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> {
+                    makeMedicineNotificationsModification(false, false);
+
+                    dialog.dismiss();
+                    finish();
+                });
+        builder.create().show();
+    }
+    
+    private void makeMedicineNotificationsModification(boolean previousNotificationStatus, boolean dosingNotificationStatus) {
+        try {
+            medicine.modifyMedicineNotifications(this, previousNotificationTimeHours, previousNotificationTimeMinutes,
+                    previousNotificationStatus, dosingNotificationStatus);
+
+            Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
+            finish();
+        } catch (DBInsertException | DBDeleteException | DBFindException exception) {
+            ExceptionManager.advertiseUI(this, exception.getMessage());
+        }
     }
 
     private void setPreviousNotificationTime(MedicationNotification previousNotification) {

@@ -70,9 +70,7 @@ public class TreatmentFragment extends Fragment {
         });
 
         RelativeLayout relativeLayoutMedicines = fragmentView.findViewById(R.id.relativeLayoutMedicines);
-        relativeLayoutMedicines.setOnClickListener(view -> {
-            openFragmentFromTreatment(new MedicinesFragment());
-        });
+        relativeLayoutMedicines.setOnClickListener(view -> openFragmentFromTreatment(new MedicinesFragment()));
 
         RelativeLayout relativeLayoutSymptoms = fragmentView.findViewById(R.id.relativeLayoutSymptoms);
         relativeLayoutSymptoms.setOnClickListener(view -> {

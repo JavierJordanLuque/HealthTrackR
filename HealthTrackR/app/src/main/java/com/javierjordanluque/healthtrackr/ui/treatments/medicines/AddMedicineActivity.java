@@ -1,7 +1,10 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.medicines;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Medicine;
@@ -18,6 +26,7 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.enumerations.AdministrationRoute;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
+import com.javierjordanluque.healthtrackr.util.PermissionManager;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
@@ -28,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AddMedicineActivity extends BaseActivity {
     private Treatment treatment;
+    private Medicine medicine;
     private TextInputLayout layoutName;
     private TextInputLayout layoutInitialDosingTime;
     private EditText editTextName;
@@ -131,19 +141,20 @@ public class AddMedicineActivity extends BaseActivity {
             showAddMedicineNoPreviousNotificationConfirmationDialog(treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
         } else {
             try {
-                Medicine medicine = new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+                medicine = new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
 
-                Intent intent = new Intent();
-                intent.putExtra(MainActivity.class.getSimpleName(), MedicineFragment.class.getName());
+                if (PermissionManager.hasNotificationPermission(this)) {
+                    medicine.schedulePreviousMedicationNotification(this, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
+                    medicine.scheduleMedicationNotification(this);
 
-                Bundle bundle = new Bundle();
-                bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
-                bundle.putLong(Medicine.class.getSimpleName(), medicine.getId());
-                intent.putExtras(bundle);
-
-                setResult(RESULT_OK, intent);
-
-                finish();
+                    openNextActivity();
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionManager.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
+                    } else {
+                        showNotificationPermissionDeniedDialog();
+                    }
+                }
             } catch (DBInsertException | DBDeleteException exception) {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
             }
@@ -156,25 +167,80 @@ public class AddMedicineActivity extends BaseActivity {
         builder.setMessage(getString(R.string.medicines_dialog_message_no_previous_notification_add))
                 .setPositiveButton(getString(R.string.dialog_positive_add), (dialog, id) -> {
                     try {
-                        Medicine medicine = new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
+                        medicine = new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
 
-                        Intent intent = new Intent();
-                        intent.putExtra(MainActivity.class.getSimpleName(), MedicineFragment.class.getName());
-
-                        Bundle bundle = new Bundle();
-                        bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
-                        bundle.putLong(Medicine.class.getSimpleName(), medicine.getId());
-                        intent.putExtras(bundle);
-
-                        setResult(RESULT_OK, intent);
-
-                        finish();
-                    } catch (DBInsertException | DBDeleteException exception) {
+                        if (PermissionManager.hasNotificationPermission(this)) {
+                            scheduleNotifications();
+                            openNextActivity();
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionManager.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
+                            } else {
+                                showNotificationPermissionDeniedDialog();
+                            }
+                        }
+                    } catch (DBInsertException exception) {
                         ExceptionManager.advertiseUI(this, exception.getMessage());
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
         builder.create().show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PermissionManager.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                scheduleNotifications();
+                openNextActivity();
+            } else {
+                showNotificationPermissionDeniedDialog();
+            }
+        }
+    }
+
+    private final ActivityResultLauncher<Intent> notificationPermissionLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
+                    scheduleNotifications();
+                openNextActivity();
+            });
+
+    private void showNotificationPermissionDeniedDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.medicines_dialog_notification_permission))
+                .setPositiveButton(getString(R.string.snackbar_action_more), (dialog, id) -> {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.setData(android.net.Uri.parse("package:" + getPackageName()));
+                    notificationPermissionLauncher.launch(intent);
+                })
+                .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> openNextActivity());
+        builder.create().show();
+    }
+
+    private void scheduleNotifications() {
+        try {
+            medicine.schedulePreviousMedicationNotification(this, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
+            medicine.scheduleMedicationNotification(this);
+        } catch (DBInsertException | DBDeleteException exception) {
+            ExceptionManager.advertiseUI(this, exception.getMessage());
+        }
+    }
+
+    private void openNextActivity() {
+        Intent intent = new Intent();
+        intent.putExtra(MainActivity.class.getSimpleName(), MedicineFragment.class.getName());
+
+        Bundle bundle = new Bundle();
+        bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
+        bundle.putLong(Medicine.class.getSimpleName(), medicine.getId());
+        intent.putExtras(bundle);
+
+        setResult(RESULT_OK, intent);
+
+        finish();
     }
 
     private AdministrationRoute getAdministrationRouteFromSpinner() {

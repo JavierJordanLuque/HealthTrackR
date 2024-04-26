@@ -14,6 +14,7 @@ import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
 import com.javierjordanluque.healthtrackr.models.Treatment;
+import com.javierjordanluque.healthtrackr.util.PermissionManager;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.NotificationException;
@@ -80,7 +81,7 @@ public class NotificationPublisher extends BroadcastReceiver {
     }
 
     private void medicationPublisher(Context context, Notification notification) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+        if (PermissionManager.hasNotificationPermission(context) && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             MedicationNotification medicationNotification = (MedicationNotification) notification;
 
             String medicineName = medicationNotification.getMedicine().getName();
@@ -173,7 +174,7 @@ public class NotificationPublisher extends BroadcastReceiver {
     }
 
     private void appointmentPublisher(Context context, Notification notification) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+        if (PermissionManager.hasNotificationPermission(context) && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             MedicalAppointmentNotification appointmentNotification = (MedicalAppointmentNotification) notification;
 
             String appointmentPurpose = appointmentNotification.getAppointment().getPurpose();

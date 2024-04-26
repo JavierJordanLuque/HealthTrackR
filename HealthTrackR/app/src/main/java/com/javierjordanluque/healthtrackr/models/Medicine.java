@@ -36,7 +36,7 @@ public class Medicine implements Identifiable {
     private List<MedicationNotification> notifications;
 
     public Medicine(Context context, Treatment treatment, String name, String activeSubstance, Integer dose, AdministrationRoute administrationRoute, ZonedDateTime initialDosingTime,
-                    int dosageFrequencyHours, int dosageFrequencyMinutes) throws DBInsertException, DBDeleteException {
+                    int dosageFrequencyHours, int dosageFrequencyMinutes) throws DBInsertException {
         this.treatment = treatment;
         this.name = name;
         this.activeSubstance = activeSubstance;
@@ -46,15 +46,12 @@ public class Medicine implements Identifiable {
         this.dosageFrequencyHours = dosageFrequencyHours;
         this.dosageFrequencyMinutes = dosageFrequencyMinutes;
 
-        if (context != null) {
+        if (context != null)
             this.treatment.addMedicine(context, this);
-            schedulePreviousMedicationNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
-            scheduleMedicationNotification(context);
-        }
     }
 
     public void schedulePreviousMedicationNotification(Context context, int previousMinutes) throws DBInsertException, DBDeleteException {
-        if (PermissionManager.hasNotificationPermission(context) && previousMinutes > 0) {
+        if (previousMinutes > 0 && PermissionManager.hasNotificationPermission(context)) {
             long timestamp = initialDosingTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
             long totalDosageFrequencyMinutes = TimeUnit.HOURS.toMinutes(dosageFrequencyHours) + dosageFrequencyMinutes;
 

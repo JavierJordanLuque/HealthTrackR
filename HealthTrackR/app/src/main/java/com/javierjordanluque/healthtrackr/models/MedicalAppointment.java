@@ -32,16 +32,11 @@ public class MedicalAppointment implements Identifiable {
         this.dateTime = dateTime;
         this.location = location;
 
-        if (context != null) {
+        if (context != null)
             this.treatment.addAppointment(context, this);
-            scheduleAppointmentNotification(context, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
-        }
     }
 
     public void scheduleAppointmentNotification(Context context, int previousMinutes) throws DBInsertException {
-        // Check if the notification is valid by ensuring:
-        // 1. It's not already past
-        // 2. The app has permission to send notifications
         if (dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes)) &&
                 PermissionManager.hasNotificationPermission(context)) {
             long timestamp = dateTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
