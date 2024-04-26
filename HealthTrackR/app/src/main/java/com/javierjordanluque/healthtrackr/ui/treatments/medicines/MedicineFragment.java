@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.concurrent.TimeUnit;
 
 public class MedicineFragment extends Fragment {
     private OnToolbarChangeListener listener;
@@ -40,6 +43,7 @@ public class MedicineFragment extends Fragment {
     private TextView textViewInitialDosingTime;
     private TextView textViewDosingFrequency;
     private TextView textViewNextDose;
+    private Handler handler;
 
     public MedicineFragment() {
     }
@@ -47,6 +51,7 @@ public class MedicineFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        handler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -170,9 +175,18 @@ public class MedicineFragment extends Fragment {
         }
 
 
+        updateNextDose(true);
+    }
+
+    private void updateNextDose(boolean isFirst) {
         ZonedDateTime nextDose = medicine.calculateNextDose();
         if (nextDose != null) {
-            textViewNextDose.setText(((MainActivity) requireActivity()).formatTimeDifference(Duration.between(ZonedDateTime.now(), nextDose).toMillis()));
+            ZonedDateTime now = ZonedDateTime.now();
+            textViewNextDose.setText(((MainActivity) requireActivity()).formatTimeDifference(Duration.between(now, nextDose).toMillis()));
+
+            long delayMillis = isFirst ? TimeUnit.SECONDS.toMillis(30 - now.getSecond() % 30) : TimeUnit.MINUTES.toMillis(1);
+
+            handler.postDelayed(() -> updateNextDose(false), delayMillis);
         } else {
             textViewNextDose.setText(R.string.medicines_none);
         }
@@ -189,5 +203,6 @@ public class MedicineFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         listener = null;
+        handler.removeCallbacksAndMessages(null);
     }
 }
