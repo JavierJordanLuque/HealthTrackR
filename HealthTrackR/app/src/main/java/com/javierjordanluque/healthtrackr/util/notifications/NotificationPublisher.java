@@ -1,6 +1,8 @@
 package com.javierjordanluque.healthtrackr.util.notifications;
 
 import android.Manifest;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +16,8 @@ import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
 import com.javierjordanluque.healthtrackr.models.Treatment;
+import com.javierjordanluque.healthtrackr.ui.MainActivity;
+import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicineFragment;
 import com.javierjordanluque.healthtrackr.util.PermissionManager;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
@@ -86,16 +90,13 @@ public class NotificationPublisher extends BroadcastReceiver {
             String medicineName = medicationNotification.getMedicine().getName();
             String treatmentTitle = medicationNotification.getMedicine().getTreatment().getTitle();
 
-            // @TODO
-            // Establish a hierarchy by adding the android:parentActivityName in AndroidManifest.xml
-            // Replace MyActivity with the activity which shows the medicine's info
-            /*
-            Intent actionIntent = new Intent(context, MyActivity.class);
+            Intent actionIntent = new Intent(context, MainActivity.class);
+            actionIntent.putExtra(MainActivity.CURRENT_FRAGMENT, MedicineFragment.class.getName());
+            actionIntent.putExtra(MedicationNotification.class.getSimpleName(), notification.getId());
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             stackBuilder.addNextIntentWithParentStack(actionIntent);
-            PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(Integer.parseInt(notificationId),
+            PendingIntent actionPendingIntent = stackBuilder.getPendingIntent((int) notification.getId(),
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-            */
 
             NotificationCompat.Builder publicNotificationBuilder;
             NotificationCompat.Builder notificationBuilder;
@@ -115,8 +116,8 @@ public class NotificationPublisher extends BroadcastReceiver {
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setAutoCancel(true)
                         .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-                        //.setContentIntent(actionPendingIntent);
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                        .setContentIntent(actionPendingIntent);
 
                 notificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.PREVIOUS_MEDICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_medication)
@@ -127,8 +128,8 @@ public class NotificationPublisher extends BroadcastReceiver {
                         .setAutoCancel(true)
                         .setCategory(NotificationCompat.CATEGORY_REMINDER)
                         .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-                        .setPublicVersion(publicNotificationBuilder.build());
-                        //.setContentIntent(actionPendingIntent);
+                        .setPublicVersion(publicNotificationBuilder.build())
+                        .setContentIntent(actionPendingIntent);
             } else {
                 String publicMessage = context.getString(R.string.notification_public_message_medication_scheduled_now);
                 String message = context.getString(R.string.notification_message_medication_dose) + " " + medicineName + " " + context.getString(R.string.notification_message_medication_treatment) + " " +
@@ -142,8 +143,8 @@ public class NotificationPublisher extends BroadcastReceiver {
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setAutoCancel(true)
                         .setCategory(NotificationCompat.CATEGORY_ALARM)
-                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-                        //.setContentIntent(actionPendingIntent);
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                        .setContentIntent(actionPendingIntent);
 
                 notificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_medication)
@@ -154,8 +155,8 @@ public class NotificationPublisher extends BroadcastReceiver {
                         .setAutoCancel(true)
                         .setCategory(NotificationCompat.CATEGORY_ALARM)
                         .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-                        .setPublicVersion(publicNotificationBuilder.build());
-                        //.setContentIntent(actionPendingIntent);
+                        .setPublicVersion(publicNotificationBuilder.build())
+                        .setContentIntent(actionPendingIntent);
             }
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -198,16 +199,13 @@ public class NotificationPublisher extends BroadcastReceiver {
                         ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " + appointmentLocationLongitude + ".";
             }
 
-            // @TODO
-            // Establish a hierarchy by adding the android:parentActivityName in AndroidManifest.xml
-            // Replace MyActivity with the activity which shows the appointment's info
-            /*
-            Intent actionIntent = new Intent(context, MyActivity.class);
+            Intent actionIntent = new Intent(context, MainActivity.class);
+            //actionIntent.putExtra(MainActivity.CURRENT_FRAGMENT, MedicalAppointmentFragment.class.getName());
+            actionIntent.putExtra(MedicalAppointmentNotification.class.getSimpleName(), notification.getId());
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             stackBuilder.addNextIntentWithParentStack(actionIntent);
-            PendingIntent actionPendingIntent = stackBuilder.getPendingIntent(Integer.parseInt(notificationId),
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-            */
+            PendingIntent actionPendingIntent = stackBuilder.getPendingIntent((int) notification.getId(),
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             NotificationCompat.Builder publicNotificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_medical_appointment)
@@ -217,8 +215,8 @@ public class NotificationPublisher extends BroadcastReceiver {
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setAutoCancel(true)
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-                    //.setContentIntent(actionPendingIntent);
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .setContentIntent(actionPendingIntent);
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_medical_appointment)
@@ -229,8 +227,8 @@ public class NotificationPublisher extends BroadcastReceiver {
                     .setAutoCancel(true)
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-                    .setPublicVersion(publicNotificationBuilder.build());
-                    //.setContentIntent(actionPendingIntent);
+                    .setPublicVersion(publicNotificationBuilder.build())
+                    .setContentIntent(actionPendingIntent);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             notificationManager.notify((int) notification.getId(), notificationBuilder.build());

@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr;
 
 import android.app.Application;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
@@ -46,6 +47,7 @@ public class HealthTrackRApp extends Application {
     private void createNotificationChannel(String channelId, CharSequence channelName, int importance, String channelDescription, String groupId) {
         NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
         channel.setDescription(channelDescription);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         if (groupId != null)
             channel.setGroup(groupId);
 

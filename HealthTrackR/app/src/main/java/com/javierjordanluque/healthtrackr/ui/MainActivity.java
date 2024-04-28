@@ -18,18 +18,24 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.databinding.ActivityMainBinding;
+import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
+import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.account.AccountFragment;
 import com.javierjordanluque.healthtrackr.ui.calendar.CalendarFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentsFragment;
+import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicineFragment;
+import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicinesFragment;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends BaseActivity implements OnToolbarChangeListener {
     ActivityMainBinding binding;
-    private final String CURRENT_FRAGMENT = "currentFragment";
+    public static final String CURRENT_FRAGMENT = "currentFragment";
     public Fragment currentFragment;
 
     @Override
@@ -45,8 +51,19 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
             currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, CURRENT_FRAGMENT);
 
         if (currentFragment == null) {
-            currentFragment = new TreatmentsFragment();
-            replaceFragment(currentFragment);
+            if (getIntent().hasExtra(CURRENT_FRAGMENT)) {
+                String fragmentClassName = getIntent().getStringExtra(CURRENT_FRAGMENT);
+                if (fragmentClassName != null) {
+                    if (fragmentClassName.equals(MedicineFragment.class.getName())) {
+                        showMedicineFragmentFromNotification(fragmentClassName);
+                    } else {
+                        //showMedicalAppointmentFragmentFromNotification(fragmentClassName);
+                    }
+                }
+            } else {
+                currentFragment = new TreatmentsFragment();
+                replaceFragment(currentFragment);
+            }
         }
 
         int selectedItem;
@@ -122,6 +139,41 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
                     }
                 }
             });
+
+    private void showMedicineFragmentFromNotification(String fragmentClassName) {
+        try {
+            Fragment fragment = (Fragment) Class.forName(fragmentClassName).newInstance();
+            NotificationRepository notificationRepository = new NotificationRepository(this);
+            MedicationNotification medicationNotification = (MedicationNotification) notificationRepository.findById(getIntent().getLongExtra(MedicationNotification.class.getSimpleName(), -1));
+
+            if (medicationNotification != null) {
+                sessionViewModel.setUserSession(medicationNotification.getMedicine().getTreatment().getUser());
+
+                Fragment treatmentsFragment = new TreatmentsFragment();
+                replaceFragment(treatmentsFragment);
+
+                Fragment treatmentFragment = new TreatmentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putLong(Treatment.class.getSimpleName(), medicationNotification.getMedicine().getTreatment().getId());
+                treatmentFragment.setArguments(bundle);
+                replaceFragment(treatmentFragment);
+
+                Fragment medicinesFragment = new MedicinesFragment();
+                bundle = new Bundle();
+                bundle.putLong(Treatment.class.getSimpleName(), medicationNotification.getMedicine().getTreatment().getId());
+                medicinesFragment.setArguments(bundle);
+                replaceFragment(medicinesFragment);
+
+                bundle = new Bundle();
+                bundle.putLong(Treatment.class.getSimpleName(), medicationNotification.getMedicine().getTreatment().getId());
+                bundle.putLong(Medicine.class.getSimpleName(), medicationNotification.getMedicine().getId());
+                fragment.setArguments(bundle);
+                replaceFragment(fragment);
+            }
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | DBFindException exception) {
+            ExceptionManager.advertiseUI(this, exception.getMessage());
+        }
+    }
 
     public void setTreatmentLayoutStatus(Treatment treatment, ImageView imageViewStatus, TextView textViewStatus) {
         if (!treatment.isStarted()) {
