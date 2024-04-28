@@ -24,7 +24,6 @@ import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
 public class NotificationPublisher extends BroadcastReceiver {
-    private final int NOW_MARGIN_MINUTES = 1;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -185,7 +184,7 @@ public class NotificationPublisher extends BroadcastReceiver {
 
             String publicMessage;
             String message;
-            if (!ZonedDateTime.now().isBefore(appointmentDateTime.minusMinutes(NOW_MARGIN_MINUTES))) {
+            if (!ZonedDateTime.now().isBefore(appointmentDateTime.minusMinutes(1))) {
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_now);
                 message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
                         context.getString(R.string.notification_message_medical_appointment_scheduled_now) + " " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " +
