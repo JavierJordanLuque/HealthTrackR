@@ -27,7 +27,7 @@
     <string name="medicines_form_dosing_frequency">Periodicidad de toma *</string>
     <string name="medicines_form_previous_notification_time">Hora de la notificacion previa *</string>
 
-    <string name="medicines_dosing_frequency_helper">Una periodicidad de toma de 0 horas y 0 minutos indica una única toma. Frecuencias de toma menores a 20 minutos pueden provocar el anidamiento de las notificaciones.</string>
+    <string name="medicines_dosing_frequency_helper">Una periodicidad de toma de 0 horas y 0 minutos indica una única toma.</string>
     <string name="medicines_previous_notification_time_helper">Una hora de notificación previa de 0 horas y 0 minutos indica que no hay notificación previa. Las horas de notificación previa inferiores a 20 minutos pueden provocar su anidamiento con la notificación de toma.</string>
 
     <string name="medicines_dialog_message_no_previous_notification_add">La periodicidad de toma es menor o igual que el tiempo establecido para la notificación previa (por defecto 1 hora antes). Por tanto, la notificación previa no se establecerá. ¿Estás seguro/a de añadir este medicamento?</string>

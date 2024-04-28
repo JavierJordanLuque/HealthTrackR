@@ -43,7 +43,7 @@
     <string name="medicines_form_dosing_frequency">Dosing frequency *</string>
     <string name="medicines_form_previous_notification_time">Previous notification time *</string>
 
-    <string name="medicines_dosing_frequency_helper">A dosing frequency of 0 hours and 0 minutes indicates a single dose. Dosing frequencies less than 20 minutes may cause notification nesting.</string>
+    <string name="medicines_dosing_frequency_helper">A dosing frequency of 0 hours and 0 minutes indicates a single dose.</string>
     <string name="medicines_previous_notification_time_helper">A previous notification time of 0 hours and 0 minutes indicates no previous notification. Previous notification times less than 20 minutes may cause notification nesting with the dosing notification.</string>
 
     <string name="medicines_dialog_message_no_previous_notification_add">The dosing frequency is less than or equal to the time set for the previous notification (default 1 hour before). Therefore, the previous notification will not be set. Are you sure you want to add this medication?</string>

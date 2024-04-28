@@ -129,8 +129,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutInitialDosingTime"
-                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
-                        app:errorEnabled="false">
+                        style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextInitialDosingTime"
