@@ -13,7 +13,6 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
-import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
@@ -78,8 +77,7 @@ public class Treatment implements Identifiable {
                 }
             } else if (!isFinished() && endDate.isBefore(ZonedDateTime.now())) {
                 for (Medicine medicine : getMedicines(context)) {
-                    List<MedicationNotification> medicationNotifications = new ArrayList<>(medicine.getNotifications(context));
-                    for (MedicationNotification medicationNotification : medicationNotifications)
+                    for (MedicationNotification medicationNotification : medicine.getNotifications(context))
                         NotificationScheduler.cancelNotification(context, medicationNotification);
                 }
             }
@@ -128,8 +126,7 @@ public class Treatment implements Identifiable {
     }
 
     public void removeMedicine(Context context, Medicine medicine) throws DBDeleteException, DBFindException {
-        List<MedicationNotification> medicationNotifications = new ArrayList<>(medicine.getNotifications(context));
-        for (MedicationNotification medicationNotification : medicationNotifications)
+        for (MedicationNotification medicationNotification : medicine.getNotifications(context))
             NotificationScheduler.cancelNotification(context, medicationNotification);
 
         MedicineRepository medicineRepository = new MedicineRepository(context);

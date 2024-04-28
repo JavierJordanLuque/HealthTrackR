@@ -104,30 +104,30 @@ public class NotificationPublisher extends BroadcastReceiver {
                 ZonedDateTime medicineNextDose = medicationNotification.getMedicine().calculateNextDose();
                 String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), medicineNextDose).toMillis());
 
-                String publicMessage = context.getString(R.string.notification_public_message_medication_scheduled_in) + " " + formattedTimeDifference;
+                String publicMessage = context.getString(R.string.notification_public_message_medication_scheduled_in) + " " + formattedTimeDifference + ".";
                 String message = context.getString(R.string.notification_message_medication_dose) + " " + medicineName + " " + context.getString(R.string.notification_message_medication_treatment) + " " + treatmentTitle + " " + context.getString(R.string.notification_message_medication_scheduled_in) + " " +
-                        formattedTimeDifference;
+                        formattedTimeDifference + ".";
 
                 publicNotificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.PREVIOUS_MEDICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(publicMessage)
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(publicMessage))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(publicMessage))
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setAutoCancel(true)
-                        .setCategory(NotificationCompat.CATEGORY_REMINDER);
+                        .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
                         //.setContentIntent(actionPendingIntent);
 
                 notificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.PREVIOUS_MEDICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(message)
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(message))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setAutoCancel(true)
                         .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                        .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                         .setPublicVersion(publicNotificationBuilder.build());
                         //.setContentIntent(actionPendingIntent);
             } else {
@@ -139,22 +139,22 @@ public class NotificationPublisher extends BroadcastReceiver {
                         .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(publicMessage)
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(publicMessage))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(publicMessage))
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setAutoCancel(true)
-                        .setCategory(NotificationCompat.CATEGORY_ALARM);
+                        .setCategory(NotificationCompat.CATEGORY_ALARM)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
                         //.setContentIntent(actionPendingIntent);
 
                 notificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_medication)
                         .setContentTitle(context.getString(R.string.notification_title_medication))
                         .setContentText(message)
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(message))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setAutoCancel(true)
                         .setCategory(NotificationCompat.CATEGORY_ALARM)
+                        .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                         .setPublicVersion(publicNotificationBuilder.build());
                         //.setContentIntent(actionPendingIntent);
             }
@@ -188,15 +188,15 @@ public class NotificationPublisher extends BroadcastReceiver {
             if (!ZonedDateTime.now().isBefore(appointmentDateTime.minusMinutes(NOW_MARGIN_MINUTES))) {
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_now);
                 message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
-                        context.getString(R.string.notification_message_medical_appointment_scheduled_now) + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " +
-                        appointmentLocationLongitude;
+                        context.getString(R.string.notification_message_medical_appointment_scheduled_now) + " " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " +
+                        appointmentLocationLongitude + ".";
             } else {
                 String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), appointmentDateTime).toMillis());
 
-                publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference;
+                publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference + ".";
                 message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
                         context.getString(R.string.notification_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude +
-                        ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " + appointmentLocationLongitude;
+                        ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " + appointmentLocationLongitude + ".";
             }
 
             // @TODO
@@ -214,22 +214,22 @@ public class NotificationPublisher extends BroadcastReceiver {
                     .setSmallIcon(R.drawable.ic_medical_appointment)
                     .setContentTitle(context.getString(R.string.notification_title_medical_appointment))
                     .setContentText(publicMessage)
-                    .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(publicMessage))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(publicMessage))
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setAutoCancel(true)
-                    .setCategory(NotificationCompat.CATEGORY_REMINDER);
+                    .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
                     //.setContentIntent(actionPendingIntent);
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_medical_appointment)
                     .setContentTitle(context.getString(R.string.notification_title_medical_appointment))
                     .setContentText(message)
-                    .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(message))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setAutoCancel(true)
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                    .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                     .setPublicVersion(publicNotificationBuilder.build());
                     //.setContentIntent(actionPendingIntent);
 
@@ -255,6 +255,19 @@ public class NotificationPublisher extends BroadcastReceiver {
         long days = TimeUnit.MILLISECONDS.toDays(timeDifferenceMillis);
         long hours = TimeUnit.MILLISECONDS.toHours(timeDifferenceMillis) % 24;
         long minutes = TimeUnit.MILLISECONDS.toMinutes(timeDifferenceMillis) % 60;
+
+        if (TimeUnit.MILLISECONDS.toSeconds(timeDifferenceMillis) % 60 >= 30)
+            minutes++;
+
+        if (minutes == 60) {
+            minutes = 0;
+            hours++;
+        }
+
+        if (hours == 24) {
+            hours = 0;
+            days++;
+        }
 
         String timeDifferenceString = "";
         if (days > 0)

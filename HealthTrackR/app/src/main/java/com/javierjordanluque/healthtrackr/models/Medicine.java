@@ -157,9 +157,7 @@ public class Medicine implements Identifiable {
         }
 
         if (modifiedInitialDosingTime || modifiedDosingFrequency) {
-            List<MedicationNotification> medicationNotifications = new ArrayList<>(getNotifications(context));
-
-            for (MedicationNotification medicationNotification : medicationNotifications) {
+            for (MedicationNotification medicationNotification : getNotifications(context)) {
                 if (medicationNotification.getTimestamp() != oldInitialDosingTime.toInstant().toEpochMilli()) {
                     int previousMinutes = (int) ChronoUnit.MINUTES.between(Instant.ofEpochMilli(medicationNotification.getTimestamp())
                             .atZone(oldInitialDosingTime.getZone()), oldInitialDosingTime);
@@ -298,6 +296,9 @@ public class Medicine implements Identifiable {
         if (notifications == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotifications(notificationRepository.findMedicineNotifications(this.treatment.getId(), this.id));
+
+            for (MedicationNotification medicationNotification : notifications)
+                medicationNotification.setMedicine(this);
         }
 
         return notifications;

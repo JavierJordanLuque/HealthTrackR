@@ -3,7 +3,7 @@ package com.javierjordanluque.healthtrackr.util.notifications;
 import com.javierjordanluque.healthtrackr.models.MedicalAppointment;
 
 public class MedicalAppointmentNotification extends Notification {
-    private final MedicalAppointment appointment;
+    private MedicalAppointment appointment;
 
     public MedicalAppointmentNotification(MedicalAppointment appointment, long timestamp) {
         super(timestamp);
@@ -12,5 +12,9 @@ public class MedicalAppointmentNotification extends Notification {
 
     public MedicalAppointment getAppointment() {
         return appointment;
+    }
+
+    public void setAppointment(MedicalAppointment appointment) {
+        this.appointment = appointment;
     }
 }

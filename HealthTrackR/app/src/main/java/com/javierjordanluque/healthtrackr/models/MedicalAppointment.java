@@ -154,6 +154,8 @@ public class MedicalAppointment implements Identifiable {
         if (notification == null) {
             NotificationRepository notificationRepository = new NotificationRepository(context);
             setNotification(notificationRepository.findAppointmentNotification(this.id));
+
+            notification.setAppointment(this);
         }
 
         return notification;

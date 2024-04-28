@@ -13,4 +13,8 @@ public class MedicationNotification extends Notification {
     public Medicine getMedicine() {
         return medicine;
     }
+
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
+    }
 }

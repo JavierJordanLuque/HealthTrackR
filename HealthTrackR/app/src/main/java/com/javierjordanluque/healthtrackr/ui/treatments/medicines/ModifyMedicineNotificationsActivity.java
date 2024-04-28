@@ -35,8 +35,6 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ModifyMedicineNotificationsActivity extends BaseActivity {
@@ -118,23 +116,20 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
         switchPreviousNotificationStatus = findViewById(R.id.switchPreviousNotificationStatus);
         switchDosingNotificationStatus = findViewById(R.id.switchDosingNotificationStatus);
 
-        List<MedicationNotification> notifications = new ArrayList<>();
+        MedicationNotification previousNotification = null;
         try {
-            notifications = medicine.getNotifications(this);
+            for (MedicationNotification notification : medicine.getNotifications(this)) {
+                if (notification.getTimestamp() != medicine.getInitialDosingTime().toInstant().toEpochMilli()) {
+                    switchPreviousNotificationStatus.setChecked(true);
+
+                    previousNotification = notification;
+                    setPreviousNotificationTime(notification);
+                } else {
+                    switchDosingNotificationStatus.setChecked(true);
+                }
+            }
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(this, exception.getMessage());
-        }
-
-        MedicationNotification previousNotification = null;
-        for (MedicationNotification notification : notifications) {
-            if (notification.getTimestamp() != medicine.getInitialDosingTime().toInstant().toEpochMilli()) {
-                switchPreviousNotificationStatus.setChecked(true);
-
-                previousNotification = notification;
-                setPreviousNotificationTime(notification);
-            } else {
-                switchDosingNotificationStatus.setChecked(true);
-            }
         }
 
         MedicationNotification finalPreviousNotification = previousNotification;

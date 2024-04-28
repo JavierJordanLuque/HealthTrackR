@@ -14,19 +14,19 @@
 
     <string name="notification_message_medication_dose">Siguiente dosis de</string>
     <string name="notification_message_medication_treatment">del tratamiento</string>
-    <string name="notification_message_medication_schedule_now">está programada para ahora</string>
+    <string name="notification_message_medication_schedule_now">está programada para ahora.</string>
     <string name="notification_message_medication_scheduled_in">está programada para dentro de</string>
 
     <string name="notification_message_medical_appointment_appointment">Cita médica para</string>
     <string name="notification_message_medical_appointment_treatment">del tratamiento</string>
-    <string name="notification_message_medical_appointment_scheduled_now">programado para ahora</string>
+    <string name="notification_message_medical_appointment_scheduled_now">programado para ahora.</string>
     <string name="notification_message_medical_appointment_scheduled_in">programada para dentro de</string>
     <string name="notification_message_medical_appointment_latitude">Localización: Latitud</string>
     <string name="notification_message_medical_appointment_longitude">Longitud</string>
 
-    <string name="notification_public_message_medication_scheduled_now">Una dosis de medicación está programada para ahora</string>
+    <string name="notification_public_message_medication_scheduled_now">Una dosis de medicación está programada para ahora.</string>
     <string name="notification_public_message_medication_scheduled_in">Una dosis de medicación está programada para dentro de</string>
-    <string name="notification_public_message_medical_appointment_scheduled_now">Una cita médica está programada para ahora</string>
+    <string name="notification_public_message_medical_appointment_scheduled_now">Una cita médica está programada para ahora.</string>
     <string name="notification_public_message_medical_appointment_scheduled_in">Una cita médica está programada para dentro de</string>
 
     <plurals name="notification_message_days">
