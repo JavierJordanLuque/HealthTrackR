@@ -13,6 +13,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
@@ -77,7 +78,8 @@ public class Treatment implements Identifiable {
                 }
             } else if (!isFinished() && endDate.isBefore(ZonedDateTime.now())) {
                 for (Medicine medicine : getMedicines(context)) {
-                    for (MedicationNotification medicationNotification : medicine.getNotifications(context))
+                    List<MedicationNotification> medicationNotifications = new ArrayList<>(medicine.getNotifications(context));
+                    for (MedicationNotification medicationNotification : medicationNotifications)
                         NotificationScheduler.cancelNotification(context, medicationNotification);
                 }
             }
@@ -125,7 +127,11 @@ public class Treatment implements Identifiable {
         medicines.add(medicine);
     }
 
-    public void removeMedicine(Context context, Medicine medicine) throws DBDeleteException {
+    public void removeMedicine(Context context, Medicine medicine) throws DBDeleteException, DBFindException {
+        List<MedicationNotification> medicationNotifications = new ArrayList<>(medicine.getNotifications(context));
+        for (MedicationNotification medicationNotification : medicationNotifications)
+            NotificationScheduler.cancelNotification(context, medicationNotification);
+
         MedicineRepository medicineRepository = new MedicineRepository(context);
         medicineRepository.delete(medicine);
         medicines.remove(medicine);
@@ -173,7 +179,9 @@ public class Treatment implements Identifiable {
         appointments.add(appointment);
     }
 
-    public void removeAppointment(Context context, MedicalAppointment appointment) throws DBDeleteException {
+    public void removeAppointment(Context context, MedicalAppointment appointment) throws DBDeleteException, DBFindException {
+        NotificationScheduler.cancelNotification(context, appointment.getNotification(context));
+
         MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
         medicalAppointmentRepository.delete(appointment);
         appointments.remove(appointment);
@@ -263,6 +271,7 @@ public class Treatment implements Identifiable {
                 return -1;
             } else {
                 int compareNextDose = nextDose1.compareTo(nextDose2);
+
                 return compareNextDose != 0 ? compareNextDose : medicine1.getInitialDosingTime().compareTo(medicine2.getInitialDosingTime());
             }
         });

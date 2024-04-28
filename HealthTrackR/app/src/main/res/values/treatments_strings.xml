@@ -4,7 +4,7 @@
     <string name="treatments_app_bar_title_add">Treatment addition</string>
     <string name="treatments_app_bar_title_modify">Treatment modification</string>
 
-    <string name="treatments_no_elements">You don´t have treatments. Please add a new treatment</string>
+    <string name="treatments_no_elements">You don´t have treatments. Please add a new treatment.</string>
     <string name="treatments_not_found_message">No treatments found matching the specified filters. Please try different filters.</string>
 
     <string name="treatments_title">Title</string>

@@ -273,7 +273,98 @@ public class User implements Identifiable {
             TreatmentRepository treatmentRepository = new TreatmentRepository(context);
             setTreatments(treatmentRepository.findUserTreatments(this.id));
         }
-        treatments.sort((treatment1, treatment2) -> treatment2.getStartDate().compareTo(treatment1.getStartDate()));
+
+        treatments.sort((treatment1, treatment2) -> {
+            // Sort in progress treatments
+            if (treatment1.isStarted() && !treatment1.isFinished() && !treatment2.isStarted()) {
+                return -1;
+            } else if (!treatment1.isStarted() && treatment2.isStarted() && !treatment2.isFinished()) {
+                return 1;
+            } else if (treatment1.isStarted() && !treatment1.isFinished() && treatment2.isStarted() && !treatment2.isFinished()) {
+                if (treatment1.getEndDate() != null && treatment2.getEndDate() != null) {
+                    int endDateComparison = treatment2.getEndDate().compareTo(treatment1.getEndDate());
+
+                    if (endDateComparison != 0) {
+                        return endDateComparison;
+                    } else {
+                        int startDateComparison = treatment2.getStartDate().compareTo(treatment1.getStartDate());
+
+                        if (startDateComparison != 0) {
+                            return startDateComparison;
+                        } else {
+                            return treatment1.getTitle().compareTo(treatment2.getTitle());
+                        }
+                    }
+                } else if (treatment1.getEndDate() != null) {
+                    return -1;
+                } else if (treatment2.getEndDate() != null) {
+                    return 1;
+                } else {
+                    return treatment1.getTitle().compareTo(treatment2.getTitle());
+                }
+            }
+
+            // Sort pending treatments
+            if (!treatment1.isStarted() && !treatment2.isStarted()) {
+                if (treatment1.getStartDate() != null && treatment2.getStartDate() != null) {
+                    int startDateComparison = treatment2.getStartDate().compareTo(treatment1.getStartDate());
+
+                    if (startDateComparison != 0) {
+                        return startDateComparison;
+                    } else {
+                        if (treatment1.getEndDate() != null && treatment2.getEndDate() != null) {
+                            int endDateComparison = treatment2.getEndDate().compareTo(treatment1.getEndDate());
+
+                            if (endDateComparison != 0) {
+                                return endDateComparison;
+                            } else {
+                                return treatment1.getTitle().compareTo(treatment2.getTitle());
+                            }
+                        } else if (treatment1.getEndDate() != null) {
+                            return -1;
+                        } else if (treatment2.getEndDate() != null) {
+                            return 1;
+                        } else {
+                            return treatment1.getTitle().compareTo(treatment2.getTitle());
+                        }
+                    }
+                } else if (treatment1.getStartDate() != null) {
+                    return -1;
+                } else if (treatment2.getStartDate() != null) {
+                    return 1;
+                } else {
+                    return treatment1.getTitle().compareTo(treatment2.getTitle());
+                }
+            }
+
+            // Sort finished treatments
+            if (treatment1.isFinished() && treatment2.isFinished()) {
+                if (treatment1.getEndDate() != null && treatment2.getEndDate() != null) {
+                    int endDateComparison = treatment2.getEndDate().compareTo(treatment1.getEndDate());
+
+                    if (endDateComparison != 0) {
+                        return endDateComparison;
+                    } else {
+                        int startDateComparison = treatment2.getStartDate().compareTo(treatment1.getStartDate());
+                        if (startDateComparison != 0) {
+                            return startDateComparison;
+                        } else {
+                            return treatment1.getTitle().compareTo(treatment2.getTitle());
+                        }
+                    }
+                } else if (treatment1.getEndDate() != null) {
+                    return -1;
+                } else if (treatment2.getEndDate() != null) {
+                    return 1;
+                } else {
+                    return treatment1.getTitle().compareTo(treatment2.getTitle());
+                }
+            } else if (treatment1.isFinished()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
 
         return treatments;
     }

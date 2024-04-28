@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,16 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -352,25 +347,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month - 1);
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-    }
-
-    public void setTreatmentLayoutStatus(Treatment treatment, ImageView imageViewStatus, TextView textViewStatus) {
-        if (!treatment.isStarted()) {
-            imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_pending));
-            imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red)));
-            imageViewStatus.setContentDescription(getString(R.string.content_description_status_pending));
-            textViewStatus.setText(getString(R.string.treatments_status_pending));
-        } else if (treatment.isStarted() && !treatment.isFinished()) {
-            imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_in_progress));
-            imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.amber)));
-            imageViewStatus.setContentDescription(getString(R.string.content_description_status_in_progress));
-            textViewStatus.setText(getString(R.string.treatments_status_in_progress));
-        } else if (treatment.isFinished()) {
-            imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_finished));
-            imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)));
-            imageViewStatus.setContentDescription(getString(R.string.content_description_status_finished));
-            textViewStatus.setText(getString(R.string.treatments_status_finished));
-        }
     }
 
     public String formatTimeDifference(long timeDifferenceMillis) {

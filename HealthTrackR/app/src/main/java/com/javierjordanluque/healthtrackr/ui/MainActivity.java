@@ -1,17 +1,24 @@
 package com.javierjordanluque.healthtrackr.ui;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.databinding.ActivityMainBinding;
+import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.account.AccountFragment;
 import com.javierjordanluque.healthtrackr.ui.calendar.CalendarFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentFragment;
@@ -116,8 +123,27 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
                 }
             });
 
+    public void setTreatmentLayoutStatus(Treatment treatment, ImageView imageViewStatus, TextView textViewStatus) {
+        if (!treatment.isStarted()) {
+            imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_pending));
+            imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red)));
+            imageViewStatus.setContentDescription(getString(R.string.content_description_status_pending));
+            textViewStatus.setText(getString(R.string.treatments_status_pending));
+        } else if (treatment.isStarted() && !treatment.isFinished()) {
+            imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_in_progress));
+            imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.amber)));
+            imageViewStatus.setContentDescription(getString(R.string.content_description_status_in_progress));
+            textViewStatus.setText(getString(R.string.treatments_status_in_progress));
+        } else if (treatment.isFinished()) {
+            imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_finished));
+            imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)));
+            imageViewStatus.setContentDescription(getString(R.string.content_description_status_finished));
+            textViewStatus.setText(getString(R.string.treatments_status_finished));
+        }
+    }
+
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         FragmentManager fragmentManager = getSupportFragmentManager();

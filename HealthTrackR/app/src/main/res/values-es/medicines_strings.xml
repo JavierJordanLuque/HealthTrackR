@@ -5,7 +5,7 @@
     <string name="medicines_app_bar_title_modify">Modificación de medicamento</string>
     <string name="medicines_app_bar_title_modify_notifications">Modificación de notificaciones</string>
 
-    <string name="medicines_no_elements">No tienes medicamentos en este tratamiento. Por favor, añade un nuevo medicamento</string>
+    <string name="medicines_no_elements">No tienes medicamentos en este tratamiento. Por favor, añade un nuevo medicamento.</string>
     <string name="medicines_none">Ninguna</string>
     <string name="medicines_now">Ahora</string>
     <string name="medicines_single_dose">Dosis única</string>
