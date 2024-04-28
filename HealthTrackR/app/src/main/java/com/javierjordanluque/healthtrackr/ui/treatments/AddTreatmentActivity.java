@@ -181,7 +181,7 @@ public class AddTreatmentActivity extends BaseActivity {
     }
 
     private boolean isValidTitle(String title) {
-        return !title.isEmpty() && title.length() <= 50;
+        return !title.isEmpty();
     }
 
     private boolean isValidStartDate(String startDate) {

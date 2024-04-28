@@ -25,6 +25,7 @@
     <string name="error_invalid_treatment_diagnosis">The title must contain less than 200 characters.</string>
 
     <string name="error_invalid_medicine_name">The name mustn´t be empty.</string>
+    <string name="error_invalid_medicine_name_existing">The specified medicine already exists in this treatment.</string>
     <string name="error_invalid_medicine_initial_dosing_time">The initial dosing time mustn´t be empty.</string>
     <string name="error_invalid_medicine_previous_notification_time">The previous notification time must be less than the dosage frequency.</string>
 

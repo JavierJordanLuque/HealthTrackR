@@ -25,6 +25,7 @@
     <string name="error_invalid_treatment_diagnosis">El diagnóstico debe contener menos de 200 caracteres.</string>
 
     <string name="error_invalid_medicine_name">El nombre no debe estar vacío.</string>
+    <string name="error_invalid_medicine_name_existing">El medicamento especificado ya existe en este tratamiento.</string>
     <string name="error_invalid_medicine_initial_dosing_time">La hora de primera toma no debe estar vacía.</string>
     <string name="error_invalid_medicine_previous_notification_time">La hora de la notificación previa debe ser menor que la periodicidad de toma.</string>
 

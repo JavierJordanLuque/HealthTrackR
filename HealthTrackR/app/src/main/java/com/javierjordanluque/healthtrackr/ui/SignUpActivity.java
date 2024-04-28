@@ -120,11 +120,11 @@ public class SignUpActivity extends BaseActivity {
     }
 
     private boolean isValidFirstName(String firstName) {
-        return !firstName.isEmpty() && firstName.length() <= 50;
+        return !firstName.isEmpty();
     }
 
     private boolean isValidLastName(String lastName) {
-        return !lastName.isEmpty() && lastName.length() <= 50;
+        return !lastName.isEmpty();
     }
 
     @Override

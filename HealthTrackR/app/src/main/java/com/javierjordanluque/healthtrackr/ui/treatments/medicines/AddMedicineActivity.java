@@ -28,6 +28,7 @@ import com.javierjordanluque.healthtrackr.ui.BaseActivity;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.util.PermissionManager;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
@@ -103,11 +104,20 @@ public class AddMedicineActivity extends BaseActivity {
         String name = editTextName.getText().toString().trim();
 
         boolean validName = isValidName(name);
+
+        boolean validNameGivenDependencies = true;
+        if (validName)
+            validNameGivenDependencies = isValidNameGivenDependencies(name);
+
         boolean validInitialDosingTime = isValidInitialDosingTime(editTextInitialDosingTime.getText().toString().trim());
 
-        if (!validName || !validInitialDosingTime) {
-            if (!validName)
+        if (!validName || !validNameGivenDependencies || !validInitialDosingTime) {
+            if (!validName) {
                 layoutName.setError(getString(R.string.error_invalid_medicine_name));
+            } else if (!validNameGivenDependencies) {
+                layoutName.setError(getString(R.string.error_invalid_medicine_name_existing));
+            }
+
             if (!validInitialDosingTime)
                 layoutInitialDosingTime.setError(getString(R.string.error_invalid_medicine_initial_dosing_time));
 
@@ -279,8 +289,20 @@ public class AddMedicineActivity extends BaseActivity {
         spinnerAdministrationRoute.setSelection(adapter.getCount() - 1);
     }
 
-    private boolean isValidName(String title) {
-        return !title.isEmpty() && title.length() <= 50;
+    private boolean isValidName(String name) {
+        return !name.isEmpty();
+    }
+
+    private boolean isValidNameGivenDependencies(String name) {
+        try {
+            for (Medicine medicineFromTreatment : treatment.getMedicines(this)) {
+                if (medicineFromTreatment.getName().equalsIgnoreCase(name))
+                    return false;
+            }
+        } catch (DBFindException exception) {
+            ExceptionManager.advertiseUI(this, exception.getMessage());
+        }
+        return true;
     }
 
     private boolean isValidInitialDosingTime(String initialDosingTime) {
