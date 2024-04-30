@@ -27,6 +27,10 @@
 
     <string name="dialog_message_save">Are you sure you want to save the changes?</string>
 
+    <string name="dialog_date_picker_day">Day</string>
+    <string name="dialog_date_picker_month">Month</string>
+    <string name="dialog_date_picker_year">Year</string>
+
     <string name="toast_confirmation_save">Changes applied successfully!</string>
 
     <string name="filter_title">Filter</string>

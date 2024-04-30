@@ -25,6 +25,10 @@
 
     <string name="dialog_message_save">¿Estás seguro/a de guardar los cambios?</string>
 
+    <string name="dialog_date_picker_day">Día</string>
+    <string name="dialog_date_picker_month">Mes</string>
+    <string name="dialog_date_picker_year">Año</string>
+
     <string name="toast_confirmation_save">¡Cambios guardados!</string>
 
     <string name="filter_title">Filtro</string>
