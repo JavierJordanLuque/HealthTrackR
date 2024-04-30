@@ -176,12 +176,12 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
     }
 
     public void setTreatmentLayoutStatus(Treatment treatment, ImageView imageViewStatus, TextView textViewStatus) {
-        if (!treatment.isStarted()) {
+        if (treatment.isPending()) {
             imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_pending));
             imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red)));
             imageViewStatus.setContentDescription(getString(R.string.content_description_status_pending));
             textViewStatus.setText(getString(R.string.treatments_status_pending));
-        } else if (treatment.isStarted() && !treatment.isFinished()) {
+        } else if (treatment.isInProgress()) {
             imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_in_progress));
             imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.amber)));
             imageViewStatus.setContentDescription(getString(R.string.content_description_status_in_progress));

@@ -114,6 +114,13 @@ public class Treatment implements Identifiable {
     public boolean isStarted() {
         return !ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).isBefore(startDate);
     }
+    public boolean isPending() {
+        return !isStarted();
+    }
+
+    public boolean isInProgress() {
+        return isStarted() && !isFinished();
+    }
 
     public boolean isFinished() {
         return endDate != null && ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).isAfter(endDate);

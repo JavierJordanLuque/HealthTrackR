@@ -30,6 +30,7 @@
 
     <string name="treatments_toast_confirmation_delete">¡Tratamiento eliminado!</string>
 
+    <string name="treatments_status">Estado</string>
     <string name="treatments_status_pending">Pendiente</string>
     <string name="treatments_status_in_progress">En progreso</string>
     <string name="treatments_status_finished">Finalizado</string>

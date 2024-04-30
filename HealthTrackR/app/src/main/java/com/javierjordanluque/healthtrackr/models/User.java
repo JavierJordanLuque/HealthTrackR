@@ -169,7 +169,8 @@ public class User implements Identifiable {
         treatments.remove(treatment);
     }
 
-    public List<Treatment> filterTreatments(String title, ZonedDateTime startDate, ZonedDateTime endDate, TreatmentCategory category) {
+    public List<Treatment> filterTreatments(String title, ZonedDateTime startDate, ZonedDateTime endDate, TreatmentCategory category, boolean statusPending,
+                                            boolean statusInProgress, boolean statusFinished) {
         List<Treatment> filteredTreatments = new ArrayList<>();
 
         for (Treatment treatment : treatments) {
@@ -177,8 +178,9 @@ public class User implements Identifiable {
             boolean startDateMatches = startDate == null || treatment.getStartDate().isAfter(startDate) || treatment.getStartDate().isEqual(startDate);
             boolean endDateMatches = endDate == null || (treatment.getEndDate() != null && treatment.getEndDate().isBefore(endDate)) || (treatment.getEndDate() != null && treatment.getEndDate().isEqual(endDate));
             boolean categoryMatches = category == null || treatment.getCategory().equals(category);
+            boolean statusMatches = (statusPending && treatment.isPending()) || (statusInProgress && treatment.isInProgress()) || (statusFinished && treatment.isFinished());
 
-            if (titleMatches && startDateMatches && endDateMatches && categoryMatches)
+            if (titleMatches && startDateMatches && endDateMatches && categoryMatches && statusMatches)
                 filteredTreatments.add(treatment);
         }
 
@@ -276,11 +278,11 @@ public class User implements Identifiable {
 
         treatments.sort((treatment1, treatment2) -> {
             // Sort in progress treatments
-            if (treatment1.isStarted() && !treatment1.isFinished() && !treatment2.isStarted()) {
+            if (treatment1.isInProgress() && treatment2.isPending()) {
                 return -1;
-            } else if (!treatment1.isStarted() && treatment2.isStarted() && !treatment2.isFinished()) {
+            } else if (!treatment1.isPending() && treatment2.isInProgress()) {
                 return 1;
-            } else if (treatment1.isStarted() && !treatment1.isFinished() && treatment2.isStarted() && !treatment2.isFinished()) {
+            } else if (treatment1.isInProgress() && treatment2.isInProgress()) {
                 if (treatment1.getEndDate() != null && treatment2.getEndDate() != null) {
                     int endDateComparison = treatment2.getEndDate().compareTo(treatment1.getEndDate());
 
@@ -305,7 +307,7 @@ public class User implements Identifiable {
             }
 
             // Sort pending treatments
-            if (!treatment1.isStarted() && !treatment2.isStarted()) {
+            if (treatment1.isPending() && treatment2.isPending()) {
                 if (treatment1.getStartDate() != null && treatment2.getStartDate() != null) {
                     int startDateComparison = treatment2.getStartDate().compareTo(treatment1.getStartDate());
 

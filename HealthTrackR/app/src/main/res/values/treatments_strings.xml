@@ -30,6 +30,7 @@
 
     <string name="treatments_toast_confirmation_delete">Treatment deleted successfully!</string>
 
+    <string name="treatments_status">Status</string>
     <string name="treatments_status_pending">Pending</string>
     <string name="treatments_status_in_progress">In progress</string>
     <string name="treatments_status_finished">Finished</string>

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -51,6 +52,9 @@ public class TreatmentsFragment extends Fragment {
     private ZonedDateTime startDateFilter;
     private ZonedDateTime endDateFilter;
     private TreatmentCategory categoryFilter;
+    private Boolean statusPendingFilter;
+    private Boolean statusInProgressFilter;
+    private Boolean statusFinishedFilter;
 
     public TreatmentsFragment() {
     }
@@ -149,6 +153,27 @@ public class TreatmentsFragment extends Fragment {
 
             Spinner spinnerCategory = configureCategorySpinner(popupView.findViewById(R.id.spinnerCategory));
 
+            CheckBox checkBoxStatusPending = popupView.findViewById(R.id.checkBoxStatusPending);
+            if (statusPendingFilter != null) {
+                checkBoxStatusPending.setChecked(statusPendingFilter);
+            } else {
+                checkBoxStatusPending.setChecked(true);
+            }
+
+            CheckBox checkBoxStatusInProgress = popupView.findViewById(R.id.checkBoxStatusInProgress);
+            if (statusInProgressFilter != null) {
+                checkBoxStatusInProgress.setChecked(statusInProgressFilter);
+            } else {
+                checkBoxStatusInProgress.setChecked(true);
+            }
+
+            CheckBox checkBoxStatusFinished = popupView.findViewById(R.id.checkBoxStatusFinished);
+            if (statusFinishedFilter != null) {
+                checkBoxStatusFinished.setChecked(statusFinishedFilter);
+            } else {
+                checkBoxStatusFinished.setChecked(true);
+            }
+
             Button buttonFilter = popupView.findViewById(R.id.buttonFilter);
             buttonFilter.setOnClickListener(v -> {
                 titleFilter = editTextTitle.getText().toString().trim();
@@ -165,7 +190,12 @@ public class TreatmentsFragment extends Fragment {
 
                 categoryFilter = getCategoryFromSpinner(spinnerCategory);
 
-                List<Treatment> filteredTreatments = user.filterTreatments(titleFilter, startDateFilter, endDateFilter, categoryFilter);
+                statusPendingFilter = checkBoxStatusPending.isChecked();
+                statusInProgressFilter = checkBoxStatusInProgress.isChecked();
+                statusFinishedFilter = checkBoxStatusFinished.isChecked();
+
+                List<Treatment> filteredTreatments = user.filterTreatments(titleFilter, startDateFilter, endDateFilter, categoryFilter, statusPendingFilter,
+                        statusInProgressFilter, statusFinishedFilter);
                 showTreatments(filteredTreatments, true);
 
                 popupWindow.dismiss();
@@ -174,10 +204,7 @@ public class TreatmentsFragment extends Fragment {
             Button buttonClearFilter = popupView.findViewById(R.id.buttonClearFilter);
             buttonClearFilter.setOnClickListener(v -> {
                 try {
-                    titleFilter = null;
-                    startDateFilter = null;
-                    endDateFilter = null;
-                    categoryFilter = null;
+                    resetFilters();
 
                     List<Treatment> unfilteredTreatments = user.getTreatments(requireActivity());
                     showTreatments(unfilteredTreatments, false);
@@ -210,6 +237,7 @@ public class TreatmentsFragment extends Fragment {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
 
+        resetFilters();
         showTreatments(treatments, false);
     }
 
@@ -274,6 +302,16 @@ public class TreatmentsFragment extends Fragment {
                 linearLayout.addView(cardView);
             }
         }
+    }
+
+    private void resetFilters() {
+        titleFilter = null;
+        startDateFilter = null;
+        endDateFilter = null;
+        categoryFilter = null;
+        statusPendingFilter = true;
+        statusInProgressFilter = true;
+        statusFinishedFilter = true;
     }
 
     private TreatmentCategory getCategoryFromSpinner(Spinner spinnerCategory) {
