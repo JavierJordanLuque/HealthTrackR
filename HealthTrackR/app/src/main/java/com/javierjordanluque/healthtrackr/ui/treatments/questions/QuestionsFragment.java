@@ -1,4 +1,4 @@
-package com.javierjordanluque.healthtrackr.ui.treatments.symptoms;
+package com.javierjordanluque.healthtrackr.ui.treatments.questions;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.javierjordanluque.healthtrackr.R;
-import com.javierjordanluque.healthtrackr.models.Symptom;
+import com.javierjordanluque.healthtrackr.models.Question;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
@@ -35,7 +35,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.util.List;
 
-public class SymptomsFragment extends Fragment {
+public class QuestionsFragment extends Fragment {
     private OnToolbarChangeListener listener;
     private Treatment treatment;
     private ImageView imageViewStatus;
@@ -44,7 +44,7 @@ public class SymptomsFragment extends Fragment {
     private ConstraintLayout constraintLayoutNoElements;
     private LinearLayout linearLayout;
 
-    public SymptomsFragment() {
+    public QuestionsFragment() {
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SymptomsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.fragment_symptoms, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_questions, container, false);
 
         imageViewStatus = fragmentView.findViewById(R.id.imageViewStatus);
         textViewStatus = fragmentView.findViewById(R.id.textViewStatus);
@@ -63,12 +63,12 @@ public class SymptomsFragment extends Fragment {
         constraintLayoutNoElements = fragmentView.findViewById(R.id.constraintLayoutNoElements);
         linearLayout = fragmentView.findViewById(R.id.linearLayout);
 
-        FloatingActionButton buttonAddSymptom = fragmentView.findViewById(R.id.buttonAddSymptom);
-        buttonAddSymptom.setOnClickListener(view -> {
+        FloatingActionButton buttonAddQuestion = fragmentView.findViewById(R.id.buttonAddQuestion);
+        buttonAddQuestion.setOnClickListener(view -> {
             if (treatment.isFinished()) {
                 ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
             } else {
-                addSymptom();
+                addQuestion();
             }
         });
 
@@ -87,31 +87,31 @@ public class SymptomsFragment extends Fragment {
         if (listener != null)
             listener.onTitleChanged(treatment.getTitle());
 
-        List<Symptom> symptoms = null;
+        List<Question> questions = null;
         try {
-            symptoms = treatment.getSymptoms(requireActivity());
+            questions = treatment.getQuestions(requireActivity());
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
 
-        showSymptoms(symptoms);
+        showQuestions(questions);
     }
 
-    private void showSymptoms(List<Symptom> symptoms) {
+    private void showQuestions(List<Question> questions) {
         linearLayout.removeAllViews();
-        if (symptoms == null || symptoms.isEmpty()) {
+        if (questions == null || questions.isEmpty()) {
             nestedScrollView.setVisibility(View.GONE);
             constraintLayoutNoElements.setVisibility(View.VISIBLE);
 
             TextView textViewNoElements = constraintLayoutNoElements.findViewById(R.id.textViewNoElements);
-            textViewNoElements.setText(R.string.symptoms_no_elements);
+            textViewNoElements.setText(R.string.questions_no_elements);
         } else {
             constraintLayoutNoElements.setVisibility(View.GONE);
             nestedScrollView.setVisibility(View.VISIBLE);
 
             boolean isFirst = true;
-            for (Symptom symptom : symptoms) {
-                MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(getContext()).inflate(R.layout.card_symptom, linearLayout, false);
+            for (Question question : questions) {
+                MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(getContext()).inflate(R.layout.card_question, linearLayout, false);
                 if (!isFirst) {
                     LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) cardView.getLayoutParams();
                     layoutParams.topMargin = getResources().getDimensionPixelSize(R.dimen.form_margin_top);
@@ -121,21 +121,21 @@ public class SymptomsFragment extends Fragment {
                 }
 
                 TextView textViewDescription = cardView.findViewById(R.id.textViewDescription);
-                textViewDescription.setText(symptom.getDescription());
+                textViewDescription.setText(question.getDescription());
 
                 cardView.setOnLongClickListener(view -> {
                     PopupMenu popupMenu = new PopupMenu(getContext(), view);
-                    popupMenu.getMenuInflater().inflate(R.menu.symptom_menu, popupMenu.getMenu());
+                    popupMenu.getMenuInflater().inflate(R.menu.question_menu, popupMenu.getMenu());
 
                     popupMenu.setOnMenuItemClickListener(item -> {
-                        if (item.getItemId() == R.id.menuDeleteSymptom) {
+                        if (item.getItemId() == R.id.menuDeleteQuestion) {
                             new AlertDialog.Builder(getContext())
-                                    .setMessage(getString(R.string.symptoms_dialog_message_delete))
+                                    .setMessage(getString(R.string.questions_dialog_message_delete))
                                     .setPositiveButton(getString(R.string.dialog_positive_delete), (dialog, which) -> {
                                         try {
-                                            treatment.removeSymptom(requireActivity(), symptom);
+                                            treatment.removeQuestion(requireActivity(), question);
 
-                                            Toast.makeText(requireActivity(), getString(R.string.symptoms_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(requireActivity(), getString(R.string.questions_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
                                             onResume();
                                         } catch (DBDeleteException exception) {
                                             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
@@ -157,8 +157,8 @@ public class SymptomsFragment extends Fragment {
         }
     }
 
-    private void addSymptom() {
-        View dialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_add_symptom, null);
+    private void addQuestion() {
+        View dialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_add_question, null);
 
         TextView textViewDescriptionError = dialogView.findViewById(R.id.textViewDescriptionError);
         ImageView imageViewDescriptionError = dialogView.findViewById(R.id.imageViewDescriptionError);
@@ -180,7 +180,7 @@ public class SymptomsFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialogView);
-        builder.setTitle(getString(R.string.symptoms_dialog_title_add));
+        builder.setTitle(getString(R.string.questions_dialog_title_add));
         builder.setPositiveButton(getString(R.string.dialog_positive_add),
                 (dialog, which) -> {
                 });
@@ -195,7 +195,7 @@ public class SymptomsFragment extends Fragment {
                 imageViewDescriptionError.setVisibility(View.VISIBLE);
             } else {
                 try {
-                    new Symptom(requireActivity(), treatment, description);
+                    new Question(requireActivity(), treatment, description);
 
                     dialog.dismiss();
                     onResume();

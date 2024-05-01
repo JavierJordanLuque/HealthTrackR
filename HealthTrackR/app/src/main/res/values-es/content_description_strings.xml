@@ -28,4 +28,5 @@
     <string name="content_description_access_medicine_notifications">Acceder a las notificaciones del medicamento</string>
 
     <string name="content_description_add_symptom">Añadir síntoma</string>
+    <string name="content_description_add_question">Añadir pregunta</string>
 </resources>

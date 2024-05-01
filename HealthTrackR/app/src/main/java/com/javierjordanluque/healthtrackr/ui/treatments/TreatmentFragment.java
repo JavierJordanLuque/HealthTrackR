@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
 import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicinesFragment;
+import com.javierjordanluque.healthtrackr.ui.treatments.questions.QuestionsFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.symptoms.SymptomsFragment;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
@@ -82,9 +84,7 @@ public class TreatmentFragment extends Fragment {
         });
 
         FloatingActionButton buttonQuestions = fragmentView.findViewById(R.id.buttonQuestions);
-        buttonQuestions.setOnClickListener(view -> {
-            //openFragmentFromTreatment(new QuestionsFragment());
-        });
+        buttonQuestions.setOnClickListener(view -> openFragmentFromTreatment(new QuestionsFragment()));
 
         FloatingActionButton buttonDeleteTreatment = fragmentView.findViewById(R.id.buttonDeleteTreatment);
         buttonDeleteTreatment.setOnClickListener(view -> showDeleteTreatmentConfirmationDialog());
@@ -151,7 +151,7 @@ public class TreatmentFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof OnToolbarChangeListener)
             listener = (OnToolbarChangeListener) context;

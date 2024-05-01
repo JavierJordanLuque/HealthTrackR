@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        style="@style/Widget.HealthTrackR.TextView"
+        android:labelFor="@+id/editTextDescription"
+        android:layout_marginTop="0dp"
+        android:text="@string/questions_form_description" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/editTextDescription"
+            style="@style/Widget.HealthTrackR.EditText"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edit_text_layout_height"
+            android:layout_marginEnd="5dp"
+            android:autofillHints="text"
+            android:inputType="text"
+            android:maxLength="100"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewDescriptionError"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewDescriptionError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_error"
+            app:tint="?attr/colorError"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textViewDescriptionError"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:labelFor="@+id/editTextDescription"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:paddingTop="2dp"
+        android:paddingHorizontal="15dp"
+        android:text="@string/error_invalid_symptom_description"
+        android:textColor="?attr/colorError"
+        android:visibility="invisible" />
+
+</LinearLayout>

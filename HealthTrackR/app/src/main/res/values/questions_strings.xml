@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="questions_app_bar_title">Questions</string>
+
+    <string name="questions_no_elements">You don´t have questions in this treatment. Please add a new question.</string>
+
+    <string name="questions_form_description">Description *</string>
+
+    <string name="questions_dialog_title_add">Question addition</string>
+    <string name="questions_dialog_message_delete">Are you sure you want to delete this question from the treatment?</string>
+
+    <string name="questions_toast_confirmation_delete">Question deleted successfully!</string>
+</resources>
