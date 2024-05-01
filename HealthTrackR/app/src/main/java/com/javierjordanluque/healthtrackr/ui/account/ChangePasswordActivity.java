@@ -97,7 +97,7 @@ public class ChangePasswordActivity extends BaseActivity {
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     private boolean isValidPassword(String password) {

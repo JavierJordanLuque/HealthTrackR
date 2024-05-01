@@ -133,7 +133,7 @@ public class ModifyMedicineActivity extends BaseActivity {
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     private void showModifyMedicineConfirmationDialog(Integer dose, AdministrationRoute administrationRout, ZonedDateTime initialDosingTime,
@@ -151,7 +151,7 @@ public class ModifyMedicineActivity extends BaseActivity {
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     private AdministrationRoute getAdministrationRouteFromSpinner() {

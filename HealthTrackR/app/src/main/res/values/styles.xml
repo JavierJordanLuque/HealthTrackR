@@ -44,6 +44,16 @@
         <item name="boxBackgroundColor">?attr/colorSurfaceVariant</item>
     </style>
 
+    <style name="Widget.HealthTrackR.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+    </style>
+
+    <style name="Widget.HealthTrackR.EditText.Value">
+        <item name="android:layout_marginStart">@dimen/text_view_value_margin_start</item>
+    </style>
+
     <style name="Widget.HealthTrackR.TextView" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

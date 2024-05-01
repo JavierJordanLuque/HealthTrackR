@@ -194,7 +194,7 @@ public class AddMedicineActivity extends BaseActivity {
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     @Override
@@ -227,7 +227,7 @@ public class AddMedicineActivity extends BaseActivity {
                     notificationPermissionLauncher.launch(intent);
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> openNextActivity());
-        builder.create().show();
+        builder.show();
     }
 
     private void scheduleNotifications() {

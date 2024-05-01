@@ -26,4 +26,6 @@
     <string name="content_description_modify_medicine">Modificar medicamento</string>
     <string name="content_description_delete_medicine">Eliminar medicamento</string>
     <string name="content_description_access_medicine_notifications">Acceder a las notificaciones del medicamento</string>
+
+    <string name="content_description_add_symptom">Añadir síntoma</string>
 </resources>

@@ -169,21 +169,21 @@ public class ModifyTreatmentActivity extends BaseActivity {
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     private void showInvalidStartDateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.treatments_dialog_message_invalid_start_date))
                 .setPositiveButton(getString(R.string.dialog_positive_ok), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     private void showInvalidEndDateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.treatments_dialog_message_invalid_end_date))
                 .setPositiveButton(getString(R.string.dialog_positive_ok), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     private TreatmentCategory getCategoryFromSpinner() {

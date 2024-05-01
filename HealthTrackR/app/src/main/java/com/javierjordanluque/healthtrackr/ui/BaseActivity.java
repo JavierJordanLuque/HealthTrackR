@@ -123,7 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     finish();
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     public Treatment getTreatmentFromBundle(Bundle bundle) {
@@ -272,7 +272,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return dateTime.format(formatter);
     }
 
-    public void showDatePickerDialog(EditText editTextDate, String title, boolean setBirthDate) {
+    public void showDatePickerDialog(EditText editTextDate, String message, boolean setBirthDate) {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_date_picker, null);
 
         NumberPicker numberPickerDay = dialogView.findViewById(R.id.numberPickerDay);
@@ -318,13 +318,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
-        builder.setTitle(title);
+        builder.setMessage(message);
         builder.setPositiveButton(getString(R.string.dialog_positive_confirm), (dialog, which) ->
                 editTextDate.setText(showFormattedDate(LocalDate.of(numberPickerYear.getValue(), numberPickerMonth.getValue(), numberPickerDay.getValue()))));
         builder.setNegativeButton(getString(R.string.dialog_negative_cancel), null);
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        builder.show();
     }
 
     public Object getDateFromEditText(EditText editTextDate, Class<?> type) {

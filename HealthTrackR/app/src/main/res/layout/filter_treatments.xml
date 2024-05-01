@@ -25,7 +25,7 @@
 
             <EditText
                 android:id="@+id/editTextTitle"
-                style="@style/Widget.HealthTrackR.TextView.Value"
+                style="@style/Widget.HealthTrackR.EditText.Value"
                 android:layout_height="@dimen/edit_text_layout_height"
                 android:autofillHints="text"
                 android:inputType="text"
@@ -55,7 +55,7 @@
 
                 <EditText
                     android:id="@+id/editTextStartDate"
-                    style="@style/Widget.HealthTrackR.TextView.Value"
+                    style="@style/Widget.HealthTrackR.EditText.Value"
                     android:layout_height="@dimen/edit_text_layout_height"
                     android:layout_width="0dp"
                     android:focusableInTouchMode="false"
@@ -92,7 +92,7 @@
 
                 <EditText
                     android:id="@+id/editTextEndDate"
-                    style="@style/Widget.HealthTrackR.TextView.Value"
+                    style="@style/Widget.HealthTrackR.EditText.Value"
                     android:layout_height="@dimen/edit_text_layout_height"
                     android:layout_width="0dp"
                     android:focusableInTouchMode="false"

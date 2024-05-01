@@ -22,6 +22,7 @@ import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
 import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicinesFragment;
+import com.javierjordanluque.healthtrackr.ui.treatments.symptoms.SymptomsFragment;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
@@ -73,9 +74,7 @@ public class TreatmentFragment extends Fragment {
         relativeLayoutMedicines.setOnClickListener(view -> openFragmentFromTreatment(new MedicinesFragment()));
 
         RelativeLayout relativeLayoutSymptoms = fragmentView.findViewById(R.id.relativeLayoutSymptoms);
-        relativeLayoutSymptoms.setOnClickListener(view -> {
-            //openFragmentFromTreatment(new SymptomsFragment());
-        });
+        relativeLayoutSymptoms.setOnClickListener(view -> openFragmentFromTreatment(new SymptomsFragment()));
 
         RelativeLayout relativeLayoutTreatmentCalendar = fragmentView.findViewById(R.id.relativeLayoutTreatmentCalendar);
         relativeLayoutTreatmentCalendar.setOnClickListener(view -> {
@@ -114,7 +113,7 @@ public class TreatmentFragment extends Fragment {
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     @Override

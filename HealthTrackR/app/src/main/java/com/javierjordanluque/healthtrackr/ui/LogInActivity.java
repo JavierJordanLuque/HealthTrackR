@@ -96,7 +96,7 @@ public class LogInActivity extends BaseActivity {
                     startActivity(intent);
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_try_again), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     private boolean isValidEmail(String email) {

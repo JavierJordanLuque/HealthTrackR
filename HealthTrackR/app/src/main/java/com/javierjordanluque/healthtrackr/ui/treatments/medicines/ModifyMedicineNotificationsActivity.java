@@ -202,7 +202,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        builder.show();
     }
 
     @Override
@@ -241,7 +241,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
                     dialog.dismiss();
                     finish();
                 });
-        builder.create().show();
+        builder.show();
     }
     
     private void makeMedicineNotificationsModification(boolean previousNotificationStatus, boolean dosingNotificationStatus) {
