@@ -22,7 +22,6 @@ import com.javierjordanluque.healthtrackr.util.security.SerializationUtils;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -86,12 +85,11 @@ public class User implements Identifiable {
         }
 
         AllergyRepository allergyRepository = new AllergyRepository(context);
-        Iterator<Allergy> allergyIterator = this.allergies.iterator();
-        while (allergyIterator.hasNext()) {
-            Allergy allergy = allergyIterator.next();
+        List<Allergy> allergyList = new ArrayList<>(this.allergies);
+        for (Allergy allergy : allergyList) {
             if (!allergies.contains(allergy)) {
                 allergyRepository.delete(allergy);
-                allergyIterator.remove();
+                removeAllergy(allergy);
             }
         }
         for (Allergy allergy : allergies) {
@@ -102,12 +100,11 @@ public class User implements Identifiable {
         }
 
         PreviousMedicalConditionRepository previousMedicalConditionRepository = new PreviousMedicalConditionRepository(context);
-        Iterator<PreviousMedicalCondition> conditionIterator = this.conditions.iterator();
-        while (conditionIterator.hasNext()) {
-            PreviousMedicalCondition condition = conditionIterator.next();
+        List<PreviousMedicalCondition> conditionList = new ArrayList<>(this.conditions);
+        for (PreviousMedicalCondition condition : conditionList) {
             if (!conditions.contains(condition)) {
                 previousMedicalConditionRepository.delete(condition);
-                conditionIterator.remove();
+                removeCondition(condition);
             }
         }
         for (PreviousMedicalCondition condition : conditions) {
