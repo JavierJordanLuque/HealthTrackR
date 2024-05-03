@@ -201,8 +201,8 @@ public class TreatmentsFragment extends Fragment {
                 popupWindow.dismiss();
             });
 
-            Button buttonClearFilter = popupView.findViewById(R.id.buttonClearFilter);
-            buttonClearFilter.setOnClickListener(v -> {
+            Button buttonShowAllFilter = popupView.findViewById(R.id.buttonShowAllFilter);
+            buttonShowAllFilter.setOnClickListener(v -> {
                 try {
                     resetFilters();
 

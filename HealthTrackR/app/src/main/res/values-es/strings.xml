@@ -33,7 +33,7 @@
 
     <string name="filter_title">Filtro</string>
     <string name="filter_filter">Filtrar</string>
-    <string name="filter_clean">Limpiar</string>
+    <string name="filter_show_all">Ver todos</string>
 
     <string name="date_at_time">a las</string>
 </resources>

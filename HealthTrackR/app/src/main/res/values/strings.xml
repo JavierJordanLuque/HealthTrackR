@@ -35,7 +35,7 @@
 
     <string name="filter_title">Filter</string>
     <string name="filter_filter">Filter</string>
-    <string name="filter_clean">Clean</string>
+    <string name="filter_show_all">Show all</string>
     <string name="filter_greater_or_equal" translatable="false">≥</string>
     <string name="filter_less_or_equal" translatable="false">≤</string>
 

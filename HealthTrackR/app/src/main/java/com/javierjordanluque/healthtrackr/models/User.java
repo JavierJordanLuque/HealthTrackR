@@ -277,7 +277,7 @@ public class User implements Identifiable {
             // Sort in progress treatments
             if (treatment1.isInProgress() && treatment2.isPending()) {
                 return -1;
-            } else if (!treatment1.isPending() && treatment2.isInProgress()) {
+            } else if (treatment1.isPending() && treatment2.isInProgress()) {
                 return 1;
             } else if (treatment1.isInProgress() && treatment2.isInProgress()) {
                 if (treatment1.getEndDate() != null && treatment2.getEndDate() != null) {

@@ -279,11 +279,11 @@
                 </androidx.constraintlayout.widget.Guideline>
 
                 <Button
-                    android:id="@+id/buttonClearFilter"
+                    android:id="@+id/buttonShowAllFilter"
                     style="@style/Widget.HealthTrackR.SmallButton"
                     android:backgroundTint="?attr/colorTertiaryContainer"
                     android:layout_height="match_parent"
-                    android:text="@string/filter_clean"
+                    android:text="@string/filter_show_all"
                     android:textColor="?attr/colorOnTertiaryContainer"
                     app:layout_constraintEnd_toStartOf="@+id/vMarginGuideline"
                     app:layout_constraintStart_toStartOf="parent" />
