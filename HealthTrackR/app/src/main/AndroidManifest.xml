@@ -33,8 +33,13 @@
         android:theme="@style/Theme.HealthTrackR"
         tools:targetApi="31">
         <activity
+            android:name=".ui.treatments.guidelines.ModifyGuidelineActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
             android:name=".ui.treatments.guidelines.AddGuidelineActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.treatments.medicines.ModifyMedicineNotificationsActivity"
             android:exported="false"

@@ -53,7 +53,7 @@ public class Guideline implements Identifiable {
         if (this.numOrder != numOrder) {
             GuidelineRepository guidelineRepository = new GuidelineRepository(context);
             if (numOrder < this.numOrder) {
-                for (Guideline otherGuideline : guideline.getTreatment().getGuidelines(context)) {
+                for (Guideline otherGuideline : this.getTreatment().getGuidelines(context)) {
                     if (!Objects.equals(this.numOrder, otherGuideline.getNumOrder()) && otherGuideline.getNumOrder() >= numOrder && otherGuideline.getNumOrder() < this.numOrder) {
                         Guideline newOtherGuideline = new Guideline();
                         newOtherGuideline.setId(otherGuideline.getId());
@@ -65,7 +65,7 @@ public class Guideline implements Identifiable {
                     }
                 }
             } else {
-                for (Guideline otherGuideline : guideline.getTreatment().getGuidelines(context)) {
+                for (Guideline otherGuideline : this.getTreatment().getGuidelines(context)) {
                     if (!Objects.equals(this.numOrder, otherGuideline.getNumOrder()) && otherGuideline.getNumOrder() <= numOrder && otherGuideline.getNumOrder() > this.numOrder) {
                         Guideline newOtherGuideline = new Guideline();
                         newOtherGuideline.setId(otherGuideline.getId());

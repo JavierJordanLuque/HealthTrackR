@@ -140,14 +140,13 @@ public class GuidelinesFragment extends Fragment {
                             if (treatment.isFinished()) {
                                 ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
                             } else {
-                                /*
                                 Intent intent = new Intent(requireActivity(), ModifyGuidelineActivity.class);
                                 intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
                                 intent.putExtra(Guideline.class.getSimpleName(), guideline.getId());
                                 startActivity(intent);
-                                 */
                             }
-                        }else if (item.getItemId() == R.id.menuDeleteGuideline) {
+                            return true;
+                        } else if (item.getItemId() == R.id.menuDeleteGuideline) {
                             new AlertDialog.Builder(getContext())
                                     .setMessage(getString(R.string.guidelines_dialog_message_delete))
                                     .setPositiveButton(getString(R.string.button_delete), (dialog, which) -> {
