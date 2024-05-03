@@ -170,7 +170,7 @@ public class ModifyAccountActivity extends BaseActivity {
                                                      List<Allergy> allergies, List<PreviousMedicalCondition> conditions) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.dialog_message_save))
-                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_save), (dialog, id) -> {
                     try {
                         user.modifyUser(this, firstName, lastName, birthDate, gender, bloodType, allergies, conditions);
                         Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();

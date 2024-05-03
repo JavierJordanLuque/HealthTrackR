@@ -122,7 +122,7 @@ public class ModifyMedicineActivity extends BaseActivity {
                                                               int dosageFrequencyHours, int dosageFrequencyMinutes) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.medicines_dialog_message_no_previous_notification_modify))
-                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_save), (dialog, id) -> {
                     try {
                         medicine.modifyMedicine(this, dose, administrationRout, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
 
@@ -140,7 +140,7 @@ public class ModifyMedicineActivity extends BaseActivity {
                                                       int dosageFrequencyHours, int dosageFrequencyMinutes) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.dialog_message_save))
-                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_save), (dialog, id) -> {
                     try {
                         medicine.modifyMedicine(this, dose, administrationRout, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
 

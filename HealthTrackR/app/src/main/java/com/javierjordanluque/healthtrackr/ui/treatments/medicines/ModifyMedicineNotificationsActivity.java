@@ -186,7 +186,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.dialog_message_save))
-                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_save), (dialog, id) -> {
                     if (previousNotificationStatus || dosingNotificationStatus) {
                         if (PermissionManager.hasNotificationPermission(this)) {
                             makeMedicineNotificationsModification(previousNotificationStatus, dosingNotificationStatus);

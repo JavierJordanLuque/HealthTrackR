@@ -174,7 +174,7 @@
                         android:id="@+id/buttonSave"
                         style="@style/Widget.HealthTrackR.LargeButton.Form"
                         android:layout_marginTop="0dp"
-                        android:text="@string/dialog_positive_save" />
+                        android:text="@string/button_save" />
 
                 </LinearLayout>
 

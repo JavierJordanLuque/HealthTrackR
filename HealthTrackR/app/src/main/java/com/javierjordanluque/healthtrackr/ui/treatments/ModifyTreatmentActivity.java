@@ -158,7 +158,7 @@ public class ModifyTreatmentActivity extends BaseActivity {
     private void showModifyTreatmentConfirmationDialog(String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis, TreatmentCategory category) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.dialog_message_save))
-                .setPositiveButton(getString(R.string.dialog_positive_save), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_save), (dialog, id) -> {
                     try {
                         treatment.modifyTreatment(this, title, startDate, endDate, diagnosis, category);
 

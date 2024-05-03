@@ -78,7 +78,7 @@ public class ChangePasswordActivity extends BaseActivity {
     private void showChangePasswordConfirmationDialog(String currentPassword, String newPassword) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.account_dialog_message_change_password))
-                .setPositiveButton(getString(R.string.dialog_positive_change), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_change), (dialog, id) -> {
                     try {
                         user.changePassword(this, currentPassword, newPassword);
                         AuthenticationService.clearCredentials(this);

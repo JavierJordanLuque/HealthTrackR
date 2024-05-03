@@ -175,7 +175,7 @@ public class AddMedicineActivity extends BaseActivity {
                                                               ZonedDateTime initialDosingTime, int dosageFrequencyHours, int dosageFrequencyMinutes) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.medicines_dialog_message_no_previous_notification_add))
-                .setPositiveButton(getString(R.string.dialog_positive_add), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_add), (dialog, id) -> {
                     try {
                         medicine = new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
 

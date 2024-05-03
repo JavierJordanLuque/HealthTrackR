@@ -33,10 +33,10 @@
     <string name="medicines_dosing_frequency">Dosing frequency</string>
     <string name="medicines_next_dose">Next dose</string>
     <string name="medicines_each">Each:</string>
-    <string name="medicines_add_medicine">Add medicine</string>
     <string name="medicines_before">before</string>
     <string name="medicines_previous_notification_status">Previous notification status</string>
     <string name="medicines_dosing_notification_status">Dosing notification status</string>
+    <string name="medicines_add_medicine_helper">When adding the medicine, two dosing notifications will be set: a previous notification (default 1 hour before) and a notification at the dosing time.</string>
 
     <string name="medicines_form_name">Name *</string>
     <string name="medicines_form_initial_dosing_time">Initial dosing time *</string>

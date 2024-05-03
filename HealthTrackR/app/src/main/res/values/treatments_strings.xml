@@ -12,7 +12,6 @@
     <string name="treatments_end_date">End date</string>
     <string name="treatments_category">Category</string>
     <string name="treatments_diagnosis">Diagnosis</string>
-    <string name="treatments_add_treatment">Add treatment</string>
     <string name="treatments_guidelines">Guidelines</string>
     <string name="treatments_medicines">Medicines</string>
     <string name="treatments_symptoms">Symptoms</string>

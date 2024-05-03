@@ -12,13 +12,14 @@
 
     <string name="snackbar_action_more">More</string>
 
+    <string name="button_add">Add</string>
+    <string name="button_save">Save</string>
+    <string name="button_change">Change</string>
+
     <string name="dialog_positive_ok" translatable="false">OK</string>
     <string name="dialog_positive_yes">Yes</string>
     <string name="dialog_positive_accept">Accept</string>
     <string name="dialog_positive_confirm">Confirm</string>
-    <string name="dialog_positive_add">Add</string>
-    <string name="dialog_positive_save">Save</string>
-    <string name="dialog_positive_change">Change</string>
     <string name="dialog_positive_delete">Delete</string>
 
     <string name="dialog_negative_no">No</string>

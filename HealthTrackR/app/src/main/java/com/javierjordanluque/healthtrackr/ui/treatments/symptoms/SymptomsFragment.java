@@ -181,7 +181,7 @@ public class SymptomsFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialogView);
         builder.setTitle(getString(R.string.symptoms_dialog_title_add));
-        builder.setPositiveButton(getString(R.string.dialog_positive_add),
+        builder.setPositiveButton(getString(R.string.button_add),
                 (dialog, which) -> {
                 });
         builder.setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, which) -> dialog.dismiss());
