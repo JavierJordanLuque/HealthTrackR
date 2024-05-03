@@ -113,7 +113,7 @@ public class MedicineFragment extends Fragment {
     private void showDeleteMedicineConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setMessage(getString(R.string.medicines_dialog_message_delete))
-                .setPositiveButton(getString(R.string.dialog_positive_delete), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_delete), (dialog, id) -> {
                     try {
                         treatment.removeMedicine(requireActivity(), medicine);
 

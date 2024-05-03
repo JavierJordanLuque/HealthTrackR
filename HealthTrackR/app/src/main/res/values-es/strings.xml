@@ -13,12 +13,13 @@
 
     <string name="button_save">Guardar</string>
     <string name="button_add">Añadir</string>
+    <string name="button_modify">Modificar</string>
     <string name="button_change">Cambiar</string>
+    <string name="button_delete">Eliminar</string>
 
     <string name="dialog_positive_yes">Sí</string>
     <string name="dialog_positive_accept">Aceptar</string>
     <string name="dialog_positive_confirm">Confirmar</string>
-    <string name="dialog_positive_delete">Eliminar</string>
 
     <string name="dialog_negative_no">No</string>
     <string name="dialog_negative_cancel">Cancelar</string>

@@ -12,6 +12,7 @@ import com.javierjordanluque.healthtrackr.models.Guideline;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class GuidelineRepository extends BaseRepository<Guideline> {
 
     @Override
     @SuppressLint("Range")
-    protected Guideline cursorToItem(Cursor cursor) throws DBFindException, DBInsertException {
+    protected Guideline cursorToItem(Cursor cursor) throws DBFindException, DBInsertException, DBUpdateException {
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
@@ -81,7 +82,7 @@ public class GuidelineRepository extends BaseRepository<Guideline> {
                 while (cursor.moveToNext())
                     guidelines.add(cursorToItem(cursor));
             }
-        } catch (SQLiteException | DBFindException | DBInsertException exception) {
+        } catch (SQLiteException | DBFindException | DBInsertException | DBUpdateException exception) {
             throw new DBFindException("Failed to findTreatmentGuidelines from treatment with id (" + treatmentId + ")", exception);
         } finally {
             if (cursor != null)

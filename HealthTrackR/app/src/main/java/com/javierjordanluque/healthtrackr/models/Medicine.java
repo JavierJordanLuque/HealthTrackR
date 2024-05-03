@@ -171,8 +171,11 @@ public class Medicine implements Identifiable {
             }
         }
 
-        MedicineRepository medicineRepository = new MedicineRepository(context);
-        medicineRepository.update(medicine);
+        if (!(medicine.getDose() == null && medicine.getAdministrationRoute() == null && medicine.getInitialDosingTime() == null && medicine.getDosageFrequencyMinutes() == null &&
+                medicine.getDosageFrequencyHours() == null)) {
+            MedicineRepository medicineRepository = new MedicineRepository(context);
+            medicineRepository.update(medicine);
+        }
     }
 
     public void modifyMedicineNotifications(Context context, int previousNotificationTimeHours, int previousNotificationTimeMinutes, boolean previousNotificationStatus,

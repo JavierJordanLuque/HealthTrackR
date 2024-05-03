@@ -107,8 +107,11 @@ public class Treatment implements Identifiable {
             treatment.setCategory(this.category);
         }
 
-        TreatmentRepository treatmentRepository = new TreatmentRepository(context);
-        treatmentRepository.update(treatment);
+        if (!(treatment.getTitle() == null && treatment.getStartDate() == null && treatment.getEndDate() == null && treatment.getDiagnosis() == null &&
+                treatment.getCategory() == null)) {
+            TreatmentRepository treatmentRepository = new TreatmentRepository(context);
+            treatmentRepository.update(treatment);
+        }
     }
 
     public boolean isStarted() {
@@ -141,13 +144,19 @@ public class Treatment implements Identifiable {
         medicines.remove(medicine);
     }
 
-    protected void addGuideline(Context context, Guideline guideline) throws DBInsertException {
+    protected void addGuideline(Context context, Guideline guideline) throws DBInsertException, DBFindException, DBUpdateException {
+        if (guideline.getNumOrder() <= this.guidelines.size())
+            guideline.adjustGuidelinesNumOrder(context, true);
+
         GuidelineRepository guidelineRepository = new GuidelineRepository(context);
         guideline.setId(guidelineRepository.insert(guideline));
         guidelines.add(guideline);
     }
 
-    public void removeGuideline(Context context, Guideline guideline) throws DBDeleteException {
+    public void removeGuideline(Context context, Guideline guideline) throws DBDeleteException, DBFindException, DBUpdateException {
+        if (guideline.getNumOrder() < this.guidelines.size())
+            guideline.adjustGuidelinesNumOrder(context, false);
+
         GuidelineRepository guidelineRepository = new GuidelineRepository(context);
         guidelineRepository.delete(guideline);
         guidelines.remove(guideline);

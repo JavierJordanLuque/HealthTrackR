@@ -54,8 +54,7 @@ public class MedicinesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_medicines, container, false);
 
         imageViewStatus = fragmentView.findViewById(R.id.imageViewStatus);
@@ -65,8 +64,8 @@ public class MedicinesFragment extends Fragment {
         constraintLayoutNoElements = fragmentView.findViewById(R.id.constraintLayoutNoElements);
         linearLayout = fragmentView.findViewById(R.id.linearLayout);
 
-        FloatingActionButton buttonAddTreatment = fragmentView.findViewById(R.id.buttonAddMedicine);
-        buttonAddTreatment.setOnClickListener(view -> {
+        FloatingActionButton buttonAddMedicine = fragmentView.findViewById(R.id.buttonAddMedicine);
+        buttonAddMedicine.setOnClickListener(view -> {
             if (treatment.isFinished()) {
                 ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
             } else {

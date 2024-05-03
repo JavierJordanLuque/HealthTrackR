@@ -20,7 +20,7 @@ public class Guideline implements Identifiable {
     private Integer numOrder;
     private List<Multimedia> multimedias;
 
-    public Guideline(Context context, Treatment treatment, String title, String description, int numOrder) throws DBInsertException {
+    public Guideline(Context context, Treatment treatment, String title, String description, int numOrder) throws DBInsertException, DBFindException, DBUpdateException {
         this.treatment = treatment;
         this.title = title;
         this.description = description;
@@ -51,6 +51,7 @@ public class Guideline implements Identifiable {
         }
 
         if (this.numOrder != numOrder) {
+            GuidelineRepository guidelineRepository = new GuidelineRepository(context);
             if (numOrder < this.numOrder) {
                 for (Guideline otherGuideline : guideline.getTreatment().getGuidelines(context)) {
                     if (!Objects.equals(this.numOrder, otherGuideline.getNumOrder()) && otherGuideline.getNumOrder() >= numOrder && otherGuideline.getNumOrder() < this.numOrder) {
@@ -60,7 +61,6 @@ public class Guideline implements Identifiable {
                         otherGuideline.setNumOrder(otherGuideline.getNumOrder() + 1);
                         newOtherGuideline.setNumOrder(otherGuideline.getNumOrder() + 1);
 
-                        GuidelineRepository guidelineRepository = new GuidelineRepository(context);
                         guidelineRepository.update(newOtherGuideline);
                     }
                 }
@@ -73,7 +73,6 @@ public class Guideline implements Identifiable {
                         otherGuideline.setNumOrder(otherGuideline.getNumOrder() - 1);
                         newOtherGuideline.setNumOrder(otherGuideline.getNumOrder() - 1);
 
-                        GuidelineRepository guidelineRepository = new GuidelineRepository(context);
                         guidelineRepository.update(newOtherGuideline);
                     }
                 }
@@ -82,8 +81,27 @@ public class Guideline implements Identifiable {
             guideline.setNumOrder(numOrder);
         }
 
+        if (!(guideline.getTitle() == null && guideline.getDescription() == null && guideline.getNumOrder() == null)) {
+            GuidelineRepository guidelineRepository = new GuidelineRepository(context);
+            guidelineRepository.update(guideline);
+        }
+    }
+
+    public void adjustGuidelinesNumOrder(Context context, boolean increase) throws DBUpdateException, DBFindException {
         GuidelineRepository guidelineRepository = new GuidelineRepository(context);
-        guidelineRepository.update(guideline);
+
+        int shift = increase ? 1 : -1;
+
+        for (Guideline guideline : this.treatment.getGuidelines(context)) {
+            if ((increase && guideline.getNumOrder() >= this.getNumOrder()) || (!increase && guideline.getNumOrder() > this.getNumOrder())) {
+                Guideline guidelineToUpdate = new Guideline();
+                guidelineToUpdate.setId(guideline.getId());
+
+                guideline.setNumOrder(guideline.getNumOrder() + shift);
+                guidelineToUpdate.setNumOrder(guideline.getNumOrder() + shift);
+                guidelineRepository.update(guidelineToUpdate);
+            }
+        }
     }
 
     protected void addMultimedia(Context context, Multimedia multimedia) throws DBInsertException {

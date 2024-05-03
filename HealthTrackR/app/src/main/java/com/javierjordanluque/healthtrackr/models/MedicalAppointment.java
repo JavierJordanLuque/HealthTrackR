@@ -94,8 +94,10 @@ public class MedicalAppointment implements Identifiable {
             appointment.setLocation(location);
         }
 
-        MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
-        medicalAppointmentRepository.update(appointment);
+        if (!(appointment.getPurpose() == null && appointment.getDateTime() == null && appointment.getLocation() == null)) {
+            MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
+            medicalAppointmentRepository.update(appointment);
+        }
     }
 
     public void modifyMedicalAppointmentNotification(Context context, int notificationTimeHours, int notificationTimeMinutes, boolean notificationStatus) throws DBDeleteException, DBFindException, DBInsertException {

@@ -79,7 +79,7 @@ public class User implements Identifiable {
             user.setBloodType(this.bloodType);
         }
 
-        if (!(user.firstName == null && user.lastName == null && user.birthDate == null && user.gender == null && user.bloodType == null)) {
+        if (!(user.getFirstName() == null && user.getLastName() == null && user.getBirthDate() == null && user.getGender() == null && user.getBloodType() == null)) {
             UserRepository userRepository = new UserRepository(context);
             userRepository.update(user);
         }

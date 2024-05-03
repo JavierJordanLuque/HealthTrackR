@@ -27,6 +27,7 @@
     <string name="content_description_delete_medicine">Delete medicine</string>
     <string name="content_description_access_medicine_notifications">Access medicine notifications</string>
 
+    <string name="content_description_add_guideline">Add guideline</string>
     <string name="content_description_add_symptom">Add symptom</string>
     <string name="content_description_add_question">Add question</string>
 </resources>

@@ -26,6 +26,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
+import com.javierjordanluque.healthtrackr.models.Guideline;
 import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.User;
@@ -192,6 +193,23 @@ public abstract class BaseActivity extends AppCompatActivity {
                 for (Medicine medicine : treatment.getMedicines(this)) {
                     if (medicine.getId() == medicineId) {
                         return medicine;
+                    }
+                }
+            } catch (DBFindException exception) {
+                ExceptionManager.advertiseUI(this, exception.getMessage());
+            }
+        }
+
+        return null;
+    }
+
+    public Guideline getGuidelineFromIntent(Treatment treatment, Intent intent) {
+        if (intent != null) {
+            long guidelineId = intent.getLongExtra(Guideline.class.getSimpleName(), -1);
+            try {
+                for (Guideline guideline : treatment.getGuidelines(this)) {
+                    if (guideline.getId() == guidelineId) {
+                        return guideline;
                     }
                 }
             } catch (DBFindException exception) {

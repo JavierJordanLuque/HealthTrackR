@@ -85,7 +85,7 @@ public class AccountFragment extends Fragment {
     private void showDeleteAccountConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setMessage(getString(R.string.account_dialog_message_delete))
-                .setPositiveButton(getString(R.string.dialog_positive_delete), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_delete), (dialog, id) -> {
                     try {
                         user.deleteUser(requireActivity());
                         AuthenticationService.logout(requireActivity(), user);

@@ -1,4 +1,4 @@
-package com.javierjordanluque.healthtrackr.ui.treatments.symptoms;
+package com.javierjordanluque.healthtrackr.ui.treatments.guidelines;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,12 +9,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -24,18 +21,18 @@ import android.widget.Toast;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.javierjordanluque.healthtrackr.R;
-import com.javierjordanluque.healthtrackr.models.Symptom;
+import com.javierjordanluque.healthtrackr.models.Guideline;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
-import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.util.List;
 
-public class SymptomsFragment extends Fragment {
+public class GuidelinesFragment extends Fragment {
     private OnToolbarChangeListener listener;
     private Treatment treatment;
     private ImageView imageViewStatus;
@@ -44,7 +41,7 @@ public class SymptomsFragment extends Fragment {
     private ConstraintLayout constraintLayoutNoElements;
     private LinearLayout linearLayout;
 
-    public SymptomsFragment() {
+    public GuidelinesFragment() {
     }
 
     @Override
@@ -54,7 +51,7 @@ public class SymptomsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.fragment_symptoms, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_guidelines, container, false);
 
         imageViewStatus = fragmentView.findViewById(R.id.imageViewStatus);
         textViewStatus = fragmentView.findViewById(R.id.textViewStatus);
@@ -63,12 +60,16 @@ public class SymptomsFragment extends Fragment {
         constraintLayoutNoElements = fragmentView.findViewById(R.id.constraintLayoutNoElements);
         linearLayout = fragmentView.findViewById(R.id.linearLayout);
 
-        FloatingActionButton buttonAddSymptom = fragmentView.findViewById(R.id.buttonAddSymptom);
-        buttonAddSymptom.setOnClickListener(view -> {
+        FloatingActionButton buttonAddGuideline = fragmentView.findViewById(R.id.buttonAddGuideline);
+        buttonAddGuideline.setOnClickListener(view -> {
             if (treatment.isFinished()) {
                 ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
             } else {
-                addSymptom();
+                /*
+                Intent intent = new Intent(requireActivity(), AddGuidelineActivity.class);
+                intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
+                startActivity(intent);
+                 */
             }
         });
 
@@ -87,31 +88,31 @@ public class SymptomsFragment extends Fragment {
         if (listener != null)
             listener.onTitleChanged(treatment.getTitle());
 
-        List<Symptom> symptoms = null;
+        List<Guideline> guidelines = null;
         try {
-            symptoms = treatment.getSymptoms(requireActivity());
+            guidelines = treatment.getGuidelines(requireActivity());
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
 
-        showSymptoms(symptoms);
+        showGuidelines(guidelines);
     }
 
-    private void showSymptoms(List<Symptom> symptoms) {
+    private void showGuidelines(List<Guideline> guidelines) {
         linearLayout.removeAllViews();
-        if (symptoms == null || symptoms.isEmpty()) {
+        if (guidelines == null || guidelines.isEmpty()) {
             nestedScrollView.setVisibility(View.GONE);
             constraintLayoutNoElements.setVisibility(View.VISIBLE);
 
             TextView textViewNoElements = constraintLayoutNoElements.findViewById(R.id.textViewNoElements);
-            textViewNoElements.setText(R.string.symptoms_no_elements);
+            textViewNoElements.setText(R.string.guidelines_no_elements);
         } else {
             constraintLayoutNoElements.setVisibility(View.GONE);
             nestedScrollView.setVisibility(View.VISIBLE);
 
             boolean isFirst = true;
-            for (Symptom symptom : symptoms) {
-                MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(getContext()).inflate(R.layout.card_symptom, linearLayout, false);
+            for (Guideline guideline : guidelines) {
+                MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(getContext()).inflate(R.layout.card_guideline, linearLayout, false);
                 if (!isFirst) {
                     LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) cardView.getLayoutParams();
                     layoutParams.topMargin = getResources().getDimensionPixelSize(R.dimen.form_margin_top);
@@ -120,24 +121,45 @@ public class SymptomsFragment extends Fragment {
                     isFirst = false;
                 }
 
+                TextView textViewTitle = cardView.findViewById(R.id.textViewTitle);
+                textViewTitle.setText(guideline.getTitle());
+
+                String description = guideline.getDescription();
                 TextView textViewDescription = cardView.findViewById(R.id.textViewDescription);
-                textViewDescription.setText(symptom.getDescription());
+                if (description != null) {
+                    textViewDescription.setText(description);
+                } else {
+                    textViewDescription.setText(R.string.unspecified);
+                }
+
+                // Manage guideline's multimedias
 
                 cardView.setOnLongClickListener(view -> {
                     PopupMenu popupMenu = new PopupMenu(getContext(), view);
-                    popupMenu.getMenuInflater().inflate(R.menu.symptom_menu, popupMenu.getMenu());
+                    popupMenu.getMenuInflater().inflate(R.menu.guideline_menu, popupMenu.getMenu());
 
                     popupMenu.setOnMenuItemClickListener(item -> {
-                        if (item.getItemId() == R.id.menuDeleteSymptom) {
+                        if (item.getItemId() == R.id.menuModifyGuideline) {
+                            if (treatment.isFinished()) {
+                                ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
+                            } else {
+                                /*
+                                Intent intent = new Intent(requireActivity(), ModifyGuidelineActivity.class);
+                                intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
+                                intent.putExtra(Guideline.class.getSimpleName(), guideline.getId());
+                                startActivity(intent);
+                                 */
+                            }
+                        }else if (item.getItemId() == R.id.menuDeleteGuideline) {
                             new AlertDialog.Builder(getContext())
-                                    .setMessage(getString(R.string.symptoms_dialog_message_delete))
+                                    .setMessage(getString(R.string.guidelines_dialog_message_delete))
                                     .setPositiveButton(getString(R.string.button_delete), (dialog, which) -> {
                                         try {
-                                            treatment.removeSymptom(requireActivity(), symptom);
+                                            treatment.removeGuideline(requireActivity(), guideline);
 
-                                            Toast.makeText(requireActivity(), getString(R.string.symptoms_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(requireActivity(), getString(R.string.guidelines_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
                                             onResume();
-                                        } catch (DBDeleteException exception) {
+                                        } catch (DBDeleteException | DBFindException | DBUpdateException exception) {
                                             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
                                         }
                                     })
@@ -155,59 +177,6 @@ public class SymptomsFragment extends Fragment {
                 linearLayout.addView(cardView);
             }
         }
-    }
-
-    private void addSymptom() {
-        View dialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_add_symptom, null);
-
-        TextView textViewDescriptionError = dialogView.findViewById(R.id.textViewDescriptionError);
-        ImageView imageViewDescriptionError = dialogView.findViewById(R.id.imageViewDescriptionError);
-        EditText editTextDescription = dialogView.findViewById(R.id.editTextDescription);
-        editTextDescription.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                textViewDescriptionError.setVisibility(View.INVISIBLE);
-                imageViewDescriptionError.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(dialogView);
-        builder.setTitle(getString(R.string.symptoms_dialog_title_add));
-        builder.setPositiveButton(getString(R.string.button_add),
-                (dialog, which) -> {
-                });
-        builder.setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, which) -> dialog.dismiss());
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-            String description = editTextDescription.getText().toString().trim();
-            if (!isValidDescription(description)) {
-                textViewDescriptionError.setVisibility(View.VISIBLE);
-                imageViewDescriptionError.setVisibility(View.VISIBLE);
-            } else {
-                try {
-                    new Symptom(requireActivity(), treatment, description);
-
-                    dialog.dismiss();
-                    onResume();
-                } catch (DBInsertException exception) {
-                    ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
-                }
-            }
-        });
-    }
-
-    private boolean isValidDescription(String description) {
-        return !description.isEmpty();
     }
 
     @Override

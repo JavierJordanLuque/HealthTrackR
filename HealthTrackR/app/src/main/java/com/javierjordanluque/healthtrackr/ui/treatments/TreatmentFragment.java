@@ -22,6 +22,7 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
+import com.javierjordanluque.healthtrackr.ui.treatments.guidelines.GuidelinesFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicinesFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.questions.QuestionsFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.symptoms.SymptomsFragment;
@@ -68,9 +69,7 @@ public class TreatmentFragment extends Fragment {
         });
 
         RelativeLayout relativeLayoutGuidelines = fragmentView.findViewById(R.id.relativeLayoutGuidelines);
-        relativeLayoutGuidelines.setOnClickListener(view -> {
-            //openFragmentFromTreatment(new GuidelinesFragment());
-        });
+        relativeLayoutGuidelines.setOnClickListener(view -> openFragmentFromTreatment(new GuidelinesFragment()));
 
         RelativeLayout relativeLayoutMedicines = fragmentView.findViewById(R.id.relativeLayoutMedicines);
         relativeLayoutMedicines.setOnClickListener(view -> openFragmentFromTreatment(new MedicinesFragment()));
@@ -102,7 +101,7 @@ public class TreatmentFragment extends Fragment {
     private void showDeleteTreatmentConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setMessage(getString(R.string.treatments_dialog_message_delete))
-                .setPositiveButton(getString(R.string.dialog_positive_delete), (dialog, id) -> {
+                .setPositiveButton(getString(R.string.button_delete), (dialog, id) -> {
                     try {
                         ((MainActivity) requireActivity()).sessionViewModel.getUserSession().removeTreatment(requireActivity(), treatment);
 

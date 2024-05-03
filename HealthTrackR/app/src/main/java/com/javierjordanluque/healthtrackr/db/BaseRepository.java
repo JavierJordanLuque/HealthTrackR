@@ -40,7 +40,7 @@ public abstract class BaseRepository<T extends Identifiable> {
     }
 
     protected abstract ContentValues getContentValues(T item) throws SerializationException, EncryptionException, HashException;
-    protected abstract T cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException, DBDeleteException;
+    protected abstract T cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException, DBDeleteException, DBUpdateException;
 
     public long insert(T item) throws DBInsertException {
         SQLiteDatabase db = null;

@@ -131,7 +131,7 @@ public class QuestionsFragment extends Fragment {
                         if (item.getItemId() == R.id.menuDeleteQuestion) {
                             new AlertDialog.Builder(getContext())
                                     .setMessage(getString(R.string.questions_dialog_message_delete))
-                                    .setPositiveButton(getString(R.string.dialog_positive_delete), (dialog, which) -> {
+                                    .setPositiveButton(getString(R.string.button_delete), (dialog, which) -> {
                                         try {
                                             treatment.removeQuestion(requireActivity(), question);
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guidelines_app_bar_title">Pautas</string>
+    <string name="guidelines_app_bar_title_add">Adición de pautas</string>
+    <string name="guidelines_app_bar_title_modify">Modificación de pautas</string>
+
+    <string name="guidelines_no_elements">No tienes pautas en este tratamiento. Por favor, añade una nueva pauta.</string>
+
+    <string name="guidelines_description">Descripción</string>
+    <string name="guidelines_images">Imágenes</string>
+    <string name="guidelines_videos">Vídeos</string>
+    <string name="guidelines_add_file">Añadir archivo</string>
+
+    <string name="guidelines_form_title">Título *</string>
+    <string name="guidelines_form_number_order">Número de orden *</string>
+
+    <string name="guidelines_dialog_message_delete">¿Estás seguro/a de eliminar esta pauta del tratamiento?</string>
+
+    <string name="guidelines_toast_confirmation_delete">¡Pauta eliminada!</string>
+</resources>

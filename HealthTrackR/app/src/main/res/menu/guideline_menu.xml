@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menuDeleteSymptom"
+        android:id="@+id/menuModifyGuideline"
+        android:title="@string/button_modify" />
+    <item
+        android:id="@+id/menuDeleteGuideline"
         android:title="@string/button_delete" />
 </menu>
