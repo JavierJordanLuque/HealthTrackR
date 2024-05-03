@@ -87,14 +87,11 @@ public class QuestionsFragment extends Fragment {
         if (listener != null)
             listener.onTitleChanged(treatment.getTitle());
 
-        List<Question> questions = null;
         try {
-            questions = treatment.getQuestions(requireActivity());
+            showQuestions(treatment.getQuestions(requireActivity()));
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
-
-        showQuestions(questions);
     }
 
     private void showQuestions(List<Question> questions) {

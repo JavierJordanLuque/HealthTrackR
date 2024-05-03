@@ -29,6 +29,7 @@
             style="@style/Widget.HealthTrackR.TextView.Value" />
 
         <View
+            android:id="@+id/viewSeparationLine"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/text_view_margin_top"

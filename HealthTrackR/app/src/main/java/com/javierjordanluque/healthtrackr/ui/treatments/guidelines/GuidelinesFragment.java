@@ -2,6 +2,7 @@ package com.javierjordanluque.healthtrackr.ui.treatments.guidelines;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -65,11 +66,9 @@ public class GuidelinesFragment extends Fragment {
             if (treatment.isFinished()) {
                 ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
             } else {
-                /*
                 Intent intent = new Intent(requireActivity(), AddGuidelineActivity.class);
                 intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
                 startActivity(intent);
-                 */
             }
         });
 
@@ -88,14 +87,11 @@ public class GuidelinesFragment extends Fragment {
         if (listener != null)
             listener.onTitleChanged(treatment.getTitle());
 
-        List<Guideline> guidelines = null;
         try {
-            guidelines = treatment.getGuidelines(requireActivity());
+            showGuidelines(treatment.getGuidelines(requireActivity()));
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
-
-        showGuidelines(guidelines);
     }
 
     private void showGuidelines(List<Guideline> guidelines) {
@@ -129,7 +125,8 @@ public class GuidelinesFragment extends Fragment {
                 if (description != null) {
                     textViewDescription.setText(description);
                 } else {
-                    textViewDescription.setText(R.string.unspecified);
+                    textViewDescription.setVisibility(View.GONE);
+                    cardView.findViewById(R.id.viewSeparationLine).setVisibility(View.GONE);
                 }
 
                 // Manage guideline's multimedias

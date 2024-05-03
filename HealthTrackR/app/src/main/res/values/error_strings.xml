@@ -22,12 +22,15 @@
     <string name="error_invalid_treatment_start_date_given_dependencies">The start date mustn´t be after other dates contained in the treatment.</string>
     <string name="error_invalid_treatment_end_date">The end date must be after the start date.</string>
     <string name="error_invalid_treatment_end_date_given_dependencies">The end date mustn´t be before other dates contained in the treatment.</string>
-    <string name="error_invalid_treatment_diagnosis">The title must contain less than 200 characters.</string>
+    <string name="error_invalid_treatment_diagnosis">The diagnosis must contain less than 200 characters.</string>
 
     <string name="error_invalid_medicine_name">The name mustn´t be empty.</string>
     <string name="error_invalid_medicine_name_existing">The specified medicine already exists in this treatment.</string>
     <string name="error_invalid_medicine_initial_dosing_time">The initial dosing time mustn´t be empty.</string>
     <string name="error_invalid_medicine_previous_notification_time">The previous notification time must be less than the dosage frequency.</string>
+
+    <string name="error_invalid_guideline_title">The title mustn´t be empty.</string>
+    <string name="error_invalid_guideline_description">The description must contain less than 300 characters.</string>
 
     <string name="error_invalid_symptom_description">The description mustn`t be empty.</string>
 

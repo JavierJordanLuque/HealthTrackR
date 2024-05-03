@@ -87,14 +87,11 @@ public class SymptomsFragment extends Fragment {
         if (listener != null)
             listener.onTitleChanged(treatment.getTitle());
 
-        List<Symptom> symptoms = null;
         try {
-            symptoms = treatment.getSymptoms(requireActivity());
+            showSymptoms(treatment.getSymptoms(requireActivity()));
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
-
-        showSymptoms(symptoms);
     }
 
     private void showSymptoms(List<Symptom> symptoms) {

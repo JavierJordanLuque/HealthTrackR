@@ -12,7 +12,7 @@
     <string name="guidelines_add_file">Add file</string>
 
     <string name="guidelines_form_title">Title *</string>
-    <string name="guidelines_form_number_order">Number order *</string>
+    <string name="guidelines_form_number_of_order">Number of order *</string>
 
     <string name="guidelines_dialog_message_delete">Are you sure you want to delete this guideline from the treatment?</string>
 

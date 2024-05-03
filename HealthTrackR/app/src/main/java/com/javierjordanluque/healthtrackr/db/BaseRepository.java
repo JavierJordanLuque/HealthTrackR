@@ -108,7 +108,7 @@ public abstract class BaseRepository<T extends Identifiable> {
 
             if (cursor != null && cursor.moveToFirst())
                 item = cursorToItem(cursor);
-        } catch (SQLiteException | DBFindException | DecryptionException |
+        } catch (SQLiteException | DBFindException | DBUpdateException | DecryptionException |
                  DeserializationException | DBInsertException | DBDeleteException exception) {
             throw new DBFindException("Failed to findById item with id (" + id + ")", exception);
         } finally {
@@ -135,7 +135,7 @@ public abstract class BaseRepository<T extends Identifiable> {
                     items.add(item);
                 }
             }
-        } catch (SQLiteException | DBFindException | DecryptionException |
+        } catch (SQLiteException | DBFindException | DBUpdateException | DecryptionException |
                  DeserializationException | DBInsertException | DBDeleteException exception) {
             throw new DBFindException("Failed to findAll items", exception);
         } finally {

@@ -230,15 +230,12 @@ public class TreatmentsFragment extends Fragment {
         if (listener != null)
             listener.onTitleChanged(getString(R.string.treatments_app_bar_title));
 
-        List<Treatment> treatments = null;
         try {
-            treatments = user.getTreatments(requireActivity());
+            resetFilters();
+            showTreatments(user.getTreatments(requireActivity()), false);
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
-
-        resetFilters();
-        showTreatments(treatments, false);
     }
 
     private void showTreatments(List<Treatment> treatments, boolean filter) {

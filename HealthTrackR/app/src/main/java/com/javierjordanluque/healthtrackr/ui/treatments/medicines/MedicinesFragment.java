@@ -91,14 +91,11 @@ public class MedicinesFragment extends Fragment {
         if (listener != null)
             listener.onTitleChanged(treatment.getTitle());
 
-        List<Medicine> medicines = null;
         try {
-            medicines = treatment.getMedicines(requireActivity());
+            showMedicines(treatment.getMedicines(requireActivity()));
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
-
-        showMedicines(medicines);
     }
 
     private void showMedicines(List<Medicine> medicines) {
