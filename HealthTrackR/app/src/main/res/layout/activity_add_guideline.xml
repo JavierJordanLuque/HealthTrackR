@@ -99,21 +99,26 @@
                             android:maxLength="300" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <FrameLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutNumOrder"
-                        style="@style/FrameLayout.Outlined"
+                        style="@style/FormLayout.Outlined"
                         android:layout_width="160dp">
 
                         <TextView
+                            android:id="@+id/textViewNumOrder"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/guidelines_form_number_of_order" />
+                            android:text="@string/guidelines_form_number_of_order"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <Spinner
                             android:id="@+id/spinnerNumOrder"
-                            style="@style/Widget.HealthTrackR.Spinner.Filled" />
+                            style="@style/Widget.HealthTrackR.Spinner"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewNumOrder" />
 
-                    </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
 

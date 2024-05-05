@@ -129,6 +129,10 @@ public class Guideline implements Identifiable {
         return treatment;
     }
 
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
+    }
+
     public String getTitle() {
         return title;
     }

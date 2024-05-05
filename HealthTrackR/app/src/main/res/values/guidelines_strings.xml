@@ -9,11 +9,20 @@
     <string name="guidelines_description">Description</string>
     <string name="guidelines_images">Images</string>
     <string name="guidelines_videos">Videos</string>
-    <string name="guidelines_add_file">Add file</string>
+
+    <string name="guidelines_add_image">Add image</string>
+    <string name="guidelines_add_video">Add video</string>
+    <string name="guidelines_upload_image_from_device">Upload image from the device</string>
+    <string name="guidelines_upload_video_from_device">Upload video from the device</string>
 
     <string name="guidelines_form_title">Title *</string>
     <string name="guidelines_form_number_of_order">Number of order *</string>
+    <string name="guidelines_form_url" translatable="false">URL *</string>
 
+    <string name="guidelines_dialog_message_add_image">Enter the image URL or upload an image stored on the device:</string>
+    <string name="guidelines_dialog_message_add_video">Enter the video URL or upload a video stored on the device:</string>
+    <string name="guidelines_dialog_message_image_not_found">The image is no longer available, so it will be removed from the guideline.</string>
+    <string name="guidelines_dialog_message_video_not_found">The video is no longer available, so it will be removed from the guideline.</string>
     <string name="guidelines_dialog_message_delete">Are you sure you want to delete this guideline from the treatment?</string>
 
     <string name="guidelines_toast_confirmation_delete">Guideline deleted successfully!</string>

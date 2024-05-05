@@ -121,35 +121,45 @@
                             android:inputType="date" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <FrameLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutGender"
-                        style="@style/FrameLayout.Filled">
+                        style="@style/FormLayout.Filled">
 
                         <TextView
+                            android:id="@+id/textViewGender"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/account_gender" />
+                            android:text="@string/account_gender"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <Spinner
                             android:id="@+id/spinnerGender"
-                            style="@style/Widget.HealthTrackR.Spinner.Filled" />
+                            style="@style/Widget.HealthTrackR.Spinner"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewGender" />
 
-                    </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <FrameLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutBloodType"
-                        style="@style/FrameLayout.Filled">
+                        style="@style/FormLayout.Filled">
 
                         <TextView
+                            android:id="@+id/textViewBloodType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/account_blood_type" />
+                            android:text="@string/account_blood_type"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <Spinner
                             android:id="@+id/spinnerBloodType"
-                            style="@style/Widget.HealthTrackR.Spinner.Filled" />
+                            style="@style/Widget.HealthTrackR.Spinner"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewBloodType" />
 
-                    </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutAllergies"

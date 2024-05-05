@@ -270,6 +270,9 @@ public class Treatment implements Identifiable {
         if (medicines == null) {
             MedicineRepository medicineRepository = new MedicineRepository(context);
             setMedicines(medicineRepository.findTreatmentMedicines(this.id));
+
+            for (Medicine medicine : medicines)
+                medicine.setTreatment(this);
         }
 
         medicines.sort((medicine1, medicine2) -> {
@@ -300,6 +303,9 @@ public class Treatment implements Identifiable {
         if (guidelines == null) {
             GuidelineRepository guidelineRepository = new GuidelineRepository(context);
             setGuidelines(guidelineRepository.findTreatmentGuidelines(this.id));
+
+            for (Guideline guideline : guidelines)
+                guideline.setTreatment(this);
         }
         guidelines.sort(Comparator.comparingInt(Guideline::getNumOrder));
 
@@ -314,6 +320,9 @@ public class Treatment implements Identifiable {
         if (symptoms == null) {
             SymptomRepository symptomRepository = new SymptomRepository(context);
             setSymptoms(symptomRepository.findTreatmentSymptoms(this.id));
+
+            for (Symptom symptom : symptoms)
+                symptom.setTreatment(this);
         }
 
         return symptoms;
@@ -327,6 +336,9 @@ public class Treatment implements Identifiable {
         if (questions == null) {
             QuestionRepository questionRepository = new QuestionRepository(context);
             setQuestions(questionRepository.findTreatmentQuestions(this.id));
+
+            for (Question question : questions)
+                question.setTreatment(this);
         }
 
         return questions;
@@ -340,6 +352,9 @@ public class Treatment implements Identifiable {
         if (appointments == null) {
             MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
             setAppointments(medicalAppointmentRepository.findTreatmentAppointments(this.id));
+
+            for (MedicalAppointment appointment : appointments)
+                appointment.setTreatment(this);
         }
         appointments.sort((appointment1, appointment2) -> appointment2.getDateTime().compareTo(appointment1.getDateTime()));
 

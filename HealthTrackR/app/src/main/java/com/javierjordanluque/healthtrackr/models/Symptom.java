@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Symptom implements Identifiable {
     private long id;
-    private final Treatment treatment;
+    private Treatment treatment;
     private final String description;
 
     public Symptom(Context context, Treatment treatment, String description) throws DBInsertException {
@@ -30,6 +30,10 @@ public class Symptom implements Identifiable {
 
     public Treatment getTreatment() {
         return treatment;
+    }
+
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
     }
 
     public String getDescription() {

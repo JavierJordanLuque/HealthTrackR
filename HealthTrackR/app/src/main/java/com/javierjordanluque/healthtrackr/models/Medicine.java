@@ -235,7 +235,7 @@ public class Medicine implements Identifiable {
         return treatment;
     }
 
-    private void setTreatment(Treatment treatment) {
+    public void setTreatment(Treatment treatment) {
         this.treatment = treatment;
     }
 

@@ -95,20 +95,25 @@
                             android:maxLength="10" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <FrameLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutAdministrationRoute"
-                        style="@style/FrameLayout.Filled">
+                        style="@style/FormLayout.Filled">
 
                         <TextView
+                            android:id="@+id/textViewAdministrationRoute"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/medicines_administration_route" />
+                            android:text="@string/medicines_administration_route"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <Spinner
                             android:id="@+id/spinnerAdministrationRoute"
-                            style="@style/Widget.HealthTrackR.Spinner.Filled" />
+                            style="@style/Widget.HealthTrackR.Spinner"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewAdministrationRoute" />
 
-                    </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutInitialDosingTime"
@@ -123,26 +128,30 @@
                             android:inputType="datetime" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <FrameLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutDosageFrequency"
-                        style="@style/FrameLayout.Filled">
+                        style="@style/FormLayout.Filled">
 
                         <TextView
+                            android:id="@+id/textViewDosageFrequency"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/medicines_form_dosing_frequency" />
+                            android:text="@string/medicines_form_dosing_frequency"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp">
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewDosageFrequency">
 
                             <TextView
                                 android:id="@+id/textViewDosageFrequencyEach"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?attr/textAppearanceBodyLarge"
                                 android:text="@string/medicines_each"
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -151,16 +160,16 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/textViewDosageFrequencyEach"
                                 app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/textViewDosageFrequencyEach"
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <EditText
                                     android:id="@+id/editTextDosageFrequencyHours"
-                                    android:layout_height="48dp"
                                     android:layout_width="60dp"
-                                    android:inputType="number"
+                                    android:layout_height="48dp"
                                     android:autofillHints="number"
+                                    android:inputType="number"
                                     android:maxLength="4"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -171,20 +180,20 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:labelFor="@+id/editTextDosageFrequencyHours"
-                                    android:textAppearance="?attr/textAppearanceBodyLarge"
                                     android:text="@string/medicines_hours"
+                                    android:textAppearance="?attr/textAppearanceBodyLarge"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/editTextDosageFrequencyHours"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <EditText
                                     android:id="@+id/editTextDosageFrequencyMinutes"
-                                    android:layout_height="48dp"
                                     android:layout_width="40dp"
-                                    android:layout_marginTop="0dp"
+                                    android:layout_height="48dp"
                                     android:layout_marginStart="10dp"
-                                    android:inputType="number"
+                                    android:layout_marginTop="0dp"
                                     android:autofillHints="number"
+                                    android:inputType="number"
                                     android:maxLength="2"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/textViewDosageFrequencyHours"
@@ -195,8 +204,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:labelFor="@+id/editTextDosageFrequencyMinutes"
-                                    android:textAppearance="?attr/textAppearanceBodyLarge"
                                     android:text="@string/medicines_minutes"
+                                    android:textAppearance="?attr/textAppearanceBodyLarge"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/editTextDosageFrequencyMinutes"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -205,7 +214,7 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:layout_width="wrap_content"

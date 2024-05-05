@@ -100,21 +100,100 @@
                             android:maxLength="300" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <FrameLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutNumOrder"
-                        style="@style/FrameLayout.Filled"
+                        style="@style/FormLayout.Filled"
                         android:layout_width="160dp">
 
                         <TextView
+                            android:id="@+id/textViewNumOrder"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/guidelines_form_number_of_order" />
+                            android:text="@string/guidelines_form_number_of_order"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <Spinner
                             android:id="@+id/spinnerNumOrder"
-                            style="@style/Widget.HealthTrackR.Spinner.Filled" />
+                            style="@style/Widget.HealthTrackR.Spinner"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewNumOrder" />
 
-                    </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutImages"
+                        style="@style/FormLayout.Filled">
+
+                        <TextView
+                            android:id="@+id/textViewImages"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/guidelines_images"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:id="@+id/linearLayoutImages"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewImages">
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/buttonAddImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="5dp"
+                            android:text="@string/guidelines_add_image"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayoutImages" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutVideos"
+                        style="@style/FormLayout.Filled">
+
+                        <TextView
+                            android:id="@+id/textViewVideos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/guidelines_videos"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:id="@+id/linearLayoutVideos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewVideos">
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/buttonAddVideo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="5dp"
+                            android:text="@string/guidelines_add_video"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayoutVideos" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
 

@@ -128,6 +128,10 @@ public class MedicalAppointment implements Identifiable {
         return treatment;
     }
 
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
+    }
+
     public String getPurpose() {
         return purpose;
     }

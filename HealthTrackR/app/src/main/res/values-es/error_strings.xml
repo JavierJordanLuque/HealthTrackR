@@ -31,6 +31,7 @@
 
     <string name="error_invalid_guideline_title">El título no debe estar vacío.</string>
     <string name="error_invalid_guideline_description">La descripción debe contener menos de 300 caracteres.</string>
+    <string name="error_invalid_guidelines_url">La URL no es válida. Por favor, introduce una URL válida.</string>
 
     <string name="error_invalid_symptom_description">La descripción no debe estar vacía.</string>
 

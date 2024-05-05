@@ -103,15 +103,14 @@
         <item name="layout_constraintWidth_max">@dimen/text_view_max_width</item>
     </style>
 
-    <style name="Widget.HealthTrackR.Spinner.Filled" parent="Widget.AppCompat.Spinner.DropDown">
+    <style name="Widget.HealthTrackR.Spinner" parent="Widget.AppCompat.Spinner.DropDown">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/spinner_height</item>
         <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
         <item name="backgroundColor">?attr/colorSurfaceVariant</item>
-        <item name="android:layout_marginTop">@dimen/spinner_layout_margin_top</item>
     </style>
 
-    <style name="FrameLayout">
+    <style name="FormLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/form_margin_top</item>
@@ -119,11 +118,11 @@
         <item name="android:paddingHorizontal">@dimen/spinner_layout_padding_horizontal</item>
     </style>
 
-    <style name="FrameLayout.Outlined">
+    <style name="FormLayout.Outlined">
         <item name="android:background">@drawable/frame_layout_container_outlined</item>
     </style>
 
-    <style name="FrameLayout.Filled">
+    <style name="FormLayout.Filled">
         <item name="android:background">@drawable/frame_layout_container_filled</item>
     </style>
 

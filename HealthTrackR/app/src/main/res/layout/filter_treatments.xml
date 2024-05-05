@@ -112,7 +112,7 @@
 
             <Spinner
                 android:id="@+id/spinnerCategory"
-                style="@style/Widget.HealthTrackR.Spinner.Filled"
+                style="@style/Widget.HealthTrackR.Spinner"
                 android:layout_height="@dimen/edit_text_layout_height"
                 android:layout_marginStart="@dimen/text_view_value_margin_start"
                 android:layout_marginTop="10dp" />

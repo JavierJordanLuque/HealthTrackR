@@ -9,11 +9,19 @@
     <string name="guidelines_description">Descripción</string>
     <string name="guidelines_images">Imágenes</string>
     <string name="guidelines_videos">Vídeos</string>
-    <string name="guidelines_add_file">Añadir archivo</string>
+
+    <string name="guidelines_add_image">Añadir imagen</string>
+    <string name="guidelines_add_video">Añadir vídeo</string>
+    <string name="guidelines_upload_image_from_device">Subir imagen desde el dispositivo</string>
+    <string name="guidelines_upload_video_from_device">Subir vídeo desde el dispositivo</string>
 
     <string name="guidelines_form_title">Título *</string>
     <string name="guidelines_form_number_of_order">Número de orden *</string>
 
+    <string name="guidelines_dialog_message_add_image">Introduce la URL de la imagen o sube una imagen almacenada en el dispositivo:</string>
+    <string name="guidelines_dialog_message_add_video">Introduce la URL del vídeo o sube un vídeo almacenado en el dispositivo:</string>
+    <string name="guidelines_dialog_message_image_not_found">La imagen ya no se encuentra disponible, por lo que se quitará de la pauta.</string>
+    <string name="guidelines_dialog_message_video_not_found">El vídeo ya no se encuentra disponible, por lo que se quitará de la pauta.</string>
     <string name="guidelines_dialog_message_delete">¿Estás seguro/a de eliminar esta pauta del tratamiento?</string>
 
     <string name="guidelines_toast_confirmation_delete">¡Pauta eliminada!</string>
