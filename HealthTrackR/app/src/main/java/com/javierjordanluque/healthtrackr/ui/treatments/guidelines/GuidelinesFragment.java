@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,11 @@ import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Guideline;
+import com.javierjordanluque.healthtrackr.models.Multimedia;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
@@ -124,12 +128,19 @@ public class GuidelinesFragment extends Fragment {
                 TextView textViewDescription = cardView.findViewById(R.id.textViewDescription);
                 if (description != null) {
                     textViewDescription.setText(description);
-                } else {
-                    textViewDescription.setVisibility(View.GONE);
-                    cardView.findViewById(R.id.viewSeparationLine).setVisibility(View.GONE);
+                    textViewDescription.setVisibility(View.VISIBLE);
                 }
 
-                // Manage guideline's multimedias
+                try {
+                    List<Multimedia> multimedias = guideline.getMultimedias(requireActivity());
+
+                    if (description != null && !multimedias.isEmpty())
+                        cardView.findViewById(R.id.viewSeparationLine).setVisibility(View.VISIBLE);
+                    if (!multimedias.isEmpty())
+                        showMultimedias(cardView, multimedias);
+                } catch (DBFindException exception) {
+                    ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
+                }
 
                 cardView.setOnLongClickListener(view -> {
                     PopupMenu popupMenu = new PopupMenu(getContext(), view);
@@ -173,6 +184,19 @@ public class GuidelinesFragment extends Fragment {
                 linearLayout.addView(cardView);
             }
         }
+    }
+
+    private void showMultimedias(MaterialCardView cardView, List<Multimedia> multimedias) {
+        ConstraintLayout constraintLayout = cardView.findViewById(R.id.constraintLayout);
+        constraintLayout.setVisibility(View.VISIBLE);
+
+        ViewPager2 viewPager = constraintLayout.findViewById(R.id.viewPager);
+        TabLayout tabLayout = constraintLayout.findViewById(R.id.tabLayout);
+
+        viewPager.setAdapter(new MultimediaPagerAdapter(requireActivity(), multimedias));
+
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+        }).attach();
     }
 
     @Override

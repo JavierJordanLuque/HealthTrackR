@@ -24,5 +24,9 @@
     <string name="guidelines_dialog_message_video_not_found">El vídeo ya no se encuentra disponible, por lo que se quitará de la pauta.</string>
     <string name="guidelines_dialog_message_delete">¿Estás seguro/a de eliminar esta pauta del tratamiento?</string>
 
+    <string name="guidelines_dialog_denied_read_multimedia_permission">Se ha denegado el permiso de acceso al contenido multimedia, por lo que no se podrá seleccionar contenido multimedia desde el dispositivo. Se recomienda otorgar el permiso para poder añadir contenido multimedia del dispositivo a las pautas.</string>
+
     <string name="guidelines_toast_confirmation_delete">¡Pauta eliminada!</string>
+    <string name="guidelines_toast_no_app_open_image">No hay una aplicación disponible para abrir esta imagen.</string>
+    <string name="guidelines_toast_no_app_open_video">No hay una aplicación disponible para abrir esta vídeo.</string>
 </resources>

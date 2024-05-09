@@ -15,7 +15,7 @@
     </androidx.constraintlayout.widget.Guideline>
 
     <TextView
-        android:id="@+id/textViewPath"
+        android:id="@+id/textViewURI"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:clickable="true"

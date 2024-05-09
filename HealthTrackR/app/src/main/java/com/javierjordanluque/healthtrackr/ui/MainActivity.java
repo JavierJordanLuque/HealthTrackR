@@ -118,27 +118,26 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
         fragmentTransaction.commit();
     }
 
-    public ActivityResultLauncher<Intent> fragmentLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    Intent data = result.getData();
+    public ActivityResultLauncher<Intent> fragmentLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK) {
+            Intent data = result.getData();
 
-                    if (data != null && data.hasExtra(this.getClass().getSimpleName())) {
-                        String fragmentClassName = data.getStringExtra(this.getClass().getSimpleName());
+            if (data != null && data.hasExtra(this.getClass().getSimpleName())) {
+                String fragmentClassName = data.getStringExtra(this.getClass().getSimpleName());
 
-                        if (fragmentClassName != null) {
-                            try {
-                                Fragment fragment = (Fragment) Class.forName(fragmentClassName).newInstance();
-                                fragment.setArguments(data.getExtras());
+                if (fragmentClassName != null) {
+                    try {
+                        Fragment fragment = (Fragment) Class.forName(fragmentClassName).newInstance();
+                        fragment.setArguments(data.getExtras());
 
-                                replaceFragment(fragment);
-                            } catch (IllegalAccessException | InstantiationException | ClassNotFoundException exception) {
-                                ExceptionManager.advertiseUI(this, exception.getMessage());
-                            }
-                        }
+                        replaceFragment(fragment);
+                    } catch (IllegalAccessException | InstantiationException | ClassNotFoundException exception) {
+                        ExceptionManager.advertiseUI(this, exception.getMessage());
                     }
                 }
-            });
+            }
+        }
+    });
 
     private void showMedicineFragmentFromNotification(String fragmentClassName) {
         try {

@@ -211,16 +211,9 @@ public class AddMedicineActivity extends BaseActivity {
         }
     }
 
-    private final ActivityResultLauncher<Intent> notificationPermissionLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
-                    scheduleNotifications();
-                openNextActivity();
-            });
-
     private void showNotificationPermissionDeniedDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.medicines_dialog_notification_permission))
+        builder.setMessage(getString(R.string.medicines_dialog_denied_notification_permission))
                 .setPositiveButton(getString(R.string.snackbar_action_more), (dialog, id) -> {
                     Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                     intent.setData(android.net.Uri.parse("package:" + getPackageName()));
@@ -229,6 +222,12 @@ public class AddMedicineActivity extends BaseActivity {
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> openNextActivity());
         builder.show();
     }
+
+    private final ActivityResultLauncher<Intent> notificationPermissionLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
+            scheduleNotifications();
+        openNextActivity();
+    });
 
     private void scheduleNotifications() {
         try {

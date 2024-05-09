@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.net.Uri;
 
 import com.javierjordanluque.healthtrackr.db.BaseRepository;
 import com.javierjordanluque.healthtrackr.models.Multimedia;
@@ -21,7 +22,7 @@ public class MultimediaRepository extends BaseRepository<Multimedia> {
     private static final String TABLE_NAME = "MULTIMEDIA";
     private final String GUIDELINE_ID = "guideline_id";
     private final String TYPE = "type";
-    private final String PATH = "path";
+    private final String URI = "uri";
     private final Context context;
 
     public MultimediaRepository(Context context) {
@@ -37,8 +38,8 @@ public class MultimediaRepository extends BaseRepository<Multimedia> {
             contentValues.put(GUIDELINE_ID, multimedia.getGuideline().getId());
         if (multimedia.getType() != null)
             contentValues.put(TYPE, multimedia.getType().name());
-        if (multimedia.getPath() != null)
-            contentValues.put(PATH, multimedia.getPath());
+        if (multimedia.getUri() != null)
+            contentValues.put(URI, multimedia.getUri().toString());
 
         return contentValues;
     }
@@ -50,7 +51,7 @@ public class MultimediaRepository extends BaseRepository<Multimedia> {
         Guideline guideline = guidelineRepository.findById(cursor.getLong(cursor.getColumnIndex(GUIDELINE_ID)));
 
         Multimedia multimedia = new Multimedia(null, guideline, MultimediaType.valueOf(cursor.getString(cursor.getColumnIndex(TYPE))),
-                cursor.getString(cursor.getColumnIndex(PATH)));
+                Uri.parse(cursor.getString(cursor.getColumnIndex(URI))));
         multimedia.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
         return multimedia;

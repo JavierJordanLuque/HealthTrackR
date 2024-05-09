@@ -25,5 +25,9 @@
     <string name="guidelines_dialog_message_video_not_found">The video is no longer available, so it will be removed from the guideline.</string>
     <string name="guidelines_dialog_message_delete">Are you sure you want to delete this guideline from the treatment?</string>
 
+    <string name="guidelines_dialog_denied_read_multimedia_permission">Access to multimedia content has been denied, so multimedia content cannot be selected from the device. Grant permission is recommended to add multimedia content from the device to the guidelines.</string>
+
     <string name="guidelines_toast_confirmation_delete">Guideline deleted successfully!</string>
+    <string name="guidelines_toast_no_app_open_image">There is no app available to open this image.</string>
+    <string name="guidelines_toast_no_app_open_video">There is no app available to open this video.</string>
 </resources>

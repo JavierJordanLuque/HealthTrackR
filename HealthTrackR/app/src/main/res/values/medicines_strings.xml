@@ -49,7 +49,7 @@
     <string name="medicines_dialog_message_no_previous_notification_add">The dosing frequency is less than or equal to the time set for the previous notification (default 1 hour before). Therefore, the previous notification will not be set. Are you sure you want to add this medication?</string>
     <string name="medicines_dialog_message_no_previous_notification_modify">The dosing frequency is less than or equal to the time set for the previous notification. Therefore, the previous notification will not be set. Are you sure you want to save the changes?</string>
     <string name="medicines_dialog_message_delete">Are you sure you want to delete this medicine from the treatment?</string>
-    <string name="medicines_dialog_notification_permission">Notification permission is denied, so notifications will not be set up. Granting permission is recommended to receive medication notifications.</string>
+    <string name="medicines_dialog_denied_notification_permission">Notification permission has been denied, so notifications will not be set up. Granting permission is recommended to receive medication notifications.</string>
 
     <string name="medicines_toast_confirmation_delete">Medicine deleted successfully!</string>
 

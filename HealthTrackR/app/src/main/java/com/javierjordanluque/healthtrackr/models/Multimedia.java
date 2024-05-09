@@ -13,26 +13,15 @@ public class Multimedia implements Identifiable {
     private long id;
     private final Guideline guideline;
     private final MultimediaType type;
-    private final String path;
+    private final Uri uri;
 
-    public Multimedia(Context context, Guideline guideline, MultimediaType type, String path) throws DBInsertException {
+    public Multimedia(Context context, Guideline guideline, MultimediaType type, Uri uri) throws DBInsertException {
         this.guideline = guideline;
         this.type = type;
-        this.path = path;
+        this.uri = uri;
 
         if (context != null)
             this.guideline.addMultimedia(context, this);
-    }
-
-    public Object getMedia() {
-        switch (type) {
-            case IMAGE:
-                return BitmapFactory.decodeFile(path);
-            case VIDEO:
-                return Uri.parse(path);
-            default:
-                return null;
-        }
     }
 
     @Override
@@ -52,8 +41,8 @@ public class Multimedia implements Identifiable {
         return type;
     }
 
-    public String getPath() {
-        return path;
+    public Uri getUri() {
+        return uri;
     }
 
     @Override
@@ -66,6 +55,6 @@ public class Multimedia implements Identifiable {
         return id == multimedia.id &&
                 Objects.equals(guideline, multimedia.guideline) &&
                 type == multimedia.type &&
-                Objects.equals(path, multimedia.path);
+                Objects.equals(uri, multimedia.uri);
     }
 }

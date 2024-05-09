@@ -75,7 +75,7 @@ public class NotificationScheduler {
 
     private static PendingIntent buildPendingIntent(Context context, Notification notification) {
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        notificationIntent.setAction("com.javierjordanluque.healthtrackr.SHOW_NOTIFICATION");
+        notificationIntent.setAction(context.getPackageName() + ".SHOW_NOTIFICATION");
         notificationIntent.putExtra(NOTIFICATION_ID, notification.getId());
 
         return PendingIntent.getBroadcast(context, (int) notification.getId(), notificationIntent, PendingIntent.FLAG_IMMUTABLE);

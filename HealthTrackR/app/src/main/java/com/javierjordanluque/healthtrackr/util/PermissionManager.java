@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat;
 
 public class PermissionManager {
     public static final int REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS = 101;
+    public static final int REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE = 102;
 
     public static boolean hasNotificationPermission(Context context) {
         boolean permission;
@@ -26,5 +27,9 @@ public class PermissionManager {
     private static boolean areNotificationsEnabled(Context context) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         return notificationManager.areNotificationsEnabled();
+    }
+
+    public static boolean hasReadMultimediaPermission(Context context) {
+        return ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 }

@@ -5,6 +5,12 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- Devices running Android 13 (API level 33) or higher
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" /> -->
 
     <queries>
         <intent>
@@ -23,7 +29,7 @@
 
     <application
         android:name=".HealthTrackRApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -93,7 +99,7 @@
             android:name=".util.notifications.NotificationPublisher"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.javierjordanluque.healthtrackr.SHOW_NOTIFICATION" />
+                <action android:name="${applicationId}.SHOW_NOTIFICATION" />
             </intent-filter>
         </receiver>
         <receiver
@@ -106,12 +112,12 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.javierjordanluque.healthtrackr.file-provider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/provider_paths"/>
         </provider>
     </application>
 

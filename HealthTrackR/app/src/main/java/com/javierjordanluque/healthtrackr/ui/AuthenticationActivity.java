@@ -14,7 +14,6 @@ import com.javierjordanluque.healthtrackr.util.exceptions.AuthenticationExceptio
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 public class AuthenticationActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
