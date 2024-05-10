@@ -191,12 +191,20 @@ public class GuidelinesFragment extends Fragment {
         constraintLayout.setVisibility(View.VISIBLE);
 
         ViewPager2 viewPager = constraintLayout.findViewById(R.id.viewPager);
-        TabLayout tabLayout = constraintLayout.findViewById(R.id.tabLayout);
-
         viewPager.setAdapter(new MultimediaPagerAdapter(requireActivity(), multimedias));
 
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-        }).attach();
+        if (multimedias.size() > 1) {
+            LinearLayout linearLayoutCardView = cardView.findViewById(R.id.linearLayoutCardView);
+            linearLayoutCardView.setPadding(linearLayoutCardView.getPaddingLeft(),
+                    linearLayoutCardView.getPaddingTop(),
+                    linearLayoutCardView.getPaddingRight(),
+                    -18);
+
+            TabLayout tabLayout = cardView.findViewById(R.id.tabLayout);
+            tabLayout.setVisibility(View.VISIBLE);
+
+            new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {}).attach();
+        }
     }
 
     @Override

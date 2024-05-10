@@ -30,6 +30,7 @@
     <string name="content_description_add_guideline">Añadir pauta</string>
     <string name="content_description_remove_multimedia">Quitar multimedia</string>
     <string name="content_description_guideline_image">Imagen de la pauta</string>
+    <string name="content_description_multimedia_error_icon">Icono de error</string>
 
     <string name="content_description_add_symptom">Añadir síntoma</string>
     <string name="content_description_add_question">Añadir pregunta</string>

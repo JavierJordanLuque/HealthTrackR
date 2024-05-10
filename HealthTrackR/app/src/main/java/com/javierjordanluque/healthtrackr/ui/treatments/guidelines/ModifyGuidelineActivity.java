@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -186,25 +187,19 @@ public class ModifyGuidelineActivity extends BaseActivity {
     private void openImage(String uriString, ImageButton imageButtonRemove) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
 
-        if (isValidURL(uriString)) {
+        if (isValidImageURL(uriString)) {
             intent.setData(Uri.parse(uriString));
         } else {
             String filePath = getPathFromUri(Uri.parse(uriString), MultimediaType.IMAGE);
-            File file = new File(filePath);
 
-            if (file.exists()) {
-                Uri uriForFile = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
-                intent.setDataAndType(uriForFile, "image/*");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.guidelines_dialog_message_image_not_found)
-                        .setPositiveButton(R.string.dialog_positive_ok, (dialog, id) -> {
-                            imageButtonRemove.performClick();
-                            dialog.dismiss();
-                        });
-                builder.create().show();
+            if (filePath == null || !new File(filePath).exists()) {
+                showMultimediaNotFoundDialog(getString(R.string.guidelines_dialog_message_image_not_found), imageButtonRemove);
+                return;
             }
+
+            Uri uriForFile = FileProvider.getUriForFile(this, getPackageName() + ".provider", new File(filePath));
+            intent.setDataAndType(uriForFile, "image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
 
         try {
@@ -217,25 +212,19 @@ public class ModifyGuidelineActivity extends BaseActivity {
     private void openVideo(String uriString, ImageButton imageButtonRemove) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
 
-        if (isValidURL(uriString)) {
+        if (isValidVideoURL(uriString)) {
             intent.setData(Uri.parse(uriString));
         } else {
             String filePath = getPathFromUri(Uri.parse(uriString), MultimediaType.VIDEO);
-            File file = new File(filePath);
 
-            if (file.exists()) {
-                Uri uriForFile = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
-                intent.setDataAndType(uriForFile, "video/*");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.guidelines_dialog_message_video_not_found)
-                        .setPositiveButton(R.string.dialog_positive_ok, (dialog, id) -> {
-                            imageButtonRemove.performClick();
-                            dialog.dismiss();
-                        });
-                builder.create().show();
+            if (filePath == null || !new File(filePath).exists()) {
+                showMultimediaNotFoundDialog(getString(R.string.guidelines_dialog_message_video_not_found), imageButtonRemove);
+                return;
             }
+
+            Uri uriForFile = FileProvider.getUriForFile(this, getPackageName() + ".provider", new File(filePath));
+            intent.setDataAndType(uriForFile, "video/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
 
         try {
@@ -243,6 +232,16 @@ public class ModifyGuidelineActivity extends BaseActivity {
         } catch (ActivityNotFoundException exception) {
             Toast.makeText(this, R.string.guidelines_toast_no_app_open_video, Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void showMultimediaNotFoundDialog(String message, ImageButton imageButtonRemove) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setPositiveButton(R.string.dialog_positive_ok, (dialog, id) -> {
+                    imageButtonRemove.performClick();
+                    dialog.dismiss();
+                });
+        builder.create().show();
     }
 
     private String getPathFromUri(Uri uri, MultimediaType multimediaType) {
@@ -334,7 +333,7 @@ public class ModifyGuidelineActivity extends BaseActivity {
     private void addImage(View view) {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_image, null);
 
-        TextView textViewURLError = dialogView.findViewById(R.id.textViewURLError);
+        TextView textViewURLHelper = dialogView.findViewById(R.id.textViewURLHelper);
         ImageView imageViewURLError = dialogView.findViewById(R.id.imageViewURLError);
         EditText editTextURL = dialogView.findViewById(R.id.editTextURL);
         editTextURL.addTextChangedListener(new TextWatcher() {
@@ -343,8 +342,8 @@ public class ModifyGuidelineActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                textViewURLError.setVisibility(View.INVISIBLE);
-                imageViewURLError.setVisibility(View.INVISIBLE);
+                textViewURLHelper.setTextAppearance(R.style.TextAppearance_HealthTrackR_BodySmall);
+                imageViewURLError.setVisibility(View.GONE);
             }
 
             @Override
@@ -376,10 +375,13 @@ public class ModifyGuidelineActivity extends BaseActivity {
 
         addImageDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String url = editTextURL.getText().toString().trim();
-            if (!isValidURL(url)) {
-                textViewURLError.setVisibility(View.VISIBLE);
+            if (!isValidImageURL(url)) {
+                TypedValue typedValue = new TypedValue();
+                getTheme().resolveAttribute(com.google.android.material.R.attr.colorError, typedValue, true);
+                textViewURLHelper.setTextColor(typedValue.data);
                 imageViewURLError.setVisibility(View.VISIBLE);
             } else {
+                newImageURIStrings.add(url);
                 insertNewMultimediaInLayout(url, MultimediaType.IMAGE, newImageURIStrings, linearLayoutImages);
                 addImageDialog.dismiss();
             }
@@ -389,7 +391,7 @@ public class ModifyGuidelineActivity extends BaseActivity {
     private void addVideo(View view) {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_video, null);
 
-        TextView textViewURLError = dialogView.findViewById(R.id.textViewURLError);
+        TextView textViewURLHelper = dialogView.findViewById(R.id.textViewURLHelper);
         ImageView imageViewURLError = dialogView.findViewById(R.id.imageViewURLError);
         EditText editTextURL = dialogView.findViewById(R.id.editTextURL);
         editTextURL.addTextChangedListener(new TextWatcher() {
@@ -398,8 +400,8 @@ public class ModifyGuidelineActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                textViewURLError.setVisibility(View.INVISIBLE);
-                imageViewURLError.setVisibility(View.INVISIBLE);
+                textViewURLHelper.setTextAppearance(R.style.TextAppearance_HealthTrackR_BodySmall);
+                imageViewURLError.setVisibility(View.GONE);
             }
 
             @Override
@@ -431,10 +433,13 @@ public class ModifyGuidelineActivity extends BaseActivity {
 
         addVideoDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String url = editTextURL.getText().toString().trim();
-            if (!isValidURL(url)) {
-                textViewURLError.setVisibility(View.VISIBLE);
+            if (!isValidVideoURL(url)) {
+                TypedValue typedValue = new TypedValue();
+                getTheme().resolveAttribute(com.google.android.material.R.attr.colorError, typedValue, true);
+                textViewURLHelper.setTextColor(typedValue.data);
                 imageViewURLError.setVisibility(View.VISIBLE);
             } else {
+                newVideoURIStrings.add(url);
                 insertNewMultimediaInLayout(url, MultimediaType.VIDEO, newVideoURIStrings, linearLayoutVideos);
                 addVideoDialog.dismiss();
             }
@@ -553,8 +558,20 @@ public class ModifyGuidelineActivity extends BaseActivity {
         return description.length() <= 300;
     }
 
-    private boolean isValidURL(String url) {
+    private boolean isValidImageURL(String imageUrl) {
+        return isValidUrl(imageUrl) && (imageUrl.endsWith(".jpg") || imageUrl.endsWith(".jpeg") || imageUrl.endsWith(".png") || imageUrl.endsWith(".gif"));
+    }
+
+    private boolean isValidVideoURL(String videoUrl) {
+        return isValidUrl(videoUrl) && (videoUrl.endsWith(".mp4") || videoUrl.endsWith(".3gp") || videoUrl.endsWith(".avi") || videoUrl.endsWith(".mov") || isYouTubeUrl(videoUrl));
+    }
+
+    private boolean isValidUrl(String url) {
         return !url.isEmpty() && (url.startsWith("https://") || url.startsWith("http://"));
+    }
+
+    private boolean isYouTubeUrl(String url) {
+        return url.contains("youtube.com") || url.contains("youtu.be");
     }
 
     @Override

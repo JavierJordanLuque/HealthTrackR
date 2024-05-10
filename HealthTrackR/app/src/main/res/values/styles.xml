@@ -119,11 +119,11 @@
     </style>
 
     <style name="FormLayout.Outlined">
-        <item name="android:background">@drawable/frame_layout_container_outlined</item>
+        <item name="android:background">@drawable/form_layout_container_outlined</item>
     </style>
 
     <style name="FormLayout.Filled">
-        <item name="android:background">@drawable/frame_layout_container_filled</item>
+        <item name="android:background">@drawable/form_layout_container_filled</item>
     </style>
 
     <style name="Widget.HealthTrackR.SmallButton" parent="Widget.Material3.Button">

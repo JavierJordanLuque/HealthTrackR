@@ -30,6 +30,7 @@
     <string name="content_description_add_guideline">Add guideline</string>
     <string name="content_description_remove_multimedia">Remove multimedia</string>
     <string name="content_description_guideline_image">Guideline´s image</string>
+    <string name="content_description_multimedia_error_icon">Error icon</string>
 
     <string name="content_description_add_symptom">Add symptom</string>
     <string name="content_description_add_question">Add question</string>

@@ -81,7 +81,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 textViewPreviousNotificationTimeError.setVisibility(View.GONE);
                 imageViewPreviousNotificationTimeError.setVisibility(View.GONE);
-                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.frame_layout_container_filled);
+                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
                 textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
             }
 
@@ -98,7 +98,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 textViewPreviousNotificationTimeError.setVisibility(View.GONE);
                 imageViewPreviousNotificationTimeError.setVisibility(View.GONE);
-                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.frame_layout_container_filled);
+                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
                 textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
             }
 
@@ -166,7 +166,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
                 textViewPreviousNotificationTimeHelper.setVisibility(View.GONE);
                 textViewPreviousNotificationTimeError.setVisibility(View.VISIBLE);
                 imageViewPreviousNotificationTimeError.setVisibility(View.VISIBLE);
-                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.frame_layout_container_filled_error);
+                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled_error);
 
                 return;
             }

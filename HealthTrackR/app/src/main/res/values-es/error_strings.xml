@@ -15,14 +15,14 @@
     <string name="error_invalid_repeat_password">Las contraseñas no coinciden.</string>
 
     <string name="error_invalid_first_name">El nombre no debe estar vacío.</string>
-    <string name="error_invalid_last_name">Los apellidos deben estar vacíos.</string>
+    <string name="error_invalid_last_name">Los apellidos no deben estar vacíos.</string>
 
     <string name="error_invalid_treatment_title">El título no debe estar vacío.</string>
     <string name="error_invalid_treatment_start_date">La fecha de inicio no debe estar vacía.</string>
     <string name="error_invalid_treatment_start_date_given_dependencies">La fecha de inicio no debe ser posterior a otras fechas contenidas en el tratamiento.</string>
     <string name="error_invalid_treatment_end_date">La fecha de finalización debe ser posterior a la fecha de inicio.</string>
     <string name="error_invalid_treatment_end_date_given_dependencies">La fecha de finalización no debe ser anterior a otras fechas contenidas en el tratamiento.</string>
-    <string name="error_invalid_treatment_diagnosis">El diagnóstico debe contener menos de 200 caracteres.</string>
+    <string name="error_invalid_treatment_diagnosis">El diagnóstico debe tener menos de 200 caracteres.</string>
 
     <string name="error_invalid_medicine_name">El nombre no debe estar vacío.</string>
     <string name="error_invalid_medicine_name_existing">El medicamento especificado ya existe en este tratamiento.</string>
@@ -30,8 +30,7 @@
     <string name="error_invalid_medicine_previous_notification_time">La hora de la notificación previa debe ser menor que la periodicidad de toma.</string>
 
     <string name="error_invalid_guideline_title">El título no debe estar vacío.</string>
-    <string name="error_invalid_guideline_description">La descripción debe contener menos de 300 caracteres.</string>
-    <string name="error_invalid_guidelines_url">La URL no es válida. Por favor, introduce una URL válida.</string>
+    <string name="error_invalid_guideline_description">La descripción debe tener menos de 300 caracteres.</string>
 
     <string name="error_invalid_symptom_description">La descripción no debe estar vacía.</string>
 

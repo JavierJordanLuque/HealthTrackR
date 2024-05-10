@@ -45,16 +45,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textViewURLError"
+        android:id="@+id/textViewURLHelper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:labelFor="@+id/editTextDescription"
         android:textAppearance="?attr/textAppearanceBodySmall"
         android:paddingTop="2dp"
         android:paddingHorizontal="15dp"
-        android:text="@string/error_invalid_guidelines_url"
-        android:textColor="?attr/colorError"
-        android:visibility="invisible" />
+        android:text="@string/guidelines_image_url_helper" />
 
     <Button
         android:id="@+id/buttonSelectImageFromDevice"
