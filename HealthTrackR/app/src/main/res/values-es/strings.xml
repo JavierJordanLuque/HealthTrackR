@@ -38,4 +38,6 @@
     <string name="filter_show_all">Ver todos</string>
 
     <string name="date_at_time">a las</string>
+
+    <string name="manage">Gestionar</string>
 </resources>

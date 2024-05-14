@@ -26,11 +26,17 @@
     <string name="content_description_modify_medicine">Modificar medicamento</string>
     <string name="content_description_delete_medicine">Eliminar medicamento</string>
     <string name="content_description_access_medicine_notifications">Acceder a las notificaciones del medicamento</string>
+    <string name="content_description_error_icon">Icono de error</string>
 
     <string name="content_description_add_guideline">Añadir pauta</string>
     <string name="content_description_remove_multimedia">Quitar multimedia</string>
-    <string name="content_description_guideline_image">Imagen de la pauta</string>
-    <string name="content_description_multimedia_error_icon">Icono de error</string>
+    <string name="content_description_multimedia_error_loading_multimedia_content">Error al cargar el contenido multimedia</string>
+    <string name="content_description_guideline_image">Imagen de la pauta:</string>
+    <string name="content_description_guideline_video">Vídeo de la pauta:</string>
+    <string name="content_description_selectable_image">Imagen seleccionable</string>
+    <string name="content_description_selectable_video">Vídeo seleccionable</string>
+    <string name="content_description_close_dialog">Cerrar diálogo</string>
+    <string name="content_description_video_duration">Duración del vídeo</string>
 
     <string name="content_description_add_symptom">Añadir síntoma</string>
     <string name="content_description_add_question">Añadir pregunta</string>

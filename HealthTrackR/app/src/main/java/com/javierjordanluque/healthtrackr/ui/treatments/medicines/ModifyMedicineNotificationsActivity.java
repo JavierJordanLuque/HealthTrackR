@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ModifyMedicineNotificationsActivity extends BaseActivity {
     private Medicine medicine;
-    private ConstraintLayout layoutPreviousNotificationTime;
+    private ConstraintLayout constraintLayoutPreviousNotificationTime;
     private EditText editTextPreviousNotificationTimeHours;
     private EditText editTextPreviousNotificationTimeMinutes;
     private SwitchMaterial switchPreviousNotificationStatus;
@@ -47,7 +47,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
     private TextView textViewPreviousNotificationTimeHelper;
     private TextView textViewPreviousNotificationTimeError;
     private ImageView imageViewPreviousNotificationTimeError;
-    private FrameLayout frameLayoutPreviousNotificationTime;
+    private ConstraintLayout layoutPreviousNotificationTime;
     private int previousNotificationTimeHours;
     private int previousNotificationTimeMinutes;
     private boolean previousNotificationStatus;
@@ -66,11 +66,11 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
         TextView textViewName = findViewById(R.id.textViewName);
         textViewName.setText(medicine.getName());
 
-        layoutPreviousNotificationTime = findViewById(R.id.layoutPreviousNotificationTime);
+        constraintLayoutPreviousNotificationTime = findViewById(R.id.constraintLayoutPreviousNotificationTime);
         textViewPreviousNotificationTimeHelper = findViewById(R.id.textViewPreviousNotificationTimeHelper);
         textViewPreviousNotificationTimeError = findViewById(R.id.textViewPreviousNotificationTimeError);
         imageViewPreviousNotificationTimeError = findViewById(R.id.imageViewPreviousNotificationTimeError);
-        frameLayoutPreviousNotificationTime = findViewById(R.id.frameLayoutPreviousNotificationTime);
+        layoutPreviousNotificationTime = findViewById(R.id.layoutPreviousNotificationTime);
 
         editTextPreviousNotificationTimeHours = findViewById(R.id.editTextPreviousNotificationTimeHours);
         editTextPreviousNotificationTimeHours.addTextChangedListener(new TextWatcher() {
@@ -81,7 +81,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 textViewPreviousNotificationTimeError.setVisibility(View.GONE);
                 imageViewPreviousNotificationTimeError.setVisibility(View.GONE);
-                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
+                layoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
                 textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
             }
 
@@ -98,7 +98,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 textViewPreviousNotificationTimeError.setVisibility(View.GONE);
                 imageViewPreviousNotificationTimeError.setVisibility(View.GONE);
-                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
+                layoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
                 textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
             }
 
@@ -135,7 +135,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
         MedicationNotification finalPreviousNotification = previousNotification;
         switchPreviousNotificationStatus.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
-                layoutPreviousNotificationTime.setVisibility(View.GONE);
+                constraintLayoutPreviousNotificationTime.setVisibility(View.GONE);
             } else {
                 setPreviousNotificationTime(finalPreviousNotification);
             }
@@ -166,7 +166,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
                 textViewPreviousNotificationTimeHelper.setVisibility(View.GONE);
                 textViewPreviousNotificationTimeError.setVisibility(View.VISIBLE);
                 imageViewPreviousNotificationTimeError.setVisibility(View.VISIBLE);
-                frameLayoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled_error);
+                layoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled_error);
 
                 return;
             }
@@ -222,8 +222,8 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.medicines_dialog_denied_notification_permission))
                 .setPositiveButton(getString(R.string.snackbar_action_more), (dialog, id) -> {
-                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    intent.setData(android.net.Uri.parse("package:" + getPackageName()));
+                    Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
                     notificationPermissionLauncher.launch(intent);
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> {
@@ -265,7 +265,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
         } else {
             previousTotalMinutes = TimeUnit.MILLISECONDS.toMinutes(NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
         }
-        layoutPreviousNotificationTime.setVisibility(View.VISIBLE);
+        constraintLayoutPreviousNotificationTime.setVisibility(View.VISIBLE);
 
         long hours = previousTotalMinutes / 60;
         long minutes = previousTotalMinutes % 60;

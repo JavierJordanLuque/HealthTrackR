@@ -42,4 +42,6 @@
     <string name="filter_less_or_equal" translatable="false">≤</string>
 
     <string name="date_at_time">at</string>
+
+    <string name="manage">Manage</string>
 </resources>

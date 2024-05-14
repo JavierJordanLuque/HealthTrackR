@@ -26,11 +26,17 @@
     <string name="content_description_modify_medicine">Modify medicine</string>
     <string name="content_description_delete_medicine">Delete medicine</string>
     <string name="content_description_access_medicine_notifications">Access medicine notifications</string>
+    <string name="content_description_error_icon">Error icon</string>
 
     <string name="content_description_add_guideline">Add guideline</string>
     <string name="content_description_remove_multimedia">Remove multimedia</string>
-    <string name="content_description_guideline_image">Guideline´s image</string>
-    <string name="content_description_multimedia_error_icon">Error icon</string>
+    <string name="content_description_multimedia_error_loading_multimedia_content">Error loading multimedia content</string>
+    <string name="content_description_guideline_image">Guideline´s image:</string>
+    <string name="content_description_guideline_video">Guideline´s video:</string>
+    <string name="content_description_selectable_image">Selectable image</string>
+    <string name="content_description_selectable_video">Selectable video</string>
+    <string name="content_description_close_dialog">Close dialog</string>
+    <string name="content_description_video_duration">Video`s duration</string>
 
     <string name="content_description_add_symptom">Add symptom</string>
     <string name="content_description_add_question">Add question</string>

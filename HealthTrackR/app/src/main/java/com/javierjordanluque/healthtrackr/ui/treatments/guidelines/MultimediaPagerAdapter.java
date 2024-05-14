@@ -42,7 +42,6 @@ public class MultimediaPagerAdapter extends RecyclerView.Adapter<MultimediaPager
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-
         if (viewType == MultimediaType.IMAGE.ordinal()) {
             view = LayoutInflater.from(context).inflate(R.layout.item_image_pager, parent, false);
         } else if (viewType == MultimediaType.VIDEO.ordinal()) {
@@ -65,6 +64,8 @@ public class MultimediaPagerAdapter extends RecyclerView.Adapter<MultimediaPager
                     .load(multimedia.getUri())
                     .error(new BitmapDrawable(context.getResources(), createBitmapFromView(multimediaNotFoundView)))
                     .into(holder.imageView);
+
+            holder.imageView.setContentDescription(context.getString(R.string.content_description_guideline_image) + " " + multimedia.getUri().toString());
         } else {
             if (!isYouTubeUrl(multimedia.getUri().toString())) {
                 holder.videoView.setVideoURI(Uri.parse(multimedia.getUri().toString()));
@@ -95,6 +96,8 @@ public class MultimediaPagerAdapter extends RecyclerView.Adapter<MultimediaPager
                     holder.videoView.setVisibility(View.GONE);
                     return true;
                 });
+
+                holder.videoView.setContentDescription(context.getString(R.string.content_description_guideline_video) + " " + multimedia.getUri().toString());
             } else {
                 holder.videoView.setVisibility(View.GONE);
                 holder.webView.setVisibility(View.VISIBLE);
@@ -105,6 +108,7 @@ public class MultimediaPagerAdapter extends RecyclerView.Adapter<MultimediaPager
                 holder.webView.loadData(video, "text/html", "utf-8");
                 holder.webView.getSettings().setJavaScriptEnabled(true);
                 holder.webView.setWebChromeClient(new WebChromeClient());
+                holder.webView.setContentDescription(context.getString(R.string.content_description_guideline_video) + " " + multimedia.getUri().toString());
             }
         }
     }
@@ -138,6 +142,7 @@ public class MultimediaPagerAdapter extends RecyclerView.Adapter<MultimediaPager
             String pattern = "(?<=watch\\?v=|/videos/|embed/|youtu.be/|/v/|/e/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#&?\\n]*";
             Pattern compiledPattern = Pattern.compile(pattern);
             Matcher matcher = compiledPattern.matcher(url);
+
             if (matcher.find())
                 videoId = matcher.group();
         }

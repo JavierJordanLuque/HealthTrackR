@@ -53,4 +53,6 @@
     <dimen name="text_view_subtitle_margin_top">10dp</dimen>
     <dimen name="text_view_subtitle_margin_start">10dp</dimen>
     <dimen name="text_view_subtitle_margin_end">100dp</dimen>
+
+    <dimen name="multimedia_selector_grid_spacing">1.5dp</dimen>
 </resources>

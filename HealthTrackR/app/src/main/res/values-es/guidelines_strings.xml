@@ -17,6 +17,11 @@
     <string name="guidelines_upload_image_from_device">Subir imagen desde el dispositivo</string>
     <string name="guidelines_upload_video_from_device">Subir vídeo desde el dispositivo</string>
 
+    <string name="guidelines_select_image">Selecciona una imagen</string>
+    <string name="guidelines_select_video">Selecciona un vídeo</string>
+    <string name="guidelines_select_image_manage_info">Has dado acceso a un número concreto de imágenes.</string>
+    <string name="guidelines_select_video_manage_info">Has dado acceso a un número concreto de vídeos.</string>
+
     <string name="guidelines_form_title">Título *</string>
     <string name="guidelines_form_number_of_order">Número de orden *</string>
 

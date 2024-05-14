@@ -133,7 +133,8 @@
 
                     <RelativeLayout
                         android:id="@+id/relativeLayoutGuidelines"
-                        style="@style/RelativeLayoutGrid">
+                        style="@style/RelativeLayoutGrid"
+                        android:foreground="?attr/selectableItemBackground">
 
                         <TextView
                             android:id="@+id/textViewGuidelines"
@@ -149,7 +150,8 @@
 
                     <RelativeLayout
                         android:id="@+id/relativeLayoutMedicines"
-                        style="@style/RelativeLayoutGrid">
+                        style="@style/RelativeLayoutGrid"
+                        android:foreground="?attr/selectableItemBackground">
 
                         <TextView
                             android:id="@+id/textViewMedicines"
@@ -165,7 +167,8 @@
 
                     <RelativeLayout
                         android:id="@+id/relativeLayoutSymptoms"
-                        style="@style/RelativeLayoutGrid">
+                        style="@style/RelativeLayoutGrid"
+                        android:foreground="?attr/selectableItemBackground">
 
                         <TextView
                             android:id="@+id/textViewSymptoms"
@@ -181,7 +184,8 @@
 
                     <RelativeLayout
                         android:id="@+id/relativeLayoutTreatmentCalendar"
-                        style="@style/RelativeLayoutGrid">
+                        style="@style/RelativeLayoutGrid"
+                        android:foreground="?attr/selectableItemBackground">
 
                         <TextView
                             android:id="@+id/textViewTreatmentCalendar"
