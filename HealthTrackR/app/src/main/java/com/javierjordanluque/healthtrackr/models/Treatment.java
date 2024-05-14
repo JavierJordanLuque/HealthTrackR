@@ -77,7 +77,7 @@ public class Treatment implements Identifiable {
                 }
             } else if (!isFinished() && endDate.isBefore(ZonedDateTime.now())) {
                 for (Medicine medicine : getMedicines(context)) {
-                    for (MedicationNotification medicationNotification : medicine.getNotifications(context))
+                    for (MedicationNotification medicationNotification :  new ArrayList<>(medicine.getNotifications(context)))
                         NotificationScheduler.cancelNotification(context, medicationNotification);
                 }
             }
@@ -136,7 +136,7 @@ public class Treatment implements Identifiable {
     }
 
     public void removeMedicine(Context context, Medicine medicine) throws DBDeleteException, DBFindException {
-        for (MedicationNotification medicationNotification : medicine.getNotifications(context))
+        for (MedicationNotification medicationNotification : new ArrayList<>(medicine.getNotifications(context)))
             NotificationScheduler.cancelNotification(context, medicationNotification);
 
         MedicineRepository medicineRepository = new MedicineRepository(context);

@@ -16,11 +16,16 @@ import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
 import com.javierjordanluque.healthtrackr.models.Treatment;
+import com.javierjordanluque.healthtrackr.models.User;
+import com.javierjordanluque.healthtrackr.ui.LogInActivity;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicineFragment;
+import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.PermissionManager;
+import com.javierjordanluque.healthtrackr.util.exceptions.AuthenticationException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
+import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import com.javierjordanluque.healthtrackr.util.exceptions.NotificationException;
 
 import java.time.Duration;
@@ -39,7 +44,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             if (notification instanceof MedicationNotification) {
                 Treatment treatment = ((MedicationNotification) notification).getMedicine().getTreatment();
                 if (!treatment.isFinished()) {
-                    medicationPublisher(context, notification);
+                    medicationPublisher(context, (MedicationNotification) notification);
                 } else {
                     try {
                         NotificationScheduler.cancelNotification(context, notification);
@@ -53,7 +58,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             } else if (notification instanceof MedicalAppointmentNotification) {
                 Treatment treatment = ((MedicalAppointmentNotification) notification).getAppointment().getTreatment();
                 if (!treatment.isFinished()) {
-                    appointmentPublisher(context, notification);
+                    appointmentPublisher(context, (MedicalAppointmentNotification) notification);
                 } else {
                     try {
                         NotificationScheduler.cancelNotification(context, notification);
@@ -83,20 +88,12 @@ public class NotificationPublisher extends BroadcastReceiver {
         return notification;
     }
 
-    private void medicationPublisher(Context context, Notification notification) {
+    private void medicationPublisher(Context context, MedicationNotification medicationNotification) {
         if (PermissionManager.hasNotificationPermission(context) && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            MedicationNotification medicationNotification = (MedicationNotification) notification;
-
             String medicineName = medicationNotification.getMedicine().getName();
             String treatmentTitle = medicationNotification.getMedicine().getTreatment().getTitle();
 
-            Intent actionIntent = new Intent(context, MainActivity.class);
-            actionIntent.putExtra(MainActivity.CURRENT_FRAGMENT, MedicineFragment.class.getName());
-            actionIntent.putExtra(MedicationNotification.class.getSimpleName(), notification.getId());
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-            stackBuilder.addNextIntentWithParentStack(actionIntent);
-            PendingIntent actionPendingIntent = stackBuilder.getPendingIntent((int) notification.getId(),
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+            PendingIntent actionPendingIntent = createNotificationActionPendingIntent(context, medicationNotification);
 
             NotificationCompat.Builder publicNotificationBuilder;
             NotificationCompat.Builder notificationBuilder;
@@ -160,23 +157,21 @@ public class NotificationPublisher extends BroadcastReceiver {
             }
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify((int) notification.getId(), notificationBuilder.build());
+            notificationManager.notify((int) medicationNotification.getId(), notificationBuilder.build());
         } else {
             try {
-                NotificationScheduler.cancelNotification(context, notification);
+                NotificationScheduler.cancelNotification(context, medicationNotification);
             } catch (DBFindException | DBDeleteException exception) {
                 try {
-                    throw new NotificationException("Failed to cancel notification with id (" + notification.getId() + ") from a finished treatment", exception);
+                    throw new NotificationException("Failed to cancel notification with id (" + medicationNotification.getId() + ") from a finished treatment", exception);
                 } catch (NotificationException ignored) {
                 }
             }
         }
     }
 
-    private void appointmentPublisher(Context context, Notification notification) {
+    private void appointmentPublisher(Context context, MedicalAppointmentNotification appointmentNotification) {
         if (PermissionManager.hasNotificationPermission(context) && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            MedicalAppointmentNotification appointmentNotification = (MedicalAppointmentNotification) notification;
-
             String appointmentPurpose = appointmentNotification.getAppointment().getPurpose();
             String treatmentTitle = appointmentNotification.getAppointment().getTreatment().getTitle();
             double appointmentLocationLatitude = appointmentNotification.getAppointment().getLocation().getLatitude();
@@ -199,13 +194,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                         ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " + appointmentLocationLongitude + ".";
             }
 
-            Intent actionIntent = new Intent(context, MainActivity.class);
-            //actionIntent.putExtra(MainActivity.CURRENT_FRAGMENT, MedicalAppointmentFragment.class.getName());
-            actionIntent.putExtra(MedicalAppointmentNotification.class.getSimpleName(), notification.getId());
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-            stackBuilder.addNextIntentWithParentStack(actionIntent);
-            PendingIntent actionPendingIntent = stackBuilder.getPendingIntent((int) notification.getId(),
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+            PendingIntent actionPendingIntent = createNotificationActionPendingIntent(context, appointmentNotification);
 
             NotificationCompat.Builder publicNotificationBuilder = new NotificationCompat.Builder(context, HealthTrackRApp.MEDICAL_APPOINTMENT_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_medical_appointment)
@@ -231,21 +220,64 @@ public class NotificationPublisher extends BroadcastReceiver {
                     .setContentIntent(actionPendingIntent);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify((int) notification.getId(), notificationBuilder.build());
+            notificationManager.notify((int) appointmentNotification.getId(), notificationBuilder.build());
             try {
                 appointmentNotification.getAppointment().removeNotification(context, appointmentNotification);
             } catch (DBDeleteException ignored) {
             }
         } else {
             try {
-                NotificationScheduler.cancelNotification(context, notification);
+                NotificationScheduler.cancelNotification(context, appointmentNotification);
             } catch (DBFindException | DBDeleteException exception) {
                 try {
-                    throw new NotificationException("Failed to cancel notification with id (" + notification.getId() + ") from a finished treatment", exception);
+                    throw new NotificationException("Failed to cancel notification with id (" + appointmentNotification.getId() + ") from a finished treatment", exception);
                 } catch (NotificationException ignored) {
                 }
             }
         }
+    }
+
+    private PendingIntent createNotificationActionPendingIntent(Context context, Notification notification) {
+        PendingIntent actionPendingIntent = null;
+        Intent actionIntent = null;
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+
+        Object[] credentials = AuthenticationService.getCredentials(context);
+        String email = (credentials != null) ? (String) credentials[0] : null;
+        String password = (credentials != null) ? (String) credentials[1] : null;
+
+        if (email != null && password != null) {
+            try {
+                User user = AuthenticationService.login(context, email, password);
+
+                if (notification instanceof MedicationNotification &&
+                        user.equals(((MedicationNotification) notification).getMedicine().getTreatment().getUser())) {
+                    actionIntent = new Intent(context, MainActivity.class);
+                    actionIntent.putExtra(MainActivity.CURRENT_FRAGMENT, MedicineFragment.class.getName());
+                    actionIntent.putExtra(MedicationNotification.class.getSimpleName(), notification.getId());
+                } else if (notification instanceof MedicalAppointmentNotification &&
+                        user.equals(((MedicalAppointmentNotification) notification).getAppointment().getTreatment().getUser())) {
+                    actionIntent = new Intent(context, MainActivity.class);
+                    //actionIntent.putExtra(MainActivity.CURRENT_FRAGMENT, MedicalAppointmentFragment.class.getName());
+                    actionIntent.putExtra(MedicalAppointmentNotification.class.getSimpleName(), notification.getId());
+                }
+
+                if (actionIntent != null) {
+                    stackBuilder.addNextIntentWithParentStack(actionIntent);
+                    actionPendingIntent = stackBuilder.getPendingIntent((int) notification.getId(), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                }
+            } catch (AuthenticationException exception) {
+                ExceptionManager.advertiseUI(context, exception.getMessage());
+            }
+        }
+
+        if (actionPendingIntent == null) {
+            actionIntent = new Intent(context, LogInActivity.class);
+            stackBuilder.addNextIntentWithParentStack(actionIntent);
+            actionPendingIntent = stackBuilder.getPendingIntent((int) notification.getId(), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        }
+
+        return actionPendingIntent;
     }
 
     private String formatTimeDifference(Context context, long timeDifferenceMillis) {

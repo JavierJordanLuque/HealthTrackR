@@ -12,6 +12,8 @@
     <string name="guidelines_image_url_helper">The URL must contain a valid prefix (https://, http://) and a valid image extension (.jpg, .jpeg, .png, .gif).</string>
     <string name="guidelines_video_url_helper">The URL must contain a valid prefix (https://, http://) and a valid video extension (.mp4, .3gp, .avi, .mov) or belong to YouTube.</string>
 
+    <string name="guidelines_add_guideline_helper">After adding the guideline, explanatory images or videos can be included by modifying it.</string>
+
     <string name="guidelines_add_image">Add image</string>
     <string name="guidelines_add_video">Add video</string>
     <string name="guidelines_upload_image_from_device">Upload image from the device</string>

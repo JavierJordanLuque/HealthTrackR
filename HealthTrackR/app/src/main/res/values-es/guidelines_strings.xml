@@ -12,6 +12,8 @@
     <string name="guidelines_image_url_helper">La URL debe contener un prefijo válido (https://, http://) y una extensión de imagen válida (.jpg, .jpeg, .png, .gif).</string>
     <string name="guidelines_video_url_helper">La URL debe contener un prefijo válido (https://, http://) y una extensión de vídeo válida (.mp4, .3gp, .avi, .mov) o pertenecer a YouTube.</string>
 
+    <string name="guidelines_add_guideline_helper">Después de agregar la pauta, se podrán incluir imágenes o vídeos explicativos mediante su modificación.</string>
+
     <string name="guidelines_add_image">Añadir imagen</string>
     <string name="guidelines_add_video">Añadir vídeo</string>
     <string name="guidelines_upload_image_from_device">Subir imagen desde el dispositivo</string>

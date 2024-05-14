@@ -106,8 +106,8 @@
                             android:id="@+id/editTextDose"
                             android:layout_width="160dp"
                             android:layout_height="wrap_content"
-                            android:hint="@string/medicines_dose"
                             android:autofillHints="number"
+                            android:hint="@string/medicines_dose"
                             android:inputType="number"
                             android:maxLength="10" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -234,15 +234,28 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:labelFor="@+id/editTextDosageFrequencyMinutes"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        android:paddingTop="2dp"
                         android:paddingHorizontal="15dp"
-                        android:text="@string/medicines_dosing_frequency_helper" />
+                        android:paddingTop="2dp"
+                        android:text="@string/medicines_dosing_frequency_helper"
+                        android:textAppearance="?attr/textAppearanceBodySmall" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewAddMedicineHelper"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/editTextDosageFrequencyMinutes"
+                    android:paddingHorizontal="15dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/medicines_add_medicine_helper"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineStart"
@@ -262,9 +275,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingTop="@dimen/linear_layout_padding_top"
+                    android:paddingBottom="@dimen/linear_layout_padding_bottom"
                     app:layout_constraintEnd_toEndOf="@id/vLargeButtonGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vLargeButtonGuidelineStart"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewAddMedicineHelper"
                     app:layout_constraintWidth_max="@dimen/large_btn_max_width">
 
                     <Button
@@ -274,19 +288,6 @@
                         android:text="@string/button_add" />
 
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@+id/editTextDosageFrequencyMinutes"
-                    android:textAppearance="?attr/textAppearanceBodySmall"
-                    android:paddingTop="2dp"
-                    android:paddingHorizontal="15dp"
-                    android:paddingBottom="@dimen/linear_layout_padding_bottom"
-                    android:text="@string/medicines_add_medicine_helper"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutButtonAdd"
-                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
-                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

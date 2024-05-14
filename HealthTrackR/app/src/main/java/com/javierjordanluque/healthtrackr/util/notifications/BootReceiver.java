@@ -32,7 +32,6 @@ public class BootReceiver extends BroadcastReceiver {
                     } else {
                         NotificationScheduler.scheduleInexactNotification(context, notification);
                     }
-
                 } else if (notification instanceof MedicalAppointmentNotification) {
                     NotificationScheduler.scheduleInexactNotification(context, notification);
                 }
