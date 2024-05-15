@@ -21,8 +21,13 @@
 
     <string name="guidelines_select_image">Selecciona una imagen</string>
     <string name="guidelines_select_video">Selecciona un vídeo</string>
-    <string name="guidelines_select_image_manage_info">Has dado acceso a un número concreto de imágenes.</string>
-    <string name="guidelines_select_video_manage_info">Has dado acceso a un número concreto de vídeos.</string>
+    <string name="guidelines_select_image_manage_info_api_34">Has dado acceso a un número concreto de imágenes.</string>
+    <string name="guidelines_select_video_manage_info_api_34">Has dado acceso a un número concreto de vídeos.</string>
+    <string name="guidelines_select_image_manage_info_api_33">Has dado acceso a las imágenes del dispositivo.</string>
+    <string name="guidelines_select_video_manage_info_api_33">Has dado acceso a los vídeos del dispositivo.</string>
+    <string name="guidelines_select_multimedia_manage_info_default">Has dado acceso al contenido multimedia del dispositivo.</string>
+    <string name="guidelines_select_image_no_media">No se encontraron imágenes en el dispositivo.</string>
+    <string name="guidelines_select_video_no_media">No se encontraron vídeos en el dispositivo.</string>
 
     <string name="guidelines_form_title">Título *</string>
     <string name="guidelines_form_number_of_order">Número de orden *</string>

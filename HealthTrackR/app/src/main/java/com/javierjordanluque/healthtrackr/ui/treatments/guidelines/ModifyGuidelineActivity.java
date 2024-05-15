@@ -31,7 +31,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModifyGuidelineActivity extends BaseActivity {
+    private final boolean USE_USER_CONTROL_PICKER = true;
     private Treatment treatment;
     private Guideline guideline;
     private TextInputLayout layoutTitle;
@@ -115,7 +115,6 @@ public class ModifyGuidelineActivity extends BaseActivity {
 
         Button buttonAddImage = findViewById(R.id.buttonAddImage);
         buttonAddImage.setOnClickListener(this::addImage);
-
 
         Button buttonAddVideo = findViewById(R.id.buttonAddVideo);
         buttonAddVideo.setOnClickListener(this::addVideo);
@@ -370,28 +369,30 @@ public class ModifyGuidelineActivity extends BaseActivity {
         addImageDialog = builder.create();
 
         buttonSelectImageFromDevice.setOnClickListener(buttonView -> {
-            if (PermissionManager.hasReadMediaImagesPermission(this)) {
+            if (!USE_USER_CONTROL_PICKER) {
                 selectImageFromDevice();
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && PermissionManager.hasReadMediaPartialPermission(this)) {
-                onRequestReadMultimediaPermissionMultimediaType = MultimediaType.IMAGE;
-
-                List<Media> mediaList = MediaHelper.getImages(getContentResolver());
-                if (!mediaList.isEmpty()) {
-                    selectAllowedImageFromDevice(mediaList);
-                } else {
-                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
-                            PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
-                }
             } else {
-                onRequestReadMultimediaPermissionMultimediaType = MultimediaType.IMAGE;
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
-                            PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
-                } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
-                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_IMAGES);
+                if (PermissionManager.hasReadMediaImagesPermission(this)) {
+                    selectAllowedImageFromDevice(MediaHelper.getImages(getContentResolver()));
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && PermissionManager.hasReadMediaPartialPermission(this)) {
+                    List<Media> mediaList = MediaHelper.getImages(getContentResolver());
+                    if (!mediaList.isEmpty()) {
+                        selectAllowedImageFromDevice(mediaList);
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
+                                PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
+                    }
                 } else {
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PermissionManager.REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE);
+                    onRequestReadMultimediaPermissionMultimediaType = MultimediaType.IMAGE;
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
+                                PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
+                    } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+                        requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_IMAGES);
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PermissionManager.REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE);
+                    }
                 }
             }
         });
@@ -446,28 +447,30 @@ public class ModifyGuidelineActivity extends BaseActivity {
         addVideoDialog = builder.create();
 
         buttonSelectVideoFromDevice.setOnClickListener(buttonView -> {
-            if (PermissionManager.hasReadMediaVideoPermission(this)) {
+            if (!USE_USER_CONTROL_PICKER) {
                 selectVideoFromDevice();
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && PermissionManager.hasReadMediaPartialPermission(this)) {
-                onRequestReadMultimediaPermissionMultimediaType = MultimediaType.VIDEO;
-
-                List<Media> mediaList = MediaHelper.getVideos(getContentResolver());
-                if (!mediaList.isEmpty()) {
-                    selectAllowedVideoFromDevice(mediaList);
-                } else {
-                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
-                            PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
-                }
             } else {
-                onRequestReadMultimediaPermissionMultimediaType = MultimediaType.VIDEO;
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
-                            PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
-                } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
-                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO}, PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VIDEO);
+                if (PermissionManager.hasReadMediaVideoPermission(this)) {
+                    selectAllowedVideoFromDevice(MediaHelper.getVideos(getContentResolver()));
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && PermissionManager.hasReadMediaPartialPermission(this)) {
+                    List<Media> mediaList = MediaHelper.getVideos(getContentResolver());
+                    if (!mediaList.isEmpty()) {
+                        selectAllowedVideoFromDevice(mediaList);
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
+                                PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
+                    }
                 } else {
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PermissionManager.REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE);
+                    onRequestReadMultimediaPermissionMultimediaType = MultimediaType.VIDEO;
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
+                                PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
+                    } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+                        requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO}, PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VIDEO);
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PermissionManager.REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE);
+                    }
                 }
             }
         });
@@ -494,13 +497,7 @@ public class ModifyGuidelineActivity extends BaseActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode ==  PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.IMAGE)) {
-                    selectImageFromDevice();
-                } else if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.VIDEO)) {
-                    selectVideoFromDevice();
-                }
-            } else if (grantResults.length > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
                 if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.IMAGE)) {
                     selectAllowedImageFromDevice(MediaHelper.getImages(getContentResolver()));
                 } else if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.VIDEO)) {
@@ -511,22 +508,22 @@ public class ModifyGuidelineActivity extends BaseActivity {
             }
         } else if (requestCode ==  PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_IMAGES) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                selectImageFromDevice();
+                selectAllowedImageFromDevice(MediaHelper.getImages(getContentResolver()));
             } else {
                 showReadMultimediaPermissionDeniedDialog();
             }
         } else if (requestCode ==  PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VIDEO) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                selectVideoFromDevice();
+                selectAllowedVideoFromDevice(MediaHelper.getVideos(getContentResolver()));
             } else {
                 showReadMultimediaPermissionDeniedDialog();
             }
         } else if (requestCode == PermissionManager.REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.IMAGE)) {
-                    selectImageFromDevice();
+                    selectAllowedImageFromDevice(MediaHelper.getImages(getContentResolver()));
                 } else if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.VIDEO)) {
-                    selectVideoFromDevice();
+                    selectAllowedVideoFromDevice(MediaHelper.getVideos(getContentResolver()));
                 }
             } else {
                 showReadMultimediaPermissionDeniedDialog();
@@ -551,6 +548,8 @@ public class ModifyGuidelineActivity extends BaseActivity {
     }
 
     private void selectAllowedImageFromDevice(List<Media> mediaList) {
+        onRequestReadMultimediaPermissionMultimediaType = MultimediaType.IMAGE;
+
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View bottomSheetView = LayoutInflater.from(this).inflate(R.layout.dialog_media_selector, null);
         bottomSheetDialog.setContentView(bottomSheetView);
@@ -562,44 +561,58 @@ public class ModifyGuidelineActivity extends BaseActivity {
         imageViewCloseIcon.setOnClickListener(view -> bottomSheetDialog.dismiss());
 
         TextView textViewManageInfo = bottomSheetView.findViewById(R.id.textViewManageInfo);
-        textViewManageInfo.setText(R.string.guidelines_select_image_manage_info);
-
         TextView textViewManageButton = bottomSheetView.findViewById(R.id.textViewManageButton);
-        textViewManageButton.setOnClickListener(view -> {
-            bottomSheetDialog.dismiss();
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-                requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
-                        PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
-        });
-
         RecyclerView recyclerView = bottomSheetView.findViewById(R.id.recyclerView);
 
-        bottomSheetDialog.setOnShowListener(dialog -> {
-            BottomSheetDialog dialogInterface = (BottomSheetDialog) dialog;
-            FrameLayout bottomSheet = dialogInterface.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+        if (mediaList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
 
-            if (bottomSheet != null) {
-                int numColumns = 3;
-                int widthPixels = bottomSheet.getWidth() - getResources().getDimensionPixelSize(R.dimen.multimedia_selector_grid_spacing) * (numColumns + 1) * 2;
-                int cellSize = widthPixels / numColumns;
-
-                SelectableMultimediaAdapter adapter = new SelectableMultimediaAdapter(this, mediaList, cellSize);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new GridLayoutManager(this, numColumns));
-
-                adapter.setOnItemClickListener((position, view) -> {
-                    Media selectedMedia = mediaList.get(position);
-                    Uri imageURI = selectedMedia.getUri();
-
-                    String imageUriString = imageURI.toString();
-                    newImageURIStrings.add(imageUriString);
-                    insertNewMultimediaInLayout(imageUriString, MultimediaType.IMAGE, newImageURIStrings, linearLayoutImages);
-
+            TextView textViewNoMedia = bottomSheetView.findViewById(R.id.textViewNoMedia);
+            textViewNoMedia.setVisibility(View.VISIBLE);
+            textViewNoMedia.setText(R.string.guidelines_select_image_no_media);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                textViewManageInfo.setText(R.string.guidelines_select_image_manage_info_api_34);
+                textViewManageButton.setOnClickListener(view -> {
                     bottomSheetDialog.dismiss();
+
+                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
+                            PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
                 });
+            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+                textViewManageInfo.setText(R.string.guidelines_select_image_manage_info_api_33);
+                textViewManageButton.setVisibility(View.GONE);
+            } else {
+                textViewManageInfo.setText(R.string.guidelines_select_multimedia_manage_info_default);
+                textViewManageButton.setVisibility(View.GONE);
             }
-        });
+
+            bottomSheetDialog.setOnShowListener(dialog -> {
+                BottomSheetDialog dialogInterface = (BottomSheetDialog) dialog;
+                FrameLayout bottomSheet = dialogInterface.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+
+                if (bottomSheet != null) {
+                    int numColumns = 3;
+                    int widthPixels = bottomSheet.getWidth() - getResources().getDimensionPixelSize(R.dimen.multimedia_selector_grid_spacing) * (numColumns + 1) * 2;
+                    int cellSize = widthPixels / numColumns;
+
+                    SelectableMultimediaAdapter adapter = new SelectableMultimediaAdapter(this, mediaList, cellSize);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new GridLayoutManager(this, numColumns));
+
+                    adapter.setOnItemClickListener((position, view) -> {
+                        Media selectedMedia = mediaList.get(position);
+                        Uri imageURI = selectedMedia.getUri();
+
+                        String imageUriString = imageURI.toString();
+                        newImageURIStrings.add(imageUriString);
+                        insertNewMultimediaInLayout(imageUriString, MultimediaType.IMAGE, newImageURIStrings, linearLayoutImages);
+
+                        bottomSheetDialog.dismiss();
+                    });
+                }
+            });
+        }
 
         bottomSheetDialog.show();
         addImageDialog.dismiss();
@@ -619,44 +632,58 @@ public class ModifyGuidelineActivity extends BaseActivity {
         imageViewCloseIcon.setOnClickListener(view -> bottomSheetDialog.dismiss());
 
         TextView textViewManageInfo = bottomSheetView.findViewById(R.id.textViewManageInfo);
-        textViewManageInfo.setText(R.string.guidelines_select_video_manage_info);
-
         TextView textViewManageButton = bottomSheetView.findViewById(R.id.textViewManageButton);
-        textViewManageButton.setOnClickListener(view -> {
-            bottomSheetDialog.dismiss();
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-                requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
-                        PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
-        });
-
         RecyclerView recyclerView = bottomSheetView.findViewById(R.id.recyclerView);
 
-        bottomSheetDialog.setOnShowListener(dialog -> {
-            BottomSheetDialog dialogInterface = (BottomSheetDialog) dialog;
-            FrameLayout bottomSheet = dialogInterface.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+        if (mediaList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
 
-            if (bottomSheet != null) {
-                int numColumns = 3;
-                int widthPixels = bottomSheet.getWidth() - getResources().getDimensionPixelSize(R.dimen.multimedia_selector_grid_spacing) * (numColumns + 1) * 2;
-                int cellSize = widthPixels / numColumns;
-
-                SelectableMultimediaAdapter adapter = new SelectableMultimediaAdapter(this, mediaList, cellSize);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new GridLayoutManager(this, numColumns));
-
-                adapter.setOnItemClickListener((position, view) -> {
-                    Media selectedMedia = mediaList.get(position);
-                    Uri videoURI = selectedMedia.getUri();
-
-                    String videoURIString = videoURI.toString();
-                    newVideoURIStrings.add(videoURIString);
-                    insertNewMultimediaInLayout(videoURIString, MultimediaType.VIDEO, newVideoURIStrings, linearLayoutVideos);
-
+            TextView textViewNoMedia = bottomSheetView.findViewById(R.id.textViewNoMedia);
+            textViewNoMedia.setVisibility(View.VISIBLE);
+            textViewNoMedia.setText(R.string.guidelines_select_video_no_media);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                textViewManageInfo.setText(R.string.guidelines_select_video_manage_info_api_34);
+                textViewManageButton.setOnClickListener(view -> {
                     bottomSheetDialog.dismiss();
+
+                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
+                            PermissionManager.REQUEST_CODE_PERMISSION_READ_MEDIA_VISUAL_USER_SELECTED);
                 });
+            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+                textViewManageInfo.setText(R.string.guidelines_select_video_manage_info_api_33);
+                textViewManageButton.setVisibility(View.GONE);
+            } else {
+                textViewManageInfo.setText(R.string.guidelines_select_multimedia_manage_info_default);
+                textViewManageButton.setVisibility(View.GONE);
             }
-        });
+
+            bottomSheetDialog.setOnShowListener(dialog -> {
+                BottomSheetDialog dialogInterface = (BottomSheetDialog) dialog;
+                FrameLayout bottomSheet = dialogInterface.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+
+                if (bottomSheet != null) {
+                    int numColumns = 3;
+                    int widthPixels = bottomSheet.getWidth() - getResources().getDimensionPixelSize(R.dimen.multimedia_selector_grid_spacing) * (numColumns + 1) * 2;
+                    int cellSize = widthPixels / numColumns;
+
+                    SelectableMultimediaAdapter adapter = new SelectableMultimediaAdapter(this, mediaList, cellSize);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new GridLayoutManager(this, numColumns));
+
+                    adapter.setOnItemClickListener((position, view) -> {
+                        Media selectedMedia = mediaList.get(position);
+                        Uri videoURI = selectedMedia.getUri();
+
+                        String videoURIString = videoURI.toString();
+                        newVideoURIStrings.add(videoURIString);
+                        insertNewMultimediaInLayout(videoURIString, MultimediaType.VIDEO, newVideoURIStrings, linearLayoutVideos);
+
+                        bottomSheetDialog.dismiss();
+                    });
+                }
+            });
+        }
 
         bottomSheetDialog.show();
         addVideoDialog.dismiss();
@@ -675,11 +702,21 @@ public class ModifyGuidelineActivity extends BaseActivity {
     }
 
     private final ActivityResultLauncher<Intent> readMultimediaPermissionLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.IMAGE)) {
-                selectImageFromDevice();
-            } else if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.VIDEO)) {
-                selectVideoFromDevice();
+        if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.IMAGE)) {
+            if (PermissionManager.hasReadMediaImagesPermission(this)) {
+                selectAllowedImageFromDevice(MediaHelper.getImages(getContentResolver()));
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && PermissionManager.hasReadMediaPartialPermission(this)) {
+                List<Media> mediaList = MediaHelper.getImages(getContentResolver());
+                if (!mediaList.isEmpty())
+                    selectAllowedImageFromDevice(mediaList);
+            }
+        } else if (onRequestReadMultimediaPermissionMultimediaType.equals(MultimediaType.VIDEO)) {
+            if (PermissionManager.hasReadMediaVideoPermission(this)) {
+                selectAllowedVideoFromDevice(MediaHelper.getVideos(getContentResolver()));
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && PermissionManager.hasReadMediaPartialPermission(this)) {
+                List<Media> mediaList = MediaHelper.getVideos(getContentResolver());
+                if (!mediaList.isEmpty())
+                    selectAllowedVideoFromDevice(mediaList);
             }
         }
     });
