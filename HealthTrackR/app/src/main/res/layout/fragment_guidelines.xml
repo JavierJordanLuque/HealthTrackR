@@ -44,7 +44,7 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -75,8 +75,7 @@
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:paddingTop="@dimen/linear_layout_padding_top"
@@ -84,8 +83,21 @@
                     android:layout_marginTop="@dimen/linear_layout_margin_top_inside_treatments"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
-                    app:layout_constraintWidth_max="@dimen/text_view_max_width">
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
+
+                    <View
+                        android:id="@+id/viewSeparationLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?attr/colorOutlineVariant" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

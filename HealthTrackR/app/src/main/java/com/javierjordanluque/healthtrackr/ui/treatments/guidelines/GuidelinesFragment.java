@@ -20,7 +20,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -110,16 +109,8 @@ public class GuidelinesFragment extends Fragment {
             constraintLayoutNoElements.setVisibility(View.GONE);
             nestedScrollView.setVisibility(View.VISIBLE);
 
-            boolean isFirst = true;
             for (Guideline guideline : guidelines) {
-                MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(getContext()).inflate(R.layout.card_guideline, linearLayout, false);
-                if (!isFirst) {
-                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) cardView.getLayoutParams();
-                    layoutParams.topMargin = getResources().getDimensionPixelSize(R.dimen.form_margin_top);
-                    cardView.setLayoutParams(layoutParams);
-                } else {
-                    isFirst = false;
-                }
+                ConstraintLayout cardView = (ConstraintLayout) LayoutInflater.from(getContext()).inflate(R.layout.card_guideline, linearLayout, false);
 
                 TextView textViewTitle = cardView.findViewById(R.id.textViewTitle);
                 textViewTitle.setText(guideline.getTitle());
@@ -186,7 +177,7 @@ public class GuidelinesFragment extends Fragment {
         }
     }
 
-    private void showMultimedias(MaterialCardView cardView, List<Multimedia> multimedias) {
+    private void showMultimedias(ConstraintLayout cardView, List<Multimedia> multimedias) {
         ConstraintLayout constraintLayout = cardView.findViewById(R.id.constraintLayout);
         constraintLayout.setVisibility(View.VISIBLE);
 
