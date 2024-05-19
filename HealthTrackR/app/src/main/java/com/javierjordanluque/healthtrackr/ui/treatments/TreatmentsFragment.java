@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,11 +81,7 @@ public class TreatmentsFragment extends Fragment {
         buttonFilterTreatments.setOnClickListener(view -> {
             View popupView = getLayoutInflater().inflate(R.layout.filter_treatments, null);
             PopupWindow popupWindow = new PopupWindow(popupView, buttonFilterTreatments.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
-
-            int[] location = new int[2];
-            buttonFilterTreatments.getLocationInWindow(location);
-
-            popupWindow.showAtLocation(buttonFilterTreatments, Gravity.START | Gravity.TOP, location[0], location[1] + buttonFilterTreatments.getHeight());
+            popupWindow.showAsDropDown(buttonFilterTreatments, 0, 0);
 
             EditText editTextTitle = popupView.findViewById(R.id.editTextTitle);
             if (titleFilter != null) {

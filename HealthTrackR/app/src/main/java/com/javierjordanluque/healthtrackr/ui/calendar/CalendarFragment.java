@@ -13,12 +13,12 @@ import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -55,6 +55,7 @@ public class CalendarFragment extends Fragment {
     private MaterialCalendarView calendarView;
     private LocalDate selectedDate;
     private TextView textViewSelectedDate;
+    private ImageButton imageButtonLegend;
     private LinearLayout linearLayoutNoElements;
     private LinearLayout linearLayout;
     private Boolean pendingAppointmentsFilter;
@@ -79,6 +80,14 @@ public class CalendarFragment extends Fragment {
             showSelectedDateSchedule();
         });
 
+        imageButtonLegend = fragmentView.findViewById(R.id.imageButtonLegend);
+        imageButtonLegend.setOnClickListener(view -> {
+            View popupView = getLayoutInflater().inflate(R.layout.calendar_legend, null);
+            PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            popupWindow.showAsDropDown(imageButtonLegend, imageButtonLegend.getWidth() - popupView.getMeasuredWidth(), 10);
+        });
+
         textViewSelectedDate = fragmentView.findViewById(R.id.textViewSelectedDate);
         linearLayoutNoElements = fragmentView.findViewById(R.id.linearLayoutNoElements);
         linearLayout = fragmentView.findViewById(R.id.linearLayout);
@@ -87,11 +96,7 @@ public class CalendarFragment extends Fragment {
         buttonFilterCalendar.setOnClickListener(view -> {
             View popupView = getLayoutInflater().inflate(R.layout.filter_appointments, null);
             PopupWindow popupWindow = new PopupWindow(popupView, buttonFilterCalendar.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
-
-            int[] location = new int[2];
-            buttonFilterCalendar.getLocationInWindow(location);
-
-            popupWindow.showAtLocation(buttonFilterCalendar, Gravity.START | Gravity.TOP, location[0], location[1] + buttonFilterCalendar.getHeight());
+            popupWindow.showAsDropDown(buttonFilterCalendar, 0, 0);
 
             CheckBox checkBoxPassedAppointments = popupView.findViewById(R.id.checkBoxPassedAppointments);
             if (passedAppointmentsFilter != null) {

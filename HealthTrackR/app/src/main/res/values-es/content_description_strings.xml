@@ -42,4 +42,6 @@
     <string name="content_description_add_question">Añadir pregunta</string>
 
     <string name="content_description_add_medical_appointment">Añadir cita médica</string>
+
+    <string name="content_description_calendar_legend">Leyenda del calendario</string>
 </resources>
