@@ -22,6 +22,7 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.enumerations.TreatmentCategory;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
+import com.javierjordanluque.healthtrackr.ui.treatments.calendar.TreatmentCalendarFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.guidelines.GuidelinesFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicinesFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.questions.QuestionsFragment;
@@ -78,9 +79,7 @@ public class TreatmentFragment extends Fragment {
         relativeLayoutSymptoms.setOnClickListener(view -> openFragmentFromTreatment(new SymptomsFragment()));
 
         RelativeLayout relativeLayoutTreatmentCalendar = fragmentView.findViewById(R.id.relativeLayoutTreatmentCalendar);
-        relativeLayoutTreatmentCalendar.setOnClickListener(view -> {
-            //openFragmentFromTreatment(new TreatmentCalendarFragment());
-        });
+        relativeLayoutTreatmentCalendar.setOnClickListener(view -> openFragmentFromTreatment(new TreatmentCalendarFragment()));
 
         FloatingActionButton buttonQuestions = fragmentView.findViewById(R.id.buttonQuestions);
         buttonQuestions.setOnClickListener(view -> openFragmentFromTreatment(new QuestionsFragment()));

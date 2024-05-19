@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -176,17 +175,17 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
 
     public void setTreatmentLayoutStatus(Treatment treatment, ImageView imageViewStatus, TextView textViewStatus) {
         if (treatment.isPending()) {
-            imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_pending));
+            imageViewStatus.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_status_pending));
             imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red)));
             imageViewStatus.setContentDescription(getString(R.string.content_description_status_pending));
             textViewStatus.setText(getString(R.string.treatments_status_pending));
         } else if (treatment.isInProgress()) {
-            imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_in_progress));
+            imageViewStatus.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_status_in_progress));
             imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.amber)));
             imageViewStatus.setContentDescription(getString(R.string.content_description_status_in_progress));
             textViewStatus.setText(getString(R.string.treatments_status_in_progress));
         } else if (treatment.isFinished()) {
-            imageViewStatus.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_status_finished));
+            imageViewStatus.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_status_finished));
             imageViewStatus.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)));
             imageViewStatus.setContentDescription(getString(R.string.content_description_status_finished));
             textViewStatus.setText(getString(R.string.treatments_status_finished));

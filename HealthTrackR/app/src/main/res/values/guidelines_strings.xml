@@ -4,7 +4,7 @@
     <string name="guidelines_app_bar_title_add">Guideline addition</string>
     <string name="guidelines_app_bar_title_modify">Guideline modification</string>
 
-    <string name="guidelines_no_elements">You don´t have guidelines in this treatment. Please add a new guideline.</string>
+    <string name="guidelines_no_elements">You have no guidelines in this treatment. Please add a new guideline.</string>
 
     <string name="guidelines_description">Description</string>
     <string name="guidelines_images">Images</string>

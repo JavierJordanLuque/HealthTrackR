@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="calendar_app_bar_title">Calendario</string>
+
+    <string name="calendar_no_elements">No tienes eventos para esta fecha.</string>
+
+    <string name="calendar_of">de</string>
+    <string name="calendar_today">(hoy)</string>
+    <string name="calendar_yesterday">(ayer)</string>
+    <string name="calendar_tomorrow">(mañana)</string>
+
+    <string name="calendar_medicines">Medicamentos</string>
+    <string name="calendar_medical_appointments">Citas médicas</string>
 </resources>

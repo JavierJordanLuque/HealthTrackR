@@ -55,4 +55,10 @@
     <dimen name="text_view_subtitle_margin_end">100dp</dimen>
 
     <dimen name="multimedia_selector_grid_spacing">1.5dp</dimen>
+
+    <dimen name="calendar_btn_min_width">50dp</dimen>
+    <dimen name="calendar_btn_max_width">150dp</dimen>
+    <dimen name="calendar_btn_margin_start">15dp</dimen>
+    <dimen name="calendar_btn_padding">5dp</dimen>
+    <dimen name="calendar_btn_margin_top">10dp</dimen>
 </resources>

@@ -24,6 +24,18 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
+    <style name="TextAppearance.HealthTrackR.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.HealthTrackR.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
     <style name="TextAppearance.HealthTrackR.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
         <item name="fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -40,5 +52,13 @@
         <item name="fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="TextAppearance.HealthTrackR.Date.Light" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/mcv_text_date_light</item>
+    </style>
+
+    <style name="TextAppearance.HealthTrackR.Date.Dark" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/mcv_text_date_dark</item>
     </style>
 </resources>

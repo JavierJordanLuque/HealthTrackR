@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.treatments.calendar.TreatmentCalendarFragment">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/StatusLayout">
+
+            <ImageView
+                android:id="@+id/imageViewStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_status_in_progress"
+                android:contentDescription="@string/content_description_status_in_progress"
+                app:tint="@color/amber"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/textViewStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/treatments_status_in_progress"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewStatus" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMarginGuidelineStart"
+                    style="@style/vMarginGuidelineStart">
+
+                </androidx.constraintlayout.widget.Guideline>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMarginGuidelineEnd"
+                    style="@style/vMarginGuidelineEnd">
+
+                </androidx.constraintlayout.widget.Guideline>
+
+                <TextView
+                    android:id="@+id/textViewTitle"
+                    style="@style/Widget.HealthTrackR.TextView.Title"
+                    android:text="@string/treatments_calendar_app_bar_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/buttonFilterCalendar"
+                    android:layout_width="@dimen/filter_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/linear_layout_margin_top_inside_treatments"
+                    android:backgroundTint="?attr/colorSecondaryContainer"
+                    android:text="@string/filter_title"
+                    android:textColor="?attr/colorOnSecondaryContainer"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+                <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/linear_layout_margin_top_inside_treatments"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonFilterCalendar"
+                    app:layout_constraintWidth_max="@dimen/text_view_max_width" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/linear_layout_padding_top"
+                    android:paddingBottom="@dimen/linear_layout_padding_bottom"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@+id/calendarView"
+                    app:layout_constraintWidth_max="@dimen/text_view_max_width">
+
+                    <TextView
+                        android:id="@+id/textViewSelectedDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+
+                    <TextView
+                        android:id="@+id/textViewNoElements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                        android:textAlignment="center"
+                        android:text="@string/calendar_no_elements"
+                        android:layout_marginTop="10dp"
+                        android:visibility="visible" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutAppointments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutMedicines"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonAddMedicalAppointment"
+            style="@style/Widget.HealthTrackR.FloatingActionButton.Primary"
+            android:layout_gravity="bottom|end"
+            android:contentDescription="@string/content_description_add_medical_appointment"
+            app:srcCompat="@drawable/ic_add" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>

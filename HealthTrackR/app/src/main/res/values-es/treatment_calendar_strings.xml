@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="treatments_calendar_app_bar_title">Calendario &amp; citas médicas</string>
+
+    <string name="treatments_calendar_filter_passed_appointments">Citas pasadas</string>
+    <string name="treatments_calendar_filter_pending_appointments">Citas pendientes</string>
+</resources>
