@@ -11,4 +11,7 @@
 
     <string name="calendar_medicines">Medicamentos</string>
     <string name="calendar_medical_appointments">Citas médicas</string>
+
+    <string name="calendar_treatment_start">Inicio del tratamiento</string>
+    <string name="calendar_treatment_end">Finalización del tratamiento</string>
 </resources>

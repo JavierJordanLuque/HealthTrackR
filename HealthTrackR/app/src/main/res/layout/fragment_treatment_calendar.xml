@@ -23,9 +23,7 @@
                 app:tint="@color/amber"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </ImageView>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewStatus"
@@ -54,15 +52,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <TextView
                     android:id="@+id/textViewTitle"
@@ -99,7 +93,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/linear_layout_padding_top"
                     android:paddingBottom="@dimen/linear_layout_padding_bottom"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
@@ -112,30 +105,33 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?attr/textAppearanceHeadlineSmall" />
 
-                    <TextView
-                        android:id="@+id/textViewNoElements"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:textAlignment="center"
-                        android:text="@string/calendar_no_elements"
-                        android:layout_marginTop="10dp"
-                        android:visibility="visible" />
-
                     <LinearLayout
-                        android:id="@+id/linearLayoutAppointments"
+                        android:id="@+id/linearLayoutNoElements"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp"
-                        android:visibility="gone" />
+                        android:visibility="visible">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/view_separator_height"
+                            android:layout_margin="@dimen/view_separator_margin"
+                            android:background="?attr/colorOutlineVariant" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?attr/textAppearanceBodyLarge"
+                            android:textAlignment="center"
+                            android:text="@string/calendar_no_elements" />
+
+                    </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linearLayoutMedicines"
+                        android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp"
                         android:visibility="gone" />
 
                 </LinearLayout>

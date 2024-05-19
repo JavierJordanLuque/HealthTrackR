@@ -31,15 +31,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -121,15 +117,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineStart"
-                    style="@style/vLargeButtonGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vLargeButtonGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineEnd"
-                    style="@style/vLargeButtonGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vLargeButtonGuidelineEnd" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -157,7 +149,6 @@
                         android:text="@string/account_delete" />
 
                 </LinearLayout>
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

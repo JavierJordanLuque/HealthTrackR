@@ -130,18 +130,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.33">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    app:layout_constraintGuide_percent="0.33" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vStatusRightGuideline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.66">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    app:layout_constraintGuide_percent="0.66" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
@@ -272,9 +268,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.5">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    app:layout_constraintGuide_percent="0.5" />
 
                 <Button
                     android:id="@+id/buttonShowAllFilter"
@@ -301,6 +295,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

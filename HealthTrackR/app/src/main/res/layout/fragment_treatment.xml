@@ -29,9 +29,7 @@
                 app:tint="@color/amber"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </ImageView>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewStatus"
@@ -60,15 +58,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -146,6 +140,7 @@
                             android:layout_below="@+id/textViewGuidelines"
                             android:src="@drawable/ic_guideline"
                             android:contentDescription="@string/content_description_access_guidelines"/>
+
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -163,6 +158,7 @@
                             android:layout_below="@+id/textViewMedicines"
                             android:src="@drawable/ic_medication"
                             android:contentDescription="@string/content_description_access_medicines" />
+
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -180,6 +176,7 @@
                             android:layout_below="@+id/textViewSymptoms"
                             android:src="@drawable/ic_symptom"
                             android:contentDescription="@string/content_description_access_symptoms" />
+
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -197,6 +194,7 @@
                             android:layout_below="@+id/textViewTreatmentCalendar"
                             android:src="@drawable/ic_calendar"
                             android:contentDescription="@string/content_description_access_calendar" />
+
                     </RelativeLayout>
 
                 </GridLayout>
@@ -214,9 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.5">
-
-                    </androidx.constraintlayout.widget.Guideline>
+                        app:layout_constraintGuide_percent="0.5" />
 
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -231,9 +227,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="?attr/colorOnSecondaryContainer"
                         app:elevation="@dimen/btn_elevation"
-                        android:contentDescription="@string/content_description_access_questions">
-
-                    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+                        android:contentDescription="@string/content_description_access_questions" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/buttonDeleteTreatment"
@@ -247,9 +241,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="?attr/colorOnErrorContainer"
                         app:elevation="@dimen/btn_elevation"
-                        android:contentDescription="@string/content_description_delete_treatment">
-
-                    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+                        android:contentDescription="@string/content_description_delete_treatment" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

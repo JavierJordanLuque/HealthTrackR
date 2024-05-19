@@ -48,20 +48,15 @@
                     android:text="@string/account_change_password"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                </Button>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -89,6 +84,7 @@
                             android:hint="@string/account_form_first_name"
                             android:inputType="text"
                             android:maxLength="50" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -104,6 +100,7 @@
                             android:hint="@string/account_form_last_name"
                             android:inputType="text"
                             android:maxLength="50" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -119,6 +116,7 @@
                             android:focusableInTouchMode="false"
                             android:hint="@string/account_birth_date"
                             android:inputType="date" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -174,6 +172,7 @@
                             android:autofillHints="text"
                             android:hint="@string/account_allergies"
                             android:inputType="textMultiLine" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -189,21 +188,18 @@
                             android:autofillHints="text"
                             android:hint="@string/account_previous_medical_conditions"
                             android:inputType="textMultiLine" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineStart"
-                    style="@style/vLargeButtonGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vLargeButtonGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineEnd"
-                    style="@style/vLargeButtonGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vLargeButtonGuidelineEnd" />
 
                 <LinearLayout
                     android:layout_width="0dp"

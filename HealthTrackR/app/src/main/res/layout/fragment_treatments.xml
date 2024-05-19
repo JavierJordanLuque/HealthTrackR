@@ -39,15 +39,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -58,9 +54,7 @@
                     android:paddingBottom="@dimen/linear_layout_padding_bottom"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintWidth_max="@dimen/text_view_max_width">
-
-                </LinearLayout>
+                    app:layout_constraintWidth_max="@dimen/text_view_max_width" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -75,15 +69,11 @@
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/vMarginGuidelineStartNoElements"
-                style="@style/vMarginGuidelineStart">
-
-            </androidx.constraintlayout.widget.Guideline>
+                style="@style/vMarginGuidelineStart" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/vMarginGuidelineEndNoElements"
-                style="@style/vMarginGuidelineEnd">
-
-            </androidx.constraintlayout.widget.Guideline>
+                style="@style/vMarginGuidelineEnd" />
 
             <TextView
                 android:id="@+id/textViewNoElements"

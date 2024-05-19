@@ -42,7 +42,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/view_separator_height"
             android:layout_marginTop="@dimen/text_view_margin_top"
             android:background="?attr/colorAccent" />
 

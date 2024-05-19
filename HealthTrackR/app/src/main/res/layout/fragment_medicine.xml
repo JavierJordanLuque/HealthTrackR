@@ -29,9 +29,7 @@
                 app:tint="@color/amber"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </ImageView>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewStatus"
@@ -60,15 +58,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <TextView
                     android:id="@+id/textViewTitle"
@@ -77,14 +71,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textViewName"
                     style="@style/Widget.HealthTrackR.TextView.Subtitle"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewTitle"/>
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -125,7 +119,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/view_separator_height"
                         android:layout_marginTop="@dimen/text_view_margin_top"
                         android:background="?attr/colorOutlineVariant" />
 
@@ -147,7 +141,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/view_separator_height"
                         android:layout_marginTop="@dimen/text_view_margin_top"
                         android:background="?attr/colorOutlineVariant" />
 
@@ -174,10 +168,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.5">
-
-                    </androidx.constraintlayout.widget.Guideline>
-
+                        app:layout_constraintGuide_percent="0.5" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/buttonMedicineNotifications"
@@ -191,9 +182,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="?attr/colorOnSecondaryContainer"
                         app:elevation="@dimen/btn_elevation"
-                        android:contentDescription="@string/content_description_access_medicine_notifications">
-
-                    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+                        android:contentDescription="@string/content_description_access_medicine_notifications" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/buttonDeleteMedicine"
@@ -207,9 +196,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="?attr/colorOnErrorContainer"
                         app:elevation="@dimen/btn_elevation"
-                        android:contentDescription="@string/content_description_delete_medicine">
-
-                    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+                        android:contentDescription="@string/content_description_delete_medicine" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

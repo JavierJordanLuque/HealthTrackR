@@ -23,9 +23,7 @@
                 app:tint="@color/amber"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </ImageView>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewStatus"
@@ -55,15 +53,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <TextView
                     android:id="@+id/textViewTitle"
@@ -102,15 +96,11 @@
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/vMarginGuidelineStartNoElements"
-                style="@style/vMarginGuidelineStart">
-
-            </androidx.constraintlayout.widget.Guideline>
+                style="@style/vMarginGuidelineStart" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/vMarginGuidelineEndNoElements"
-                style="@style/vMarginGuidelineEnd">
-
-            </androidx.constraintlayout.widget.Guideline>
+                style="@style/vMarginGuidelineEnd" />
 
             <TextView
                 android:id="@+id/textView"

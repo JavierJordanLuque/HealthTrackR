@@ -59,7 +59,8 @@ public class TreatmentCalendarFragment extends Fragment {
     private MaterialCalendarView calendarView;
     private LocalDate selectedDate;
     private TextView textViewSelectedDate;
-    private TextView textViewNoElements;
+    private LinearLayout linearLayoutNoElements;
+    private LinearLayout linearLayout;
     private LinearLayout linearLayoutAppointments;
     private LinearLayout linearLayoutMedicines;
     private Boolean pendingAppointmentsFilter;
@@ -89,9 +90,8 @@ public class TreatmentCalendarFragment extends Fragment {
         });
 
         textViewSelectedDate = fragmentView.findViewById(R.id.textViewSelectedDate);
-        textViewNoElements = fragmentView.findViewById(R.id.textViewNoElements);
-        linearLayoutAppointments = fragmentView.findViewById(R.id.linearLayoutAppointments);
-        linearLayoutMedicines = fragmentView.findViewById(R.id.linearLayoutMedicines);
+        linearLayoutNoElements = fragmentView.findViewById(R.id.linearLayoutNoElements);
+        linearLayout = fragmentView.findViewById(R.id.linearLayout);
 
         FloatingActionButton buttonAddMedicalAppointment = fragmentView.findViewById(R.id.buttonAddMedicalAppointment);
         buttonAddMedicalAppointment.setOnClickListener(view -> {
@@ -180,6 +180,9 @@ public class TreatmentCalendarFragment extends Fragment {
         if (listener != null)
             listener.onTitleChanged(treatment.getTitle());
 
+        if (selectedDate == null)
+            selectedDate = LocalDate.now();
+
         calendarView.state().edit()
                 .setMinimumDate(CalendarDay.from(treatment.getStartDate().getYear(), treatment.getStartDate().getMonthValue(), treatment.getStartDate().getDayOfMonth()))
                 .commit();
@@ -197,17 +200,24 @@ public class TreatmentCalendarFragment extends Fragment {
         try {
             resetFilters();
             showHighlightedMedicalAppointments(treatment.getAppointments(requireActivity()));
-            showHighlightedMedicinesDates(treatment.getMedicines(requireActivity()));
+            showHighlightedMedicines(treatment.getMedicines(requireActivity()));
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
 
-        if (selectedDate == null)
-            selectedDate = LocalDate.now();
         showSelectedDateSchedule();
     }
 
-    private void showHighlightedMedicinesDates(List<Medicine> medicines) {
+    private void showHighlightedMedicalAppointments(List<MedicalAppointment> appointments) {
+        Collection<CalendarDay> highlightedDates = new ArrayList<>();
+
+        for (MedicalAppointment appointment : appointments)
+            highlightedDates.add(CalendarDay.from(appointment.getDateTime().getYear(), appointment.getDateTime().getMonthValue(), appointment.getDateTime().getDayOfMonth()));
+
+        calendarView.addDecorator(new MedicalAppointmentDecorator(requireActivity(), highlightedDates));
+    }
+
+    private void showHighlightedMedicines(List<Medicine> medicines) {
         Collection<CalendarDay> highlightedDates = new ArrayList<>();
 
         for (Medicine medicine : medicines) {
@@ -236,25 +246,66 @@ public class TreatmentCalendarFragment extends Fragment {
         calendarView.addDecorator(new MedicineDecorator(requireActivity(), highlightedDates));
     }
 
-    private void showHighlightedMedicalAppointments(List<MedicalAppointment> appointments) {
-        Collection<CalendarDay> highlightedDates = new ArrayList<>();
-
-        for (MedicalAppointment appointment : appointments)
-            highlightedDates.add(CalendarDay.from(appointment.getDateTime().getYear(), appointment.getDateTime().getMonthValue(), appointment.getDateTime().getDayOfMonth()));
-
-        calendarView.addDecorator(new MedicalAppointmentDecorator(requireActivity(), highlightedDates));
-    }
-
     private void showSelectedDateSchedule() {
         setTextViewSelectedDate();
-        textViewNoElements.setVisibility(View.VISIBLE);
-        linearLayoutAppointments.setVisibility(View.GONE);
-        linearLayoutMedicines.setVisibility(View.GONE);
+        linearLayoutNoElements.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(View.GONE);
+        linearLayout.removeAllViews();
 
         if (!treatment.getStartDate().toLocalDate().isAfter(selectedDate) && (treatment.getEndDate() == null || !treatment.getEndDate().toLocalDate().isBefore(selectedDate))) {
+            boolean hasStarted = treatment.getStartDate().toLocalDate().equals(selectedDate);
+            boolean hasFinished = treatment.getEndDate() != null && treatment.getEndDate().toLocalDate().equals(selectedDate);
+
             try {
-                setAppointmentsSelectedDate(treatment.getAppointments(requireActivity()));
-                setMedicinesSelectedDate(treatment.getMedicines(requireActivity()));
+                List<MedicalAppointment> appointmentsToShow = new ArrayList<>();
+                for (MedicalAppointment appointment : treatment.getAppointments(requireActivity()))
+                    if (appointment.getDateTime().toLocalDate().equals(selectedDate))
+                        appointmentsToShow.add(appointment);
+
+                List<Medicine> medicinesToShow = new ArrayList<>();
+                for (Medicine medicine : treatment.getMedicines(requireActivity())) {
+                    ZonedDateTime dosingTime = medicine.getInitialDosingTime();
+                    Duration frequency = Duration.ofHours(medicine.getDosageFrequencyHours()).plusMinutes(medicine.getDosageFrequencyMinutes());
+
+                    while (!dosingTime.toLocalDate().isAfter(selectedDate)) {
+                        if (dosingTime.toLocalDate().isEqual(selectedDate)) {
+                            medicinesToShow.add(medicine);
+                            break;
+                        } else if (!frequency.isZero()) {
+                            long dosesElapsed = Duration.between(dosingTime, selectedDate.atStartOfDay(dosingTime.getZone())).toMinutes() / frequency.toMinutes();
+                            dosingTime = dosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                if (hasStarted || hasFinished || !appointmentsToShow.isEmpty() || !medicinesToShow.isEmpty()) {
+                    View separatorView = new View(requireActivity());
+                    separatorView.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            getResources().getDimensionPixelSize(R.dimen.view_separator_height)
+                    ));
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) separatorView.getLayoutParams();
+                    int margin = getResources().getDimensionPixelSize(R.dimen.view_separator_margin);
+                    params.setMargins(margin, margin, margin, 0);
+                    separatorView.setLayoutParams(params);
+                    TypedValue value = new TypedValue();
+                    requireActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.colorOutlineVariant, value, true);
+                    separatorView.setBackgroundResource(value.resourceId);
+                    linearLayout.addView(separatorView);
+
+                    linearLayoutNoElements.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+
+                if (hasStarted)
+                    setLimitSelectedDate(R.string.calendar_treatment_start);
+                if (!appointmentsToShow.isEmpty())
+                    setAppointmentsSelectedDate(appointmentsToShow);
+                if (!medicinesToShow.isEmpty())
+                    setMedicinesSelectedDate(medicinesToShow);
+                if (hasFinished)
+                    setLimitSelectedDate(R.string.calendar_treatment_end);
             } catch (DBFindException exception) {
                 ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
             }
@@ -283,67 +334,111 @@ public class TreatmentCalendarFragment extends Fragment {
         textViewSelectedDate.setText(formattedDate);
     }
 
-    private void setAppointmentsSelectedDate(List<MedicalAppointment> appointments) {
-        linearLayoutAppointments.removeAllViews();
-        List<MedicalAppointment> appointmentsToShow = new ArrayList<>();
+    private void setLimitSelectedDate(int text) {
+        TextView textViewLimitDate = new TextView(requireActivity());
+        textViewLimitDate.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textViewLimitDate.getLayoutParams();
+        params.setMargins(0, getResources().getDimensionPixelSize(R.dimen.text_view_margin_top), 0, 0);
+        textViewLimitDate.setLayoutParams(params);
 
-        for (MedicalAppointment appointment : appointments) {
-            if (appointment.getDateTime().toLocalDate().equals(selectedDate))
-                appointmentsToShow.add(appointment);
-        }
+        TypedValue value = new TypedValue();
+        requireActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.textAppearanceTitleMedium, value, true);
+        textViewLimitDate.setTextAppearance(value.data);
+        textViewLimitDate.setText(text);
+        linearLayout.addView(textViewLimitDate);
+    }
 
-        if (!appointmentsToShow.isEmpty()) {
-            textViewNoElements.setVisibility(View.GONE);
-            linearLayoutAppointments.setVisibility(View.VISIBLE);
+    private void setAppointmentsSelectedDate(List<MedicalAppointment> appointmentsToShow) {
+        TextView textViewAppointments = new TextView(requireActivity());
+        textViewAppointments.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textViewAppointments.getLayoutParams();
+        params.setMargins(0, getResources().getDimensionPixelSize(R.dimen.text_view_margin_top), 0, 0);
+        textViewAppointments.setLayoutParams(params);
 
-            TextView textViewAppointments = new TextView(requireActivity());
-            textViewAppointments.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-            TypedValue value = new TypedValue();
-            requireActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.textAppearanceTitleMedium, value, true);
-            textViewAppointments.setTextAppearance(value.data);
-            textViewAppointments.setText(R.string.calendar_medical_appointments);
-            linearLayoutMedicines.addView(textViewAppointments);
+        TypedValue value = new TypedValue();
+        requireActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.textAppearanceTitleMedium, value, true);
+        textViewAppointments.setTextAppearance(value.data);
+        textViewAppointments.setText(R.string.calendar_medical_appointments);
+        linearLayout.addView(textViewAppointments);
 
-            for (MedicalAppointment appointment : appointmentsToShow) {
-                TextView textViewAppointment = new TextView(requireActivity());
-                textViewAppointment.setLayoutParams(new ConstraintLayout.LayoutParams(
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT
-                ));
-                textViewAppointment.setText(appointment.getDateTime().toLocalTime().toString());
+        for (MedicalAppointment appointment : appointmentsToShow) {
+            TextView textViewAppointment = new TextView(requireActivity());
+            textViewAppointment.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            textViewAppointment.setText(appointment.getDateTime().toLocalTime().toString());
+            textViewAppointment.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) textViewAppointment.getLayoutParams();
-                textViewAppointment.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_container));
-                textViewAppointment.setClickable(true);
-                textViewAppointment.setFocusable(true);
-                TypedValue foregroundValue = new TypedValue();
-                requireActivity().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, foregroundValue, true);
-                textViewAppointment.setForeground(ResourcesCompat.getDrawable(getResources(), foregroundValue.resourceId, requireActivity().getTheme()));
-                int padding = getResources().getDimensionPixelSize(R.dimen.calendar_btn_padding);
-                textViewAppointment.setPadding(padding, padding, padding, padding);
-                params.setMargins(getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_start), getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_top),
-                        0, 0);
-                textViewAppointment.setLayoutParams(params);
+            ConstraintLayout.LayoutParams constraintParams = (ConstraintLayout.LayoutParams) textViewAppointment.getLayoutParams();
+            constraintParams.matchConstraintMinWidth = getResources().getDimensionPixelSize(R.dimen.calendar_btn_min_width);
+            constraintParams.matchConstraintMaxWidth = getResources().getDimensionPixelSize(R.dimen.calendar_btn_max_width);
+            constraintParams.setMargins(
+                    getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_start),
+                    getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_top),
+                    0,
+                    0
+            );
+            textViewAppointment.setLayoutParams(constraintParams);
+            int padding = getResources().getDimensionPixelSize(R.dimen.calendar_btn_padding);
+            textViewAppointment.setPadding(padding, padding, padding, padding);
 
-                linearLayoutAppointments.addView(textViewAppointment);
-            }
+            textViewAppointment.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_container));
+            value = new TypedValue();
+            requireActivity().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, value, true);
+            textViewAppointment.setForeground(ResourcesCompat.getDrawable(getResources(), value.resourceId, requireActivity().getTheme()));
+
+            textViewAppointment.setFocusable(true);
+            textViewAppointment.setClickable(true);
+            textViewAppointment.setOnClickListener(view -> {
+                    /*
+                    Fragment fragment = new MedicalAppointmentFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(Treatment.class.getSimpleName(), appointment.getTreatment().getId());
+                    bundle.putLong(Medicine.class.getSimpleName(), appointment.getId());
+                    fragment.setArguments(bundle);
+                    ((MainActivity) requireActivity()).replaceFragment(fragment);
+                     */
+            });
+
+            linearLayout.addView(textViewAppointment);
         }
     }
 
-    private void setMedicinesSelectedDate(List<Medicine> medicines) {
-        linearLayoutMedicines.removeAllViews();
-        List<Medicine> medicinesToShow = new ArrayList<>();
+    private void setMedicinesSelectedDate(List<Medicine> medicinesToShow) {
+        TextView textViewMedicines = new TextView(requireActivity());
+        textViewMedicines.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textViewMedicines.getLayoutParams();
+        params.setMargins(0, getResources().getDimensionPixelSize(R.dimen.text_view_margin_top), 0, 0);
+        textViewMedicines.setLayoutParams(params);
 
-        for (Medicine medicine : medicines) {
+        TypedValue value = new TypedValue();
+        requireActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.textAppearanceTitleMedium, value, true);
+        textViewMedicines.setTextAppearance(value.data);
+        textViewMedicines.setText(R.string.calendar_medicines);
+        linearLayout.addView(textViewMedicines);
+
+        for (Medicine medicine : medicinesToShow) {
+            List<String> dosingTimes = new ArrayList<>();
+
             ZonedDateTime dosingTime = medicine.getInitialDosingTime();
             Duration frequency = Duration.ofHours(medicine.getDosageFrequencyHours()).plusMinutes(medicine.getDosageFrequencyMinutes());
 
             while (!dosingTime.toLocalDate().isAfter(selectedDate)) {
                 if (dosingTime.toLocalDate().isEqual(selectedDate)) {
-                    medicinesToShow.add(medicine);
-                    break;
+                    dosingTimes.add(dosingTime.toLocalTime().toString());
+
+                    if (!frequency.isZero()) {
+                        dosingTime = dosingTime.plusMinutes(frequency.toMinutes());
+                    } else {
+                        break;
+                    }
                 } else if (!frequency.isZero()) {
                     long dosesElapsed = Duration.between(dosingTime, selectedDate.atStartOfDay(dosingTime.getZone())).toMinutes() / frequency.toMinutes();
                     dosingTime = dosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
@@ -351,111 +446,71 @@ public class TreatmentCalendarFragment extends Fragment {
                     break;
                 }
             }
-        }
 
-        if (!medicinesToShow.isEmpty()) {
-            textViewNoElements.setVisibility(View.GONE);
-            linearLayoutMedicines.setVisibility(View.VISIBLE);
-
-            TextView textViewMedicines = new TextView(requireActivity());
-            textViewMedicines.setLayoutParams(new LinearLayout.LayoutParams(
+            ConstraintLayout constraintLayout = new ConstraintLayout(requireActivity());
+            params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-            TypedValue value = new TypedValue();
-            requireActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.textAppearanceTitleMedium, value, true);
-            textViewMedicines.setTextAppearance(value.data);
-            textViewMedicines.setText(R.string.calendar_medicines);
-            linearLayoutMedicines.addView(textViewMedicines);
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_top), 0, 0);
+            constraintLayout.setLayoutParams(params);
 
-            for (Medicine medicine : medicinesToShow) {
-                List<String> dosingTimes = new ArrayList<>();
+            TextView textViewMedicine = new TextView(requireActivity());
+            textViewMedicine.setId(View.generateViewId());
+            textViewMedicine.setLayoutParams(new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ));
+            textViewMedicine.setText(medicine.getName());
+            textViewMedicine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-                ZonedDateTime dosingTime = medicine.getInitialDosingTime();
-                Duration frequency = Duration.ofHours(medicine.getDosageFrequencyHours()).plusMinutes(medicine.getDosageFrequencyMinutes());
+            ConstraintLayout.LayoutParams constraintParams = (ConstraintLayout.LayoutParams) textViewMedicine.getLayoutParams();
+            constraintParams.matchConstraintMinWidth = getResources().getDimensionPixelSize(R.dimen.calendar_btn_min_width);
+            constraintParams.matchConstraintMaxWidth = getResources().getDimensionPixelSize(R.dimen.calendar_btn_max_width);
+            constraintParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_start));
+            textViewMedicine.setLayoutParams(constraintParams);
+            int padding = getResources().getDimensionPixelSize(R.dimen.calendar_btn_padding);
+            textViewMedicine.setPadding(padding, padding, padding, padding);
 
-                while (!dosingTime.toLocalDate().isAfter(selectedDate)) {
-                    if (dosingTime.toLocalDate().isEqual(selectedDate)) {
-                        dosingTimes.add(dosingTime.toLocalTime().toString());
+            textViewMedicine.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_container));
+            value = new TypedValue();
+            requireActivity().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, value, true);
+            textViewMedicine.setForeground(ResourcesCompat.getDrawable(getResources(), value.resourceId, requireActivity().getTheme()));
 
-                        if (!frequency.isZero()) {
-                            dosingTime = dosingTime.plusMinutes(frequency.toMinutes());
-                        } else {
-                            break;
-                        }
-                    } else if (!frequency.isZero()) {
-                        long dosesElapsed = Duration.between(dosingTime, selectedDate.atStartOfDay(dosingTime.getZone())).toMinutes() / frequency.toMinutes();
-                        dosingTime = dosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
-                    } else {
-                        break;
-                    }
-                }
+            textViewMedicine.setFocusable(true);
+            textViewMedicine.setClickable(true);
+            textViewMedicine.setOnClickListener(view -> {
+                Fragment fragment = new MedicineFragment();
+                Bundle bundle = new Bundle();
+                bundle.putLong(Treatment.class.getSimpleName(), medicine.getTreatment().getId());
+                bundle.putLong(Medicine.class.getSimpleName(), medicine.getId());
+                fragment.setArguments(bundle);
+                ((MainActivity) requireActivity()).replaceFragment(fragment);
+            });
 
-                ConstraintLayout constraintLayout = new ConstraintLayout(requireActivity());
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                layoutParams.setMargins(0, getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_top), 0, 0);
-                constraintLayout.setLayoutParams(layoutParams);
+            constraintLayout.addView(textViewMedicine);
 
-                TextView textViewMedicine = new TextView(requireActivity());
-                textViewMedicine.setId(View.generateViewId());
-                textViewMedicine.setLayoutParams(new ConstraintLayout.LayoutParams(
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT
-                ));
-                textViewMedicine.setText(medicine.getName());
-                textViewMedicine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            TextView textViewDosingTimes = new TextView(requireActivity());
+            textViewDosingTimes.setId(View.generateViewId());
+            textViewDosingTimes.setLayoutParams(new ConstraintLayout.LayoutParams(
+                    0,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ));
+            textViewDosingTimes.setText(TextUtils.join(", ", dosingTimes));
+            constraintLayout.addView(textViewDosingTimes);
 
-                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) textViewMedicine.getLayoutParams();
-                params.matchConstraintMinWidth = getResources().getDimensionPixelSize(R.dimen.calendar_btn_min_width);
-                params.matchConstraintMaxWidth = getResources().getDimensionPixelSize(R.dimen.calendar_btn_max_width);
-                textViewMedicine.setLayoutParams(params);
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+            constraintSet.connect(textViewMedicine.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+            constraintSet.connect(textViewMedicine.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+            constraintSet.connect(textViewMedicine.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+            constraintSet.connect(textViewDosingTimes.getId(), ConstraintSet.START, textViewMedicine.getId(), ConstraintSet.END, getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_start));
+            constraintSet.connect(textViewDosingTimes.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+            constraintSet.connect(textViewDosingTimes.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+            constraintSet.connect(textViewDosingTimes.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+            constraintSet.applyTo(constraintLayout);
 
-                textViewMedicine.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_container));
-                textViewMedicine.setFocusable(true);
-                textViewMedicine.setClickable(true);
-                textViewMedicine.setOnClickListener(view -> {
-                    Fragment fragment = new MedicineFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putLong(Treatment.class.getSimpleName(), treatment.getId());
-                    bundle.putLong(Medicine.class.getSimpleName(), medicine.getId());
-                    fragment.setArguments(bundle);
-                    ((MainActivity) requireActivity()).replaceFragment(fragment);
-                });
-
-                TypedValue foregroundValue = new TypedValue();
-                requireActivity().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, foregroundValue, true);
-                textViewMedicine.setForeground(ResourcesCompat.getDrawable(getResources(), foregroundValue.resourceId, requireActivity().getTheme()));
-                int padding = getResources().getDimensionPixelSize(R.dimen.calendar_btn_padding);
-                textViewMedicine.setPadding(padding, padding, padding, padding);
-                params.setMarginStart(getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_start));
-                textViewMedicine.setLayoutParams(params);
-
-                constraintLayout.addView(textViewMedicine);
-
-                TextView textViewDosingTimes = new TextView(requireActivity());
-                textViewDosingTimes.setId(View.generateViewId());
-                textViewDosingTimes.setLayoutParams(new ConstraintLayout.LayoutParams(
-                        0,
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT
-                ));
-                textViewDosingTimes.setText(TextUtils.join(", ", dosingTimes));
-                constraintLayout.addView(textViewDosingTimes);
-
-                ConstraintSet constraintSet = new ConstraintSet();
-                constraintSet.clone(constraintLayout);
-                constraintSet.connect(textViewMedicine.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-                constraintSet.connect(textViewMedicine.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-                constraintSet.connect(textViewMedicine.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-                constraintSet.connect(textViewDosingTimes.getId(), ConstraintSet.START, textViewMedicine.getId(), ConstraintSet.END, getResources().getDimensionPixelSize(R.dimen.calendar_btn_margin_start));
-                constraintSet.connect(textViewDosingTimes.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-                constraintSet.connect(textViewDosingTimes.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-                constraintSet.connect(textViewDosingTimes.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-                constraintSet.applyTo(constraintLayout);
-
-                linearLayoutMedicines.addView(constraintLayout);
-            }
+            linearLayout.addView(constraintLayout);
         }
     }
 

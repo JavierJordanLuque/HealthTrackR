@@ -21,12 +21,12 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
                 android:labelFor="@id/numberPickerDay"
-                android:text="@string/dialog_date_picker_day"/>
+                android:text="@string/dialog_date_picker_day" />
 
             <NumberPicker
                 android:id="@+id/numberPickerDay"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -41,12 +41,12 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
                 android:labelFor="@id/numberPickerMonth"
-                android:text="@string/dialog_date_picker_month"/>
+                android:text="@string/dialog_date_picker_month" />
 
             <NumberPicker
                 android:id="@+id/numberPickerMonth"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -61,12 +61,12 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
                 android:labelFor="@id/numberPickerYear"
-                android:text="@string/dialog_date_picker_year"/>
+                android:text="@string/dialog_date_picker_year" />
 
             <NumberPicker
                 android:id="@+id/numberPickerYear"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

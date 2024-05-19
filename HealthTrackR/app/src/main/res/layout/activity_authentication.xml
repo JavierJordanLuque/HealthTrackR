@@ -47,15 +47,11 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vLargeButtonGuidelineStart"
-        style="@style/vLargeButtonGuidelineStart">
-
-    </androidx.constraintlayout.widget.Guideline>
+        style="@style/vLargeButtonGuidelineStart" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vLargeButtonGuidelineEnd"
-        style="@style/vLargeButtonGuidelineEnd">
-
-    </androidx.constraintlayout.widget.Guideline>
+        style="@style/vLargeButtonGuidelineEnd" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

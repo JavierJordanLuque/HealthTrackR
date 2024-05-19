@@ -23,9 +23,7 @@
                 app:tint="@color/amber"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </ImageView>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewStatus"
@@ -55,15 +53,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <TextView
                     android:id="@+id/textViewTitle"
@@ -72,7 +66,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -88,16 +82,14 @@
                     <View
                         android:id="@+id/viewSeparationLine"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/view_separator_height"
                         android:background="?attr/colorOutlineVariant" />
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
+                        android:orientation="vertical" />
 
                 </LinearLayout>
 
@@ -114,15 +106,11 @@
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/vMarginGuidelineStartNoElements"
-                style="@style/vMarginGuidelineStart">
-
-            </androidx.constraintlayout.widget.Guideline>
+                style="@style/vMarginGuidelineStart" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/vMarginGuidelineEndNoElements"
-                style="@style/vMarginGuidelineEnd">
-
-            </androidx.constraintlayout.widget.Guideline>
+                style="@style/vMarginGuidelineEnd" />
 
             <TextView
                 android:id="@+id/textView"

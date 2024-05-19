@@ -11,7 +11,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginBottom="10dp"
         android:background="?attr/colorSurfaceVariant"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/textViewSelect"
@@ -60,9 +60,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textViewManageButton">
-
-            </TextView>
+                app:layout_constraintEnd_toStartOf="@+id/textViewManageButton" />
 
             <TextView
                 android:id="@+id/textViewManageButton"
@@ -78,7 +76,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

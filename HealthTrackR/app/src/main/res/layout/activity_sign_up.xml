@@ -44,15 +44,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -78,6 +74,7 @@
                             android:autofillHints="emailAddress"
                             android:hint="@string/authentication_form_email"
                             android:inputType="textEmailAddress" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -96,6 +93,7 @@
                             android:autofillHints="password"
                             android:hint="@string/authentication_form_password"
                             android:inputType="textPassword" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -112,6 +110,7 @@
                             android:autofillHints="password"
                             android:hint="@string/authentication_form_repeat_password"
                             android:inputType="textPassword" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -126,6 +125,7 @@
                             android:autofillHints="name"
                             android:hint="@string/authentication_form_first_name"
                             android:inputType="text" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -140,21 +140,18 @@
                             android:autofillHints="name"
                             android:hint="@string/authentication_form_last_name"
                             android:inputType="text" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineStart"
-                    style="@style/vLargeButtonGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vLargeButtonGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineEnd"
-                    style="@style/vLargeButtonGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vLargeButtonGuidelineEnd" />
 
                 <LinearLayout
                     android:layout_width="0dp"

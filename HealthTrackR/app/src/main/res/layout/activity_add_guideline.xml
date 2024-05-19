@@ -45,15 +45,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineStart"
-                    style="@style/vMarginGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vMarginGuidelineEnd"
-                    style="@style/vMarginGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vMarginGuidelineEnd" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -79,6 +75,7 @@
                             android:hint="@string/guidelines_form_title"
                             android:inputType="text"
                             android:maxLength="50" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -97,6 +94,7 @@
                             android:hint="@string/guidelines_description"
                             android:inputType="textMultiLine"
                             android:maxLength="300" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -137,15 +135,11 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineStart"
-                    style="@style/vLargeButtonGuidelineStart">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vLargeButtonGuidelineStart" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineEnd"
-                    style="@style/vLargeButtonGuidelineEnd">
-
-                </androidx.constraintlayout.widget.Guideline>
+                    style="@style/vLargeButtonGuidelineEnd" />
 
                 <LinearLayout
                     android:layout_width="0dp"
