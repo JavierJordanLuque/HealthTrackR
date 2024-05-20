@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="calendar_app_bar_title">Calendar</string>
+    <string name="calendar_treatment_app_bar_title">Calendar &amp; medical appointments</string>
+
+    <string name="calendar_filter_passed_appointments">Passed appointments</string>
+    <string name="calendar_filter_pending_appointments">Pending appointments</string>
 
     <string name="calendar_no_elements">You have no events for this date.</string>
 

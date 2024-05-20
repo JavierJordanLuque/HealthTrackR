@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.calendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -97,10 +98,8 @@ public class TreatmentCalendarFragment extends Fragment {
             if (treatment.isFinished()) {
                 ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
             } else {
-                /*
                 Intent intent = new Intent(requireActivity(), AddMedicalAppointmentActivity.class);
                 ((MainActivity) requireActivity()).fragmentLauncher.launch(intent);
-                 */
             }
         });
 

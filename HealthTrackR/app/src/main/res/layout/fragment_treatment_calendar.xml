@@ -61,7 +61,7 @@
                 <TextView
                     android:id="@+id/textViewTitle"
                     style="@style/Widget.HealthTrackR.TextView.Title"
-                    android:text="@string/treatments_calendar_app_bar_title"
+                    android:text="@string/calendar_treatment_app_bar_title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"

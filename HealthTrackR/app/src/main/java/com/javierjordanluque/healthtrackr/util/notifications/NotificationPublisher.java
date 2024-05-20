@@ -172,7 +172,7 @@ public class NotificationPublisher extends BroadcastReceiver {
 
     private void appointmentPublisher(Context context, MedicalAppointmentNotification appointmentNotification) {
         if (PermissionManager.hasNotificationPermission(context) && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            String appointmentPurpose = appointmentNotification.getAppointment().getPurpose();
+            String appointmentSubject = appointmentNotification.getAppointment().getSubject();
             String treatmentTitle = appointmentNotification.getAppointment().getTreatment().getTitle();
             double appointmentLocationLatitude = appointmentNotification.getAppointment().getLocation().getLatitude();
             double appointmentLocationLongitude = appointmentNotification.getAppointment().getLocation().getLongitude();
@@ -182,14 +182,14 @@ public class NotificationPublisher extends BroadcastReceiver {
             String message;
             if (!ZonedDateTime.now().isBefore(appointmentDateTime.minusMinutes(1))) {
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_now);
-                message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
+                message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentSubject + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
                         context.getString(R.string.notification_message_medical_appointment_scheduled_now) + " " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " +
                         appointmentLocationLongitude + ".";
             } else {
                 String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), appointmentDateTime).toMillis());
 
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference + ".";
-                message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentPurpose + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
+                message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentSubject + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
                         context.getString(R.string.notification_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude +
                         ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " + appointmentLocationLongitude + ".";
             }

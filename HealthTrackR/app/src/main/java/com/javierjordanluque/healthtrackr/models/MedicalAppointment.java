@@ -21,15 +21,15 @@ import java.util.concurrent.TimeUnit;
 public class MedicalAppointment implements Identifiable {
     private long id;
     private Treatment treatment;
-    private String purpose;
+    private String subject;
     private ZonedDateTime dateTime;
     private Location location;
     private MedicalAppointmentNotification notification;
 
-    public MedicalAppointment(Context context, Treatment treatment, String purpose, ZonedDateTime dateTime, Location location) throws DBInsertException {
+    public MedicalAppointment(Context context, Treatment treatment, ZonedDateTime dateTime, String subject, Location location) throws DBInsertException {
         this.treatment = treatment;
-        this.purpose = purpose;
         this.dateTime = dateTime;
+        this.subject = subject;
         this.location = location;
 
         if (context != null)
@@ -59,18 +59,10 @@ public class MedicalAppointment implements Identifiable {
     private MedicalAppointment() {
     }
 
-    public void modifyMedicalAppointment(Context context, String purpose, ZonedDateTime dateTime, Location location) throws DBUpdateException, DBFindException,
+    public void modifyMedicalAppointment(Context context, ZonedDateTime dateTime, String subject, Location location) throws DBUpdateException, DBFindException,
             DBDeleteException, DBInsertException {
         MedicalAppointment appointment = new MedicalAppointment();
         appointment.setId(this.id);
-
-        if ((this.purpose == null && purpose != null ) || (purpose != null && !this.purpose.equals(purpose))) {
-            setPurpose(purpose);
-            appointment.setPurpose(this.purpose);
-        } else if (this.purpose != null && purpose == null) {
-            setPurpose(null);
-            appointment.setPurpose("");
-        }
 
         if (!this.dateTime.equals(dateTime)) {
             ZonedDateTime oldDateTime = this.dateTime;
@@ -85,6 +77,14 @@ public class MedicalAppointment implements Identifiable {
             scheduleAppointmentNotification(context, previousMinutes);
         }
 
+        if ((this.subject == null && subject != null ) || (subject != null && !this.subject.equals(subject))) {
+            setSubject(subject);
+            appointment.setSubject(this.subject);
+        } else if (this.subject != null && subject == null) {
+            setSubject(null);
+            appointment.setSubject("");
+        }
+
         if ((this.location == null && location != null ) || (location != null && !this.location.equals(location))) {
             setLocation(location);
             appointment.setLocation(this.location);
@@ -94,7 +94,7 @@ public class MedicalAppointment implements Identifiable {
             appointment.setLocation(location);
         }
 
-        if (!(appointment.getPurpose() == null && appointment.getDateTime() == null && appointment.getLocation() == null)) {
+        if (!(appointment.getSubject() == null && appointment.getDateTime() == null && appointment.getLocation() == null)) {
             MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
             medicalAppointmentRepository.update(appointment);
         }
@@ -132,12 +132,12 @@ public class MedicalAppointment implements Identifiable {
         this.treatment = treatment;
     }
 
-    public String getPurpose() {
-        return purpose;
+    public String getSubject() {
+        return subject;
     }
 
-    private void setPurpose(String purpose) {
-        this.purpose = purpose;
+    private void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public ZonedDateTime getDateTime() {
@@ -180,7 +180,7 @@ public class MedicalAppointment implements Identifiable {
         MedicalAppointment medicalAppointment = (MedicalAppointment) obj;
         return id == medicalAppointment.id &&
                 Objects.equals(treatment, medicalAppointment.treatment) &&
-                Objects.equals(purpose, medicalAppointment.purpose) &&
+                Objects.equals(subject, medicalAppointment.subject) &&
                 Objects.equals(dateTime, medicalAppointment.dateTime) &&
                 Objects.equals(location, medicalAppointment.location);
     }

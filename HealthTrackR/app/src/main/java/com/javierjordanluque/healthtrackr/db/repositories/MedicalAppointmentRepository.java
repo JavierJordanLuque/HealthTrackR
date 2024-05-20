@@ -31,7 +31,7 @@ import java.util.List;
 public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointment> {
     private static final String TABLE_NAME = "MEDICAL_APPOINTMENT";
     private final String TREATMENT_ID = "treatment_id";
-    private final String PURPOSE = "purpose";
+    private final String SUBJECT = "subject";
     private final String DATE_TIME = "date_time";
     private final String DATE_TIME_IV = "date_time_iv";
     private final String LATITUDE = "latitude";
@@ -50,18 +50,18 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
         if (appointment.getTreatment() != null)
             contentValues.put(TREATMENT_ID, appointment.getTreatment().getId());
 
-        if (appointment.getPurpose() != null) {
-            if (appointment.getPurpose().isEmpty()) {
-                contentValues.putNull(PURPOSE);
-            } else {
-                contentValues.put(PURPOSE, appointment.getPurpose());
-            }
-        }
-
         if (appointment.getDateTime() != null) {
             CipherData cipherData = SecurityService.encrypt(SerializationUtils.serialize(appointment.getDateTime().toEpochSecond()));
             contentValues.put(DATE_TIME, cipherData.getEncryptedData());
             contentValues.put(DATE_TIME_IV, cipherData.getInitializationVector());
+        }
+
+        if (appointment.getSubject() != null) {
+            if (appointment.getSubject().isEmpty()) {
+                contentValues.putNull(SUBJECT);
+            } else {
+                contentValues.put(SUBJECT, appointment.getSubject());
+            }
         }
 
         if (appointment.getLocation() != null) {
@@ -91,7 +91,7 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
         if (!cursor.isNull(cursor.getColumnIndex(LATITUDE)) && !cursor.isNull(cursor.getColumnIndex(LONGITUDE)))
             location = new Location(cursor.getDouble(cursor.getColumnIndex(LATITUDE)), cursor.getDouble(cursor.getColumnIndex(LONGITUDE)));
 
-        MedicalAppointment appointment = new MedicalAppointment(null, treatment, cursor.getString(cursor.getColumnIndex(PURPOSE)), date, location);
+        MedicalAppointment appointment = new MedicalAppointment(null, treatment, date, cursor.getString(cursor.getColumnIndex(SUBJECT)), location);
         appointment.setId(cursor.getLong(cursor.getColumnIndex(ID)));
 
         return appointment;
