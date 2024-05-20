@@ -2,4 +2,5 @@
 <resources>
     <color name="calendar_medicationLegend">#FFD54F</color>
     <color name="calendar_medicationLegendContainer">#FF6F00</color>
+    <color name="calendar_currentDate">#BA68C8</color>
 </resources>

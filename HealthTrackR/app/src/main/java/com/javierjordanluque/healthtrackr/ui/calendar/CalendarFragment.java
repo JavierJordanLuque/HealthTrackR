@@ -30,6 +30,7 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
+import com.javierjordanluque.healthtrackr.ui.calendar.decorators.CurrentDateDecorator;
 import com.javierjordanluque.healthtrackr.ui.calendar.decorators.MedicalAppointmentDecorator;
 import com.javierjordanluque.healthtrackr.ui.calendar.decorators.MedicineDecorator;
 import com.javierjordanluque.healthtrackr.ui.calendar.decorators.TreatmentEndDateDecorator;
@@ -151,7 +152,8 @@ public class CalendarFragment extends Fragment {
     }
 
     private void setCalendarView() {
-        calendarView.setSelectedDate(org.threeten.bp.LocalDate.now());
+        calendarView.setSelectedDate(CalendarDay.today());
+        calendarView.addDecorator(new CurrentDateDecorator(requireActivity()));
 
         boolean isNightMode = ((MainActivity) requireActivity()).isNightMode();
         calendarView.setDateTextAppearance(isNightMode ? R.style.TextAppearance_HealthTrackR_Date_Dark : R.style.TextAppearance_HealthTrackR_Date_Light);

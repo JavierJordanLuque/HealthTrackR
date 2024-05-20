@@ -7,6 +7,7 @@
 
     <color name="calendar_medicationLegend">#FF6F00</color>
     <color name="calendar_medicationLegendContainer">#FFD54F</color>
+    <color name="calendar_currentDate">#6A1B9A</color>
 
     <color name="light_primary">#00677D</color>
     <color name="light_onPrimary">#FFFFFF</color>
