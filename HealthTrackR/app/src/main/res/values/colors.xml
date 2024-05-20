@@ -5,6 +5,9 @@
     <color name="green">#00FF00</color>
     <color name="amber">#FFA500</color>
 
+    <color name="calendar_medicationLegend">#FF6F00</color>
+    <color name="calendar_medicationLegendContainer">#FFD54F</color>
+
     <color name="light_primary">#00677D</color>
     <color name="light_onPrimary">#FFFFFF</color>
     <color name="light_primaryContainer">#B2EBFF</color>

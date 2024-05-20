@@ -1,7 +1,6 @@
 package com.javierjordanluque.healthtrackr.ui.calendar;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -114,7 +113,6 @@ public class CalendarFragment extends Fragment {
 
             Button buttonFilter = popupView.findViewById(R.id.buttonFilter);
             buttonFilter.setOnClickListener(v -> {
-
                 passedAppointmentsFilter = checkBoxPassedAppointments.isChecked();
                 pendingAppointmentsFilter = checkBoxPendingAppointments.isChecked();
 
@@ -155,7 +153,7 @@ public class CalendarFragment extends Fragment {
     private void setCalendarView() {
         calendarView.setSelectedDate(org.threeten.bp.LocalDate.now());
 
-        boolean isNightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        boolean isNightMode = ((MainActivity) requireActivity()).isNightMode();
         calendarView.setDateTextAppearance(isNightMode ? R.style.TextAppearance_HealthTrackR_Date_Dark : R.style.TextAppearance_HealthTrackR_Date_Light);
         calendarView.setLeftArrow(isNightMode ? R.drawable.ic_calendar_left_arrow_dark : R.drawable.ic_calendar_left_arrow_light);
         calendarView.setRightArrow(isNightMode ? R.drawable.ic_calendar_right_arrow_dark : R.drawable.ic_calendar_right_arrow_light);
@@ -182,22 +180,6 @@ public class CalendarFragment extends Fragment {
         }
 
         if (!treatments.isEmpty()) {
-            Collection<CalendarDay> startDates = new ArrayList<>();
-            Collection<CalendarDay> endDates = new ArrayList<>();
-            for (Treatment treatment : treatments) {
-                if (!startDates.contains(CalendarDay.from(treatment.getStartDate().getYear(), treatment.getStartDate().getMonthValue(), treatment.getStartDate().getDayOfMonth())))
-                    startDates.add(CalendarDay.from(treatment.getStartDate().getYear(), treatment.getStartDate().getMonthValue(), treatment.getStartDate().getDayOfMonth()));
-
-                if (treatment.getEndDate() != null)
-                    if (!endDates.contains(CalendarDay.from(treatment.getEndDate().getYear(), treatment.getEndDate().getMonthValue(), treatment.getEndDate().getDayOfMonth())))
-                        endDates.add(CalendarDay.from(treatment.getEndDate().getYear(), treatment.getEndDate().getMonthValue(), treatment.getEndDate().getDayOfMonth()));
-            }
-
-            if (!startDates.isEmpty())
-                calendarView.addDecorator(new TreatmentStartDateDecorator(requireActivity(), startDates));
-            if (!endDates.isEmpty())
-                calendarView.addDecorator(new TreatmentEndDateDecorator(requireActivity(), endDates));
-
             try {
                 resetFilters();
 
@@ -213,6 +195,22 @@ public class CalendarFragment extends Fragment {
             } catch (DBFindException exception) {
                 ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
             }
+
+            Collection<CalendarDay> startDates = new ArrayList<>();
+            Collection<CalendarDay> endDates = new ArrayList<>();
+            for (Treatment treatment : treatments) {
+                if (!startDates.contains(CalendarDay.from(treatment.getStartDate().getYear(), treatment.getStartDate().getMonthValue(), treatment.getStartDate().getDayOfMonth())))
+                    startDates.add(CalendarDay.from(treatment.getStartDate().getYear(), treatment.getStartDate().getMonthValue(), treatment.getStartDate().getDayOfMonth()));
+
+                if (treatment.getEndDate() != null)
+                    if (!endDates.contains(CalendarDay.from(treatment.getEndDate().getYear(), treatment.getEndDate().getMonthValue(), treatment.getEndDate().getDayOfMonth())))
+                        endDates.add(CalendarDay.from(treatment.getEndDate().getYear(), treatment.getEndDate().getMonthValue(), treatment.getEndDate().getDayOfMonth()));
+            }
+
+            if (!startDates.isEmpty())
+                calendarView.addDecorator(new TreatmentStartDateDecorator(requireActivity(), startDates));
+            if (!endDates.isEmpty())
+                calendarView.addDecorator(new TreatmentEndDateDecorator(requireActivity(), endDates));
 
             showSelectedDateSchedule();
         }
@@ -235,20 +233,14 @@ public class CalendarFragment extends Fragment {
             ZonedDateTime dosingTime = medicine.getInitialDosingTime();
             Duration frequency = Duration.ofHours(medicine.getDosageFrequencyHours()).plusMinutes(medicine.getDosageFrequencyMinutes());
 
-            LocalDate cntDosingDate = dosingTime.toLocalDate();
             LocalDate endDate = medicine.getTreatment().getEndDate() != null ? medicine.getTreatment().getEndDate().toLocalDate() : LocalDate.now().plusDays(10);
-            while (!cntDosingDate.isAfter(endDate)) {
-                if (dosingTime.toLocalDate().isEqual(cntDosingDate)) {
-                    if (!highlightedDates.contains(CalendarDay.from(cntDosingDate.getYear(), cntDosingDate.getMonthValue(), cntDosingDate.getDayOfMonth())))
-                        highlightedDates.add(CalendarDay.from(cntDosingDate.getYear(), cntDosingDate.getMonthValue(), cntDosingDate.getDayOfMonth()));
+            while (!dosingTime.toLocalDate().isAfter(endDate)) {
+                if (!highlightedDates.contains(CalendarDay.from(dosingTime.getYear(), dosingTime.getMonthValue(), dosingTime.getDayOfMonth())))
+                    highlightedDates.add(CalendarDay.from(dosingTime.getYear(), dosingTime.getMonthValue(), dosingTime.getDayOfMonth()));
 
-                    if (!frequency.isZero()) {
-                        cntDosingDate = cntDosingDate.plusDays(1);
-                        long dosesElapsed = Duration.between(dosingTime, cntDosingDate.atStartOfDay(dosingTime.getZone())).toMinutes() / frequency.toMinutes();
-                        dosingTime = dosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
-                    } else {
-                        break;
-                    }
+                if (!frequency.isZero()) {
+                    long dosesElapsed = Duration.between(dosingTime, dosingTime.plusDays(1)).toMinutes() / frequency.toMinutes();
+                    dosingTime = dosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
                 } else {
                     break;
                 }
@@ -430,7 +422,7 @@ public class CalendarFragment extends Fragment {
             int padding = getResources().getDimensionPixelSize(R.dimen.calendar_btn_padding);
             textViewAppointment.setPadding(padding, padding, padding, padding);
 
-            textViewAppointment.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_container));
+            textViewAppointment.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_appointment_container));
             value = new TypedValue();
             requireActivity().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, value, true);
             textViewAppointment.setForeground(ResourcesCompat.getDrawable(getResources(), value.resourceId, requireActivity().getTheme()));
@@ -515,7 +507,9 @@ public class CalendarFragment extends Fragment {
             int padding = getResources().getDimensionPixelSize(R.dimen.calendar_btn_padding);
             textViewMedicine.setPadding(padding, padding, padding, padding);
 
-            textViewMedicine.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_container));
+            if (((MainActivity) requireActivity()).isNightMode())
+                textViewMedicine.setTextColor(ContextCompat.getColor(requireActivity(), R.color.light_onPrimary));
+            textViewMedicine.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_medication_container));
             value = new TypedValue();
             requireActivity().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, value, true);
             textViewMedicine.setForeground(ResourcesCompat.getDrawable(getResources(), value.resourceId, requireActivity().getTheme()));

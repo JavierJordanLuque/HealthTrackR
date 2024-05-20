@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui.calendar.decorators;
 
 import android.content.Context;
+import android.content.res.Configuration;
 
 import androidx.core.content.ContextCompat;
 
@@ -29,6 +30,6 @@ public class MedicineDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(10, ContextCompat.getColor(context, R.color.amber)));
+        view.addSpan(new DotSpan(10, ContextCompat.getColor(context, R.color.calendar_medicationLegend)));
     }
 }

@@ -1,7 +1,6 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.calendar;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -134,7 +133,6 @@ public class TreatmentCalendarFragment extends Fragment {
 
             Button buttonFilter = popupView.findViewById(R.id.buttonFilter);
             buttonFilter.setOnClickListener(v -> {
-
                 passedAppointmentsFilter = checkBoxPassedAppointments.isChecked();
                 pendingAppointmentsFilter = checkBoxPendingAppointments.isChecked();
 
@@ -165,7 +163,7 @@ public class TreatmentCalendarFragment extends Fragment {
     private void setCalendarView() {
         calendarView.setSelectedDate(org.threeten.bp.LocalDate.now());
 
-        boolean isNightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        boolean isNightMode = ((MainActivity) requireActivity()).isNightMode();
         calendarView.setDateTextAppearance(isNightMode ? R.style.TextAppearance_HealthTrackR_Date_Dark : R.style.TextAppearance_HealthTrackR_Date_Light);
         calendarView.setLeftArrow(isNightMode ? R.drawable.ic_calendar_left_arrow_dark : R.drawable.ic_calendar_left_arrow_light);
         calendarView.setRightArrow(isNightMode ? R.drawable.ic_calendar_right_arrow_dark : R.drawable.ic_calendar_right_arrow_light);
@@ -186,6 +184,14 @@ public class TreatmentCalendarFragment extends Fragment {
         if (selectedDate == null)
             selectedDate = LocalDate.now();
 
+        try {
+            resetFilters();
+            showHighlightedMedicalAppointments(treatment.getAppointments(requireActivity()));
+            showHighlightedMedicines(treatment.getMedicines(requireActivity()));
+        } catch (DBFindException exception) {
+            ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
+        }
+
         calendarView.state().edit()
                 .setMinimumDate(CalendarDay.from(treatment.getStartDate().getYear(), treatment.getStartDate().getMonthValue(), treatment.getStartDate().getDayOfMonth()))
                 .commit();
@@ -198,14 +204,6 @@ public class TreatmentCalendarFragment extends Fragment {
                     .commit();
             calendarView.addDecorator(new TreatmentEndDateDecorator(requireActivity(), Collections.singletonList(CalendarDay.from(treatment.getEndDate().getYear(),
                     treatment.getEndDate().getMonthValue(), treatment.getEndDate().getDayOfMonth()))));
-        }
-
-        try {
-            resetFilters();
-            showHighlightedMedicalAppointments(treatment.getAppointments(requireActivity()));
-            showHighlightedMedicines(treatment.getMedicines(requireActivity()));
-        } catch (DBFindException exception) {
-            ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
 
         showSelectedDateSchedule();
@@ -227,19 +225,14 @@ public class TreatmentCalendarFragment extends Fragment {
             ZonedDateTime dosingTime = medicine.getInitialDosingTime();
             Duration frequency = Duration.ofHours(medicine.getDosageFrequencyHours()).plusMinutes(medicine.getDosageFrequencyMinutes());
 
-            LocalDate cntDosingDate = dosingTime.toLocalDate();
-            LocalDate endDate = treatment.getEndDate() != null ? treatment.getEndDate().toLocalDate() : LocalDate.now().plusDays(10);
-            while (!cntDosingDate.isAfter(endDate)) {
-                if (dosingTime.toLocalDate().isEqual(cntDosingDate)) {
-                    highlightedDates.add(CalendarDay.from(cntDosingDate.getYear(), cntDosingDate.getMonthValue(), cntDosingDate.getDayOfMonth()));
+            LocalDate endDate = medicine.getTreatment().getEndDate() != null ? medicine.getTreatment().getEndDate().toLocalDate() : LocalDate.now().plusDays(10);
+            while (!dosingTime.toLocalDate().isAfter(endDate)) {
+                if (!highlightedDates.contains(CalendarDay.from(dosingTime.getYear(), dosingTime.getMonthValue(), dosingTime.getDayOfMonth())))
+                    highlightedDates.add(CalendarDay.from(dosingTime.getYear(), dosingTime.getMonthValue(), dosingTime.getDayOfMonth()));
 
-                    if (!frequency.isZero()) {
-                        cntDosingDate = cntDosingDate.plusDays(1);
-                        long dosesElapsed = Duration.between(dosingTime, cntDosingDate.atStartOfDay(dosingTime.getZone())).toMinutes() / frequency.toMinutes();
-                        dosingTime = dosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
-                    } else {
-                        break;
-                    }
+                if (!frequency.isZero()) {
+                    long dosesElapsed = Duration.between(dosingTime, dosingTime.plusDays(1)).toMinutes() / frequency.toMinutes();
+                    dosingTime = dosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
                 } else {
                     break;
                 }
@@ -390,7 +383,7 @@ public class TreatmentCalendarFragment extends Fragment {
             int padding = getResources().getDimensionPixelSize(R.dimen.calendar_btn_padding);
             textViewAppointment.setPadding(padding, padding, padding, padding);
 
-            textViewAppointment.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_container));
+            textViewAppointment.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_appointment_container));
             value = new TypedValue();
             requireActivity().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, value, true);
             textViewAppointment.setForeground(ResourcesCompat.getDrawable(getResources(), value.resourceId, requireActivity().getTheme()));
@@ -475,7 +468,9 @@ public class TreatmentCalendarFragment extends Fragment {
             int padding = getResources().getDimensionPixelSize(R.dimen.calendar_btn_padding);
             textViewMedicine.setPadding(padding, padding, padding, padding);
 
-            textViewMedicine.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_container));
+            if (((MainActivity) requireActivity()).isNightMode())
+                textViewMedicine.setTextColor(ContextCompat.getColor(requireActivity(), R.color.light_onPrimary));
+            textViewMedicine.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.calendar_schedule_medication_container));
             value = new TypedValue();
             requireActivity().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, value, true);
             textViewMedicine.setForeground(ResourcesCompat.getDrawable(getResources(), value.resourceId, requireActivity().getTheme()));
