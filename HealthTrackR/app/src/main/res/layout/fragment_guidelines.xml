@@ -83,6 +83,7 @@
                         android:id="@+id/viewSeparationLine"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/view_separator_height"
+                        android:layout_marginHorizontal="@dimen/view_guideline_separator_margin"
                         android:background="?attr/colorOutlineVariant" />
 
                     <LinearLayout

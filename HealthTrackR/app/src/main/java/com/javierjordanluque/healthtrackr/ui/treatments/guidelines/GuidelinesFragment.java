@@ -11,6 +11,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -173,6 +174,20 @@ public class GuidelinesFragment extends Fragment {
                 });
 
                 linearLayout.addView(cardView);
+
+                View separatorView = new View(requireActivity());
+                separatorView.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        getResources().getDimensionPixelSize(R.dimen.view_separator_height)
+                ));
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) separatorView.getLayoutParams();
+                int margin = getResources().getDimensionPixelSize(R.dimen.view_guideline_separator_margin);
+                params.setMargins(margin, 0, margin, 0);
+                separatorView.setLayoutParams(params);
+                TypedValue value = new TypedValue();
+                requireActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.colorOutlineVariant, value, true);
+                separatorView.setBackgroundResource(value.resourceId);
+                linearLayout.addView(separatorView);
             }
         }
     }
@@ -189,7 +204,7 @@ public class GuidelinesFragment extends Fragment {
             linearLayoutCardView.setPadding(linearLayoutCardView.getPaddingLeft(),
                     linearLayoutCardView.getPaddingTop(),
                     linearLayoutCardView.getPaddingRight(),
-                    -18);
+                    -15);
 
             TabLayout tabLayout = cardView.findViewById(R.id.tabLayout);
             tabLayout.setVisibility(View.VISIBLE);

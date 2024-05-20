@@ -58,6 +58,7 @@
 
     <dimen name="view_separator_height">1dp</dimen>
     <dimen name="view_separator_margin">10dp</dimen>
+    <dimen name="view_guideline_separator_margin">30dp</dimen>
 
     <dimen name="calendar_btn_min_width">50dp</dimen>
     <dimen name="calendar_btn_max_width">150dp</dimen>
