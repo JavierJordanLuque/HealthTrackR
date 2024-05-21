@@ -38,6 +38,7 @@
     <string name="error_invalid_medical_appointment_date_time">The date time mustn´t be empty.</string>
     <string name="error_invalid_medical_appointment_subject">The subject must contain less than 200 characters.</string>
     <string name="error_invalid_medical_appointment_location">The location must have a valid latitude and longitude.</string>
+    <string name="error_no_medical_appointment_notification">The medical appointment has already taken place.</string>
 
     <string name="error_location_disabled">Please enable location to use this feature.</string>
 </resources>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="medical_appointment_bar_title_add">Adición de cita médica</string>
-    <string name="medical_appointment_bar_title_modify">Modificación de cita médica</string>
+    <string name="medical_appointment_app_bar_title">Cita médica</string>
+    <string name="medical_appointment_app_bar_title_add">Adición de cita médica</string>
+    <string name="medical_appointment_app_bar_title_modify">Modificación de cita médica</string>
 
+    <string name="medical_appointment_date_time">Fecha y hora</string>
     <string name="medical_appointment_subject">Asunto</string>
     <string name="medical_appointment_location">Lugar</string>
     <string name="medical_appointment_location_latitude">Latitud:</string>
@@ -12,5 +14,8 @@
 
     <string name="medical_appointment_add_medicine_helper">Al añadir la cita médica se establecerá una notificación previa (por defecto 1 hora antes).</string>
 
+    <string name="medical_appointment_dialog_message_delete">¿Estás seguro/a de eliminar esta cita médica del tratamiento?</string>
     <string name="medical_appointment_dialog_denied_notification_permission">Se ha denegado el permiso de mostrar notificaciones, por lo que no se establecerán notificaciones. Se recomienda otorgar permiso para poder recibir notificaciones de citas médicas.</string>
+
+    <string name="medical_appointment_toast_confirmation_delete">¡Cita médica eliminada!</string>
 </resources>

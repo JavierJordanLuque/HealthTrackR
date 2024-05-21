@@ -1,4 +1,4 @@
-package com.javierjordanluque.healthtrackr.ui.treatments.calendar;
+package com.javierjordanluque.healthtrackr.ui.treatments.calendar.appointments;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -27,6 +27,7 @@ import com.javierjordanluque.healthtrackr.models.Location;
 import com.javierjordanluque.healthtrackr.models.MedicalAppointment;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
+import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.util.PermissionManager;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
@@ -51,7 +52,7 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medical_appointment);
-        setUpToolbar(getString(R.string.medical_appointment_bar_title_add));
+        setUpToolbar(getString(R.string.medical_appointment_app_bar_title_add));
         showBackButton(true);
 
         treatment = getTreatmentFromIntent(getIntent());
@@ -206,7 +207,6 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
     }
 
     private void openNextActivity() {
-        /*
         Intent intent = new Intent();
         intent.putExtra(MainActivity.class.getSimpleName(), MedicalAppointmentFragment.class.getName());
 
@@ -216,7 +216,6 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
         intent.putExtras(bundle);
 
         setResult(RESULT_OK, intent);
-         */
 
         finish();
     }

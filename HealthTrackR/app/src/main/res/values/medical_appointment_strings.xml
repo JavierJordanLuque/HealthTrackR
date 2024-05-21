@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="medical_appointment_bar_title_add">Medical appointment addition</string>
-    <string name="medical_appointment_bar_title_modify">Medical appointment modification</string>
+    <string name="medical_appointment_app_bar_title">Medical appointment</string>
+    <string name="medical_appointment_app_bar_title_add">Medical appointment addition</string>
+    <string name="medical_appointment_app_bar_title_modify">Medical appointment modification</string>
 
+    <string name="medical_appointment_date_time">Date time</string>
     <string name="medical_appointment_subject">Subject</string>
     <string name="medical_appointment_location">Location</string>
     <string name="medical_appointment_location_latitude">Latitude:</string>
@@ -12,5 +14,8 @@
 
     <string name="medical_appointment_add_medicine_helper">When adding the medical appointment, a previous notification (default 1 hour before) will be set.</string>
 
+    <string name="medical_appointment_dialog_message_delete">Are you sure you want to delete this medical appointment from the treatment?</string>
     <string name="medical_appointment_dialog_denied_notification_permission">Notification permission has been denied, so notifications will not be set up. Granting permission is recommended to receive medical appointment notifications.</string>
+
+    <string name="medical_appointment_toast_confirmation_delete">Medical appointment deleted successfully!</string>
 </resources>

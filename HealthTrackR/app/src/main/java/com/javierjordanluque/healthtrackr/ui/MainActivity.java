@@ -18,16 +18,19 @@ import androidx.fragment.app.FragmentTransaction;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.databinding.ActivityMainBinding;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
+import com.javierjordanluque.healthtrackr.models.MedicalAppointment;
 import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.account.AccountFragment;
 import com.javierjordanluque.healthtrackr.ui.calendar.CalendarFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.TreatmentsFragment;
+import com.javierjordanluque.healthtrackr.ui.treatments.calendar.TreatmentCalendarFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicineFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicinesFragment;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -56,7 +59,7 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
                     if (fragmentClassName.equals(MedicineFragment.class.getName())) {
                         showMedicineFragmentFromNotification(fragmentClassName);
                     } else {
-                        //showMedicalAppointmentFragmentFromNotification(fragmentClassName);
+                        showMedicalAppointmentFragmentFromNotification(fragmentClassName);
                     }
                 }
             } else {
@@ -165,6 +168,41 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
                 bundle = new Bundle();
                 bundle.putLong(Treatment.class.getSimpleName(), medicationNotification.getMedicine().getTreatment().getId());
                 bundle.putLong(Medicine.class.getSimpleName(), medicationNotification.getMedicine().getId());
+                fragment.setArguments(bundle);
+                replaceFragment(fragment);
+            }
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | DBFindException exception) {
+            ExceptionManager.advertiseUI(this, exception.getMessage());
+        }
+    }
+
+    private void showMedicalAppointmentFragmentFromNotification(String fragmentClassName) {
+        try {
+            Fragment fragment = (Fragment) Class.forName(fragmentClassName).newInstance();
+            NotificationRepository notificationRepository = new NotificationRepository(this);
+            MedicalAppointmentNotification medicalAppointmentNotification = (MedicalAppointmentNotification) notificationRepository.findById(getIntent().getLongExtra(MedicalAppointmentNotification.class.getSimpleName(), -1));
+
+            if (medicalAppointmentNotification != null) {
+                sessionViewModel.setUserSession(medicalAppointmentNotification.getAppointment().getTreatment().getUser());
+
+                Fragment treatmentsFragment = new TreatmentsFragment();
+                replaceFragment(treatmentsFragment);
+
+                Fragment treatmentFragment = new TreatmentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putLong(Treatment.class.getSimpleName(), medicalAppointmentNotification.getAppointment().getTreatment().getId());
+                treatmentFragment.setArguments(bundle);
+                replaceFragment(treatmentFragment);
+
+                Fragment treatmentCalendarFragment = new TreatmentCalendarFragment();
+                bundle = new Bundle();
+                bundle.putLong(Treatment.class.getSimpleName(), medicalAppointmentNotification.getAppointment().getTreatment().getId());
+                treatmentCalendarFragment.setArguments(bundle);
+                replaceFragment(treatmentCalendarFragment);
+
+                bundle = new Bundle();
+                bundle.putLong(Treatment.class.getSimpleName(), medicalAppointmentNotification.getAppointment().getTreatment().getId());
+                bundle.putLong(MedicalAppointment.class.getSimpleName(), medicalAppointmentNotification.getAppointment().getId());
                 fragment.setArguments(bundle);
                 replaceFragment(fragment);
             }

@@ -42,6 +42,9 @@
     <string name="content_description_add_question">Add question</string>
 
     <string name="content_description_add_medical_appointment">Add medical appointment</string>
+    <string name="content_description_modify_medical_appointment">Modify medical appointment</string>
+    <string name="content_description_delete_medical_appointment">Delete medical appointment</string>
+    <string name="content_description_access_medical_appointment_notification">Access medical appointment notification</string>
 
     <string name="content_description_calendar_legend">Calendar legend</string>
 </resources>

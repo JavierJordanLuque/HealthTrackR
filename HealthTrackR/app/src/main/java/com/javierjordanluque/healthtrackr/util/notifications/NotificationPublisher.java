@@ -19,6 +19,7 @@ import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.ui.LogInActivity;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
+import com.javierjordanluque.healthtrackr.ui.treatments.calendar.appointments.MedicalAppointmentFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicineFragment;
 import com.javierjordanluque.healthtrackr.util.AuthenticationService;
 import com.javierjordanluque.healthtrackr.util.PermissionManager;
@@ -258,7 +259,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                 } else if (notification instanceof MedicalAppointmentNotification &&
                         user.equals(((MedicalAppointmentNotification) notification).getAppointment().getTreatment().getUser())) {
                     actionIntent = new Intent(context, MainActivity.class);
-                    //actionIntent.putExtra(MainActivity.CURRENT_FRAGMENT, MedicalAppointmentFragment.class.getName());
+                    actionIntent.putExtra(MainActivity.CURRENT_FRAGMENT, MedicalAppointmentFragment.class.getName());
                     actionIntent.putExtra(MedicalAppointmentNotification.class.getSimpleName(), notification.getId());
                 }
 

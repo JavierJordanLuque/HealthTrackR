@@ -37,6 +37,8 @@ import com.javierjordanluque.healthtrackr.ui.calendar.decorators.MedicalAppointm
 import com.javierjordanluque.healthtrackr.ui.calendar.decorators.MedicineDecorator;
 import com.javierjordanluque.healthtrackr.ui.calendar.decorators.TreatmentEndDateDecorator;
 import com.javierjordanluque.healthtrackr.ui.calendar.decorators.TreatmentStartDateDecorator;
+import com.javierjordanluque.healthtrackr.ui.treatments.calendar.appointments.AddMedicalAppointmentActivity;
+import com.javierjordanluque.healthtrackr.ui.treatments.calendar.appointments.MedicalAppointmentFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicineFragment;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
@@ -394,14 +396,12 @@ public class TreatmentCalendarFragment extends Fragment {
             textViewAppointment.setFocusable(true);
             textViewAppointment.setClickable(true);
             textViewAppointment.setOnClickListener(view -> {
-                    /*
                     Fragment fragment = new MedicalAppointmentFragment();
                     Bundle bundle = new Bundle();
                     bundle.putLong(Treatment.class.getSimpleName(), appointment.getTreatment().getId());
-                    bundle.putLong(Medicine.class.getSimpleName(), appointment.getId());
+                    bundle.putLong(MedicalAppointment.class.getSimpleName(), appointment.getId());
                     fragment.setArguments(bundle);
                     ((MainActivity) requireActivity()).replaceFragment(fragment);
-                     */
             });
 
             linearLayout.addView(textViewAppointment);

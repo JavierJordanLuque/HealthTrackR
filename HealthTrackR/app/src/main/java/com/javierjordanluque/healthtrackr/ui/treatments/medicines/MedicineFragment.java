@@ -57,8 +57,7 @@ public class MedicineFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_medicine, container, false);
 
         imageViewStatus = fragmentView.findViewById(R.id.imageViewStatus);

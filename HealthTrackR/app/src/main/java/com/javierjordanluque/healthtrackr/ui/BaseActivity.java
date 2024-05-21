@@ -28,6 +28,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Guideline;
+import com.javierjordanluque.healthtrackr.models.MedicalAppointment;
 import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.User;
@@ -139,11 +140,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (bundle != null) {
                 long treatmentId = bundle.getLong(Treatment.class.getSimpleName());
                 try {
-                    for (Treatment treatment : user.getTreatments(this)) {
-                        if (treatment.getId() == treatmentId) {
+                    for (Treatment treatment : user.getTreatments(this))
+                        if (treatment.getId() == treatmentId)
                             return treatment;
-                        }
-                    }
                 } catch (DBFindException exception) {
                     ExceptionManager.advertiseUI(this, exception.getMessage());
                 }
@@ -157,11 +156,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (bundle != null) {
             long medicineId = bundle.getLong(Medicine.class.getSimpleName());
             try {
-                for (Medicine medicine : treatment.getMedicines(this)) {
-                    if (medicine.getId() == medicineId) {
+                for (Medicine medicine : treatment.getMedicines(this))
+                    if (medicine.getId() == medicineId)
                         return medicine;
-                    }
-                }
+            } catch (DBFindException exception) {
+                ExceptionManager.advertiseUI(this, exception.getMessage());
+            }
+        }
+
+        return null;
+    }
+
+    public MedicalAppointment getMedicalAppointmentFromBundle(Treatment treatment, Bundle bundle) {
+        if (bundle != null) {
+            long medicalAppointmentId = bundle.getLong(MedicalAppointment.class.getSimpleName());
+            try {
+                for (MedicalAppointment medicalAppointment : treatment.getAppointments(this))
+                    if (medicalAppointment.getId() == medicalAppointmentId)
+                        return medicalAppointment;
             } catch (DBFindException exception) {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
             }
@@ -177,11 +189,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (intent != null) {
                 long treatmentId = intent.getLongExtra(Treatment.class.getSimpleName(), -1);
                 try {
-                    for (Treatment treatment : user.getTreatments(this)) {
-                        if (treatment.getId() == treatmentId) {
+                    for (Treatment treatment : user.getTreatments(this))
+                        if (treatment.getId() == treatmentId)
                             return treatment;
-                        }
-                    }
                 } catch (DBFindException exception) {
                     ExceptionManager.advertiseUI(this, exception.getMessage());
                 }
@@ -195,11 +205,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (intent != null) {
             long medicineId = intent.getLongExtra(Medicine.class.getSimpleName(), -1);
             try {
-                for (Medicine medicine : treatment.getMedicines(this)) {
-                    if (medicine.getId() == medicineId) {
+                for (Medicine medicine : treatment.getMedicines(this))
+                    if (medicine.getId() == medicineId)
                         return medicine;
-                    }
-                }
             } catch (DBFindException exception) {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
             }
@@ -212,11 +220,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (intent != null) {
             long guidelineId = intent.getLongExtra(Guideline.class.getSimpleName(), -1);
             try {
-                for (Guideline guideline : treatment.getGuidelines(this)) {
-                    if (guideline.getId() == guidelineId) {
+                for (Guideline guideline : treatment.getGuidelines(this))
+                    if (guideline.getId() == guidelineId)
                         return guideline;
-                    }
-                }
+            } catch (DBFindException exception) {
+                ExceptionManager.advertiseUI(this, exception.getMessage());
+            }
+        }
+
+        return null;
+    }
+
+    public MedicalAppointment getMedicalAppointmentFromIntent(Treatment treatment, Intent intent) {
+        if (intent != null) {
+            long medicalAppointmentId = intent.getLongExtra(MedicalAppointment.class.getSimpleName(), -1);
+            try {
+                for (MedicalAppointment medicalAppointment : treatment.getAppointments(this))
+                    if (medicalAppointment.getId() == medicalAppointmentId)
+                        return medicalAppointment;
             } catch (DBFindException exception) {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
             }
