@@ -155,9 +155,7 @@ public class AddMedicineActivity extends BaseActivity {
                 medicine = new Medicine(this, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime, dosageFrequencyHours, dosageFrequencyMinutes);
 
                 if (PermissionManager.hasNotificationPermission(this)) {
-                    medicine.schedulePreviousMedicationNotification(this, NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
-                    medicine.scheduleMedicationNotification(this);
-
+                    scheduleNotifications();
                     openNextActivity();
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -166,7 +164,7 @@ public class AddMedicineActivity extends BaseActivity {
                         showNotificationPermissionDeniedDialog();
                     }
                 }
-            } catch (DBInsertException | DBDeleteException exception) {
+            } catch (DBInsertException exception) {
                 ExceptionManager.advertiseUI(this, exception.getMessage());
             }
         }

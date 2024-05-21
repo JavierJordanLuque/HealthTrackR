@@ -99,6 +99,8 @@ public class TreatmentCalendarFragment extends Fragment {
                 ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
             } else {
                 Intent intent = new Intent(requireActivity(), AddMedicalAppointmentActivity.class);
+                intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
+
                 ((MainActivity) requireActivity()).fragmentLauncher.launch(intent);
             }
         });
@@ -364,9 +366,9 @@ public class TreatmentCalendarFragment extends Fragment {
 
         for (MedicalAppointment appointment : appointmentsToShow) {
             TextView textViewAppointment = new TextView(requireActivity());
-            textViewAppointment.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
+            textViewAppointment.setLayoutParams(new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
             ));
             textViewAppointment.setText(appointment.getDateTime().toLocalTime().toString());
             textViewAppointment.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

@@ -80,7 +80,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 textViewPreviousNotificationTimeError.setVisibility(View.GONE);
-                imageViewPreviousNotificationTimeError.setVisibility(View.GONE);
+                imageViewPreviousNotificationTimeError.setVisibility(View.INVISIBLE);
                 layoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
                 textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
             }
@@ -97,7 +97,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 textViewPreviousNotificationTimeError.setVisibility(View.GONE);
-                imageViewPreviousNotificationTimeError.setVisibility(View.GONE);
+                imageViewPreviousNotificationTimeError.setVisibility(View.INVISIBLE);
                 layoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
                 textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
             }

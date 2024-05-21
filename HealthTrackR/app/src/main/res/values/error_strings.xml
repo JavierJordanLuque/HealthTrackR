@@ -28,13 +28,16 @@
     <string name="error_invalid_medicine_name_existing">The specified medicine already exists in this treatment.</string>
     <string name="error_invalid_medicine_initial_dosing_time">The initial dosing time mustn´t be empty.</string>
     <string name="error_invalid_medicine_previous_notification_time">The previous notification time must be less than the dosage frequency.</string>
+    <string name="error_no_medicine_notifications">The medicine has no more doses. Please, modify its dosing frequency or the treatment end date to continue with this medicine.</string>
 
     <string name="error_invalid_guideline_title">The title mustn´t be empty.</string>
     <string name="error_invalid_guideline_description">The description must contain less than 300 characters.</string>
 
     <string name="error_invalid_symptom_description">The description mustn`t be empty.</string>
 
-    <string name="error_no_medicine_notifications"> The medicine has no more doses. Please, modify its dosing frequency or the treatment end date to continue with this medicine.</string>
+    <string name="error_invalid_medical_appointment_date_time">The date time mustn´t be empty.</string>
+    <string name="error_invalid_medical_appointment_subject">The subject must contain less than 200 characters.</string>
+    <string name="error_invalid_medical_appointment_location">The location must have a valid latitude and longitude.</string>
 
     <string name="error_location_disabled">Please enable location to use this feature.</string>
 </resources>
