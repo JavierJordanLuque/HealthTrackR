@@ -13,6 +13,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
@@ -193,7 +194,9 @@ public class Treatment implements Identifiable {
     }
 
     public void removeAppointment(Context context, MedicalAppointment appointment) throws DBDeleteException, DBFindException {
-        NotificationScheduler.cancelNotification(context, appointment.getNotification(context));
+        MedicalAppointmentNotification appointmentNotification = appointment.getNotification(context);
+        if (appointmentNotification != null)
+            NotificationScheduler.cancelNotification(context,appointmentNotification);
 
         MedicalAppointmentRepository medicalAppointmentRepository = new MedicalAppointmentRepository(context);
         medicalAppointmentRepository.delete(appointment);
