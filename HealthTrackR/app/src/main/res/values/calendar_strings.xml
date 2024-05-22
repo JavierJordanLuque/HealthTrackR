@@ -3,8 +3,10 @@
     <string name="calendar_app_bar_title">Calendar</string>
     <string name="calendar_treatment_app_bar_title">Calendar &amp; medical appointments</string>
 
-    <string name="calendar_filter_passed_appointments">Passed appointments</string>
-    <string name="calendar_filter_pending_appointments">Pending appointments</string>
+    <string name="calendar_filter_medical_appointments">Medical appointments</string>
+    <string name="calendar_filter_medication_intakes">Medication intakes</string>
+    <string name="calendar_filter_passed">Passed</string>
+    <string name="calendar_filter_pending">Pending</string>
 
     <string name="calendar_no_elements">You have no events for this date.</string>
 

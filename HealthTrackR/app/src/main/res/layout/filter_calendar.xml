@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/popup_container"
+            android:layout_gravity="center">
+
+            <TextView
+                style="@style/Widget.HealthTrackR.TextView.Bold"
+                android:layout_marginTop="0dp"
+                android:text="@string/calendar_filter_medical_appointments" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_view_margin_top">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vAppointmentsGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxPassedAppointments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/calendar_filter_passed"
+                    app:layout_constraintEnd_toStartOf="@+id/vAppointmentsGuideline"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxPendingAppointments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/calendar_filter_pending"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vAppointmentsGuideline" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                style="@style/Widget.HealthTrackR.TextView.Bold"
+                android:text="@string/calendar_filter_medication_intakes" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_view_margin_top">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMedicationsGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxPassedMedications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/calendar_filter_passed"
+                    app:layout_constraintEnd_toStartOf="@+id/vMedicationsGuideline"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxPendingMedications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/calendar_filter_pending"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vMedicationsGuideline" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_view_margin_top">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMarginGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <Button
+                    android:id="@+id/buttonShowAllFilter"
+                    style="@style/Widget.HealthTrackR.SmallButton"
+                    android:backgroundTint="?attr/colorTertiaryContainer"
+                    android:layout_height="match_parent"
+                    android:text="@string/filter_show_all"
+                    android:textColor="?attr/colorOnTertiaryContainer"
+                    app:layout_constraintEnd_toStartOf="@+id/vMarginGuideline"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonFilter"
+                    style="@style/Widget.HealthTrackR.SmallButton"
+                    android:backgroundTint="?attr/colorPrimaryContainer"
+                    android:layout_height="match_parent"
+                    android:text="@string/filter_filter"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/vMarginGuideline" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

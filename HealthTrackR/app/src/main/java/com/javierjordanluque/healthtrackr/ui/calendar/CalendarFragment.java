@@ -46,6 +46,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -59,8 +60,12 @@ public class CalendarFragment extends Fragment {
     private ImageButton imageButtonLegend;
     private LinearLayout linearLayoutNoElements;
     private LinearLayout linearLayout;
+    private MedicalAppointmentDecorator medicalAppointmentDecorator;
+    private MedicineDecorator medicineDecorator;
     private Boolean pendingAppointmentsFilter;
     private Boolean passedAppointmentsFilter;
+    private Boolean pendingMedicationsFilter;
+    private Boolean passedMedicationsFilter;
 
     public CalendarFragment() {
     }
@@ -95,7 +100,7 @@ public class CalendarFragment extends Fragment {
 
         ExtendedFloatingActionButton buttonFilterCalendar = fragmentView.findViewById(R.id.buttonFilterCalendar);
         buttonFilterCalendar.setOnClickListener(view -> {
-            View popupView = getLayoutInflater().inflate(R.layout.filter_appointments, null);
+            View popupView = getLayoutInflater().inflate(R.layout.filter_calendar, null);
             PopupWindow popupWindow = new PopupWindow(popupView, buttonFilterCalendar.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popupWindow.showAsDropDown(buttonFilterCalendar, 0, 0);
 
@@ -113,17 +118,37 @@ public class CalendarFragment extends Fragment {
                 checkBoxPendingAppointments.setChecked(true);
             }
 
+            CheckBox checkBoxPassedMedications = popupView.findViewById(R.id.checkBoxPassedMedications);
+            if (passedMedicationsFilter != null) {
+                checkBoxPassedMedications.setChecked(passedMedicationsFilter);
+            } else {
+                checkBoxPassedMedications.setChecked(true);
+            }
+
+            CheckBox checkBoxPendingMedications = popupView.findViewById(R.id.checkBoxPendingMedications);
+            if (pendingMedicationsFilter != null) {
+                checkBoxPendingMedications.setChecked(pendingMedicationsFilter);
+            } else {
+                checkBoxPendingMedications.setChecked(true);
+            }
+
             Button buttonFilter = popupView.findViewById(R.id.buttonFilter);
             buttonFilter.setOnClickListener(v -> {
                 passedAppointmentsFilter = checkBoxPassedAppointments.isChecked();
                 pendingAppointmentsFilter = checkBoxPendingAppointments.isChecked();
+                passedMedicationsFilter = checkBoxPassedMedications.isChecked();
+                pendingMedicationsFilter = checkBoxPendingMedications.isChecked();
 
                 try {
                     List<MedicalAppointment> filteredAppointments = new ArrayList<>();
-                    for (Treatment treatment : user.getTreatments(requireActivity()))
+                    List<Medicine> filteredMedicines = new ArrayList<>();
+                    for (Treatment treatment : user.getTreatments(requireActivity())) {
                         filteredAppointments.addAll(treatment.filterAppointments(passedAppointmentsFilter, pendingAppointmentsFilter));
+                        filteredMedicines.addAll(treatment.getMedicines(requireActivity()));
+                    }
 
                     showHighlightedMedicalAppointments(filteredAppointments);
+                    showHighlightedMedications(filteredMedicines);
                 } catch (DBFindException exception) {
                     ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
                 }
@@ -137,10 +162,14 @@ public class CalendarFragment extends Fragment {
                     resetFilters();
 
                     List<MedicalAppointment> unfilteredAppointments = new ArrayList<>();
-                    for (Treatment treatment : user.getTreatments(requireActivity()))
+                    List<Medicine> unfilteredMedicines = new ArrayList<>();
+                    for (Treatment treatment : user.getTreatments(requireActivity())) {
                         unfilteredAppointments.addAll(treatment.getAppointments(requireActivity()));
+                        unfilteredMedicines.addAll(treatment.getMedicines(requireActivity()));
+                    }
 
                     showHighlightedMedicalAppointments(unfilteredAppointments);
+                    showHighlightedMedications(unfilteredMedicines);
                 } catch (DBFindException exception) {
                     ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
                 }
@@ -183,22 +212,6 @@ public class CalendarFragment extends Fragment {
         }
 
         if (!treatments.isEmpty()) {
-            try {
-                resetFilters();
-
-                List<MedicalAppointment> appointments = new ArrayList<>();
-                List<Medicine> medicines = new ArrayList<>();
-                for (Treatment treatment : treatments) {
-                    appointments.addAll(treatment.getAppointments(requireActivity()));
-                    medicines.addAll(treatment.getMedicines(requireActivity()));
-                }
-
-                showHighlightedMedicalAppointments(appointments);
-                showHighlightedMedicines(medicines);
-            } catch (DBFindException exception) {
-                ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
-            }
-
             Collection<CalendarDay> startDates = new ArrayList<>();
             Collection<CalendarDay> endDates = new ArrayList<>();
             for (Treatment treatment : treatments) {
@@ -215,6 +228,21 @@ public class CalendarFragment extends Fragment {
             if (!endDates.isEmpty())
                 calendarView.addDecorator(new TreatmentEndDateDecorator(requireActivity(), endDates));
 
+            try {
+                resetFilters();
+                List<MedicalAppointment> appointments = new ArrayList<>();
+                List<Medicine> medicines = new ArrayList<>();
+                for (Treatment treatment : treatments) {
+                    appointments.addAll(treatment.getAppointments(requireActivity()));
+                    medicines.addAll(treatment.getMedicines(requireActivity()));
+                }
+
+                showHighlightedMedicalAppointments(appointments);
+                showHighlightedMedications(medicines);
+            } catch (DBFindException exception) {
+                ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
+            }
+
             showSelectedDateSchedule();
         }
     }
@@ -226,31 +254,76 @@ public class CalendarFragment extends Fragment {
             if (!highlightedDates.contains(CalendarDay.from(appointment.getDateTime().getYear(), appointment.getDateTime().getMonthValue(), appointment.getDateTime().getDayOfMonth())))
                 highlightedDates.add(CalendarDay.from(appointment.getDateTime().getYear(), appointment.getDateTime().getMonthValue(), appointment.getDateTime().getDayOfMonth()));
 
-        calendarView.addDecorator(new MedicalAppointmentDecorator(requireActivity(), highlightedDates));
+        if (medicalAppointmentDecorator != null)
+            calendarView.removeDecorator(medicalAppointmentDecorator);
+
+        medicalAppointmentDecorator = new MedicalAppointmentDecorator(requireActivity(), highlightedDates);
+        calendarView.addDecorator(medicalAppointmentDecorator);
     }
 
-    private void showHighlightedMedicines(List<Medicine> medicines) {
+    private void showHighlightedMedications(List<Medicine> medicines) {
         Collection<CalendarDay> highlightedDates = new ArrayList<>();
 
-        for (Medicine medicine : medicines) {
-            ZonedDateTime dosingTime = medicine.getInitialDosingTime();
-            Duration frequency = Duration.ofHours(medicine.getDosageFrequencyHours()).plusMinutes(medicine.getDosageFrequencyMinutes());
+        boolean isPassedFilter = Boolean.TRUE.equals(passedMedicationsFilter);
+        boolean isPendingFilter = Boolean.TRUE.equals(pendingMedicationsFilter);
 
-            LocalDate endDate = medicine.getTreatment().getEndDate() != null ? medicine.getTreatment().getEndDate().toLocalDate() : LocalDate.now().plusDays(10);
-            while (!dosingTime.toLocalDate().isAfter(endDate)) {
-                if (!highlightedDates.contains(CalendarDay.from(dosingTime.getYear(), dosingTime.getMonthValue(), dosingTime.getDayOfMonth())))
-                    highlightedDates.add(CalendarDay.from(dosingTime.getYear(), dosingTime.getMonthValue(), dosingTime.getDayOfMonth()));
+        if (passedMedicationsFilter == null || pendingMedicationsFilter == null || isPassedFilter || isPendingFilter) {
+            for (Medicine medicine : medicines) {
+                ZonedDateTime cntDosingTime = medicine.getInitialDosingTime();
+                ZonedDateTime currentDateTime = ZonedDateTime.now();
+                ZonedDateTime endDate = medicine.getTreatment().getEndDate();
+                LocalDate limitDate;
 
-                if (!frequency.isZero()) {
-                    long dosesElapsed = Duration.between(dosingTime, dosingTime.plusDays(1)).toMinutes() / frequency.toMinutes();
-                    dosingTime = dosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
+                if (passedMedicationsFilter == null || pendingMedicationsFilter == null || (isPassedFilter && isPendingFilter)) {
+                    limitDate = endDate != null ? endDate.toLocalDate() : currentDateTime.toLocalDate().plusDays(10);
+                } else if (isPassedFilter) {
+                    if (cntDosingTime.isAfter(currentDateTime))
+                        continue;
+
+                    limitDate = endDate != null && endDate.toLocalDate().isBefore(currentDateTime.toLocalDate()) ? endDate.toLocalDate() : currentDateTime.toLocalDate();
                 } else {
-                    break;
+                    if (endDate == null || !endDate.toLocalDate().isBefore(currentDateTime.toLocalDate())) {
+                        if (cntDosingTime.isBefore(currentDateTime)) {
+                            Duration frequency = Duration.ofHours(medicine.getDosageFrequencyHours()).plusMinutes(medicine.getDosageFrequencyMinutes());
+
+                            if (frequency.isZero())
+                                continue;
+
+                            long dosesElapsed = Duration.between(cntDosingTime, currentDateTime).toMinutes() / frequency.toMinutes();
+                            cntDosingTime = cntDosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
+                        }
+
+                        limitDate = endDate != null ? endDate.toLocalDate() : currentDateTime.toLocalDate().plusDays(10);
+                    } else {
+                        continue;
+                    }
+                }
+
+                Duration frequency = Duration.ofHours(medicine.getDosageFrequencyHours()).plusMinutes(medicine.getDosageFrequencyMinutes());
+
+                while (!cntDosingTime.toLocalDate().isAfter(limitDate)) {
+                    CalendarDay calendarDay = CalendarDay.from(cntDosingTime.getYear(), cntDosingTime.getMonthValue(), cntDosingTime.getDayOfMonth());
+                    if (!highlightedDates.contains(calendarDay))
+                        highlightedDates.add(calendarDay);
+
+                    if (!frequency.isZero()) {
+                        long dosesElapsed = Duration.between(cntDosingTime, cntDosingTime.plusDays(1).truncatedTo(ChronoUnit.DAYS)).toMinutes() / frequency.toMinutes();
+                        cntDosingTime = cntDosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
+                    } else {
+                        break;
+                    }
                 }
             }
-        }
 
-        calendarView.addDecorator(new MedicineDecorator(requireActivity(), highlightedDates));
+            if (medicineDecorator != null)
+                calendarView.removeDecorator(medicineDecorator);
+
+            medicineDecorator = new MedicineDecorator(requireActivity(), highlightedDates);
+            calendarView.addDecorator(medicineDecorator);
+        } else {
+            if (medicineDecorator != null)
+                calendarView.removeDecorator(medicineDecorator);
+        }
     }
 
     private void showSelectedDateSchedule() {
@@ -332,7 +405,7 @@ public class CalendarFragment extends Fragment {
                         if (!appointmentsToShow.isEmpty())
                             setAppointmentsSelectedDate(appointmentsToShow, linearLayoutTreatment);
                         if (!medicinesToShow.isEmpty())
-                            setMedicinesSelectedDate(medicinesToShow, linearLayoutTreatment);
+                            setMedicationsSelectedDate(medicinesToShow, linearLayoutTreatment);
                         if (hasFinished)
                             setLimitSelectedDate(R.string.calendar_treatment_end, linearLayoutTreatment);
 
@@ -445,7 +518,7 @@ public class CalendarFragment extends Fragment {
         }
     }
 
-    private void setMedicinesSelectedDate(List<Medicine> medicinesToShow, LinearLayout linearLayout) {
+    private void setMedicationsSelectedDate(List<Medicine> medicinesToShow, LinearLayout linearLayout) {
         TextView textViewMedicines = new TextView(requireActivity());
         textViewMedicines.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -555,6 +628,8 @@ public class CalendarFragment extends Fragment {
     private void resetFilters() {
         passedAppointmentsFilter = true;
         pendingAppointmentsFilter = true;
+        passedMedicationsFilter = true;
+        pendingMedicationsFilter = true;
     }
 
     @Override
