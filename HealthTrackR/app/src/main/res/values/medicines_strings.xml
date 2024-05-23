@@ -23,8 +23,6 @@
         <item quantity="many">%d min</item>
         <item quantity="other">%d min</item>
     </plurals>
-    <string name="medicines_hours" translatable="false">h</string>
-    <string name="medicines_minutes" translatable="false">min</string>
 
     <string name="medicines_active_substance">Active substance</string>
     <string name="medicines_dose">Dose</string>

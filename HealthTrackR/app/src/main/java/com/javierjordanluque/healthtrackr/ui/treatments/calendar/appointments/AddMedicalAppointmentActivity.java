@@ -70,7 +70,8 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
         editTextLatitude = findViewById(R.id.editTextLatitude);
         editTextLatitude.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -86,7 +87,8 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
         editTextLongitude = findViewById(R.id.editTextLongitude);
         editTextLongitude.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -97,12 +99,6 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 1) {
-                    char firstChar = s.charAt(0);
-                    if (firstChar < '0' || firstChar > '5') {
-                        s.clear();
-                    }
-                }
             }
         });
 

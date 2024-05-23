@@ -91,7 +91,7 @@ public class CalendarFragment extends Fragment {
             View popupView = getLayoutInflater().inflate(R.layout.calendar_legend, null);
             PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            popupWindow.showAsDropDown(imageButtonLegend, imageButtonLegend.getWidth() - popupView.getMeasuredWidth(), 10);
+            popupWindow.showAsDropDown(imageButtonLegend, -popupView.getMeasuredWidth(), -imageButtonLegend.getWidth());
         });
 
         textViewSelectedDate = fragmentView.findViewById(R.id.textViewSelectedDate);

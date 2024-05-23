@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +118,7 @@ public class TreatmentCalendarFragment extends Fragment {
             View popupView = getLayoutInflater().inflate(R.layout.calendar_legend, null);
             PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            popupWindow.showAsDropDown(imageButtonLegend, imageButtonLegend.getWidth() - popupView.getMeasuredWidth(), 10);
+            popupWindow.showAsDropDown(imageButtonLegend, -popupView.getMeasuredWidth(), -imageButtonLegend.getWidth());
         });
 
         ExtendedFloatingActionButton buttonFilterCalendar = fragmentView.findViewById(R.id.buttonFilterCalendar);

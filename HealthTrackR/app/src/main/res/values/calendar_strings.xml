@@ -21,6 +21,7 @@
     <string name="calendar_treatment_start">Start of the treatment</string>
     <string name="calendar_treatment_end">End of the treatment</string>
 
+    <string name="calendar_legend_info">Indicators overlap from least to most important:</string>
     <string name="calendar_legend_start_date">Start date</string>
     <string name="calendar_legend_end_date">End date</string>
     <string name="calendar_legend_medical_appointment">Medical appointment</string>

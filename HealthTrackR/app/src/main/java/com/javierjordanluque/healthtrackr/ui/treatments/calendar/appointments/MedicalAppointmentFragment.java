@@ -2,6 +2,7 @@ package com.javierjordanluque.healthtrackr.ui.treatments.calendar.appointments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -81,12 +82,10 @@ public class MedicalAppointmentFragment extends Fragment {
             if (!medicalAppointment.isPending()) {
                 showNoMedicalAppointmentNotificationDialog();
             } else {
-                /*
                 Intent intent = new Intent(requireActivity(), ModifyMedicalAppointmentNotificationActivity.class);
                 intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
                 intent.putExtra(MedicalAppointment.class.getSimpleName(), medicalAppointment.getId());
                 startActivity(intent);
-                 */
             }
         });
 

@@ -1,4 +1,4 @@
-package com.javierjordanluque.healthtrackr.ui.treatments.medicines;
+package com.javierjordanluque.healthtrackr.ui.treatments.calendar.appointments;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +23,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.javierjordanluque.healthtrackr.R;
-import com.javierjordanluque.healthtrackr.models.Medicine;
+import com.javierjordanluque.healthtrackr.models.MedicalAppointment;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.BaseActivity;
 import com.javierjordanluque.healthtrackr.util.PermissionManager;
@@ -32,45 +31,34 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
-import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
 import java.util.concurrent.TimeUnit;
 
-public class ModifyMedicineNotificationsActivity extends BaseActivity {
-    private Medicine medicine;
+public class ModifyMedicalAppointmentNotificationActivity extends BaseActivity {
+    private MedicalAppointment medicalAppointment;
     private ConstraintLayout constraintLayoutPreviousNotificationTime;
     private EditText editTextPreviousNotificationTimeHours;
     private EditText editTextPreviousNotificationTimeMinutes;
     private SwitchMaterial switchPreviousNotificationStatus;
-    private SwitchMaterial switchDosingNotificationStatus;
-    private TextView textViewPreviousNotificationTimeHelper;
-    private TextView textViewPreviousNotificationTimeError;
-    private ImageView imageViewPreviousNotificationTimeError;
-    private ConstraintLayout layoutPreviousNotificationTime;
     private int previousNotificationTimeHours;
     private int previousNotificationTimeMinutes;
-    private boolean previousNotificationStatus;
-    private boolean dosingNotificationStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_medicine_notifications);
-        setUpToolbar(getString(R.string.medicines_app_bar_title_modify_notifications));
+        setContentView(R.layout.activity_modify_medical_appointment_notification);
+        setUpToolbar(getString(R.string.medical_appointment_app_bar_title_modify_notification));
         showBackButton(true);
 
         Treatment treatment = getTreatmentFromIntent(getIntent());
-        medicine = getMedicineFromIntent(treatment, getIntent());
+        medicalAppointment = getMedicalAppointmentFromIntent(treatment, getIntent());
 
-        TextView textViewName = findViewById(R.id.textViewName);
-        textViewName.setText(medicine.getName());
+        TextView textViewDateTime = findViewById(R.id.textViewDateTime);
+        textViewDateTime.setText(showFormattedDateTime(medicalAppointment.getDateTime()));
 
         constraintLayoutPreviousNotificationTime = findViewById(R.id.constraintLayoutPreviousNotificationTime);
-        textViewPreviousNotificationTimeHelper = findViewById(R.id.textViewPreviousNotificationTimeHelper);
-        textViewPreviousNotificationTimeError = findViewById(R.id.textViewPreviousNotificationTimeError);
-        imageViewPreviousNotificationTimeError = findViewById(R.id.imageViewPreviousNotificationTimeError);
-        layoutPreviousNotificationTime = findViewById(R.id.layoutPreviousNotificationTime);
 
         editTextPreviousNotificationTimeHours = findViewById(R.id.editTextPreviousNotificationTimeHours);
         editTextPreviousNotificationTimeHours.addTextChangedListener(new TextWatcher() {
@@ -80,10 +68,6 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                textViewPreviousNotificationTimeError.setVisibility(View.GONE);
-                imageViewPreviousNotificationTimeError.setVisibility(View.INVISIBLE);
-                layoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
-                textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -98,10 +82,6 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                textViewPreviousNotificationTimeError.setVisibility(View.GONE);
-                imageViewPreviousNotificationTimeError.setVisibility(View.INVISIBLE);
-                layoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled);
-                textViewPreviousNotificationTimeHelper.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -116,25 +96,20 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
         });
 
         switchPreviousNotificationStatus = findViewById(R.id.switchPreviousNotificationStatus);
-        switchDosingNotificationStatus = findViewById(R.id.switchDosingNotificationStatus);
 
-        MedicationNotification previousNotification = null;
+        MedicalAppointmentNotification previousNotification = null;
         try {
-            for (MedicationNotification notification : medicine.getNotifications(this)) {
-                if (notification.getTimestamp() != medicine.getInitialDosingTime().toInstant().toEpochMilli()) {
-                    switchPreviousNotificationStatus.setChecked(true);
-
-                    previousNotification = notification;
-                    setPreviousNotificationTime(notification);
-                } else {
-                    switchDosingNotificationStatus.setChecked(true);
-                }
-            }
+            previousNotification = medicalAppointment.getNotification(this);
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(this, exception.getMessage());
         }
 
-        MedicationNotification finalPreviousNotification = previousNotification;
+        if (previousNotification != null) {
+            switchPreviousNotificationStatus.setChecked(true);
+            setPreviousNotificationTime(previousNotification);
+        }
+
+        MedicalAppointmentNotification finalPreviousNotification = previousNotification;
         switchPreviousNotificationStatus.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
                 constraintLayoutPreviousNotificationTime.setVisibility(View.GONE);
@@ -144,14 +119,13 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
         });
 
         Button buttonSave = findViewById(R.id.buttonSave);
-        buttonSave.setOnClickListener(this::modifyMedicineNotifications);
+        buttonSave.setOnClickListener(this::modifyMedicalAppointmentNotification);
     }
 
-    private void modifyMedicineNotifications(View view) {
+    private void modifyMedicalAppointmentNotification(View view) {
         hideKeyboard(this);
 
         boolean previousNotificationStatus = switchPreviousNotificationStatus.isChecked();
-        boolean dosingNotificationStatus = switchDosingNotificationStatus.isChecked();
 
         if (previousNotificationStatus) {
             String previousNotificationTimeHoursString = editTextPreviousNotificationTimeHours.getText().toString().trim();
@@ -164,34 +138,23 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
             if (!previousNotificationTimeMinutesString.isEmpty())
                 previousNotificationTimeMinutes = Integer.parseInt(previousNotificationTimeMinutesString);
 
-            if (!isValidPreviousNotificationTime(previousNotificationTimeHours, previousNotificationTimeMinutes)) {
-                textViewPreviousNotificationTimeHelper.setVisibility(View.GONE);
-                textViewPreviousNotificationTimeError.setVisibility(View.VISIBLE);
-                imageViewPreviousNotificationTimeError.setVisibility(View.VISIBLE);
-                layoutPreviousNotificationTime.setBackgroundResource(R.drawable.form_layout_container_filled_error);
-
-                return;
-            }
-
-            showModifyMedicineNotificationsConfirmationDialog(previousNotificationTimeHours, previousNotificationTimeMinutes, true, dosingNotificationStatus);
+            showModifyMedicalAppointmentNotificationConfirmationDialog(previousNotificationTimeHours, previousNotificationTimeMinutes, true);
         } else {
-            showModifyMedicineNotificationsConfirmationDialog(Integer.MIN_VALUE, Integer.MIN_VALUE, false, dosingNotificationStatus);
+            showModifyMedicalAppointmentNotificationConfirmationDialog(Integer.MIN_VALUE, Integer.MIN_VALUE, false);
         }
     }
 
-    private void showModifyMedicineNotificationsConfirmationDialog(int previousNotificationTimeHours, int previousNotificationTimeMinutes,
-                                                                   boolean previousNotificationStatus, boolean dosingNotificationStatus) {
+    private void showModifyMedicalAppointmentNotificationConfirmationDialog(int previousNotificationTimeHours, int previousNotificationTimeMinutes,
+                                                                            boolean previousNotificationStatus) {
         this.previousNotificationTimeHours = previousNotificationTimeHours;
         this.previousNotificationTimeMinutes = previousNotificationTimeMinutes;
-        this.previousNotificationStatus = previousNotificationStatus;
-        this.dosingNotificationStatus = dosingNotificationStatus;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.dialog_message_save))
                 .setPositiveButton(getString(R.string.button_save), (dialog, id) -> {
-                    if (previousNotificationStatus || dosingNotificationStatus) {
+                    if (previousNotificationStatus) {
                         if (PermissionManager.hasNotificationPermission(this)) {
-                            makeMedicineNotificationsModification(previousNotificationStatus, dosingNotificationStatus);
+                            makeMedicalAppointmentNotificationModification(true);
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PermissionManager.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS);
@@ -200,7 +163,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
                             }
                         }
                     } else {
-                        makeMedicineNotificationsModification(false, false);
+                        makeMedicalAppointmentNotificationModification(false);
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());
@@ -213,7 +176,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
 
         if (requestCode == PermissionManager.REQUEST_CODE_PERMISSION_POST_NOTIFICATIONS) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                makeMedicineNotificationsModification(previousNotificationStatus, dosingNotificationStatus);
+                makeMedicalAppointmentNotificationModification(true);
             } else {
                 showNotificationPermissionDeniedDialog();
             }
@@ -222,14 +185,14 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
 
     private void showNotificationPermissionDeniedDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.medicines_dialog_denied_notification_permission))
+        builder.setMessage(getString(R.string.medical_appointment_dialog_denied_notification_permission))
                 .setPositiveButton(getString(R.string.snackbar_action_more), (dialog, id) -> {
                     Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
                     notificationPermissionLauncher.launch(intent);
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> {
-                    makeMedicineNotificationsModification(false, false);
+                    makeMedicalAppointmentNotificationModification(false);
 
                     dialog.dismiss();
                     finish();
@@ -238,18 +201,12 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
     }
 
     private final ActivityResultLauncher<Intent> notificationPermissionLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (PermissionManager.hasNotificationPermission(this)) {
-                    makeMedicineNotificationsModification(previousNotificationStatus, dosingNotificationStatus);
-                } else {
-                    makeMedicineNotificationsModification(false, false);
-                }
-            });
-    
-    private void makeMedicineNotificationsModification(boolean previousNotificationStatus, boolean dosingNotificationStatus) {
+            result -> makeMedicalAppointmentNotificationModification(PermissionManager.hasNotificationPermission(this)));
+
+    private void makeMedicalAppointmentNotificationModification(boolean previousNotificationStatus) {
         try {
-            medicine.modifyMedicineNotifications(this, previousNotificationTimeHours, previousNotificationTimeMinutes,
-                    previousNotificationStatus, dosingNotificationStatus);
+            medicalAppointment.modifyMedicalAppointmentNotification(this, previousNotificationTimeHours, previousNotificationTimeMinutes,
+                    previousNotificationStatus);
 
             Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
             finish();
@@ -258,11 +215,11 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
         }
     }
 
-    private void setPreviousNotificationTime(MedicationNotification previousNotification) {
+    private void setPreviousNotificationTime(MedicalAppointmentNotification previousNotification) {
         long previousTotalMinutes;
 
         if (previousNotification != null) {
-            previousTotalMinutes = TimeUnit.MILLISECONDS.toMinutes(medicine.getInitialDosingTime().toInstant().toEpochMilli() -
+            previousTotalMinutes = TimeUnit.MILLISECONDS.toMinutes(medicalAppointment.getDateTime().toInstant().toEpochMilli() -
                     previousNotification.getTimestamp());
         } else {
             previousTotalMinutes = TimeUnit.MILLISECONDS.toMinutes(NotificationScheduler.PREVIOUS_DEFAULT_MINUTES);
@@ -274,19 +231,6 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
 
         editTextPreviousNotificationTimeHours.setText(String.valueOf(hours));
         editTextPreviousNotificationTimeMinutes.setText(String.valueOf(minutes));
-    }
-
-    private boolean isValidPreviousNotificationTime(int previousNotificationTimeHours, int previousNotificationTimeMinutes) {
-        int dosageFrequencyHours = medicine.getDosageFrequencyHours();
-        int dosageFrequencyMinutes = medicine.getDosageFrequencyMinutes();
-
-        if (dosageFrequencyHours == 0 && dosageFrequencyMinutes == 0)
-            return true;
-
-        int totalPreviousNotificationTimeMinutes = (int) (TimeUnit.HOURS.toMinutes(previousNotificationTimeHours) + previousNotificationTimeMinutes);
-        int totalDosageFrequencyMinutes = (int) (TimeUnit.HOURS.toMinutes(dosageFrequencyHours) + dosageFrequencyMinutes);
-
-        return totalPreviousNotificationTimeMinutes < totalDosageFrequencyMinutes;
     }
 
     @Override

@@ -168,8 +168,8 @@ public class MedicineFragment extends Fragment {
         int dosageFrequencyMinutes = medicine.getDosageFrequencyMinutes();
         if (dosageFrequencyHours != 0 || dosageFrequencyMinutes != 0) {
             String dosingFrequencyString = getString(R.string.medicines_each) + " " +
-                    (dosageFrequencyHours > 0? (dosageFrequencyHours + " " + getString(R.string.medicines_hours) + " ") : "") +
-                    dosageFrequencyMinutes + " " + getString(R.string.medicines_minutes);
+                    (dosageFrequencyHours > 0? (dosageFrequencyHours + " " + getString(R.string.hours) + " ") : "") +
+                    dosageFrequencyMinutes + " " + getString(R.string.minutes);
             textViewDosingFrequency.setText(dosingFrequencyString);
         } else {
             textViewDosingFrequency.setText(R.string.medicines_single_dose);

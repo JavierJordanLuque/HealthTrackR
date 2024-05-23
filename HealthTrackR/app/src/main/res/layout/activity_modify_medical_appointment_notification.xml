@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.treatments.medicines.ModifyMedicineNotificationsActivity">
+    tools:context=".ui.treatments.calendar.appointments.ModifyMedicalAppointmentNotificationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -50,15 +50,26 @@
                     style="@style/vMarginGuidelineEnd" />
 
                 <TextView
-                    android:id="@+id/textViewName"
+                    android:id="@+id/textViewTitle"
                     style="@style/Widget.HealthTrackR.TextView.Subtitle"
                     android:textAlignment="center"
                     android:layout_marginTop="@dimen/text_view_title_margin_top"
                     android:layout_marginStart="0dp"
                     android:layout_marginEnd="0dp"
+                    android:text="@string/medical_appointment_app_bar_title"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewDateTime"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/text_view_title_margin_top"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -69,7 +80,7 @@
                     android:paddingBottom="@dimen/linear_layout_padding_bottom"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewName"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDateTime"
                     app:layout_constraintWidth_max="@dimen/text_field_max_width">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -81,7 +92,7 @@
                             android:layout_width="0dp"
                             android:layout_marginTop="0dp"
                             android:layout_marginEnd="10dp"
-                            android:text="@string/medicines_previous_notification_status"
+                            android:text="@string/medical_appointment_previous_notification_status"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -116,7 +127,7 @@
                                 android:id="@+id/textViewPreviousNotificationTime"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/medicines_form_previous_notification_time"
+                                android:text="@string/medical_appointment_form_previous_notification_time"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,7 +152,6 @@
                                         android:autofillHints="number"
                                         android:inputType="number"
                                         android:maxLength="4"
-                                        android:labelFor="@+id/textViewPreviousNotificationTimeHours"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent" />
@@ -152,6 +162,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/hours"
                                         android:textAppearance="?attr/textAppearanceBodyLarge"
+                                        android:labelFor="@+id/editTextPreviousNotificationTimeHours"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintStart_toEndOf="@+id/editTextPreviousNotificationTimeHours"
                                         app:layout_constraintTop_toTopOf="parent" />
@@ -165,7 +176,6 @@
                                         android:autofillHints="number"
                                         android:inputType="number"
                                         android:maxLength="2"
-                                        android:labelFor="@+id/textViewPreviousNotificationTimeMinutes"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintStart_toEndOf="@+id/textViewPreviousNotificationTimeHours"
                                         app:layout_constraintTop_toTopOf="parent" />
@@ -176,6 +186,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/minutes"
                                         android:textAppearance="?attr/textAppearanceBodyLarge"
+                                        android:labelFor="@+id/editTextPreviousNotificationTimeMinutes"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintStart_toEndOf="@+id/editTextPreviousNotificationTimeMinutes"
                                         app:layout_constraintTop_toTopOf="parent" />
@@ -186,23 +197,11 @@
                                     android:id="@+id/textViewPreviousNotificationTimeBefore"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/medicines_before"
+                                    android:text="@string/medical_appointment_before"
                                     android:textAppearance="?attr/textAppearanceBodyLarge"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@+id/imageViewPreviousNotificationTimeError"
-                                    app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <ImageView
-                                    android:id="@+id/imageViewPreviousNotificationTimeError"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_error"
-                                    app:tint="?attr/colorError"
-                                    android:contentDescription="@string/content_description_error_icon"
-                                    android:visibility="invisible"
-                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/constraintLayout"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -217,48 +216,9 @@
                             android:textAppearance="?attr/textAppearanceBodySmall"
                             android:paddingTop="2dp"
                             android:paddingHorizontal="15dp"
-                            android:text="@string/medicines_previous_notification_time_helper"
+                            android:text="@string/medical_appointment_previous_notification_time_helper"
                             android:visibility="visible"
                             app:layout_constraintTop_toBottomOf="@+id/layoutPreviousNotificationTime"/>
-
-                        <TextView
-                            android:id="@+id/textViewPreviousNotificationTimeError"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:labelFor="@+id/editTextDosageFrequencyMinutes"
-                            android:textAppearance="?attr/textAppearanceBodySmall"
-                            android:paddingTop="2dp"
-                            android:paddingHorizontal="15dp"
-                            android:text="@string/error_invalid_medicine_previous_notification_time"
-                            android:textColor="?attr/colorError"
-                            android:visibility="gone"
-                            app:layout_constraintTop_toBottomOf="@+id/layoutPreviousNotificationTime"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/form_margin_top">
-
-                        <TextView
-                            style="@style/Widget.HealthTrackR.TextView"
-                            android:layout_width="0dp"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginEnd="10dp"
-                            android:text="@string/medicines_dosing_notification_status"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/switchDosingNotificationStatus" />
-
-                        <com.google.android.material.switchmaterial.SwitchMaterial
-                            android:id="@+id/switchDosingNotificationStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="false"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

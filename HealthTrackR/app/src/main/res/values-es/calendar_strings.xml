@@ -21,6 +21,7 @@
     <string name="calendar_treatment_start">Inicio del tratamiento</string>
     <string name="calendar_treatment_end">Finalización del tratamiento</string>
 
+    <string name="calendar_legend_info">Los indicadores se superponen de menor a mayor importancia:</string>
     <string name="calendar_legend_start_date">Fecha de inicio</string>
     <string name="calendar_legend_end_date">Fecha de finalización</string>
     <string name="calendar_legend_medical_appointment">Cita médica</string>

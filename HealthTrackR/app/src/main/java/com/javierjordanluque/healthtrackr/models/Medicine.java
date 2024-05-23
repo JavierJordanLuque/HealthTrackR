@@ -192,11 +192,11 @@ public class Medicine implements Identifiable {
         }
 
         int previousMinutes = (int) (TimeUnit.HOURS.toMinutes(previousNotificationTimeHours) + previousNotificationTimeMinutes);
-        long previousTimestamp = initialDosingTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
+        long timestamp = initialDosingTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
 
-        if (previousNotification != null && (!previousNotificationStatus || previousNotification.getTimestamp() != previousTimestamp))
+        if (previousNotification != null && (!previousNotificationStatus || previousNotification.getTimestamp() != timestamp))
             NotificationScheduler.cancelNotification(context, previousNotification);
-        if (previousNotificationStatus && (previousNotification == null || previousNotification.getTimestamp() != previousTimestamp))
+        if (previousNotificationStatus && (previousNotification == null || previousNotification.getTimestamp() != timestamp))
             schedulePreviousMedicationNotification(context, previousMinutes);
 
         if (exactNotification != null && !dosingNotificationStatus)

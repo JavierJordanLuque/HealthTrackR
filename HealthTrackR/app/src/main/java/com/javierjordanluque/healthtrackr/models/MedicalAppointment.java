@@ -37,7 +37,7 @@ public class MedicalAppointment implements Identifiable {
     }
 
     public void scheduleAppointmentNotification(Context context, int previousMinutes) throws DBInsertException {
-        if (dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes)) &&
+        if (previousMinutes > 0 && dateTime.isAfter(ZonedDateTime.now().plusMinutes(previousMinutes)) &&
                 PermissionManager.hasNotificationPermission(context)) {
             long timestamp = dateTime.minusMinutes(previousMinutes).toInstant().toEpochMilli();
             MedicalAppointmentNotification notification = new MedicalAppointmentNotification(this, timestamp);
