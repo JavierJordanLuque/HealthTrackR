@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.treatments.calendar.appointments.ModifyMedicalAppointmentActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:theme="@style/ThemeOverlay.HealthTrackR.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMarginGuidelineStart"
+                    style="@style/vMarginGuidelineStart" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vMarginGuidelineEnd"
+                    style="@style/vMarginGuidelineEnd" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/linear_layout_padding_top"
+                    android:paddingBottom="@dimen/linear_layout_padding_bottom"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintWidth_max="@dimen/text_field_max_width">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutDateTime"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        android:layout_marginTop="0dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextDateTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/medical_appointment_form_date_time"
+                            android:inputType="datetime" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutSubject"
+                        style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="200"
+                        app:endIconContentDescription="@string/content_description_clear_text"
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextSubject"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="text"
+                            android:hint="@string/medical_appointment_subject"
+                            android:inputType="textMultiLine"
+                            android:maxLength="200" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutLocation"
+                        style="@style/FormLayout.Filled">
+
+                        <TextView
+                            android:id="@+id/textViewLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/medical_appointment_location"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layoutLatitude"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            app:layout_constraintEnd_toStartOf="@+id/imageViewLocationError"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewLocation">
+
+                            <TextView
+                                android:id="@+id/textViewLatitude"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/medical_appointment_location_latitude"
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <EditText
+                                android:id="@+id/editTextLatitude"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="21dp"
+                                android:autofillHints="number"
+                                android:inputType="numberSigned|numberDecimal"
+                                android:maxLength="11"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/textViewLatitude"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            app:layout_constraintEnd_toStartOf="@+id/imageViewLocationError"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/layoutLatitude">
+
+                            <TextView
+                                android:id="@+id/textViewLongitude"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/medical_appointment_location_longitude"
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <EditText
+                                android:id="@+id/editTextLongitude"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:autofillHints="number"
+                                android:inputType="numberSigned|numberDecimal"
+                                android:maxLength="11"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/textViewLongitude"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <ImageView
+                            android:id="@+id/imageViewLocationError"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/content_description_error_icon"
+                            android:src="@drawable/ic_error"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewLocation"
+                            app:tint="?attr/colorError">
+
+                        </ImageView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/textViewLocationError"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:labelFor="@+id/editTextLatitude"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:paddingTop="2dp"
+                        android:paddingHorizontal="15dp"
+                        android:text="@string/error_invalid_medical_appointment_location"
+                        android:textColor="?attr/colorError"
+                        android:visibility="invisible"
+                        app:layout_constraintTop_toBottomOf="@+id/layoutPreviousNotificationTime"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewAddMedicalAppointmentHelper"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/editTextDosageFrequencyMinutes"
+                    android:paddingHorizontal="15dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/medical_appointment_add_medicine_helper"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vLargeButtonGuidelineStart"
+                    style="@style/vLargeButtonGuidelineStart" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/vLargeButtonGuidelineEnd"
+                    style="@style/vLargeButtonGuidelineEnd" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/linear_layout_padding_top"
+                    android:paddingBottom="@dimen/linear_layout_padding_bottom"
+                    app:layout_constraintEnd_toEndOf="@id/vLargeButtonGuidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/vLargeButtonGuidelineStart"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewAddMedicalAppointmentHelper"
+                    app:layout_constraintWidth_max="@dimen/large_btn_max_width">
+
+                    <Button
+                        android:id="@+id/buttonSave"
+                        style="@style/Widget.HealthTrackR.LargeButton.Form"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/button_save" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

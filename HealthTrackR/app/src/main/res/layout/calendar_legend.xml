@@ -41,6 +41,26 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:src="@drawable/calendar_current_date_container" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/text_view_value_margin_start"
+                        android:text="@string/calendar_legend_current_date" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/text_view_margin_top">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/calendar_treatment_start_container" />
 
                     <TextView

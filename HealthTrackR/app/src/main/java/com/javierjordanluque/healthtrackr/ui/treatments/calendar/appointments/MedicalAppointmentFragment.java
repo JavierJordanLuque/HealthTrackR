@@ -68,12 +68,10 @@ public class MedicalAppointmentFragment extends Fragment {
             if (treatment.isFinished()) {
                 ((MainActivity) requireActivity()).showTreatmentFinishedDialog();
             } else {
-                /*
                 Intent intent = new Intent(requireActivity(), ModifyMedicalAppointmentActivity.class);
                 intent.putExtra(Treatment.class.getSimpleName(), treatment.getId());
                 intent.putExtra(MedicalAppointment.class.getSimpleName(), medicalAppointment.getId());
                 startActivity(intent);
-                 */
             }
         });
 
