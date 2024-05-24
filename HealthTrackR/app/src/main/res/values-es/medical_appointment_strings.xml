@@ -8,6 +8,7 @@
     <string name="medical_appointment_date_time">Fecha y hora</string>
     <string name="medical_appointment_subject">Asunto</string>
     <string name="medical_appointment_location">Ubicación</string>
+    <string name="medical_appointment_location_place">Lugar</string>
     <string name="medical_appointment_location_latitude">Latitud:</string>
     <string name="medical_appointment_location_longitude">Longitud:</string>
     <string name="medical_appointment_before">antes</string>
@@ -16,9 +17,11 @@
     <string name="medical_appointment_form_date_time">Fecha y hora *</string>
     <string name="medical_appointment_form_previous_notification_time">Hora de la notificacion previa *</string>
 
+    <string name="medical_appointment_location_helper">Indicar ubicación exacta</string>
     <string name="medical_appointment_add_medicine_helper">Al añadir la cita médica se establecerá una notificación previa (por defecto 1 hora antes).</string>
     <string name="medical_appointment_previous_notification_time_helper">Una hora de notificación previa de 0 horas y 0 minutos indica que no hay notificación previa.</string>
 
+    <string name="medical_appointment_dialog_message_no_location">No se ha indicado ninguna ubicación. Por favor, añade una ubicación a la cita médica para conocer la ruta.</string>
     <string name="medical_appointment_dialog_message_delete">¿Estás seguro/a de eliminar esta cita médica del tratamiento?</string>
     <string name="medical_appointment_dialog_denied_notification_permission">Se ha denegado el permiso de mostrar notificaciones, por lo que no se establecerán notificaciones. Se recomienda otorgar permiso para poder recibir notificaciones de citas médicas.</string>
 

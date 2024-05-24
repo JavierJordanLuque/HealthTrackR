@@ -1,30 +1,37 @@
 package com.javierjordanluque.healthtrackr.models;
 
-public class Location {
-    private final double latitude;
-    private final double longitude;
+import java.util.Objects;
 
-    public Location(double latitude, double longitude) {
+public class Location {
+    private final String place;
+    private final Double latitude;
+    private final Double longitude;
+
+    public Location(String place, Double latitude, Double longitude) {
+        this.place = place;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public String getPlace() {
+        return place;
+    }
+
+    public Double getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(Object object) {
+        if (this == object)
             return true;
-        if (obj == null || getClass() != obj.getClass())
+        if (object == null || getClass() != object.getClass())
             return false;
-        Location location = (Location) obj;
-        return Double.compare(location.latitude, latitude) == 0 &&
-                Double.compare(location.longitude, longitude) == 0;
+        Location location = (Location) object;
+        return Objects.equals(place, location.place) && Objects.equals(latitude, location.latitude) && Objects.equals(longitude, location.longitude);
     }
 }

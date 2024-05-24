@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Location;
@@ -40,9 +41,13 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
     private MedicalAppointment medicalAppointment;
     private TextInputLayout layoutDateTime;
     private TextInputLayout layoutSubject;
+    private SwitchMaterial switchLocation;
+    private TextInputLayout layoutPlace;
+    private ConstraintLayout layoutLocationDisplay;
     private ConstraintLayout layoutLocation;
     private EditText editTextDateTime;
     private EditText editTextSubject;
+    private EditText editTextPlace;
     private EditText editTextLatitude;
     private EditText editTextLongitude;
     private TextView textViewLocationError;
@@ -66,6 +71,13 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
         editTextSubject = findViewById(R.id.editTextSubject);
         setEditTextListener(layoutSubject, editTextSubject);
 
+        layoutPlace = findViewById(R.id.layoutPlace);
+        editTextPlace = findViewById(R.id.editTextPlace);
+
+        textViewLocationError = findViewById(R.id.textViewLocationError);
+        imageViewLocationError = findViewById(R.id.imageViewLocationError);
+
+        layoutLocationDisplay = findViewById(R.id.layoutLocationDisplay);
         layoutLocation = findViewById(R.id.layoutLocation);
         editTextLatitude = findViewById(R.id.editTextLatitude);
         editTextLatitude.addTextChangedListener(new TextWatcher() {
@@ -102,8 +114,16 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
             }
         });
 
-        textViewLocationError = findViewById(R.id.textViewLocationError);
-        imageViewLocationError = findViewById(R.id.imageViewLocationError);
+        switchLocation = findViewById(R.id.switchLocation);
+        switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                layoutPlace.setVisibility(View.VISIBLE);
+                layoutLocationDisplay.setVisibility(View.GONE);
+            } else {
+                layoutPlace.setVisibility(View.GONE);
+                layoutLocationDisplay.setVisibility(View.VISIBLE);
+            }
+        });
 
         Button buttonAddMedicalAppointment = findViewById(R.id.buttonAddMedicalAppointment);
         buttonAddMedicalAppointment.setOnClickListener(this::addMedicalAppointment);
@@ -118,7 +138,7 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
 
         boolean validDateTime = isValidDateTime(editTextDateTime.getText().toString().trim());
         boolean validSubject = isValidSubject(subject);
-        boolean validLocation = isValidLocation(latitude, longitude);
+        boolean validLocation = !switchLocation.isChecked() || isValidLocation(latitude, longitude);
 
         if (!validDateTime || !validSubject || !validLocation) {
             if (!validDateTime)
@@ -140,9 +160,14 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
             subject = null;
 
         Location location = null;
-        if (!latitude.isEmpty() && !longitude.isEmpty())
-            location = new Location(Double.parseDouble(latitude), Double.parseDouble(longitude));
-
+        if (!switchLocation.isChecked()) {
+            String place = editTextPlace.getText().toString().trim();
+            if (!place.isEmpty())
+                location = new Location(place, null, null);
+        } else {
+            if (!latitude.isEmpty() && !longitude.isEmpty())
+                location = new Location(null, Double.parseDouble(latitude), Double.parseDouble(longitude));
+        }
 
         try {
             medicalAppointment = new MedicalAppointment(this, treatment, dateTime, subject, location);

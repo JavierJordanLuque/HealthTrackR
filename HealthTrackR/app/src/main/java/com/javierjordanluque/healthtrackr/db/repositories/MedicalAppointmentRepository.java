@@ -34,6 +34,7 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
     private final String SUBJECT = "subject";
     private final String DATE_TIME = "date_time";
     private final String DATE_TIME_IV = "date_time_iv";
+    private final String PLACE = "place";
     private final String LATITUDE = "latitude";
     private final String LONGITUDE = "longitude";
     private final Context context;
@@ -65,12 +66,21 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
         }
 
         if (appointment.getLocation() != null) {
-            if (appointment.getLocation().getLatitude() == Long.MIN_VALUE && appointment.getLocation().getLongitude() == Long.MIN_VALUE) {
+            if (appointment.getLocation().getPlace() == null || appointment.getLocation().getPlace().isEmpty()) {
+                contentValues.putNull(PLACE);
+
+                if (appointment.getLocation().getLatitude() == Double.MIN_VALUE && appointment.getLocation().getLongitude() == Double.MIN_VALUE) {
+                    contentValues.putNull(LATITUDE);
+                    contentValues.putNull(LONGITUDE);
+                } else {
+                    contentValues.put(LATITUDE, appointment.getLocation().getLatitude());
+                    contentValues.put(LONGITUDE, appointment.getLocation().getLongitude());
+                }
+            } else {
+                contentValues.put(PLACE, appointment.getLocation().getPlace());
+
                 contentValues.putNull(LATITUDE);
                 contentValues.putNull(LONGITUDE);
-            } else {
-                contentValues.put(LATITUDE, appointment.getLocation().getLatitude());
-                contentValues.put(LONGITUDE, appointment.getLocation().getLongitude());
             }
         }
 
@@ -88,8 +98,11 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
                 ZoneId.systemDefault());
 
         Location location = null;
-        if (!cursor.isNull(cursor.getColumnIndex(LATITUDE)) && !cursor.isNull(cursor.getColumnIndex(LONGITUDE)))
-            location = new Location(cursor.getDouble(cursor.getColumnIndex(LATITUDE)), cursor.getDouble(cursor.getColumnIndex(LONGITUDE)));
+        if (cursor.getString(cursor.getColumnIndex(PLACE)) != null) {
+            location = new Location(cursor.getString(cursor.getColumnIndex(PLACE)), null, null);
+        } else if (!cursor.isNull(cursor.getColumnIndex(LATITUDE)) && !cursor.isNull(cursor.getColumnIndex(LONGITUDE))) {
+            location = new Location(null, cursor.getDouble(cursor.getColumnIndex(LATITUDE)), cursor.getDouble(cursor.getColumnIndex(LONGITUDE)));
+        }
 
         MedicalAppointment appointment = new MedicalAppointment(null, treatment, date, cursor.getString(cursor.getColumnIndex(SUBJECT)), location);
         appointment.setId(cursor.getLong(cursor.getColumnIndex(ID)));

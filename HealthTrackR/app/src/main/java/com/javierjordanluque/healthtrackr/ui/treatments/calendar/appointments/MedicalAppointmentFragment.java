@@ -67,7 +67,11 @@ public class MedicalAppointmentFragment extends Fragment {
 
         ImageButton imageButtonDirections = fragmentView.findViewById(R.id.imageButtonDirections);
         imageButtonDirections.setOnClickListener(view -> {
-            NavigationUtils.openGoogleMaps(requireActivity(), medicalAppointment.getLocation().getLatitude(), medicalAppointment.getLocation().getLongitude());
+            if (medicalAppointment.getLocation() == null) {
+                showNoLocationDialog();
+            } else {
+                NavigationUtils.openGoogleMaps(requireActivity(), medicalAppointment.getLocation());
+            }
         });
 
         FloatingActionButton buttonModifyMedicalAppointment = fragmentView.findViewById(R.id.buttonModifyMedicalAppointment);
@@ -98,6 +102,13 @@ public class MedicalAppointmentFragment extends Fragment {
         buttonDeleteMedicalAppointment.setOnClickListener(view -> showDeleteMedicalAppointmentConfirmationDialog());
 
         return fragmentView;
+    }
+
+    public void showNoLocationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setMessage(R.string.medical_appointment_dialog_message_no_location);
+        builder.setPositiveButton(R.string.dialog_positive_ok, (dialog, which) -> dialog.dismiss());
+        builder.show();
     }
 
     public void showNoMedicalAppointmentNotificationDialog() {
@@ -149,10 +160,16 @@ public class MedicalAppointmentFragment extends Fragment {
 
         Location location = medicalAppointment.getLocation();
         if (location != null) {
-            layoutLocation.setVisibility(View.VISIBLE);
-            textViewLocation.setVisibility(View.GONE);
-            textViewLatitude.setText(String.valueOf(location.getLatitude()));
-            textViewLongitude.setText(String.valueOf(location.getLongitude()));
+            if (location.getPlace() != null) {
+                layoutLocation.setVisibility(View.GONE);
+                textViewLocation.setVisibility(View.VISIBLE);
+                textViewLocation.setText(location.getPlace());
+            } else {
+                layoutLocation.setVisibility(View.VISIBLE);
+                textViewLocation.setVisibility(View.GONE);
+                textViewLatitude.setText(String.valueOf(location.getLatitude()));
+                textViewLongitude.setText(String.valueOf(location.getLongitude()));
+            }
         } else {
             layoutLocation.setVisibility(View.GONE);
             textViewLocation.setVisibility(View.VISIBLE);

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.models.Location;
@@ -32,9 +33,13 @@ public class ModifyMedicalAppointmentActivity extends BaseActivity {
     private MedicalAppointment medicalAppointment;
     private TextInputLayout layoutDateTime;
     private TextInputLayout layoutSubject;
+    private SwitchMaterial switchLocation;
+    private TextInputLayout layoutPlace;
+    private ConstraintLayout layoutLocationDisplay;
     private ConstraintLayout layoutLocation;
     private EditText editTextDateTime;
     private EditText editTextSubject;
+    private EditText editTextPlace;
     private EditText editTextLatitude;
     private EditText editTextLongitude;
     private TextView textViewLocationError;
@@ -62,9 +67,13 @@ public class ModifyMedicalAppointmentActivity extends BaseActivity {
         if (subject != null)
             editTextSubject.setText(subject);
 
+        layoutPlace = findViewById(R.id.layoutPlace);
+        editTextPlace = findViewById(R.id.editTextPlace);
+
         textViewLocationError = findViewById(R.id.textViewLocationError);
         imageViewLocationError = findViewById(R.id.imageViewLocationError);
 
+        layoutLocationDisplay = findViewById(R.id.layoutLocationDisplay);
         layoutLocation = findViewById(R.id.layoutLocation);
         editTextLatitude = findViewById(R.id.editTextLatitude);
         editTextLatitude.addTextChangedListener(new TextWatcher() {
@@ -101,11 +110,37 @@ public class ModifyMedicalAppointmentActivity extends BaseActivity {
             }
         });
 
+        switchLocation = findViewById(R.id.switchLocation);
+
         Location location = medicalAppointment.getLocation();
         if (location != null) {
-            editTextLatitude.setText(String.valueOf(location.getLatitude()));
-            editTextLongitude.setText(String.valueOf(location.getLongitude()));
+            String place = location.getPlace();
+
+            if (place != null) {
+                switchLocation.setChecked(false);
+                editTextPlace.setText(place);
+
+                layoutPlace.setVisibility(View.VISIBLE);
+                layoutLocationDisplay.setVisibility(View.GONE);
+            } else {
+                switchLocation.setChecked(true);
+                editTextLatitude.setText(String.valueOf(location.getLatitude()));
+                editTextLongitude.setText(String.valueOf(location.getLongitude()));
+
+                layoutPlace.setVisibility(View.GONE);
+                layoutLocationDisplay.setVisibility(View.VISIBLE);
+            }
         }
+
+        switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                layoutPlace.setVisibility(View.VISIBLE);
+                layoutLocationDisplay.setVisibility(View.GONE);
+            } else {
+                layoutPlace.setVisibility(View.GONE);
+                layoutLocationDisplay.setVisibility(View.VISIBLE);
+            }
+        });
 
         Button buttonSave = findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(this::modifyMedicalAppointment);
@@ -120,7 +155,7 @@ public class ModifyMedicalAppointmentActivity extends BaseActivity {
 
         boolean validDateTime = isValidDateTime(editTextDateTime.getText().toString().trim());
         boolean validSubject = isValidSubject(subject);
-        boolean validLocation = isValidLocation(latitude, longitude);
+        boolean validLocation = !switchLocation.isChecked() || isValidLocation(latitude, longitude);
 
         if (!validDateTime || !validSubject || !validLocation) {
             if (!validDateTime)
@@ -130,7 +165,7 @@ public class ModifyMedicalAppointmentActivity extends BaseActivity {
             if (!validLocation) {
                 textViewLocationError.setVisibility(View.VISIBLE);
                 imageViewLocationError.setVisibility(View.VISIBLE);
-                layoutLocation.setBackgroundResource(R.drawable.form_layout_container_outlined_error);
+                layoutLocation.setBackgroundResource(R.drawable.form_layout_container_filled_error);
             }
 
             return;
@@ -142,8 +177,14 @@ public class ModifyMedicalAppointmentActivity extends BaseActivity {
             subject = null;
 
         Location location = null;
-        if (!latitude.isEmpty() && !longitude.isEmpty())
-            location = new Location(Double.parseDouble(latitude), Double.parseDouble(longitude));
+        if (!switchLocation.isChecked()) {
+            String place = editTextPlace.getText().toString().trim();
+            if (!place.isEmpty())
+                location = new Location(place, null, null);
+        } else {
+            if (!latitude.isEmpty() && !longitude.isEmpty())
+                location = new Location(null, Double.parseDouble(latitude), Double.parseDouble(longitude));
+        }
 
         showModifyMedicalAppointmentConfirmationDialog(dateTime, subject, location);
     }

@@ -2,21 +2,29 @@ package com.javierjordanluque.healthtrackr.util;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.net.Uri;
-import android.widget.Toast;
 
-import com.javierjordanluque.healthtrackr.R;
+import com.javierjordanluque.healthtrackr.models.Location;
 
 public class NavigationUtils {
     private static final String USER_MANUAL_URL = "https://github.com/JavierJordanLuque/HealthTrackR/tree/main";
+
     public static void openUserManual(Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(USER_MANUAL_URL));
         context.startActivity(intent);
     }
 
-    public static void openGoogleMaps(Context context, double latitude, double longitude) {
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
+    public static void openGoogleMaps(Context context, Location location) {
+        String encodedLocation;
+        if (location.getPlace() != null) {
+            encodedLocation =  Uri.encode(location.getPlace());
+        } else if (location.getLatitude() != null && location.getLongitude() != null) {
+            encodedLocation = location.getLatitude() + "," + location.getLongitude();
+        } else {
+            return;
+        }
+
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + encodedLocation);
 
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
@@ -24,7 +32,7 @@ public class NavigationUtils {
         if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(mapIntent);
         } else {
-            Uri webIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&destination=" + latitude + "," + longitude);
+            Uri webIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&destination=" + encodedLocation);
             Intent webIntent = new Intent(Intent.ACTION_VIEW, webIntentUri);
             context.startActivity(webIntent);
         }

@@ -92,7 +92,7 @@ public class MedicalAppointment implements Identifiable {
             setLocation(location);
             appointment.setLocation(this.location);
         } else if (this.location != null && location == null) {
-            location = new Location(Long.MIN_VALUE, Long.MIN_VALUE);
+            location = new Location("", Double.MIN_VALUE, Double.MIN_VALUE);
             setLocation(null);
             appointment.setLocation(location);
         }

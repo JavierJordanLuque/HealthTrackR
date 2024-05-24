@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `MEDICAL_APPOINTMENT` (
   `subject` TEXT NULL,
   `date_time` BLOB NOT NULL,
   `date_time_iv` BLOB NOT NULL,
+  `place` TEXT NULL,
   `latitude` REAL NULL,
   `longitude` REAL NULL,
   FOREIGN KEY (`treatment_id`) REFERENCES `TREATMENT` (`id`) ON DELETE CASCADE

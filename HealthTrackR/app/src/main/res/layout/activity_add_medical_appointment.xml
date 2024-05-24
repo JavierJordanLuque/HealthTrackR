@@ -98,114 +98,181 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layoutLocation"
-                        style="@style/FormLayout.Outlined">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/form_margin_top">
 
                         <TextView
-                            android:id="@+id/textViewLocation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/medical_appointment_location"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/layoutLatitude"
+                            style="@style/Widget.HealthTrackR.TextView"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            app:layout_constraintEnd_toStartOf="@+id/imageViewLocationError"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/medical_appointment_location_helper"
+                            android:labelFor="@+id/switchLocation"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textViewLocation">
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/switchLocation" />
 
-                            <TextView
-                                android:id="@+id/textViewLatitude"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/medical_appointment_location_latitude"
-                                android:textAppearance="?attr/textAppearanceBodyLarge"
-                                android:labelFor="@+id/editTextLatitude"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <EditText
-                                android:id="@+id/editTextLatitude"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/clickable_min_size"
-                                android:layout_marginStart="21dp"
-                                android:autofillHints="number"
-                                android:inputType="numberSigned|numberDecimal"
-                                android:maxLength="11"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/textViewLatitude"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            app:layout_constraintEnd_toStartOf="@+id/imageViewLocationError"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/layoutLatitude">
-
-                            <TextView
-                                android:id="@+id/textViewLongitude"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/medical_appointment_location_longitude"
-                                android:textAppearance="?attr/textAppearanceBodyLarge"
-                                android:labelFor="@+id/editTextLongitude"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <EditText
-                                android:id="@+id/editTextLongitude"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/clickable_min_size"
-                                android:layout_marginStart="8dp"
-                                android:autofillHints="number"
-                                android:inputType="numberSigned|numberDecimal"
-                                android:maxLength="11"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/textViewLongitude"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <ImageView
-                            android:id="@+id/imageViewLocationError"
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switchLocation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/content_description_error_icon"
-                            android:src="@drawable/ic_error"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:checked="false"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textViewLocation"
-                            app:tint="?attr/colorError">
-
-                        </ImageView>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/textViewLocationError"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:labelFor="@+id/editTextLatitude"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        android:paddingTop="2dp"
-                        android:paddingHorizontal="15dp"
-                        android:text="@string/error_invalid_medical_appointment_location"
-                        android:textColor="?attr/colorError"
-                        android:visibility="invisible"
-                        app:layout_constraintTop_toBottomOf="@+id/layoutPreviousNotificationTime"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/form_margin_top">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layoutPlace"
+                            style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="0dp"
+                            app:errorEnabled="false"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="visible">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editTextPlace"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="text"
+                                android:hint="@string/medical_appointment_location_place"
+                                android:inputType="text"
+                                android:maxLength="50"
+                                tools:ignore="TextContrastCheck" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layoutLocationDisplay"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/layoutLocation"
+                                style="@style/FormLayout.Outlined"
+                                android:layout_width="match_parent"
+                                android:layout_marginTop="0dp"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:id="@+id/textViewLocation"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/medical_appointment_location"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/layoutLatitude"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    app:layout_constraintEnd_toStartOf="@+id/imageViewLocationError"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/textViewLocation">
+
+                                    <TextView
+                                        android:id="@+id/textViewLatitude"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:labelFor="@+id/editTextLatitude"
+                                        android:text="@string/medical_appointment_location_latitude"
+                                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        tools:ignore="TooDeepLayout" />
+
+                                    <EditText
+                                        android:id="@+id/editTextLatitude"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/clickable_min_size"
+                                        android:layout_marginStart="21dp"
+                                        android:autofillHints="number"
+                                        android:inputType="numberSigned|numberDecimal"
+                                        android:maxLength="11"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toEndOf="@+id/textViewLatitude"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    app:layout_constraintEnd_toStartOf="@+id/imageViewLocationError"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/layoutLatitude">
+
+                                    <TextView
+                                        android:id="@+id/textViewLongitude"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:labelFor="@+id/editTextLongitude"
+                                        android:text="@string/medical_appointment_location_longitude"
+                                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <EditText
+                                        android:id="@+id/editTextLongitude"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/clickable_min_size"
+                                        android:layout_marginStart="8dp"
+                                        android:autofillHints="number"
+                                        android:inputType="numberSigned|numberDecimal"
+                                        android:maxLength="11"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toEndOf="@+id/textViewLongitude"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <ImageView
+                                    android:id="@+id/imageViewLocationError"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/content_description_error_icon"
+                                    android:src="@drawable/ic_error"
+                                    android:visibility="invisible"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/textViewLocation"
+                                    app:tint="?attr/colorError">
+
+                                </ImageView>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/textViewLocationError"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:labelFor="@+id/editTextLatitude"
+                                android:textAppearance="?attr/textAppearanceBodySmall"
+                                android:paddingTop="2dp"
+                                android:paddingHorizontal="15dp"
+                                android:text="@string/error_invalid_medical_appointment_location"
+                                android:textColor="?attr/colorError"
+                                app:layout_constraintTop_toBottomOf="@+id/layoutLocation"
+                                android:visibility="invisible" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
 
