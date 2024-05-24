@@ -7,7 +7,7 @@
 
     <string name="medical_appointment_date_time">Fecha y hora</string>
     <string name="medical_appointment_subject">Asunto</string>
-    <string name="medical_appointment_location">Lugar</string>
+    <string name="medical_appointment_location">Ubicación</string>
     <string name="medical_appointment_location_latitude">Latitud:</string>
     <string name="medical_appointment_location_longitude">Longitud:</string>
     <string name="medical_appointment_before">antes</string>

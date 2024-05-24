@@ -16,24 +16,17 @@ public class NavigationUtils {
     }
 
     public static void openGoogleMaps(Context context, double latitude, double longitude) {
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        boolean isLocationEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
 
-        if (!isLocationEnabled) {
-            Toast.makeText(context, context.getString(R.string.error_location_disabled), Toast.LENGTH_LONG).show();
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(mapIntent);
         } else {
-            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
-
-            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-            mapIntent.setPackage("com.google.android.apps.maps");
-
-            if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
-                context.startActivity(mapIntent);
-            } else {
-                Uri webIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&destination=" + latitude + "," + longitude);
-                Intent webIntent = new Intent(Intent.ACTION_VIEW, webIntentUri);
-                context.startActivity(webIntent);
-            }
+            Uri webIntentUri = Uri.parse("https://www.google.com/maps/dir/?api=1&destination=" + latitude + "," + longitude);
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, webIntentUri);
+            context.startActivity(webIntent);
         }
     }
 }

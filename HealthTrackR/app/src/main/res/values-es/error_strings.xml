@@ -39,6 +39,4 @@
     <string name="error_invalid_medical_appointment_subject">El asunto debe tener menos de 200 caracteres.</string>
     <string name="error_invalid_medical_appointment_location">La localización debe tener una latitud y longitud válidas.</string>
     <string name="error_no_medical_appointment_notification">La cita médica ya ha tenido lugar.</string>
-
-    <string name="error_location_disabled">Por favor, habilita la ubicación para usar esta función</string>
 </resources>

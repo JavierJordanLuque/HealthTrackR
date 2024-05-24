@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.javierjordanluque.healthtrackr.models.MedicalAppointment;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.ui.MainActivity;
 import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
+import com.javierjordanluque.healthtrackr.util.NavigationUtils;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
@@ -62,6 +64,11 @@ public class MedicalAppointmentFragment extends Fragment {
         layoutLocation = fragmentView.findViewById(R.id.layoutLocation);
         textViewLatitude = fragmentView.findViewById(R.id.textViewLatitude);
         textViewLongitude = fragmentView.findViewById(R.id.textViewLongitude);
+
+        ImageButton imageButtonDirections = fragmentView.findViewById(R.id.imageButtonDirections);
+        imageButtonDirections.setOnClickListener(view -> {
+            NavigationUtils.openGoogleMaps(requireActivity(), medicalAppointment.getLocation().getLatitude(), medicalAppointment.getLocation().getLongitude());
+        });
 
         FloatingActionButton buttonModifyMedicalAppointment = fragmentView.findViewById(R.id.buttonModifyMedicalAppointment);
         buttonModifyMedicalAppointment.setOnClickListener(view -> {
