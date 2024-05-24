@@ -15,6 +15,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.javierjordanluque.healthtrackr.HealthTrackRApp;
 import com.javierjordanluque.healthtrackr.R;
 import com.javierjordanluque.healthtrackr.db.repositories.NotificationRepository;
+import com.javierjordanluque.healthtrackr.models.Location;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.models.User;
 import com.javierjordanluque.healthtrackr.ui.LogInActivity;
@@ -34,7 +35,6 @@ import java.time.ZonedDateTime;
 import java.util.concurrent.TimeUnit;
 
 public class NotificationPublisher extends BroadcastReceiver {
-
     @Override
     public void onReceive(Context context, Intent intent) {
         long notificationId = intent.getLongExtra(NotificationScheduler.NOTIFICATION_ID, -1);
@@ -175,24 +175,36 @@ public class NotificationPublisher extends BroadcastReceiver {
         if (PermissionManager.hasNotificationPermission(context) && ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             String appointmentSubject = appointmentNotification.getAppointment().getSubject();
             String treatmentTitle = appointmentNotification.getAppointment().getTreatment().getTitle();
-            double appointmentLocationLatitude = appointmentNotification.getAppointment().getLocation().getLatitude();
-            double appointmentLocationLongitude = appointmentNotification.getAppointment().getLocation().getLongitude();
             ZonedDateTime appointmentDateTime = appointmentNotification.getAppointment().getDateTime();
+            Location location = appointmentNotification.getAppointment().getLocation();
+
+            String appointmentLocation = "";
+            if (location != null) {
+                String appointmentLocationPlace = location.getPlace();
+                Double appointmentLocationLatitude = location.getLatitude();
+                Double appointmentLocationLongitude = location.getLongitude();
+
+                if (appointmentLocationPlace != null) {
+                    appointmentLocation = " " + context.getString(R.string.notification_message_medical_appointment_location) + " " + appointmentLocationPlace + ".";
+                } else if (appointmentLocationLatitude != null && appointmentLocationLongitude != null){
+                    appointmentLocation = " " + context.getString(R.string.notification_message_medical_appointment_location) + " " +
+                            context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " +
+                            context.getString(R.string.notification_message_medical_appointment_longitude) + " " + appointmentLocationLongitude + ".";
+                }
+            }
 
             String publicMessage;
             String message;
             if (!ZonedDateTime.now().isBefore(appointmentDateTime.minusMinutes(1))) {
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_now);
                 message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentSubject + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
-                        context.getString(R.string.notification_message_medical_appointment_scheduled_now) + " " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude + ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " +
-                        appointmentLocationLongitude + ".";
+                        context.getString(R.string.notification_message_medical_appointment_scheduled_now) + appointmentLocation;
             } else {
                 String formattedTimeDifference = formatTimeDifference(context, Duration.between(ZonedDateTime.now(), appointmentDateTime).toMillis());
 
                 publicMessage = context.getString(R.string.notification_public_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference + ".";
                 message = context.getString(R.string.notification_message_medical_appointment_appointment) + " " + appointmentSubject + " " + context.getString(R.string.notification_message_medical_appointment_treatment) + " " + treatmentTitle + " " +
-                        context.getString(R.string.notification_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference + ". " + context.getString(R.string.notification_message_medical_appointment_latitude) + " " + appointmentLocationLatitude +
-                        ", " + context.getString(R.string.notification_message_medical_appointment_longitude) + " " + appointmentLocationLongitude + ".";
+                        context.getString(R.string.notification_message_medical_appointment_scheduled_in) + " " + formattedTimeDifference + "."  + appointmentLocation;
             }
 
             PendingIntent actionPendingIntent = createNotificationActionPendingIntent(context, appointmentNotification);

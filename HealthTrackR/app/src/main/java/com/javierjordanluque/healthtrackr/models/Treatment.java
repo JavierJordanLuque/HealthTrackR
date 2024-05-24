@@ -359,7 +359,7 @@ public class Treatment implements Identifiable {
             for (MedicalAppointment appointment : appointments)
                 appointment.setTreatment(this);
         }
-        appointments.sort((appointment1, appointment2) -> appointment2.getDateTime().compareTo(appointment1.getDateTime()));
+        appointments.sort(Comparator.comparing(MedicalAppointment::getDateTime));
 
         return appointments;
     }

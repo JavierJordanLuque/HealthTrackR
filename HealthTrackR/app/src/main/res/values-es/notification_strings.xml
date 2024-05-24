@@ -21,7 +21,8 @@
     <string name="notification_message_medical_appointment_treatment">del tratamiento</string>
     <string name="notification_message_medical_appointment_scheduled_now">programado para ahora.</string>
     <string name="notification_message_medical_appointment_scheduled_in">programada para dentro de</string>
-    <string name="notification_message_medical_appointment_latitude">Localización: Latitud</string>
+    <string name="notification_message_medical_appointment_location">Ubicación:</string>
+    <string name="notification_message_medical_appointment_latitude">Latitud</string>
     <string name="notification_message_medical_appointment_longitude">Longitud</string>
 
     <string name="notification_public_message_medication_scheduled_now">Una dosis de medicación está programada para ahora.</string>
