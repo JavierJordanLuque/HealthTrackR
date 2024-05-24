@@ -70,10 +70,11 @@
                             android:id="@+id/editTextEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLength="50"
                             android:autofillHints="emailAddress"
                             android:hint="@string/authentication_form_email"
-                            android:inputType="textEmailAddress" />
+                            android:inputType="textEmailAddress"
+                            android:maxLength="50"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,10 +107,11 @@
                             android:id="@+id/editTextRepeatPassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLength="60"
                             android:autofillHints="password"
                             android:hint="@string/authentication_form_repeat_password"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword"
+                            android:maxLength="60"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,10 +123,11 @@
                             android:id="@+id/editTextFirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLength="50"
                             android:autofillHints="name"
                             android:hint="@string/authentication_form_first_name"
-                            android:inputType="text" />
+                            android:inputType="text"
+                            android:maxLength="50"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,10 +139,11 @@
                             android:id="@+id/editTextLastName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLength="50"
                             android:autofillHints="name"
                             android:hint="@string/authentication_form_last_name"
-                            android:inputType="text" />
+                            android:inputType="text"
+                            android:maxLength="50"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

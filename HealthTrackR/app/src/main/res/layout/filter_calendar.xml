@@ -38,6 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/calendar_filter_passed"
+                    android:contentDescription="@string/content_description_calendar_filter_medical_appointment_passed"
                     app:layout_constraintEnd_toStartOf="@+id/vAppointmentsGuideline"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -46,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/calendar_filter_pending"
+                    android:contentDescription="@string/content_description_calendar_filter_medical_appointment_pending"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/vAppointmentsGuideline" />
 
@@ -53,7 +55,7 @@
 
             <TextView
                 style="@style/Widget.HealthTrackR.TextView.Bold"
-                android:text="@string/calendar_filter_medication_intakes" />
+                android:text="@string/calendar_filter_medication_intake" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -72,6 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/calendar_filter_passed"
+                    android:contentDescription="@string/content_description_calendar_filter_medication_intake_passed"
                     app:layout_constraintEnd_toStartOf="@+id/vMedicationsGuideline"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -80,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/calendar_filter_pending"
+                    android:contentDescription="@string/content_description_calendar_filter_medication_intake_pending"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/vMedicationsGuideline" />
 

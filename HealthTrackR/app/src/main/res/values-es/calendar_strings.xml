@@ -4,7 +4,7 @@
     <string name="calendar_treatment_app_bar_title">Calendario &amp; citas médicas</string>
 
     <string name="calendar_filter_medical_appointments">Citas médicas</string>
-    <string name="calendar_filter_medication_intakes">Toma de medicamentos</string>
+    <string name="calendar_filter_medication_intake">Tomas de medicamento</string>
     <string name="calendar_filter_passed">Pasadas</string>
     <string name="calendar_filter_pending">Pendientes</string>
 

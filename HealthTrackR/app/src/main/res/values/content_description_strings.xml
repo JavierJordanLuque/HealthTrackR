@@ -47,5 +47,15 @@
     <string name="content_description_access_medical_appointment_notification">Access medical appointment notification</string>
     <string name="content_description_directions">Directions</string>
 
+    <string name="content_description_calendar_filter_medical_appointment_passed">Passed medical appointments</string>
+    <string name="content_description_calendar_filter_medical_appointment_pending">Pending medical appointments</string>
+    <string name="content_description_calendar_filter_medication_intake_passed">Passed medication intake</string>
+    <string name="content_description_calendar_filter_medication_intake_pending">Pending medication intake</string>
+
     <string name="content_description_calendar_legend">Calendar legend</string>
+    <string name="content_description_calendar_indicator_current_date">Current date indicator</string>
+    <string name="content_description_calendar_indicator_start_date">Start date indicator</string>
+    <string name="content_description_calendar_indicator_end_date">End date indicator</string>
+    <string name="content_description_calendar_indicator_medical_appointment">Medical appointment indicator</string>
+    <string name="content_description_calendar_indicator_medication_intake">Medication intake indicator</string>
 </resources>

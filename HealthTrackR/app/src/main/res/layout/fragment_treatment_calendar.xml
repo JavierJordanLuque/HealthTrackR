@@ -12,18 +12,20 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/StatusLayout">
+            style="@style/StatusLayout"
+            tools:ignore="TextSizeCheck">
 
             <ImageView
                 android:id="@+id/imageViewStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_status_in_progress"
                 android:contentDescription="@string/content_description_status_in_progress"
-                app:tint="@color/amber"
+                android:src="@drawable/ic_status_in_progress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/amber"
+                tools:ignore="ImageContrastCheck" />
 
             <TextView
                 android:id="@+id/textViewStatus"
@@ -65,7 +67,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="VisualLintOverlap" />
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/buttonFilterCalendar"
@@ -77,7 +80,8 @@
                     android:textColor="?attr/colorOnSecondaryContainer"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+                    tools:ignore="VisualLintOverlap" />
 
                 <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                     android:id="@+id/calendarView"
@@ -116,14 +120,15 @@
 
                         <ImageButton
                             android:id="@+id/imageButtonLegend"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_info"
-                            android:contentDescription="@string/content_description_calendar_legend"
+                            android:layout_width="@dimen/clickable_min_size"
+                            android:layout_height="@dimen/clickable_min_size"
                             android:background="@android:color/transparent"
+                            android:contentDescription="@string/content_description_calendar_legend"
+                            android:src="@drawable/ic_info"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ImageContrastCheck" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -73,7 +73,8 @@
                             android:autofillHints="text"
                             android:hint="@string/medicines_form_name"
                             android:inputType="text"
-                            android:maxLength="50" />
+                            android:maxLength="50"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +90,8 @@
                             android:autofillHints="text"
                             android:hint="@string/medicines_active_substance"
                             android:inputType="text"
-                            android:maxLength="50" />
+                            android:maxLength="50"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +108,9 @@
                             android:autofillHints="number"
                             android:hint="@string/medicines_dose"
                             android:inputType="number"
-                            android:maxLength="10" />
+                            android:maxLength="10"
+                            android:textColorHint="#546E7A"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -140,7 +144,8 @@
                             android:layout_height="wrap_content"
                             android:focusableInTouchMode="false"
                             android:hint="@string/medicines_form_initial_dosing_time"
-                            android:inputType="datetime" />
+                            android:inputType="datetime"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -183,7 +188,7 @@
                                 <EditText
                                     android:id="@+id/editTextDosageFrequencyHours"
                                     android:layout_width="60dp"
-                                    android:layout_height="48dp"
+                                    android:layout_height="@dimen/clickable_min_size"
                                     android:autofillHints="number"
                                     android:inputType="number"
                                     android:maxLength="4"
@@ -195,17 +200,17 @@
                                     android:id="@+id/textViewDosageFrequencyHours"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:labelFor="@+id/editTextDosageFrequencyHours"
                                     android:text="@string/hours"
                                     android:textAppearance="?attr/textAppearanceBodyLarge"
+                                    android:labelFor="@+id/editTextDosageFrequencyHours"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/editTextDosageFrequencyHours"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <EditText
                                     android:id="@+id/editTextDosageFrequencyMinutes"
-                                    android:layout_width="40dp"
-                                    android:layout_height="48dp"
+                                    android:layout_width="@dimen/clickable_min_size"
+                                    android:layout_height="@dimen/clickable_min_size"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginTop="0dp"
                                     android:autofillHints="number"
@@ -219,9 +224,9 @@
                                     android:id="@+id/textViewDosageFrequencyMinutes"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:labelFor="@+id/editTextDosageFrequencyMinutes"
                                     android:text="@string/minutes"
                                     android:textAppearance="?attr/textAppearanceBodyLarge"
+                                    android:labelFor="@+id/editTextDosageFrequencyMinutes"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/editTextDosageFrequencyMinutes"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -254,7 +259,8 @@
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                    app:layout_constraintWidth_max="@dimen/text_field_max_width" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineStart"

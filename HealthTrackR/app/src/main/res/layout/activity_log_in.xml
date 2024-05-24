@@ -73,7 +73,8 @@
                             android:autofillHints="emailAddress"
                             android:hint="@string/authentication_form_email"
                             android:inputType="textEmailAddress"
-                            android:maxLength="50" />
+                            android:maxLength="50"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,7 +91,8 @@
                             android:autofillHints="password"
                             android:hint="@string/authentication_form_password"
                             android:inputType="textPassword"
-                            android:maxLength="60" />
+                            android:maxLength="60"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

@@ -47,5 +47,15 @@
     <string name="content_description_access_medical_appointment_notification">Acceder a la notificación de la cita médica</string>
     <string name="content_description_directions">Cómo llegar</string>
 
+    <string name="content_description_calendar_filter_medical_appointment_passed">Citas médicas pasadas</string>
+    <string name="content_description_calendar_filter_medical_appointment_pending">Citas médicas pendientes</string>
+    <string name="content_description_calendar_filter_medication_intake_passed">Tomas de medicamento pasadas</string>
+    <string name="content_description_calendar_filter_medication_intake_pending">Tomas de medicamento pendientes</string>
+
     <string name="content_description_calendar_legend">Leyenda del calendario</string>
+    <string name="content_description_calendar_indicator_current_date">Indicador de fecha actual</string>
+    <string name="content_description_calendar_indicator_start_date">Indicador de fecha de inicio</string>
+    <string name="content_description_calendar_indicator_end_date">Indicador de fecha de finalización</string>
+    <string name="content_description_calendar_indicator_medical_appointment">Indicador de cita médica</string>
+    <string name="content_description_calendar_indicator_medication_intake">Indicador de toma de medicamento</string>
 </resources>

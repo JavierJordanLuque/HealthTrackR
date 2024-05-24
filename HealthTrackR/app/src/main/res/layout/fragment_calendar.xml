@@ -41,7 +41,8 @@
                     android:textColor="?attr/colorOnSecondaryContainer"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@+id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="VisualLintOverlap" />
 
                 <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                     android:id="@+id/calendarView"
@@ -80,8 +81,8 @@
 
                         <ImageButton
                             android:id="@+id/imageButtonLegend"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/clickable_min_size"
+                            android:layout_height="@dimen/clickable_min_size"
                             android:src="@drawable/ic_info"
                             android:contentDescription="@string/content_description_calendar_legend"
                             android:background="@android:color/transparent"
@@ -108,9 +109,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?attr/textAppearanceBodyLarge"
+                            android:text="@string/calendar_no_elements"
                             android:textAlignment="center"
-                            android:text="@string/calendar_no_elements" />
+                            android:textAppearance="?attr/textAppearanceBodyLarge"
+                            tools:ignore="TextContrastCheck" />
 
                     </LinearLayout>
 

@@ -73,7 +73,8 @@
                             android:autofillHints="text"
                             android:hint="@string/guidelines_form_title"
                             android:inputType="text"
-                            android:maxLength="50" />
+                            android:maxLength="50"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,14 +93,16 @@
                             android:autofillHints="text"
                             android:hint="@string/guidelines_description"
                             android:inputType="textMultiLine"
-                            android:maxLength="300" />
+                            android:maxLength="300"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutNumOrder"
                         style="@style/FormLayout.Outlined"
-                        android:layout_width="160dp">
+                        android:layout_width="160dp"
+                        tools:ignore="TextSizeCheck">
 
                         <TextView
                             android:id="@+id/textViewNumOrder"

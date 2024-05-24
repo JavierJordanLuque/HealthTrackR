@@ -26,10 +26,11 @@
             <EditText
                 android:id="@+id/editTextTitle"
                 style="@style/Widget.HealthTrackR.EditText.Value"
-                android:layout_height="@dimen/edit_text_layout_height"
+                android:layout_height="@dimen/clickable_min_size"
                 android:autofillHints="text"
                 android:inputType="text"
-                android:maxLength="50" />
+                android:maxLength="50"
+                tools:ignore="VisualLintTextFieldSize" />
 
             <TextView
                 android:id="@+id/textViewStartDate"
@@ -55,7 +56,7 @@
                 <EditText
                     android:id="@+id/editTextStartDate"
                     style="@style/Widget.HealthTrackR.EditText.Value"
-                    android:layout_height="@dimen/edit_text_layout_height"
+                    android:layout_height="@dimen/clickable_min_size"
                     android:layout_width="0dp"
                     android:focusableInTouchMode="false"
                     android:inputType="date"
@@ -63,7 +64,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textViewGreaterOrEqual"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="VisualLintTextFieldSize" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,7 +93,7 @@
                 <EditText
                     android:id="@+id/editTextEndDate"
                     style="@style/Widget.HealthTrackR.EditText.Value"
-                    android:layout_height="@dimen/edit_text_layout_height"
+                    android:layout_height="@dimen/clickable_min_size"
                     android:layout_width="0dp"
                     android:focusableInTouchMode="false"
                     android:inputType="date"
@@ -99,7 +101,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textViewLessOrEqual"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="VisualLintTextFieldSize" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -111,7 +114,7 @@
             <Spinner
                 android:id="@+id/spinnerCategory"
                 style="@style/Widget.HealthTrackR.Spinner"
-                android:layout_height="@dimen/edit_text_layout_height"
+                android:layout_height="@dimen/clickable_min_size"
                 android:layout_marginStart="@dimen/text_view_value_margin_start"
                 android:layout_marginTop="10dp" />
 
@@ -158,17 +161,18 @@
                         <CheckBox
                             android:id="@+id/checkBoxStatusPending"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="@dimen/clickable_min_size"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:src="@drawable/ic_status_pending"
                             android:contentDescription="@string/content_description_status_pending"
-                            app:tint="@color/red"
                             android:labelFor="@+id/checkBoxStatusPending"
+                            app:tint="@color/red"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/checkBoxStatusPending"
@@ -197,21 +201,23 @@
                         <CheckBox
                             android:id="@+id/checkBoxStatusInProgress"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="@dimen/clickable_min_size"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_status_in_progress"
+                            android:layout_gravity="center"
                             android:contentDescription="@string/content_description_status_in_progress"
-                            app:tint="@color/amber"
                             android:labelFor="@+id/checkBoxStatusInProgress"
+                            android:src="@drawable/ic_status_in_progress"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/checkBoxStatusPending"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/amber"
+                            tools:ignore="ImageContrastCheck" />
 
                     </LinearLayout>
 
@@ -236,21 +242,23 @@
                         <CheckBox
                             android:id="@+id/checkBoxStatusFinished"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="@dimen/clickable_min_size"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_status_finished"
+                            android:layout_gravity="center"
                             android:contentDescription="@string/content_description_status_finished"
-                            app:tint="@color/green"
                             android:labelFor="@+id/checkBoxStatusFinished"
+                            android:src="@drawable/ic_status_finished"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/checkBoxStatusPending"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/green"
+                            tools:ignore="ImageContrastCheck" />
 
                     </LinearLayout>
 

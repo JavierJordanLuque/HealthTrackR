@@ -83,7 +83,8 @@
                             android:autofillHints="name"
                             android:hint="@string/account_form_first_name"
                             android:inputType="text"
-                            android:maxLength="50" />
+                            android:maxLength="50"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,7 +100,8 @@
                             android:autofillHints="name"
                             android:hint="@string/account_form_last_name"
                             android:inputType="text"
-                            android:maxLength="50" />
+                            android:maxLength="50"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,7 +117,8 @@
                             android:layout_height="wrap_content"
                             android:focusableInTouchMode="false"
                             android:hint="@string/account_birth_date"
-                            android:inputType="date" />
+                            android:inputType="date"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

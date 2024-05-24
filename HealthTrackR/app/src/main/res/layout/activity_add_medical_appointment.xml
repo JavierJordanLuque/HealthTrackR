@@ -72,7 +72,8 @@
                             android:layout_height="wrap_content"
                             android:focusableInTouchMode="false"
                             android:hint="@string/medical_appointment_form_date_time"
-                            android:inputType="datetime" />
+                            android:inputType="datetime"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +92,8 @@
                             android:autofillHints="text"
                             android:hint="@string/medical_appointment_subject"
                             android:inputType="textMultiLine"
-                            android:maxLength="200" />
+                            android:maxLength="200"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,6 +124,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/medical_appointment_location_latitude"
                                 android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:labelFor="@+id/editTextLatitude"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -129,7 +132,7 @@
                             <EditText
                                 android:id="@+id/editTextLatitude"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="@dimen/clickable_min_size"
                                 android:layout_marginStart="21dp"
                                 android:autofillHints="number"
                                 android:inputType="numberSigned|numberDecimal"
@@ -155,6 +158,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/medical_appointment_location_longitude"
                                 android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:labelFor="@+id/editTextLongitude"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -162,7 +166,7 @@
                             <EditText
                                 android:id="@+id/editTextLongitude"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="@dimen/clickable_min_size"
                                 android:layout_marginStart="8dp"
                                 android:autofillHints="number"
                                 android:inputType="numberSigned|numberDecimal"

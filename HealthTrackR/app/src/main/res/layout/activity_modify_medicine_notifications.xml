@@ -82,6 +82,7 @@
                             android:layout_marginTop="0dp"
                             android:layout_marginEnd="10dp"
                             android:text="@string/medicines_previous_notification_status"
+                            android:labelFor="@+id/switchPreviousNotificationStatus"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -137,14 +138,14 @@
                                     <EditText
                                         android:id="@+id/editTextPreviousNotificationTimeHours"
                                         android:layout_width="60dp"
-                                        android:layout_height="48dp"
+                                        android:layout_height="@dimen/clickable_min_size"
                                         android:autofillHints="number"
                                         android:inputType="number"
                                         android:maxLength="4"
-                                        android:labelFor="@+id/textViewPreviousNotificationTimeHours"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent" />
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        tools:ignore="TooDeepLayout" />
 
                                     <TextView
                                         android:id="@+id/textViewPreviousNotificationTimeHours"
@@ -152,6 +153,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/hours"
                                         android:textAppearance="?attr/textAppearanceBodyLarge"
+                                        android:labelFor="@+id/editTextPreviousNotificationTimeHours"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintStart_toEndOf="@+id/editTextPreviousNotificationTimeHours"
                                         app:layout_constraintTop_toTopOf="parent" />
@@ -159,13 +161,12 @@
                                     <EditText
                                         android:id="@+id/editTextPreviousNotificationTimeMinutes"
                                         android:layout_width="40dp"
-                                        android:layout_height="48dp"
+                                        android:layout_height="@dimen/clickable_min_size"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginTop="0dp"
                                         android:autofillHints="number"
                                         android:inputType="number"
                                         android:maxLength="2"
-                                        android:labelFor="@+id/textViewPreviousNotificationTimeMinutes"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintStart_toEndOf="@+id/textViewPreviousNotificationTimeHours"
                                         app:layout_constraintTop_toTopOf="parent" />
@@ -176,6 +177,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="@string/minutes"
                                         android:textAppearance="?attr/textAppearanceBodyLarge"
+                                        android:labelFor="@+id/editTextPreviousNotificationTimeMinutes"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintStart_toEndOf="@+id/editTextPreviousNotificationTimeMinutes"
                                         app:layout_constraintTop_toTopOf="parent" />
@@ -247,6 +249,7 @@
                             android:layout_marginTop="0dp"
                             android:layout_marginEnd="10dp"
                             android:text="@string/medicines_dosing_notification_status"
+                            android:labelFor="@+id/switchDosingNotificationStatus"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"

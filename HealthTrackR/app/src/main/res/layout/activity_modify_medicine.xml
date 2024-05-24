@@ -164,7 +164,7 @@
                                 <EditText
                                     android:id="@+id/editTextDosageFrequencyHours"
                                     android:layout_width="60dp"
-                                    android:layout_height="48dp"
+                                    android:layout_height="@dimen/clickable_min_size"
                                     android:autofillHints="number"
                                     android:inputType="number"
                                     android:maxLength="4"
@@ -185,8 +185,8 @@
 
                                 <EditText
                                     android:id="@+id/editTextDosageFrequencyMinutes"
-                                    android:layout_width="40dp"
-                                    android:layout_height="48dp"
+                                    android:layout_width="@dimen/clickable_min_size"
+                                    android:layout_height="@dimen/clickable_min_size"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginTop="0dp"
                                     android:autofillHints="number"
