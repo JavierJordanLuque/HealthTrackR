@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guidelines_app_bar_title">Diretrizes</string>
+    <string name="guidelines_app_bar_title_add">Adicionar Diretriz</string>
+    <string name="guidelines_app_bar_title_modify">Modificar Diretriz</string>
+
+    <string name="guidelines_no_elements">Você não tem diretrizes neste tratamento. Por favor, adicione uma nova diretriz.</string>
+
+    <string name="guidelines_description">Descrição</string>
+    <string name="guidelines_images">Imagens</string>
+    <string name="guidelines_videos">Vídeos</string>
+    <string name="guidelines_image_url_helper">O URL deve conter um prefixo válido (https://, http://) e uma extensão de imagem válida (.jpg, .jpeg, .png, .gif).</string>
+    <string name="guidelines_video_url_helper">O URL deve conter um prefixo válido (https://, http://) e uma extensão de vídeo válida (.mp4, .3gp, .avi, .mov) ou pertencer ao YouTube.</string>
+
+    <string name="guidelines_add_guideline_helper">Após adicionar a diretriz, imagens ou vídeos explicativos podem ser incluídos modificando-a.</string>
+
+    <string name="guidelines_add_image">Adicionar Imagem</string>
+    <string name="guidelines_add_video">Adicionar Vídeo</string>
+    <string name="guidelines_upload_image_from_device">Enviar imagem do dispositivo</string>
+    <string name="guidelines_upload_video_from_device">Enviar vídeo do dispositivo</string>
+
+    <string name="guidelines_select_image">Selecionar uma imagem</string>
+    <string name="guidelines_select_video">Selecionar um vídeo</string>
+    <string name="guidelines_select_image_manage_info_api_34">Você deu acesso a um número limitado de imagens.</string>
+    <string name="guidelines_select_video_manage_info_api_34">Você deu acesso a um número limitado de vídeos.</string>
+    <string name="guidelines_select_image_manage_info_api_33">Você deu acesso às imagens do dispositivo.</string>
+    <string name="guidelines_select_video_manage_info_api_33">Você deu acesso aos vídeos do dispositivo.</string>
+    <string name="guidelines_select_multimedia_manage_info_default">Você deu acesso ao conteúdo multimídia do dispositivo.</string>
+    <string name="guidelines_select_image_no_media">Nenhuma imagem encontrada no dispositivo.</string>
+    <string name="guidelines_select_video_no_media">Nenhum vídeo encontrado no dispositivo.</string>
+
+    <string name="guidelines_form_title">Título *</string>
+    <string name="guidelines_form_number_of_order">Número de Ordem *</string>
+
+    <string name="guidelines_multimedia_not_found">Multimídia não encontrada</string>
+
+    <string name="guidelines_dialog_message_add_image">Digite o URL da imagem ou envie uma imagem armazenada no dispositivo:</string>
+    <string name="guidelines_dialog_message_add_video">Digite o URL do vídeo ou envie um vídeo armazenado no dispositivo:</string>
+    <string name="guidelines_dialog_message_image_not_found">A imagem não está mais disponível, portanto, será removida da diretriz.</string>
+    <string name="guidelines_dialog_message_video_not_found">O vídeo não está mais disponível, portanto, será removido da diretriz.</string>
+    <string name="guidelines_dialog_message_delete">Tem certeza de que deseja excluir esta diretriz do tratamento?</string>
+
+    <string name="guidelines_dialog_denied_read_multimedia_permission">O acesso ao conteúdo multimídia foi negado, portanto, não é possível selecionar multimídia do dispositivo. Recomenda-se conceder permissão para adicionar multimídia do dispositivo à diretriz.</string>
+
+    <string name="guidelines_toast_confirmation_delete">Diretriz excluída com sucesso!</string>
+    <string name="guidelines_toast_no_app_open_image">Não há aplicativo disponível para abrir esta imagem.</string>
+    <string name="guidelines_toast_no_app_open_video">Não há aplicativo disponível para abrir este vídeo.</string>
+</resources>

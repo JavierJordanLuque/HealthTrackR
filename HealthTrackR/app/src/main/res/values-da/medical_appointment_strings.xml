@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medical_appointment_app_bar_title">Lægeaftale</string>
+    <string name="medical_appointment_app_bar_title_add">Tilføjelse af lægeaftale</string>
+    <string name="medical_appointment_app_bar_title_modify">Ændring af lægeaftale</string>
+    <string name="medical_appointment_app_bar_title_modify_notification">Ændring af meddelelse</string>
+
+    <string name="medical_appointment_date_time">Dato og tid</string>
+    <string name="medical_appointment_subject">Emne</string>
+    <string name="medical_appointment_location">Beliggenhed</string>
+    <string name="medical_appointment_location_place">Sted</string>
+    <string name="medical_appointment_location_latitude">Breddegrad:</string>
+    <string name="medical_appointment_location_longitude">Længdegrad:</string>
+    <string name="medical_appointment_before">før</string>
+    <string name="medical_appointment_previous_notification_status">Tidligere meddelelsesstatus</string>
+
+    <string name="medical_appointment_form_date_time">Dato og tid *</string>
+    <string name="medical_appointment_form_previous_notification_time">Tidligere meddelelsestidspunkt *</string>
+
+    <string name="medical_appointment_location_helper">Angiv præcis placering</string>
+    <string name="medical_appointment_add_medicine_helper">Når lægeaftalen tilføjes, vil der blive indstillet en tidligere meddelelse (standard 1 time før).</string>
+    <string name="medical_appointment_previous_notification_time_helper">Et tidligere meddelelsestidspunkt på 0 timer og 0 minutter indikerer ingen tidligere meddelelse.</string>
+
+    <string name="medical_appointment_dialog_message_no_location">Der er ikke angivet nogen placering. Tilføj venligst en placering til lægeaftalen for at få ruten.</string>
+    <string name="medical_appointment_dialog_message_delete">Er du sikker på, at du vil slette denne lægeaftale fra behandlingen?</string>
+    <string name="medical_appointment_dialog_denied_notification_permission">Meddelelsesrettighed er blevet nægtet, så meddelelser vil ikke blive opsat. Det anbefales at give tilladelse til at modtage meddelelser om lægeaftaler.</string>
+
+    <string name="medical_appointment_toast_confirmation_delete">Lægeaftalen blev slettet succesfuldt!</string>
+</resources>

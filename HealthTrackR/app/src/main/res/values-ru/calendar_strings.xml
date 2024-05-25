@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calendar_app_bar_title">Календарь</string>
+    <string name="calendar_treatment_app_bar_title">Календарь и медицинские назначения</string>
+
+    <string name="calendar_filter_medical_appointments">Медицинские назначения</string>
+    <string name="calendar_filter_medication_intake">Прием лекарств</string>
+    <string name="calendar_filter_passed">Прошедшие</string>
+    <string name="calendar_filter_pending">Ожидающие</string>
+
+    <string name="calendar_no_elements">У вас нет событий на эту дату.</string>
+
+    <string name="calendar_today">(сегодня)</string>
+    <string name="calendar_yesterday">(вчера)</string>
+    <string name="calendar_tomorrow">(завтра)</string>
+
+    <string name="calendar_medicines">Препараты</string>
+    <string name="calendar_medical_appointments">Медицинская консультация</string>
+
+    <string name="calendar_treatment_start">Начало лечения</string>
+    <string name="calendar_treatment_end">Окончание лечения</string>
+
+    <string name="calendar_legend_info">Индикаторы перекрываются от менее важных к наиболее важным:</string>
+    <string name="calendar_legend_current_date">Текущая дата</string>
+    <string name="calendar_legend_start_date">Дата начала</string>
+    <string name="calendar_legend_end_date">Дата окончания</string>
+    <string name="calendar_legend_medical_appointment">Медицинская консультация</string>
+    <string name="calendar_legend_medication_intake">Прием лекарств</string>
+
+    <string-array name="weekdays">
+        <item>вс</item>
+        <item>пн</item>
+        <item>вт</item>
+        <item>ср</item>
+        <item>чт</item>
+        <item>пт</item>
+        <item>сб</item>
+    </string-array>
+    <string-array name="months">
+        <item>январь</item>
+        <item>февраль</item>
+        <item>март</item>
+        <item>апрель</item>
+        <item>май</item>
+        <item>июнь</item>
+        <item>июль</item>
+        <item>август</item>
+        <item>сентябрь</item>
+        <item>октябрь</item>
+        <item>ноябрь</item>
+        <item>декабрь</item>
+    </string-array>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_app_bar_title">Mitt konto</string>
+    <string name="account_app_bar_title_modify">Redigera konto</string>
+    <string name="account_app_bar_title_change_password">Ändra lösenord</string>
+
+    <string name="account_email">E-post</string>
+    <string name="account_first_name">Förnamn</string>
+    <string name="account_last_name">Efternamn</string>
+    <string name="account_birth_date">Födelsedatum</string>
+    <string name="account_gender">Kön</string>
+    <string name="account_blood_type">Blodgrupp</string>
+    <string name="account_allergies">Allergier</string>
+    <string name="account_previous_medical_conditions">Tidigare medicinska tillstånd</string>
+    <string name="account_sign_out">Logga ut</string>
+    <string name="account_delete">Ta bort konto</string>
+    <string name="account_change_password">Ändra lösenord</string>
+
+    <string name="account_form_first_name">Förnamn *</string>
+    <string name="account_form_last_name">Efternamn *</string>
+    <string name="account_form_current_password">Nuvarande lösenord *</string>
+    <string name="account_form_new_password">Nytt lösenord *</string>
+    <string name="account_form_repeat_new_password">Upprepa nytt lösenord *</string>
+
+    <string name="account_helper_allergies">Ange dina allergier separerade med kommatecken (,).</string>
+    <string name="account_helper_previous_medical_condition">Ange dina tidigare medicinska tillstånd separerade med kommatecken (,).</string>
+
+    <string name="account_dialog_message_birth_date">Välj ditt födelsedatum:</string>
+    <string name="account_dialog_message_sign_out">Är du säker på att du vill logga ut?</string>
+    <string name="account_dialog_message_delete">Är du säker på att du vill ta bort ditt konto?</string>
+    <string name="account_dialog_message_change_password">Är du säker på att du vill ändra ditt lösenord?</string>
+
+    <string name="account_toast_confirmation_delete">Kontot har tagits bort!</string>
+    <string name="account_toast_confirmation_change_password">Lösenordet har ändrats!</string>
+
+    <string-array name="account_array_gender">
+        <item>Man</item>
+        <item>Kvinna</item>
+        <item>Ej specificerat</item>
+    </string-array>
+    <string-array name="account_array_blood_type">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>Ej specificerad</item>
+    </string-array>
+</resources>

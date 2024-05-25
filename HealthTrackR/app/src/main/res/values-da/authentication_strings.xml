@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="authentication_app_bar_title_log_in">Log ind</string>
+    <string name="authentication_app_bar_title_sign_up">Tilmeld dig</string>
+
+    <string name="authentication_log_in">Log ind</string>
+    <string name="authentication_sign_in">Log ind</string>
+    <string name="authentication_sign_up">Tilmeld dig</string>
+    <string name="authentication_remember_me">Husk mig</string>
+    <string name="authentication_create_account">Opret konto</string>
+
+    <string name="authentication_form_email">E-mail *</string>
+    <string name="authentication_form_password">Adgangskode *</string>
+    <string name="authentication_form_repeat_password">Gentag adgangskode *</string>
+    <string name="authentication_form_first_name">Fornavn *</string>
+    <string name="authentication_form_last_name">Efternavn *</string>
+
+    <string name="authentication_helper_password">Adgangskoden skal være mellem 8 og 60 tegn, inklusive: store bogstaver, små bogstaver, tal og specialtegn.</string>
+</resources>

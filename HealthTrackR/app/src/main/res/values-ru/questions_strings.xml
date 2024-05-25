@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="questions_app_bar_title">Вопросы</string>
+
+    <string name="questions_no_elements">У вас нет вопросов в этом лечении. Пожалуйста, добавьте новый вопрос.</string>
+
+    <string name="questions_form_description">Описание *</string>
+
+    <string name="questions_dialog_title_add">Добавление вопроса</string>
+    <string name="questions_dialog_message_delete">Вы уверены, что хотите удалить этот вопрос из лечения?</string>
+
+    <string name="questions_toast_confirmation_delete">Вопрос успешно удален!</string>
+</resources>

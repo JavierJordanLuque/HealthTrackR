@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_description_app_icon">Hälsospårningsikon</string>
+    <string name="content_description_back_icon">Gå tillbaka</string>
+    <string name="content_description_toggle_password_visibility">Växla lösenordets synlighet</string>
+    <string name="content_description_clear_text">Rensa text</string>
+
+    <string name="content_description_modify_account">Ändra konto</string>
+    <string name="content_description_add_treatment">Lägg till behandling</string>
+    <string name="content_description_access_treatment">Åtkomst till behandling</string>
+    <string name="content_description_modify_treatment">Ändra behandling</string>
+    <string name="content_description_access_guidelines">Åtkomst till riktlinjer</string>
+    <string name="content_description_access_medicines">Åtkomst till mediciner</string>
+    <string name="content_description_access_symptoms">Åtkomst till symptom</string>
+    <string name="content_description_access_calendar">Åtkomst till behandlingskalender</string>
+    <string name="content_description_access_questions">Åtkomst till frågor</string>
+    <string name="content_description_delete_treatment">Ta bort behandling</string>
+
+    <string name="content_description_status_pending">Status för avvaktande behandling</string>
+    <string name="content_description_status_in_progress">Status för pågående behandling</string>
+    <string name="content_description_status_finished">Status för avslutad behandling</string>
+
+    <string name="content_description_add_medicine">Lägg till medicin</string>
+    <string name="content_description_modify_medicine">Ändra medicin</string>
+    <string name="content_description_delete_medicine">Ta bort medicin</string>
+    <string name="content_description_access_medicine_notifications">Åtkomst till medicinnotiser</string>
+    <string name="content_description_error_icon">Felikon</string>
+
+    <string name="content_description_add_guideline">Lägg till riktlinje</string>
+    <string name="content_description_remove_multimedia">Ta bort multimedia</string>
+    <string name="content_description_multimedia_error_loading_multimedia_content">Fel vid laddning av multimedia-innehåll</string>
+    <string name="content_description_guideline_image">Bild för riktlinje:</string>
+    <string name="content_description_guideline_video">Video för riktlinje:</string>
+    <string name="content_description_selectable_image">Valbar bild</string>
+    <string name="content_description_selectable_video">Valbar video</string>
+    <string name="content_description_close_dialog">Stäng dialog</string>
+    <string name="content_description_video_duration">Videons längd</string>
+
+    <string name="content_description_add_symptom">Lägg till symptom</string>
+    <string name="content_description_add_question">Lägg till fråga</string>
+
+    <string name="content_description_add_medical_appointment">Lägg till läkarbesök</string>
+    <string name="content_description_modify_medical_appointment">Ändra läkarbesök</string>
+    <string name="content_description_delete_medical_appointment">Ta bort läkarbesök</string>
+    <string name="content_description_access_medical_appointment_notification">Åtkomst till läkarbesöksnotis</string>
+    <string name="content_description_directions">Instruktioner</string>
+
+    <string name="content_description_calendar_filter_medical_appointment_passed">Förflutna läkarbesök</string>
+    <string name="content_description_calendar_filter_medical_appointment_pending">Väntande läkarbesök</string>
+    <string name="content_description_calendar_filter_medication_intake_passed">Förfluten medicinering</string>
+    <string name="content_description_calendar_filter_medication_intake_pending">Väntande medicinering</string>
+
+    <string name="content_description_calendar_legend">Kalenderförklaring</string>
+    <string name="content_description_calendar_indicator_current_date">Aktuell datummarkör</string>
+    <string name="content_description_calendar_indicator_start_date">Startdatummarkör</string>
+    <string name="content_description_calendar_indicator_end_date">Slutdatummarkör</string>
+    <string name="content_description_calendar_indicator_medical_appointment">Läkarbesöksmarkör</string>
+    <string name="content_description_calendar_indicator_medication_intake">Medicineringsmarkör</string>
+</resources>

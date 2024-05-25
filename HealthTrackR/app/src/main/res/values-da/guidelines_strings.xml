@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guidelines_app_bar_title">Retningslinjer</string>
+    <string name="guidelines_app_bar_title_add">Tilføjelse af retningslinje</string>
+    <string name="guidelines_app_bar_title_modify">Ændring af retningslinje</string>
+
+    <string name="guidelines_no_elements">Du har ingen retningslinjer i denne behandling. Tilføj venligst en ny retningslinje.</string>
+
+    <string name="guidelines_description">Beskrivelse</string>
+    <string name="guidelines_images">Billeder</string>
+    <string name="guidelines_videos">Videoer</string>
+    <string name="guidelines_image_url_helper">URL\'en skal indeholde et gyldigt præfiks (https://, http://) og en gyldig billedudvidelse (.jpg, .jpeg, .png, .gif).</string>
+    <string name="guidelines_video_url_helper">URL\'en skal indeholde et gyldigt præfiks (https://, http://) og en gyldig video-udvidelse (.mp4, .3gp, .avi, .mov) eller tilhøre YouTube.</string>
+
+    <string name="guidelines_add_guideline_helper">Efter tilføjelsen af retningslinjen kan forklarende billeder eller videoer inkluderes ved at ændre den.</string>
+
+    <string name="guidelines_add_image">Tilføj billede</string>
+    <string name="guidelines_add_video">Tilføj video</string>
+    <string name="guidelines_upload_image_from_device">Upload billede fra enheden</string>
+    <string name="guidelines_upload_video_from_device">Upload video fra enheden</string>
+
+    <string name="guidelines_select_image">Vælg et billede</string>
+    <string name="guidelines_select_video">Vælg en video</string>
+    <string name="guidelines_select_image_manage_info_api_34">Du har givet adgang til et begrænset antal billeder.</string>
+    <string name="guidelines_select_video_manage_info_api_34">Du har givet adgang til et begrænset antal videoer.</string>
+    <string name="guidelines_select_image_manage_info_api_33">Du har givet adgang til enhedsbilleder.</string>
+    <string name="guidelines_select_video_manage_info_api_33">Du har givet adgang til enhedsvideoer.</string>
+    <string name="guidelines_select_multimedia_manage_info_default">Du har givet adgang til enhedens multimedieindhold.</string>
+    <string name="guidelines_select_image_no_media">Ingen billeder fundet på enheden.</string>
+    <string name="guidelines_select_video_no_media">Ingen videoer fundet på enheden.</string>
+
+    <string name="guidelines_form_title">Titel *</string>
+    <string name="guidelines_form_number_of_order">Ordrenummer *</string>
+
+    <string name="guidelines_multimedia_not_found">Multimedie ikke fundet</string>
+
+    <string name="guidelines_dialog_message_add_image">Indtast billedets URL eller upload et billede gemt på enheden:</string>
+    <string name="guidelines_dialog_message_add_video">Indtast videoens URL eller upload en video gemt på enheden:</string>
+    <string name="guidelines_dialog_message_image_not_found">Billedet er ikke længere tilgængeligt, så det vil blive fjernet fra retningslinjen.</string>
+    <string name="guidelines_dialog_message_video_not_found">Videoen er ikke længere tilgængelig, så den vil blive fjernet fra retningslinjen.</string>
+    <string name="guidelines_dialog_message_delete">Er du sikker på, at du vil slette denne retningslinje fra behandlingen?</string>
+
+    <string name="guidelines_dialog_denied_read_multimedia_permission">Adgang til multimedieindhold er blevet nægtet, så multimedier kan ikke vælges fra enheden. Det anbefales at give tilladelse til at tilføje multimedier fra enheden til retningslinjen.</string>
+
+    <string name="guidelines_toast_confirmation_delete">Retningslinje slettet med succes!</string>
+    <string name="guidelines_toast_no_app_open_image">Der er ingen app tilgængelig til at åbne dette billede.</string>
+    <string name="guidelines_toast_no_app_open_video">Der er ingen app tilgængelig til at åbne denne video.</string>
+</resources>

@@ -102,7 +102,7 @@ public class MultimediaPagerAdapter extends RecyclerView.Adapter<MultimediaPager
                 holder.videoView.setVisibility(View.GONE);
                 holder.webView.setVisibility(View.VISIBLE);
 
-                String video = "<html><head><style type=\"text/css\">body {margin:0;padding:0;}</style></head><body><iframe width=\"100%\" height=\"100%\" src=\"" +
+                String video = "<html lang=\"" + context.getResources().getConfiguration().getLocales().get(0).getLanguage() + "\"><head><style type=\"text/css\">body {margin:0;padding:0;}</style></head><body><iframe width=\"100%\" height=\"100%\" src=\"" +
                         getYouTubeEmbedUrl(multimedia.getUri()) + "\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; " +
                         "encrypted-media; gyroscope; picture-in-picture; web-share\"></iframe></body></html>";
                 holder.webView.loadData(video, "text/html", "utf-8");

@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -35,6 +37,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class ModifyMedicineNotificationsActivity extends BaseActivity {
@@ -226,6 +229,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.snackbar_action_more), (dialog, id) -> {
                     Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getResources().getConfiguration().getLocales().get(0).getLanguage());
                     notificationPermissionLauncher.launch(intent);
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> {

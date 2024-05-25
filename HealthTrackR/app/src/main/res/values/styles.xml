@@ -143,8 +143,7 @@
     <style name="Widget.HealthTrackR.FloatingActionButton.Primary.BelowStatus" parent="Widget.Material3.FloatingActionButton.Primary">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">@dimen/floating_button_layout_margin</item>
-        <item name="android:layout_marginTop">@dimen/floating_button_below_status_layout_margin_top</item>
+        <item name="android:layout_margin">@dimen/floating_button_layout_margin</item>
     </style>
 
     <style name="RelativeLayoutGrid">

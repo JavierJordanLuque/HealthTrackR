@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unspecified">Ikke specificeret</string>
+
+    <string name="easter_egg_5_message">Har du en nervøs tic?</string>
+    <string name="easter_egg_10_message">Hvad er der galt med dig?</string>
+    <string name="easter_egg_15_message">Du udfordrer skæbnen…</string>
+    <string name="easter_egg_20_message">Har du fået nok? Lad mig være i fred!</string>
+    <string name="easter_egg_25_message">Okay, okay, du vandt! Du kan stoppe med det nu!</string>
+    <string name="easter_egg_30_message">Du har vundet prisen for den mest vedholdende person!</string>
+
+    <string name="snackbar_action_more">Mere</string>
+
+    <string name="button_add">Tilføj</string>
+    <string name="button_save">Gem</string>
+    <string name="button_modify">Ændre</string>
+    <string name="button_change">Skift</string>
+    <string name="button_delete">Slet</string>
+
+    <string name="dialog_positive_yes">Ja</string>
+    <string name="dialog_positive_accept">Accepter</string>
+    <string name="dialog_positive_confirm">Bekræft</string>
+
+    <string name="dialog_negative_no">Nej</string>
+    <string name="dialog_negative_cancel">Annuller</string>
+    <string name="dialog_negative_try_again">Prøv igen</string>
+
+    <string name="dialog_message_save">Er du sikker på, at du vil gemme ændringerne?</string>
+
+    <string name="dialog_date_picker_day">Dag</string>
+    <string name="dialog_date_picker_month">Måned</string>
+    <string name="dialog_date_picker_year">År</string>
+
+    <string name="toast_confirmation_save">Ændringerne blev anvendt!</string>
+
+    <string name="filter_title">Filtrer</string>
+    <string name="filter_filter">Filtrer</string>
+    <string name="filter_show_all">Vis alle</string>
+
+    <string name="date_at_time">kl.</string>
+    <string name="hours">t</string>
+    <string name="minutes">min</string>
+
+    <string name="manage">Administrer</string>
+</resources>

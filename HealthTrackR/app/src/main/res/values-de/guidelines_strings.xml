@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guidelines_app_bar_title">Leitlinien</string>
+    <string name="guidelines_app_bar_title_add">Leitlinien hinzufügen</string>
+    <string name="guidelines_app_bar_title_modify">Leitlinie ändern</string>
+
+    <string name="guidelines_no_elements">Sie haben keine Leitlinien in dieser Behandlung. Bitte fügen Sie eine neue Leitlinie hinzu.</string>
+
+    <string name="guidelines_description">Beschreibung</string>
+    <string name="guidelines_images">Bilder</string>
+    <string name="guidelines_videos">Videos</string>
+    <string name="guidelines_image_url_helper">Die URL muss ein gültiges Präfix (https://, http://) und eine gültige Bildendung (.jpg, .jpeg, .png, .gif) enthalten.</string>
+    <string name="guidelines_video_url_helper">Die URL muss ein gültiges Präfix (https://, http://) und eine gültige Videoendung (.mp4, .3gp, .avi, .mov) oder zu YouTube gehören.</string>
+
+    <string name="guidelines_add_guideline_helper">Nach Hinzufügen der Leitlinie können erklärende Bilder oder Videos durch Ändern derselben hinzugefügt werden.</string>
+
+    <string name="guidelines_add_image">Bild hinzufügen</string>
+    <string name="guidelines_add_video">Video hinzufügen</string>
+    <string name="guidelines_upload_image_from_device">Bild von Gerät hochladen</string>
+    <string name="guidelines_upload_video_from_device">Video von Gerät hochladen</string>
+
+    <string name="guidelines_select_image">Ein Bild auswählen</string>
+    <string name="guidelines_select_video">Ein Video auswählen</string>
+    <string name="guidelines_select_image_manage_info_api_34">Sie haben Zugriff auf eine begrenzte Anzahl von Bildern gewährt.</string>
+    <string name="guidelines_select_video_manage_info_api_34">Sie haben Zugriff auf eine begrenzte Anzahl von Videos gewährt.</string>
+    <string name="guidelines_select_image_manage_info_api_33">Sie haben Zugriff auf Gerätebilder gewährt.</string>
+    <string name="guidelines_select_video_manage_info_api_33">Sie haben Zugriff auf Gerätevideos gewährt.</string>
+    <string name="guidelines_select_multimedia_manage_info_default">Sie haben Zugriff auf multimediale Inhalte des Geräts gewährt.</string>
+    <string name="guidelines_select_image_no_media">Keine Bilder auf dem Gerät gefunden.</string>
+    <string name="guidelines_select_video_no_media">Keine Videos auf dem Gerät gefunden.</string>
+
+    <string name="guidelines_form_title">Titel *</string>
+    <string name="guidelines_form_number_of_order">Bestellnummer *</string>
+
+    <string name="guidelines_multimedia_not_found">Multimedia nicht gefunden</string>
+
+    <string name="guidelines_dialog_message_add_image">Geben Sie die URL des Bildes ein oder laden Sie ein Bild vom Gerät hoch:</string>
+    <string name="guidelines_dialog_message_add_video">Geben Sie die URL des Videos ein oder laden Sie ein Video vom Gerät hoch:</string>
+    <string name="guidelines_dialog_message_image_not_found">Das Bild ist nicht mehr verfügbar und wird daher aus der Leitlinie entfernt.</string>
+    <string name="guidelines_dialog_message_video_not_found">Das Video ist nicht mehr verfügbar und wird daher aus der Leitlinie entfernt.</string>
+    <string name="guidelines_dialog_message_delete">Möchten Sie diese Leitlinie aus der Behandlung wirklich löschen?</string>
+
+    <string name="guidelines_dialog_denied_read_multimedia_permission">Der Zugriff auf multimediale Inhalte wurde verweigert, daher können keine Medien vom Gerät ausgewählt werden. Es wird empfohlen, die Berechtigung zur Hinzufügung von Medien von Geräten zur Leitlinie zu erteilen.</string>
+
+    <string name="guidelines_toast_confirmation_delete">Leitlinie erfolgreich gelöscht!</string>
+    <string name="guidelines_toast_no_app_open_image">Es ist keine App zum Öffnen dieses Bildes verfügbar.</string>
+    <string name="guidelines_toast_no_app_open_video">Es ist keine App zum Öffnen dieses Videos verfügbar.</string>
+</resources>

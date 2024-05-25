@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="treatments_app_bar_title">Behandlungen</string>
+    <string name="treatments_app_bar_title_add">Behandlung hinzufügen</string>
+    <string name="treatments_app_bar_title_modify">Behandlung bearbeiten</string>
+
+    <string name="treatments_no_elements">Du hast keine Behandlungen. Bitte füge eine neue Behandlung hinzu.</string>
+    <string name="treatments_not_found_message">Keine Behandlungen gefunden, die den angegebenen Filtern entsprechen. Bitte versuche es mit anderen Filtern.</string>
+
+    <string name="treatments_title">Titel</string>
+    <string name="treatments_start_date">Startdatum</string>
+    <string name="treatments_end_date">Enddatum</string>
+    <string name="treatments_category">Kategorie</string>
+    <string name="treatments_diagnosis">Diagnose</string>
+    <string name="treatments_guidelines">Richtlinien</string>
+    <string name="treatments_medicines">Medikamente</string>
+    <string name="treatments_symptoms">Symptome</string>
+    <string name="treatments_calendar">Kalender</string>
+
+    <string name="treatments_form_title">Titel *</string>
+    <string name="treatments_form_start_date">Startdatum *</string>
+    <string name="treatments_form_category">Kategorie *</string>
+
+    <string name="treatments_dialog_message_start_date">Wählen Sie das Startdatum der Behandlung aus:</string>
+    <string name="treatments_dialog_message_invalid_start_date">Das ausgewählte Startdatum liegt nach anderen Daten in der Behandlung. Bitte passen Sie die Daten der Medikamente und Arzttermine an, bevor Sie das Startdatum der Behandlung ändern.</string>
+    <string name="treatments_dialog_message_end_date">Wählen Sie das Enddatum der Behandlung aus:</string>
+    <string name="treatments_dialog_message_invalid_end_date">Das ausgewählte Enddatum liegt vor anderen Daten in der Behandlung. Bitte passen Sie die Daten der Medikamente und Arzttermine an, bevor Sie das Enddatum der Behandlung ändern.</string>
+    <string name="treatments_dialog_message_delete">Sind Sie sicher, dass Sie diese Behandlung löschen möchten?</string>
+
+    <string name="treatments_toast_confirmation_delete">Behandlung erfolgreich gelöscht!</string>
+
+    <string name="treatments_status">Status</string>
+    <string name="treatments_status_pending">Ausstehend</string>
+    <string name="treatments_status_in_progress">In Bearbeitung</string>
+    <string name="treatments_status_finished">Abgeschlossen</string>
+
+    <string-array name="treatments_array_category">
+        <item>Medizinisch</item>
+        <item>Pharmakologisch</item>
+        <item>Physiotherapie</item>
+        <item>Rehabilitation</item>
+        <item>Psychologisch</item>
+        <item>Präventiv</item>
+        <item>Chronisch</item>
+        <item>Alternativ</item>
+    </string-array>
+</resources>

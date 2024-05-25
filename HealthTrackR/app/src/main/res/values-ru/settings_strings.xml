@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_app_bar_title">Настройки</string>
+
+    <string name="settings_reset">Сбросить настройки</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_appearance">Внешний вид</string>
+
+    <string name="settings_dialog_message_reset">Вы уверены, что хотите сбросить настройки?</string>
+    <string name="settings_dialog_positive_reset">Сбросить</string>
+</resources>

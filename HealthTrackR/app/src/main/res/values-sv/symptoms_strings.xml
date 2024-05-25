@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="symptoms_app_bar_title">Symptom</string>
+
+    <string name="symptoms_no_elements">Du har inga symptom i denna behandling. Vänligen lägg till ett nytt symptom.</string>
+
+    <string name="symptoms_form_description">Beskrivning *</string>
+
+    <string name="symptoms_dialog_title_add">Lägg till symptom</string>
+    <string name="symptoms_dialog_message_delete">Är du säker på att du vill ta bort detta symptom från behandlingen?</string>
+
+    <string name="symptoms_toast_confirmation_delete">Symptom raderades framgångsrikt!</string>
+</resources>

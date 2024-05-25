@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medical_appointment_app_bar_title">Arzttermin</string>
+    <string name="medical_appointment_app_bar_title_add">Arzttermin hinzufügen</string>
+    <string name="medical_appointment_app_bar_title_modify">Arzttermin ändern</string>
+    <string name="medical_appointment_app_bar_title_modify_notification">Benachrichtigung ändern</string>
+
+    <string name="medical_appointment_date_time">Datum und Uhrzeit</string>
+    <string name="medical_appointment_subject">Betreff</string>
+    <string name="medical_appointment_location">Ort</string>
+    <string name="medical_appointment_location_place">Platz</string>
+    <string name="medical_appointment_location_latitude">Breitengrad:</string>
+    <string name="medical_appointment_location_longitude">Längengrad:</string>
+    <string name="medical_appointment_before">vor</string>
+    <string name="medical_appointment_previous_notification_status">Vorheriger Benachrichtigungsstatus</string>
+
+    <string name="medical_appointment_form_date_time">Datum und Uhrzeit *</string>
+    <string name="medical_appointment_form_previous_notification_time">Vorherige Benachrichtigungszeit *</string>
+
+    <string name="medical_appointment_location_helper">Genauen Standort angeben</string>
+    <string name="medical_appointment_add_medicine_helper">Beim Hinzufügen des Arzttermins wird eine frühere Benachrichtigung festgelegt (standardmäßig 1 Stunde vorher).</string>
+    <string name="medical_appointment_previous_notification_time_helper">Eine Vorbenachrichtigungszeit von 0 Stunden und 0 Minuten bedeutet keine Vorbenachrichtigung.</string>
+
+    <string name="medical_appointment_dialog_message_no_location">Es wurde kein Ort angegeben. Bitte fügen Sie dem Arzttermin einen Ort hinzu, um die Route zu erhalten.</string>
+    <string name="medical_appointment_dialog_message_delete">Möchten Sie diesen Arzttermin aus der Behandlung löschen?</string>
+    <string name="medical_appointment_dialog_denied_notification_permission">Die Benachrichtigungsberechtigung wurde verweigert, sodass keine Benachrichtigungen eingerichtet werden. Es wird empfohlen, die Berechtigung zum Empfangen von Benachrichtigungen über Arzttermine zu erteilen.</string>
+
+    <string name="medical_appointment_toast_confirmation_delete">Arzttermin erfolgreich gelöscht!</string>
+</resources>

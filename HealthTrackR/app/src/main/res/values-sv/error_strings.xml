@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_initializing_app">Hoppsan, något gick fel vid uppstart av appen. Försök igen senare.</string>
+
+    <string name="error_finished_treatment">Behandlingen är avslutad. Ändra slutdatum för att fortsätta med denna behandling.</string>
+
+    <string name="error_invalid_email">E-postadressen måste innehålla mellan 5 och 50 tecken.</string>
+    <string name="error_invalid_email_requirements">Ogiltig e-postadress. Ange en giltig e-postadress.</string>
+    <string name="error_incorrect_email">Ledsen, ingen konto hittades med den här e-postadressen. Försök igen.</string>
+    <string name="error_dialog_message_incorrect_email">Ledsen, ingen konto hittades med den här e-postadressen. Försök igen eller skapa ett nytt konto.</string>
+    <string name="error_existing_email">Ledsen, den här e-postadressen används redan. Ange en annan.</string>
+
+    <string name="error_invalid_password">Lösenordet måste innehålla mellan 8 och 60 tecken.</string>
+    <string name="error_incorrect_password">Fel lösenord. Försök igen.</string>
+    <string name="error_invalid_repeat_password">Lösenorden matchar inte.</string>
+
+    <string name="error_invalid_first_name">Förnamnet får inte vara tomt.</string>
+    <string name="error_invalid_last_name">Efternamnet får inte vara tomt.</string>
+
+    <string name="error_invalid_treatment_title">Rubriken får inte vara tom.</string>
+    <string name="error_invalid_treatment_start_date">Startdatumet får inte vara tomt.</string>
+    <string name="error_invalid_treatment_start_date_given_dependencies">Startdatumet får inte vara senare än andra datum i behandlingen.</string>
+    <string name="error_invalid_treatment_end_date">Slutdatumet måste vara efter startdatumet.</string>
+    <string name="error_invalid_treatment_end_date_given_dependencies">Slutdatumet får inte vara före andra datum i behandlingen.</string>
+    <string name="error_invalid_treatment_diagnosis">Diagnosen får inte innehålla mer än 200 tecken.</string>
+
+    <string name="error_invalid_medicine_name">Namnet får inte vara tomt.</string>
+    <string name="error_invalid_medicine_name_existing">Det angivna läkemedlet finns redan i denna behandling.</string>
+    <string name="error_invalid_medicine_initial_dosing_time">Inledande doseringstid får inte vara tom.</string>
+    <string name="error_invalid_medicine_previous_notification_time">Tidigare notifieringstid måste vara mindre än doseringsfrekvensen.</string>
+    <string name="error_no_medicine_notifications">Läkemedlet har inga fler doser. Ändra dess doseringsfrekvens eller behandlings slutdatum för att fortsätta med detta läkemedel.</string>
+
+    <string name="error_invalid_guideline_title">Rubriken får inte vara tom.</string>
+    <string name="error_invalid_guideline_description">Beskrivningen får inte innehålla mer än 300 tecken.</string>
+
+    <string name="error_invalid_symptom_description">Beskrivningen får inte vara tom.</string>
+
+    <string name="error_invalid_medical_appointment_date_time">Datum och tid får inte vara tomma.</string>
+    <string name="error_invalid_medical_appointment_subject">Ämnet får inte innehålla mer än 200 tecken.</string>
+    <string name="error_invalid_medical_appointment_location">Platsen måste ha en giltig latitud och longitud.</string>
+    <string name="error_no_medical_appointment_notification">Läkarbesöket har redan ägt rum.</string>
+</resources>

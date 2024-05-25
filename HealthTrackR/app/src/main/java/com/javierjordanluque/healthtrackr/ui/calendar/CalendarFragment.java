@@ -41,15 +41,19 @@ import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter;
+import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 public class CalendarFragment extends Fragment {
     private OnToolbarChangeListener listener;
@@ -182,6 +186,9 @@ public class CalendarFragment extends Fragment {
     }
 
     private void setCalendarView() {
+        calendarView.setTitleFormatter(new MonthArrayTitleFormatter(getResources().getTextArray(R.array.months)));
+        calendarView.setWeekDayFormatter(new ArrayWeekDayFormatter(getResources().getTextArray(R.array.weekdays)));
+
         calendarView.setSelectedDate(CalendarDay.today());
         calendarView.addDecorator(new CurrentDateDecorator(requireActivity()));
 
@@ -426,14 +433,10 @@ public class CalendarFragment extends Fragment {
     private void setTextViewSelectedDate() {
         LocalDate today = LocalDate.now();
 
-        DateTimeFormatter formatter;
-        if (selectedDate.getYear() == today.getYear()) {
-            formatter = DateTimeFormatter.ofPattern("d '" + getString(R.string.calendar_of) + "' MMMM");
-        } else {
-            formatter = DateTimeFormatter.ofPattern("d '" + getString(R.string.calendar_of) + "' MMMM, yyyy");
-        }
-        String formattedDate = selectedDate.format(formatter);
+        Locale locale = getResources().getConfiguration().getLocales().get(0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(locale);
 
+        String formattedDate = selectedDate.format(formatter);
         if (selectedDate.equals(today)) {
             formattedDate += " " + getString(R.string.calendar_today);
         } else if (selectedDate.equals(today.minusDays(1))) {

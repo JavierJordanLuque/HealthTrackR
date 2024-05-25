@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="notification_channel_group_name_medication">Medicamentos</string>
+    <string name="notification_channel_group_name_medical_appointment">Consultas Médicas</string>
+    <string name="notification_channel_name_previous_medication">Lembretes de Medicamentos Anteriores</string>
+    <string name="notification_channel_description_previous_medication">Receba notificações oportunas para os horários de medicamentos. Mantenha-se no caminho certo com suas doses de medicamentos recebendo lembretes antes de cada dose programada.</string>
+    <string name="notification_channel_name_medication">Lembretes de Medicamentos</string>
+    <string name="notification_channel_description_medication">Receba notificações oportunas para os horários de medicamentos. Mantenha-se no caminho certo com suas doses de medicamentos recebendo lembretes no momento da ingestão.</string>
+    <string name="notification_channel_name_medical_appointment">Lembretes de Consultas Médicas</string>
+    <string name="notification_channel_description_medical_appointment">Receba notificações oportunas para próximas consultas médicas. Mantenha-se organizado e preparado recebendo lembretes antes de cada consulta agendada.</string>
+
+    <string name="notification_title_medication">Dose de Medicamento</string>
+    <string name="notification_title_medical_appointment">Consulta Médica</string>
+
+    <string name="notification_message_medication_dose">Próxima dose de</string>
+    <string name="notification_message_medication_treatment">do tratamento</string>
+    <string name="notification_message_medication_schedule_now">está agendada para agora.</string>
+    <string name="notification_message_medication_scheduled_in">está agendada em</string>
+
+    <string name="notification_message_medical_appointment_appointment">Consulta médica para</string>
+    <string name="notification_message_medical_appointment_treatment">em tratamento</string>
+    <string name="notification_message_medical_appointment_scheduled_now">agendada para agora.</string>
+    <string name="notification_message_medical_appointment_scheduled_in">agendada em</string>
+    <string name="notification_message_medical_appointment_location">Local:</string>
+    <string name="notification_message_medical_appointment_latitude">Latitude</string>
+    <string name="notification_message_medical_appointment_longitude">Longitude</string>
+
+    <string name="notification_public_message_medication_scheduled_now">Uma dose de medicamento está agendada para agora.</string>
+    <string name="notification_public_message_medication_scheduled_in">Uma dose de medicamento está agendada em</string>
+    <string name="notification_public_message_medical_appointment_scheduled_now">Uma consulta médica está agendada para agora.</string>
+    <string name="notification_public_message_medical_appointment_scheduled_in">Uma consulta médica está agendada em</string>
+
+    <plurals name="notification_message_days">
+        <item quantity="one">%d dia</item>
+        <item quantity="many">%d dias</item>
+        <item quantity="other">%d dias</item>
+    </plurals>
+    <plurals name="notification_message_hours">
+        <item quantity="one">%d hora</item>
+        <item quantity="many">%d horas</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
+    <plurals name="notification_message_minutes">
+        <item quantity="one">%d minuto</item>
+        <item quantity="many">%d minutos</item>
+        <item quantity="other">%d minutos</item>
+    </plurals>
+</resources>

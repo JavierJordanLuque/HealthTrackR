@@ -10,19 +10,10 @@
     <string name="medicines_now">Now</string>
     <string name="medicines_single_dose">Single dose</string>
 
-    <string name="medicines_mg" translatable="false">mg</string>
-    <plurals name="medicines_days" translatable="false">
-        <item quantity="many">%d d</item>
-        <item quantity="other">%d d</item>
-    </plurals>
-    <plurals name="medicines_hours" translatable="false">
-        <item quantity="many">%d h</item>
-        <item quantity="other">%d h</item>
-    </plurals>
-    <plurals name="medicines_minutes" translatable="false">
-        <item quantity="many">%d min</item>
-        <item quantity="other">%d min</item>
-    </plurals>
+    <string name="medicines_mg">mg</string>
+    <string name="medicines_days">d</string>
+    <string name="medicines_hours">h</string>
+    <string name="medicines_minutes">min</string>
 
     <string name="medicines_active_substance">Active substance</string>
     <string name="medicines_dose">Dose</string>

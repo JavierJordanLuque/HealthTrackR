@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calendar_app_bar_title">Kalender</string>
+    <string name="calendar_treatment_app_bar_title">Kalender und medizinische Termine</string>
+
+    <string name="calendar_filter_medical_appointments">Medizinische Termine</string>
+    <string name="calendar_filter_medication_intake">Medikamenteneinnahme</string>
+    <string name="calendar_filter_passed">Vergangen</string>
+    <string name="calendar_filter_pending">Ausstehend</string>
+
+    <string name="calendar_no_elements">Sie haben keine Ereignisse für dieses Datum.</string>
+
+    <string name="calendar_today">(heute)</string>
+    <string name="calendar_yesterday">(gestern)</string>
+    <string name="calendar_tomorrow">(morgen)</string>
+
+    <string name="calendar_medicines">Medikamente</string>
+    <string name="calendar_medical_appointments">Medizinischer Termin</string>
+
+    <string name="calendar_treatment_start">Beginn der Behandlung</string>
+    <string name="calendar_treatment_end">Ende der Behandlung</string>
+
+    <string name="calendar_legend_info">Indikatoren überlappen sich von weniger wichtig bis am wichtigsten:</string>
+    <string name="calendar_legend_current_date">Aktuelles Datum</string>
+    <string name="calendar_legend_start_date">Startdatum</string>
+    <string name="calendar_legend_end_date">Enddatum</string>
+    <string name="calendar_legend_medical_appointment">Medizinischer Termin</string>
+    <string name="calendar_legend_medication_intake">Medikamenteneinnahme</string>
+
+    <string-array name="weekdays">
+        <item>So</item>
+        <item>Mo</item>
+        <item>Di</item>
+        <item>Mi</item>
+        <item>Do</item>
+        <item>Fr</item>
+        <item>Sa</item>
+    </string-array>
+    <string-array name="months">
+        <item>Januar</item>
+        <item>Februar</item>
+        <item>März</item>
+        <item>April</item>
+        <item>Mai</item>
+        <item>Juni</item>
+        <item>Juli</item>
+        <item>August</item>
+        <item>September</item>
+        <item>Oktober</item>
+        <item>November</item>
+        <item>Dezember</item>
+    </string-array>
+</resources>

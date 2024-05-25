@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="authentication_app_bar_title_log_in">Войти</string>
+    <string name="authentication_app_bar_title_sign_up">Зарегистрироваться</string>
+
+    <string name="authentication_log_in">Войти</string>
+    <string name="authentication_sign_in">Войти</string>
+    <string name="authentication_sign_up">Зарегистрироваться</string>
+    <string name="authentication_remember_me">Запомнить меня</string>
+    <string name="authentication_create_account">Создать аккаунт</string>
+
+    <string name="authentication_form_email">E-mail *</string>
+    <string name="authentication_form_password">Пароль *</string>
+    <string name="authentication_form_repeat_password">Повторите пароль *</string>
+    <string name="authentication_form_first_name">Имя *</string>
+    <string name="authentication_form_last_name">Фамилия *</string>
+
+    <string name="authentication_helper_password">Пароль должен содержать от 8 до 60 символов, включая: прописные буквы, строчные буквы, цифры и специальные символы.</string>
+</resources>

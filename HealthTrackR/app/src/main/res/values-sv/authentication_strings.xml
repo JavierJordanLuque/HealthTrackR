@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="authentication_app_bar_title_log_in">Logga in</string>
+    <string name="authentication_app_bar_title_sign_up">Registrera dig</string>
+
+    <string name="authentication_log_in">Logga in</string>
+    <string name="authentication_sign_in">Logga in</string>
+    <string name="authentication_sign_up">Registrera dig</string>
+    <string name="authentication_remember_me">Kom ihåg mig</string>
+    <string name="authentication_create_account">Skapa konto</string>
+
+    <string name="authentication_form_email">E-post *</string>
+    <string name="authentication_form_password">Lösenord *</string>
+    <string name="authentication_form_repeat_password">Upprepa lösenord *</string>
+    <string name="authentication_form_first_name">Förnamn *</string>
+    <string name="authentication_form_last_name">Efternamn *</string>
+
+    <string name="authentication_helper_password">Lösenordet måste innehålla mellan 8 och 60 tecken, inklusive: versaler, gemener, siffror och specialtecken.</string>
+</resources>

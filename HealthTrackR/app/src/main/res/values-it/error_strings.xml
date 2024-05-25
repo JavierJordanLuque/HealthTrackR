@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_initializing_app">Ops, si è verificato un errore durante l\'impostazione dell\'app. Si prega di riprovare più tardi.</string>
+
+    <string name="error_finished_treatment">Il trattamento è terminato. Si prega di modificare la data di fine per continuare questo trattamento.</string>
+
+    <string name="error_invalid_email">L\'email deve contenere tra 5 e 50 caratteri.</string>
+    <string name="error_invalid_email_requirements">L\'email non è valida. Si prega di inserire un\'email valida.</string>
+    <string name="error_incorrect_email">Spiacenti, nessun account trovato con questo indirizzo email. Si prega di riprovare.</string>
+    <string name="error_dialog_message_incorrect_email">Spiacenti, nessun account trovato con questo indirizzo email. Si prega di riprovare o creare un nuovo account.</string>
+    <string name="error_existing_email">Spiacenti, questo indirizzo email è già in uso. Si prega di utilizzarne un altro.</string>
+
+    <string name="error_invalid_password">La password deve contenere tra 8 e 60 caratteri.</string>
+    <string name="error_incorrect_password">Password errata. Si prega di riprovare.</string>
+    <string name="error_invalid_repeat_password">Le password non corrispondono.</string>
+
+    <string name="error_invalid_first_name">Il nome non deve essere vuoto.</string>
+    <string name="error_invalid_last_name">Il cognome non deve essere vuoto.</string>
+
+    <string name="error_invalid_treatment_title">Il titolo non deve essere vuoto.</string>
+    <string name="error_invalid_treatment_start_date">La data di inizio non deve essere vuota.</string>
+    <string name="error_invalid_treatment_start_date_given_dependencies">La data di inizio non deve essere successiva ad altre date contenute nel trattamento.</string>
+    <string name="error_invalid_treatment_end_date">La data di fine deve essere successiva alla data di inizio.</string>
+    <string name="error_invalid_treatment_end_date_given_dependencies">La data di fine non deve essere precedente ad altre date contenute nel trattamento.</string>
+    <string name="error_invalid_treatment_diagnosis">La diagnosi non deve contenere più di 200 caratteri.</string>
+
+    <string name="error_invalid_medicine_name">Il nome non deve essere vuoto.</string>
+    <string name="error_invalid_medicine_name_existing">Il medicinale specificato esiste già in questo trattamento.</string>
+    <string name="error_invalid_medicine_initial_dosing_time">L\'orario di dosaggio iniziale non deve essere vuoto.</string>
+    <string name="error_invalid_medicine_previous_notification_time">L\'orario di notifica precedente deve essere inferiore alla frequenza di dosaggio.</string>
+    <string name="error_no_medicine_notifications">Il medicinale non ha più dosi. Si prega di modificare la frequenza di dosaggio o la data di fine del trattamento per continuare con questo medicinale.</string>
+
+    <string name="error_invalid_guideline_title">Il titolo non deve essere vuoto.</string>
+    <string name="error_invalid_guideline_description">La descrizione non deve contenere più di 300 caratteri.</string>
+
+    <string name="error_invalid_symptom_description">La descrizione non deve essere vuota.</string>
+
+    <string name="error_invalid_medical_appointment_date_time">La data e l\'ora non devono essere vuote.</string>
+    <string name="error_invalid_medical_appointment_subject">L\'oggetto non deve contenere più di 200 caratteri.</string>
+    <string name="error_invalid_medical_appointment_location">La posizione deve avere una latitudine e una longitudine valide.</string>
+    <string name="error_no_medical_appointment_notification">L\'appuntamento medico è già avvenuto.</string>
+</resources>

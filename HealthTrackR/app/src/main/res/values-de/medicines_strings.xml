@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicines_app_bar_title">Medikamente</string>
+    <string name="medicines_app_bar_title_add">Medikament hinzufügen</string>
+    <string name="medicines_app_bar_title_modify">Medikament bearbeiten</string>
+    <string name="medicines_app_bar_title_modify_notifications">Benachrichtigungen bearbeiten</string>
+
+    <string name="medicines_no_elements">Sie haben keine Medikamente in dieser Behandlung. Bitte fügen Sie ein neues Medikament hinzu.</string>
+    <string name="medicines_none">Keine</string>
+    <string name="medicines_now">Jetzt</string>
+    <string name="medicines_single_dose">Einzelne Dosis</string>
+
+    <string name="medicines_mg">mg</string>
+    <string name="medicines_days">dg</string>
+    <string name="medicines_hours">std</string>
+    <string name="medicines_minutes">min</string>
+
+    <string name="medicines_active_substance">Wirkstoff</string>
+    <string name="medicines_dose">Dosis</string>
+    <string name="medicines_administration_route">Verabreichungsweg</string>
+    <string name="medicines_initial_dosing_time">Anfangsdosierungszeitpunkt</string>
+    <string name="medicines_dosing_frequency">Dosierungsfrequenz</string>
+    <string name="medicines_next_dose">Nächste Dosis</string>
+    <string name="medicines_each">Jede:</string>
+    <string name="medicines_before">vor</string>
+    <string name="medicines_previous_notification_status">Vorheriger Benachrichtigungsstatus</string>
+    <string name="medicines_dosing_notification_status">Benachrichtigungsstatus für Dosierung</string>
+    <string name="medicines_add_medicine_helper">Beim Hinzufügen des Medikaments werden zwei Benachrichtigungen für die Dosierung eingestellt: eine vorherige Benachrichtigung (Standard 1 Stunde vorher) und eine Benachrichtigung zum Dosierzeitpunkt.</string>
+
+    <string name="medicines_form_name">Name *</string>
+    <string name="medicines_form_initial_dosing_time">Anfangsdosierungszeitpunkt *</string>
+    <string name="medicines_form_dosing_frequency">Dosierungsfrequenz *</string>
+    <string name="medicines_form_previous_notification_time">Zeitpunkt der vorherigen Benachrichtigung *</string>
+
+    <string name="medicines_dosing_frequency_helper">Eine Dosierungsfrequenz von 0 Stunden und 0 Minuten deutet auf eine Einzeldosis hin.</string>
+    <string name="medicines_previous_notification_time_helper">Ein Zeitpunkt für vorherige Benachrichtigungen von 0 Stunden und 0 Minuten deutet auf keine vorherige Benachrichtigung hin. Vorherige Benachrichtigungszeiten von weniger als 20 Minuten können zu einer Benachrichtigungseinbettung mit der Dosierungsbenachrichtigung führen.</string>
+
+    <string name="medicines_dialog_message_no_previous_notification_add">Die Dosierungsfrequenz ist kleiner oder gleich der Zeit, die für die vorherige Benachrichtigung eingestellt ist (standardmäßig 1 Stunde vorher). Daher wird die vorherige Benachrichtigung nicht eingestellt. Sind Sie sicher, dass Sie dieses Medikament hinzufügen möchten?</string>
+    <string name="medicines_dialog_message_no_previous_notification_modify">Die Dosierungsfrequenz ist kleiner oder gleich der Zeit, die für die vorherige Benachrichtigung eingestellt ist. Daher wird die vorherige Benachrichtigung nicht eingestellt. Sind Sie sicher, dass Sie die Änderungen speichern möchten?</string>
+    <string name="medicines_dialog_message_delete">Sind Sie sicher, dass Sie dieses Medikament aus der Behandlung löschen möchten?</string>
+    <string name="medicines_dialog_denied_notification_permission">Die Benachrichtigungsberechtigung wurde verweigert, daher werden keine Benachrichtigungen eingerichtet. Es wird empfohlen, die Berechtigung zu erteilen, um Medikamentenbenachrichtigungen zu erhalten.</string>
+
+    <string name="medicines_toast_confirmation_delete">Medikament erfolgreich gelöscht!</string>
+
+    <string-array name="medicines_array_administration_route">
+        <item>Oral</item>
+        <item>Topisch</item>
+        <item>Parenteral</item>
+        <item>Inhalativ</item>
+        <item>Ophthalmisch</item>
+        <item>Otisch</item>
+        <item>Nasal</item>
+        <item>Rektal</item>
+        <item>Nicht spezifiziert</item>
+    </string-array>
+</resources>

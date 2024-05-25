@@ -19,7 +19,6 @@
     <dimen name="text_view_value_margin_start">15dp</dimen>
 
     <dimen name="floating_button_layout_margin">16dp</dimen>
-    <dimen name="floating_button_below_status_layout_margin_top">96dp</dimen>
 
     <dimen name="spinner_layout_padding_top">5dp</dimen>
     <dimen name="spinner_layout_padding_horizontal">10dp</dimen>
@@ -48,7 +47,7 @@
     <dimen name="text_view_title_margin_top">20dp</dimen>
     <dimen name="text_view_title_margin_end">100dp</dimen>
 
-    <dimen name="linear_layout_margin_top_inside_treatments">10dp</dimen>
+    <dimen name="linear_layout_margin_top_inside_treatments">28dp</dimen>
 
     <dimen name="text_view_subtitle_margin_top">10dp</dimen>
     <dimen name="text_view_subtitle_margin_start">10dp</dimen>

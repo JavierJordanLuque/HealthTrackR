@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medical_appointment_app_bar_title">Медицинская консультация</string>
+    <string name="medical_appointment_app_bar_title_add">Добавить медицинскую консультацию</string>
+    <string name="medical_appointment_app_bar_title_modify">Изменить медицинскую консультацию</string>
+    <string name="medical_appointment_app_bar_title_modify_notification">Изменить уведомление</string>
+
+    <string name="medical_appointment_date_time">Дата и время</string>
+    <string name="medical_appointment_subject">Тема</string>
+    <string name="medical_appointment_location">Местоположение</string>
+    <string name="medical_appointment_location_place">Место</string>
+    <string name="medical_appointment_location_latitude">Широта:</string>
+    <string name="medical_appointment_location_longitude">Долгота:</string>
+    <string name="medical_appointment_before">перед</string>
+    <string name="medical_appointment_previous_notification_status">Статус предыдущего уведомления</string>
+
+    <string name="medical_appointment_form_date_time">Дата и время *</string>
+    <string name="medical_appointment_form_previous_notification_time">Время предыдущего уведомления *</string>
+
+    <string name="medical_appointment_location_helper">Указать точное местоположение</string>
+    <string name="medical_appointment_add_medicine_helper">При добавлении медицинской консультации будет установлено предыдущее уведомление (по умолчанию за 1 час до).</string>
+    <string name="medical_appointment_previous_notification_time_helper">Время предыдущего уведомления 0 часов и 0 минут означает отсутствие предыдущего уведомления.</string>
+
+    <string name="medical_appointment_dialog_message_no_location">Местоположение не указано. Пожалуйста, добавьте местоположение к медицинской консультации, чтобы получить маршрут.</string>
+    <string name="medical_appointment_dialog_message_delete">Вы уверены, что хотите удалить эту медицинскую консультацию из лечения?</string>
+    <string name="medical_appointment_dialog_denied_notification_permission">Разрешение на уведомления было отклонено, поэтому уведомления не будут настроены. Рекомендуется предоставить разрешение для получения уведомлений о медицинских консультациях.</string>
+
+    <string name="medical_appointment_toast_confirmation_delete">Медицинская консультация успешно удалена!</string>
+</resources>

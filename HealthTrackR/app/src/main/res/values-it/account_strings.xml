@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_app_bar_title">Il mio account</string>
+    <string name="account_app_bar_title_modify">Modifica account</string>
+    <string name="account_app_bar_title_change_password">Cambia password</string>
+
+    <string name="account_email">E-mail</string>
+    <string name="account_first_name">Nome</string>
+    <string name="account_last_name">Cognome</string>
+    <string name="account_birth_date">Data di nascita</string>
+    <string name="account_gender">Sesso</string>
+    <string name="account_blood_type">Gruppo sanguigno</string>
+    <string name="account_allergies">Allergie</string>
+    <string name="account_previous_medical_conditions">Condizioni mediche precedenti</string>
+    <string name="account_sign_out">Esci</string>
+    <string name="account_delete">Elimina account</string>
+    <string name="account_change_password">Cambia password</string>
+
+    <string name="account_form_first_name">Nome *</string>
+    <string name="account_form_last_name">Cognome *</string>
+    <string name="account_form_current_password">Password attuale *</string>
+    <string name="account_form_new_password">Nuova password *</string>
+    <string name="account_form_repeat_new_password">Ripeti nuova password *</string>
+
+    <string name="account_helper_allergies">Inserisci le tue allergie separate da virgole (,).</string>
+    <string name="account_helper_previous_medical_condition">Inserisci le tue condizioni mediche precedenti separate da virgole (,).</string>
+
+    <string name="account_dialog_message_birth_date">Seleziona la tua data di nascita:</string>
+    <string name="account_dialog_message_sign_out">Sei sicuro di voler uscire?</string>
+    <string name="account_dialog_message_delete">Sei sicuro di voler eliminare il tuo account?</string>
+    <string name="account_dialog_message_change_password">Sei sicuro di voler cambiare la tua password?</string>
+
+    <string name="account_toast_confirmation_delete">Account eliminato con successo!</string>
+    <string name="account_toast_confirmation_change_password">Password aggiornata con successo!</string>
+
+    <string-array name="account_array_gender">
+        <item>Uomo</item>
+        <item>Donna</item>
+        <item>Non specificato</item>
+    </string-array>
+    <string-array name="account_array_blood_type">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>Non specificato</item>
+    </string-array>
+</resources>

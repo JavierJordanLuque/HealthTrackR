@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_group_name_medication">Médicament</string>
+    <string name="notification_channel_group_name_medical_appointment">Rendez-vous médicaux</string>
+    <string name="notification_channel_name_previous_medication">Rappels de médicaments précédents</string>
+    <string name="notification_channel_description_previous_medication">Recevez des notifications en temps opportun pour les horaires de médicaments. Restez sur la bonne voie avec vos doses de médicaments en recevant des rappels avant chaque dose planifiée.</string>
+    <string name="notification_channel_name_medication">Rappels de médicaments</string>
+    <string name="notification_channel_description_medication">Recevez des notifications en temps opportun pour les horaires de médicaments. Restez sur la bonne voie avec vos doses de médicaments en recevant des rappels au moment de la prise.</string>
+    <string name="notification_channel_name_medical_appointment">Rappels de rendez-vous médicaux</string>
+    <string name="notification_channel_description_medical_appointment">Recevez des notifications en temps opportun pour les prochains rendez-vous médicaux. Restez organisé et préparé en recevant des rappels avant chaque rendez-vous planifié.</string>
+
+    <string name="notification_title_medication">Dose de médicament</string>
+    <string name="notification_title_medical_appointment">Rendez-vous médical</string>
+
+    <string name="notification_message_medication_dose">Prochaine dose de</string>
+    <string name="notification_message_medication_treatment">du traitement</string>
+    <string name="notification_message_medication_schedule_now">est prévue maintenant.</string>
+    <string name="notification_message_medication_scheduled_in">est prévue dans</string>
+
+    <string name="notification_message_medical_appointment_appointment">Rendez-vous médical pour</string>
+    <string name="notification_message_medical_appointment_treatment">sous traitement</string>
+    <string name="notification_message_medical_appointment_scheduled_now">prévu maintenant.</string>
+    <string name="notification_message_medical_appointment_scheduled_in">prévu dans</string>
+    <string name="notification_message_medical_appointment_location">Lieu :</string>
+    <string name="notification_message_medical_appointment_latitude">Latitude</string>
+    <string name="notification_message_medical_appointment_longitude">Longitude</string>
+
+    <string name="notification_public_message_medication_scheduled_now">Une dose de médicament est prévue maintenant.</string>
+    <string name="notification_public_message_medication_scheduled_in">Une dose de médicament est prévue dans</string>
+    <string name="notification_public_message_medical_appointment_scheduled_now">Un rendez-vous médical est prévu maintenant.</string>
+    <string name="notification_public_message_medical_appointment_scheduled_in">Un rendez-vous médical est prévu dans</string>
+
+    <plurals name="notification_message_days">
+        <item quantity="one">%d jour</item>
+        <item quantity="many">%d jours</item>
+        <item quantity="other">%d jours</item>
+    </plurals>
+    <plurals name="notification_message_hours">
+        <item quantity="one">%d heure</item>
+        <item quantity="many">%d heures</item>
+        <item quantity="other">%d heures</item>
+    </plurals>
+    <plurals name="notification_message_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="many">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+</resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicines_app_bar_title">Médicaments</string>
+    <string name="medicines_app_bar_title_add">Ajout de médicament</string>
+    <string name="medicines_app_bar_title_modify">Modification du médicament</string>
+    <string name="medicines_app_bar_title_modify_notifications">Modification des notifications</string>
+
+    <string name="medicines_no_elements">Vous n\'avez aucun médicament dans ce traitement. Veuillez ajouter un nouveau médicament.</string>
+    <string name="medicines_none">Aucun</string>
+    <string name="medicines_now">Maintenant</string>
+    <string name="medicines_single_dose">Dose unique</string>
+
+    <string name="medicines_mg">mg</string>
+    <string name="medicines_days">j</string>
+    <string name="medicines_hours">h</string>
+    <string name="medicines_minutes">min</string>
+
+    <string name="medicines_active_substance">Substance active</string>
+    <string name="medicines_dose">Dose</string>
+    <string name="medicines_administration_route">Voie d\'administration</string>
+    <string name="medicines_initial_dosing_time">Heure de la première dose</string>
+    <string name="medicines_dosing_frequency">Fréquence de la dose</string>
+    <string name="medicines_next_dose">Prochaine dose</string>
+    <string name="medicines_each">Chaque :</string>
+    <string name="medicines_before">avant</string>
+    <string name="medicines_previous_notification_status">Statut de notification précédent</string>
+    <string name="medicines_dosing_notification_status">Statut de notification de dose</string>
+    <string name="medicines_add_medicine_helper">Lors de l\'ajout du médicament, deux notifications de dose seront définies : une notification précédente (par défaut 1 heure avant) et une notification à l\'heure de la dose.</string>
+
+    <string name="medicines_form_name">Nom *</string>
+    <string name="medicines_form_initial_dosing_time">Heure de la première dose *</string>
+    <string name="medicines_form_dosing_frequency">Fréquence de la dose *</string>
+    <string name="medicines_form_previous_notification_time">Temps de la notification précédente *</string>
+
+    <string name="medicines_dosing_frequency_helper">Une fréquence de dose de 0 heures et 0 minutes indique une dose unique.</string>
+    <string name="medicines_previous_notification_time_helper">Un temps de notification précédent de 0 heures et 0 minutes indique qu\'il n\'y a pas de notification précédente. Des temps de notification précédents inférieurs à 20 minutes peuvent entraîner un emboîtement de notifications avec la notification de dose.</string>
+
+    <string name="medicines_dialog_message_no_previous_notification_add">La fréquence de dose est inférieure ou égale au temps défini pour la notification précédente (par défaut 1 heure avant). Par conséquent, la notification précédente ne sera pas définie. Êtes-vous sûr de vouloir ajouter ce médicament ?</string>
+    <string name="medicines_dialog_message_no_previous_notification_modify">La fréquence de dose est inférieure ou égale au temps défini pour la notification précédente. Par conséquent, la notification précédente ne sera pas définie. Êtes-vous sûr de vouloir enregistrer les modifications ?</string>
+    <string name="medicines_dialog_message_delete">Êtes-vous sûr de vouloir supprimer ce médicament du traitement ?</string>
+    <string name="medicines_dialog_denied_notification_permission">L\'autorisation de notification a été refusée, donc les notifications ne seront pas configurées. Il est recommandé d\'autoriser les notifications pour recevoir les notifications de médicaments.</string>
+
+    <string name="medicines_toast_confirmation_delete">Médicament supprimé avec succès !</string>
+
+    <string-array name="medicines_array_administration_route">
+        <item>Oral</item>
+        <item>Topique</item>
+        <item>Parentérale</item>
+        <item>Inhalation</item>
+        <item>Oculaire</item>
+        <item>Auriculaire</item>
+        <item>Nasal</item>
+        <item>Rectal</item>
+        <item>Non spécifié</item>
+    </string-array>
+</resources>

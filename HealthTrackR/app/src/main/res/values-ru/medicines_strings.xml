@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicines_app_bar_title">Препараты</string>
+    <string name="medicines_app_bar_title_add">Добавить препарат</string>
+    <string name="medicines_app_bar_title_modify">Изменить препарат</string>
+    <string name="medicines_app_bar_title_modify_notifications">Изменить уведомления</string>
+
+    <string name="medicines_no_elements">У вас нет препаратов в этом лечении. Пожалуйста, добавьте новый препарат.</string>
+    <string name="medicines_none">Нет</string>
+    <string name="medicines_now">Сейчас</string>
+    <string name="medicines_single_dose">Однократная доза</string>
+
+    <string name="medicines_mg">мг</string>
+    <string name="medicines_days">д</string>
+    <string name="medicines_hours">ч</string>
+    <string name="medicines_minutes">мин</string>
+
+    <string name="medicines_active_substance">Активное вещество</string>
+    <string name="medicines_dose">Доза</string>
+    <string name="medicines_administration_route">Способ применения</string>
+    <string name="medicines_initial_dosing_time">Начальное время дозирования</string>
+    <string name="medicines_dosing_frequency">Частота дозирования</string>
+    <string name="medicines_next_dose">Следующая доза</string>
+    <string name="medicines_each">Каждый:</string>
+    <string name="medicines_before">перед</string>
+    <string name="medicines_previous_notification_status">Статус предыдущего уведомления</string>
+    <string name="medicines_dosing_notification_status">Статус уведомления о дозировании</string>
+    <string name="medicines_add_medicine_helper">При добавлении препарата будут установлены два уведомления о дозировании: предыдущее уведомление (по умолчанию за 1 час) и уведомление во время дозирования.</string>
+
+    <string name="medicines_form_name">Название *</string>
+    <string name="medicines_form_initial_dosing_time">Начальное время дозирования *</string>
+    <string name="medicines_form_dosing_frequency">Частота дозирования *</string>
+    <string name="medicines_form_previous_notification_time">Время предыдущего уведомления *</string>
+
+    <string name="medicines_dosing_frequency_helper">Частота дозирования 0 часов и 0 минут указывает на однократную дозу.</string>
+    <string name="medicines_previous_notification_time_helper">Время предыдущего уведомления 0 часов и 0 минут указывает на отсутствие предыдущего уведомления. Время предыдущего уведомления менее 20 минут может привести к вложенности уведомлений с уведомлением о дозировании.</string>
+
+    <string name="medicines_dialog_message_no_previous_notification_add">Частота дозирования меньше или равна установленному времени предыдущего уведомления (по умолчанию за 1 час). Поэтому предыдущее уведомление не будет установлено. Вы уверены, что хотите добавить этот препарат?</string>
+    <string name="medicines_dialog_message_no_previous_notification_modify">Частота дозирования меньше или равна установленному времени предыдущего уведомления. Поэтому предыдущее уведомление не будет установлено. Вы уверены, что хотите сохранить изменения?</string>
+    <string name="medicines_dialog_message_delete">Вы уверены, что хотите удалить этот препарат из лечения?</string>
+    <string name="medicines_dialog_denied_notification_permission">Разрешение на уведомления отклонено, поэтому уведомления не будут установлены. Рекомендуется предоставить разрешение для получения уведомлений о препаратах.</string>
+
+    <string name="medicines_toast_confirmation_delete">Препарат успешно удален!</string>
+
+    <string-array name="medicines_array_administration_route">
+        <item>Перорально</item>
+        <item>Местно</item>
+        <item>Парентерально</item>
+        <item>Ингаляционно</item>
+        <item>Глазные</item>
+        <item>Ушные</item>
+        <item>Назально</item>
+        <item>Ректально</item>
+        <item>Не указано</item>
+    </string-array>
+</resources>

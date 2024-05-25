@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_initializing_app">Упс, что-то пошло не так при настройке приложения. Пожалуйста, попробуйте позже.</string>
+
+    <string name="error_finished_treatment">Лечение завершено. Пожалуйста, измените дату окончания, чтобы продолжить это лечение.</string>
+
+    <string name="error_invalid_email">Электронная почта должна содержать от 5 до 50 символов.</string>
+    <string name="error_invalid_email_requirements">Неверный адрес электронной почты. Пожалуйста, введите действительный адрес электронной почты.</string>
+    <string name="error_incorrect_email">Извините, по данному адресу электронной почты аккаунт не найден. Пожалуйста, попробуйте еще раз.</string>
+    <string name="error_dialog_message_incorrect_email">Извините, по данному адресу электронной почты аккаунт не найден. Пожалуйста, попробуйте еще раз или создайте новый аккаунт.</string>
+    <string name="error_existing_email">Извините, этот адрес электронной почты уже используется. Пожалуйста, используйте другой адрес.</string>
+
+    <string name="error_invalid_password">Пароль должен содержать от 8 до 60 символов.</string>
+    <string name="error_incorrect_password">Неверный пароль. Пожалуйста, попробуйте еще раз.</string>
+    <string name="error_invalid_repeat_password">Пароли не совпадают.</string>
+
+    <string name="error_invalid_first_name">Имя не должно быть пустым.</string>
+    <string name="error_invalid_last_name">Фамилия не должна быть пустой.</string>
+
+    <string name="error_invalid_treatment_title">Заголовок не должен быть пустым.</string>
+    <string name="error_invalid_treatment_start_date">Дата начала не должна быть пустой.</string>
+    <string name="error_invalid_treatment_start_date_given_dependencies">Дата начала не должна быть позже других дат в лечении.</string>
+    <string name="error_invalid_treatment_end_date">Дата окончания должна быть после начальной даты.</string>
+    <string name="error_invalid_treatment_end_date_given_dependencies">Дата окончания не должна быть раньше других дат в лечении.</string>
+    <string name="error_invalid_treatment_diagnosis">Диагноз не должен содержать более 200 символов.</string>
+
+    <string name="error_invalid_medicine_name">Название не должно быть пустым.</string>
+    <string name="error_invalid_medicine_name_existing">Указанный препарат уже существует в этом лечении.</string>
+    <string name="error_invalid_medicine_initial_dosing_time">Начальное время дозировки не должно быть пустым.</string>
+    <string name="error_invalid_medicine_previous_notification_time">Предыдущее время уведомления должно быть меньше частоты дозировки.</string>
+    <string name="error_no_medicine_notifications">У препарата больше нет доз. Пожалуйста, измените его частоту приема или дату окончания лечения, чтобы продолжить прием этого препарата.</string>
+
+    <string name="error_invalid_guideline_title">Заголовок не должен быть пустым.</string>
+    <string name="error_invalid_guideline_description">Описание не должно содержать более 300 символов.</string>
+
+    <string name="error_invalid_symptom_description">Описание не должно быть пустым.</string>
+
+    <string name="error_invalid_medical_appointment_date_time">Дата и время не должны быть пустыми.</string>
+    <string name="error_invalid_medical_appointment_subject">Тема не должна содержать более 200 символов.</string>
+    <string name="error_invalid_medical_appointment_location">Местоположение должно иметь действительные координаты широты и долготы.</string>
+    <string name="error_no_medical_appointment_notification">Медицинская консультация уже состоялась.</string>
+</resources>

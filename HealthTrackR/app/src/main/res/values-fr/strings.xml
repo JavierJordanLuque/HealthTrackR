@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unspecified">Non spécifié</string>
+
+    <string name="easter_egg_5_message">Avez-vous un tic nerveux ?</string>
+    <string name="easter_egg_10_message">Qu\'est-ce qui ne va pas avec vous ?</string>
+    <string name="easter_egg_15_message">Vous tentez le destin…</string>
+    <string name="easter_egg_20_message">Assez maintenant ? Laissez-moi tranquille !</string>
+    <string name="easter_egg_25_message">D\'accord, d\'accord, vous avez gagné ! Vous pouvez arrêter maintenant !</string>
+    <string name="easter_egg_30_message">Vous avez remporté le prix de la personne la plus persévérante !</string>
+
+    <string name="snackbar_action_more">Plus</string>
+
+    <string name="button_add">Ajouter</string>
+    <string name="button_save">Enregistrer</string>
+    <string name="button_modify">Modifier</string>
+    <string name="button_change">Changer</string>
+    <string name="button_delete">Supprimer</string>
+
+    <string name="dialog_positive_yes">Oui</string>
+    <string name="dialog_positive_accept">Accepter</string>
+    <string name="dialog_positive_confirm">Confirmer</string>
+
+    <string name="dialog_negative_no">Non</string>
+    <string name="dialog_negative_cancel">Annuler</string>
+    <string name="dialog_negative_try_again">Réessayer</string>
+
+    <string name="dialog_message_save">Êtes-vous sûr de vouloir enregistrer les modifications ?</string>
+
+    <string name="dialog_date_picker_day">Jour</string>
+    <string name="dialog_date_picker_month">Mois</string>
+    <string name="dialog_date_picker_year">Année</string>
+
+    <string name="toast_confirmation_save">Modifications appliquées avec succès !</string>
+
+    <string name="filter_title">Filtre</string>
+    <string name="filter_filter">Filtrer</string>
+    <string name="filter_show_all">Afficher tout</string>
+
+    <string name="date_at_time">à</string>
+    <string name="hours">h</string>
+    <string name="minutes">min</string>
+
+    <string name="manage">Gérer</string>
+</resources>

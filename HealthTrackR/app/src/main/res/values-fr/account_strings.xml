@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_app_bar_title">Mon compte</string>
+    <string name="account_app_bar_title_modify">Modification du compte</string>
+    <string name="account_app_bar_title_change_password">Changer le mot de passe</string>
+
+    <string name="account_email">E-mail</string>
+    <string name="account_first_name">Prénom</string>
+    <string name="account_last_name">Nom de famille</string>
+    <string name="account_birth_date">Date de naissance</string>
+    <string name="account_gender">Sexe</string>
+    <string name="account_blood_type">Groupe sanguin</string>
+    <string name="account_allergies">Allergies</string>
+    <string name="account_previous_medical_conditions">Antécédents médicaux</string>
+    <string name="account_sign_out">Déconnexion</string>
+    <string name="account_delete">Supprimer le compte</string>
+    <string name="account_change_password">Changer le mot de passe</string>
+
+    <string name="account_form_first_name">Prénom *</string>
+    <string name="account_form_last_name">Nom de famille *</string>
+    <string name="account_form_current_password">Mot de passe actuel *</string>
+    <string name="account_form_new_password">Nouveau mot de passe *</string>
+    <string name="account_form_repeat_new_password">Répéter le nouveau mot de passe *</string>
+
+    <string name="account_helper_allergies">Entrez vos allergies séparées par des virgules (,).</string>
+    <string name="account_helper_previous_medical_condition">Entrez vos antécédents médicaux séparés par des virgules (,).</string>
+
+    <string name="account_dialog_message_birth_date">Sélectionnez votre date de naissance :</string>
+    <string name="account_dialog_message_sign_out">Êtes-vous sûr de vouloir vous déconnecter ?</string>
+    <string name="account_dialog_message_delete">Êtes-vous sûr de vouloir supprimer votre compte ?</string>
+    <string name="account_dialog_message_change_password">Êtes-vous sûr de vouloir changer votre mot de passe ?</string>
+
+    <string name="account_toast_confirmation_delete">Compte supprimé avec succès !</string>
+    <string name="account_toast_confirmation_change_password">Mot de passe mis à jour avec succès !</string>
+
+    <string-array name="account_array_gender">
+        <item>Homme</item>
+        <item>Femme</item>
+        <item>Non spécifié</item>
+    </string-array>
+    <string-array name="account_array_blood_type">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>Non spécifié</item>
+    </string-array>
+</resources>

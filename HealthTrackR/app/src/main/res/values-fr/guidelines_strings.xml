@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guidelines_app_bar_title">Directives</string>
+    <string name="guidelines_app_bar_title_add">Ajout de directives</string>
+    <string name="guidelines_app_bar_title_modify">Modification des directives</string>
+
+    <string name="guidelines_no_elements">Vous n\'avez aucune directive dans ce traitement. Veuillez ajouter une nouvelle directive.</string>
+
+    <string name="guidelines_description">Description</string>
+    <string name="guidelines_images">Images</string>
+    <string name="guidelines_videos">Vidéos</string>
+    <string name="guidelines_image_url_helper">L\'URL doit contenir un préfixe valide (https://, http://) et une extension d\'image valide (.jpg, .jpeg, .png, .gif).</string>
+    <string name="guidelines_video_url_helper">L\'URL doit contenir un préfixe valide (https://, http://) et une extension vidéo valide (.mp4, .3gp, .avi, .mov) ou appartenir à YouTube.</string>
+
+    <string name="guidelines_add_guideline_helper">Après avoir ajouté la directive, des images ou des vidéos explicatives peuvent être incluses en les modifiant.</string>
+
+    <string name="guidelines_add_image">Ajouter une image</string>
+    <string name="guidelines_add_video">Ajouter une vidéo</string>
+    <string name="guidelines_upload_image_from_device">Télécharger une image à partir de l\'appareil</string>
+    <string name="guidelines_upload_video_from_device">Télécharger une vidéo à partir de l\'appareil</string>
+
+    <string name="guidelines_select_image">Sélectionner une image</string>
+    <string name="guidelines_select_video">Sélectionner une vidéo</string>
+    <string name="guidelines_select_image_manage_info_api_34">Vous avez donné accès à un nombre limité d\'images.</string>
+    <string name="guidelines_select_video_manage_info_api_34">Vous avez donné accès à un nombre limité de vidéos.</string>
+    <string name="guidelines_select_image_manage_info_api_33">Vous avez donné accès aux images de l\'appareil.</string>
+    <string name="guidelines_select_video_manage_info_api_33">Vous avez donné accès aux vidéos de l\'appareil.</string>
+    <string name="guidelines_select_multimedia_manage_info_default">Vous avez donné accès au contenu multimédia de l\'appareil.</string>
+    <string name="guidelines_select_image_no_media">Aucune image trouvée sur l\'appareil.</string>
+    <string name="guidelines_select_video_no_media">Aucune vidéo trouvée sur l\'appareil.</string>
+
+    <string name="guidelines_form_title">Titre *</string>
+    <string name="guidelines_form_number_of_order">Numéro de commande *</string>
+
+    <string name="guidelines_multimedia_not_found">Multimédia introuvable</string>
+
+    <string name="guidelines_dialog_message_add_image">Saisissez l\'URL de l\'image ou téléchargez une image stockée sur l\'appareil :</string>
+    <string name="guidelines_dialog_message_add_video">Saisissez l\'URL de la vidéo ou téléchargez une vidéo stockée sur l\'appareil :</string>
+    <string name="guidelines_dialog_message_image_not_found">L\'image n\'est plus disponible, elle sera donc supprimée de la directive.</string>
+    <string name="guidelines_dialog_message_video_not_found">La vidéo n\'est plus disponible, elle sera donc supprimée de la directive.</string>
+    <string name="guidelines_dialog_message_delete">Êtes-vous sûr de vouloir supprimer cette directive du traitement ?</string>
+
+    <string name="guidelines_dialog_denied_read_multimedia_permission">L\'accès au contenu multimédia a été refusé, donc aucun multimédia ne peut être sélectionné depuis l\'appareil. Il est recommandé d\'autoriser l\'accès pour ajouter du multimédia depuis l\'appareil à la directive.</string>
+
+    <string name="guidelines_toast_confirmation_delete">Directive supprimée avec succès !</string>
+    <string name="guidelines_toast_no_app_open_image">Aucune application n\'est disponible pour ouvrir cette image.</string>
+    <string name="guidelines_toast_no_app_open_video">Aucune application n\'est disponible pour ouvrir cette vidéo.</string>
+</resources>

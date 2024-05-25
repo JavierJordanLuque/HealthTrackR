@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unspecified">Não especificado</string>
+
+    <string name="easter_egg_5_message">Você tem um tic nervoso?</string>
+    <string name="easter_egg_10_message">O que está acontecendo?</string>
+    <string name="easter_egg_15_message">Você está tentando a sorte…</string>
+    <string name="easter_egg_20_message">Já chega, né? Me deixe em paz!</string>
+    <string name="easter_egg_25_message">Ok, ok, você ganhou! Pode parar com isso agora!</string>
+    <string name="easter_egg_30_message">Você ganhou o prêmio de pessoa mais persistente!</string>
+
+    <string name="snackbar_action_more">Mais</string>
+
+    <string name="button_add">Adicionar</string>
+    <string name="button_save">Salvar</string>
+    <string name="button_modify">Modificar</string>
+    <string name="button_change">Alterar</string>
+    <string name="button_delete">Excluir</string>
+
+    <string name="dialog_positive_yes">Sim</string>
+    <string name="dialog_positive_accept">Aceitar</string>
+    <string name="dialog_positive_confirm">Confirmar</string>
+
+    <string name="dialog_negative_no">Não</string>
+    <string name="dialog_negative_cancel">Cancelar</string>
+    <string name="dialog_negative_try_again">Tentar novamente</string>
+
+    <string name="dialog_message_save">Tem certeza de que deseja salvar as alterações?</string>
+
+    <string name="dialog_date_picker_day">Dia</string>
+    <string name="dialog_date_picker_month">Mês</string>
+    <string name="dialog_date_picker_year">Ano</string>
+
+    <string name="toast_confirmation_save">Alterações aplicadas com sucesso!</string>
+
+    <string name="filter_title">Filtro</string>
+    <string name="filter_filter">Filtrar</string>
+    <string name="filter_show_all">Mostrar tudo</string>
+
+    <string name="date_at_time">às</string>
+    <string name="hours">h</string>
+    <string name="minutes">min</string>
+
+    <string name="manage">Gerenciar</string>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_app_bar_title">Minha conta</string>
+    <string name="account_app_bar_title_modify">Modificar conta</string>
+    <string name="account_app_bar_title_change_password">Alterar senha</string>
+
+    <string name="account_email">E-mail</string>
+    <string name="account_first_name">Primeiro nome</string>
+    <string name="account_last_name">Sobrenome</string>
+    <string name="account_birth_date">Data de nascimento</string>
+    <string name="account_gender">Gênero</string>
+    <string name="account_blood_type">Tipo sanguíneo</string>
+    <string name="account_allergies">Alergias</string>
+    <string name="account_previous_medical_conditions">Condições médicas anteriores</string>
+    <string name="account_sign_out">Sair</string>
+    <string name="account_delete">Excluir conta</string>
+    <string name="account_change_password">Alterar senha</string>
+
+    <string name="account_form_first_name">Primeiro nome *</string>
+    <string name="account_form_last_name">Sobrenome *</string>
+    <string name="account_form_current_password">Senha atual *</string>
+    <string name="account_form_new_password">Nova senha *</string>
+    <string name="account_form_repeat_new_password">Repetir nova senha *</string>
+
+    <string name="account_helper_allergies">Digite suas alergias separadas por vírgula (,).</string>
+    <string name="account_helper_previous_medical_condition">Digite suas condições médicas anteriores separadas por vírgula (,).</string>
+
+    <string name="account_dialog_message_birth_date">Selecione sua data de nascimento:</string>
+    <string name="account_dialog_message_sign_out">Tem certeza de que deseja sair?</string>
+    <string name="account_dialog_message_delete">Tem certeza de que deseja excluir sua conta?</string>
+    <string name="account_dialog_message_change_password">Tem certeza de que deseja alterar sua senha?</string>
+
+    <string name="account_toast_confirmation_delete">Conta excluída com sucesso!</string>
+    <string name="account_toast_confirmation_change_password">Senha atualizada com sucesso!</string>
+
+    <string-array name="account_array_gender">
+        <item>Masculino</item>
+        <item>Feminino</item>
+        <item>Não especificado</item>
+    </string-array>
+    <string-array name="account_array_blood_type">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>Não especificado</item>
+    </string-array>
+</resources>

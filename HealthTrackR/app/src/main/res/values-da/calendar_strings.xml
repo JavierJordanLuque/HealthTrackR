@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calendar_app_bar_title">Kalender</string>
+    <string name="calendar_treatment_app_bar_title">Kalender og lægeaftaler</string>
+
+    <string name="calendar_filter_medical_appointments">Lægeaftaler</string>
+    <string name="calendar_filter_medication_intake">Indtagelse af medicin</string>
+    <string name="calendar_filter_passed">Gennemført</string>
+    <string name="calendar_filter_pending">Afventende</string>
+
+    <string name="calendar_no_elements">Du har ingen begivenheder for denne dato.</string>
+
+    <string name="calendar_today">(i dag)</string>
+    <string name="calendar_yesterday">(i går)</string>
+    <string name="calendar_tomorrow">(i morgen)</string>
+
+    <string name="calendar_medicines">Medicin</string>
+    <string name="calendar_medical_appointments">Lægeaftale</string>
+
+    <string name="calendar_treatment_start">Start på behandlingen</string>
+    <string name="calendar_treatment_end">Afslutning af behandlingen</string>
+
+    <string name="calendar_legend_info">Indikatorer overlapper fra mindst til mest vigtig:</string>
+    <string name="calendar_legend_current_date">Nuværende dato</string>
+    <string name="calendar_legend_start_date">Startdato</string>
+    <string name="calendar_legend_end_date">Slutdato</string>
+    <string name="calendar_legend_medical_appointment">Lægeaftale</string>
+    <string name="calendar_legend_medication_intake">Indtagelse af medicin</string>
+
+    <string-array name="weekdays">
+        <item>søn</item>
+        <item>man</item>
+        <item>tir</item>
+        <item>ons</item>
+        <item>tor</item>
+        <item>fre</item>
+        <item>lør</item>
+    </string-array>
+    <string-array name="months">
+        <item>januar</item>
+        <item>februar</item>
+        <item>marts</item>
+        <item>april</item>
+        <item>maj</item>
+        <item>juni</item>
+        <item>juli</item>
+        <item>august</item>
+        <item>september</item>
+        <item>oktober</item>
+        <item>november</item>
+        <item>december</item>
+    </string-array>
+</resources>

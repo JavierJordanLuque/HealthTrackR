@@ -36,7 +36,7 @@
     <string name="content_description_selectable_image">Selectable image</string>
     <string name="content_description_selectable_video">Selectable video</string>
     <string name="content_description_close_dialog">Close dialog</string>
-    <string name="content_description_video_duration">Video`s duration</string>
+    <string name="content_description_video_duration">Video\'s duration</string>
 
     <string name="content_description_add_symptom">Add symptom</string>
     <string name="content_description_add_question">Add question</string>

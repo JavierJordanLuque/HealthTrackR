@@ -21,11 +21,11 @@
 
     <string name="guidelines_select_image">Select an image</string>
     <string name="guidelines_select_video">Select a video</string>
-    <string name="guidelines_select_image_manage_info_api_34">You`ve given access to a select number of images.</string>
-    <string name="guidelines_select_video_manage_info_api_34">You`ve given access to a select number of videos.</string>
-    <string name="guidelines_select_image_manage_info_api_33">You`ve given access to device images.</string>
-    <string name="guidelines_select_video_manage_info_api_33">You`ve given access to device videos.</string>
-    <string name="guidelines_select_multimedia_manage_info_default">You`ve given access to device multimedia content.</string>
+    <string name="guidelines_select_image_manage_info_api_34">You\'ve given access to a select number of images.</string>
+    <string name="guidelines_select_video_manage_info_api_34">You\'ve given access to a select number of videos.</string>
+    <string name="guidelines_select_image_manage_info_api_33">You\'ve given access to device images.</string>
+    <string name="guidelines_select_video_manage_info_api_33">You\'ve given access to device videos.</string>
+    <string name="guidelines_select_multimedia_manage_info_default">You\'ve given access to device multimedia content.</string>
     <string name="guidelines_select_image_no_media">No images found on the device.</string>
     <string name="guidelines_select_video_no_media">No videos found on the device.</string>
 

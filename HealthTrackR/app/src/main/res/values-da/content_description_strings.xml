@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_description_app_icon">HealthTrackR-ikon</string>
+    <string name="content_description_back_icon">Gå tilbage</string>
+    <string name="content_description_toggle_password_visibility">Skift adgangskode synlighed</string>
+    <string name="content_description_clear_text">Ryd tekst</string>
+
+    <string name="content_description_modify_account">Rediger konto</string>
+    <string name="content_description_add_treatment">Tilføj behandling</string>
+    <string name="content_description_access_treatment">Få adgang til behandling</string>
+    <string name="content_description_modify_treatment">Rediger behandling</string>
+    <string name="content_description_access_guidelines">Få adgang til retningslinjer</string>
+    <string name="content_description_access_medicines">Få adgang til medicin</string>
+    <string name="content_description_access_symptoms">Få adgang til symptomer</string>
+    <string name="content_description_access_calendar">Få adgang til behandlingskalender</string>
+    <string name="content_description_access_questions">Få adgang til spørgsmål</string>
+    <string name="content_description_delete_treatment">Slet behandling</string>
+
+    <string name="content_description_status_pending">Afventende behandlingsstatus</string>
+    <string name="content_description_status_in_progress">Behandlingsstatus i gang</string>
+    <string name="content_description_status_finished">Behandlingsstatus færdig</string>
+
+    <string name="content_description_add_medicine">Tilføj medicin</string>
+    <string name="content_description_modify_medicine">Rediger medicin</string>
+    <string name="content_description_delete_medicine">Slet medicin</string>
+    <string name="content_description_access_medicine_notifications">Få adgang til medicinmeddelelser</string>
+    <string name="content_description_error_icon">Fejl-ikon</string>
+
+    <string name="content_description_add_guideline">Tilføj retningslinje</string>
+    <string name="content_description_remove_multimedia">Fjern multimedie</string>
+    <string name="content_description_multimedia_error_loading_multimedia_content">Fejl ved indlæsning af multimedieindhold</string>
+    <string name="content_description_guideline_image">Retningslinjebillede:</string>
+    <string name="content_description_guideline_video">Retningslinjevideo:</string>
+    <string name="content_description_selectable_image">Valgbart billede</string>
+    <string name="content_description_selectable_video">Valgbar video</string>
+    <string name="content_description_close_dialog">Luk dialog</string>
+    <string name="content_description_video_duration">Videoens varighed</string>
+
+    <string name="content_description_add_symptom">Tilføj symptom</string>
+    <string name="content_description_add_question">Tilføj spørgsmål</string>
+
+    <string name="content_description_add_medical_appointment">Tilføj lægeaftale</string>
+    <string name="content_description_modify_medical_appointment">Rediger lægeaftale</string>
+    <string name="content_description_delete_medical_appointment">Slet lægeaftale</string>
+    <string name="content_description_access_medical_appointment_notification">Få adgang til lægeaftalenotifikation</string>
+    <string name="content_description_directions">Instruktioner</string>
+
+    <string name="content_description_calendar_filter_medical_appointment_passed">Bestået lægeaftaler</string>
+    <string name="content_description_calendar_filter_medical_appointment_pending">Afventende lægeaftaler</string>
+    <string name="content_description_calendar_filter_medication_intake_passed">Bestået medicinindtag</string>
+    <string name="content_description_calendar_filter_medication_intake_pending">Afventende medicinindtag</string>
+
+    <string name="content_description_calendar_legend">Kalenderlegende</string>
+    <string name="content_description_calendar_indicator_current_date">Aktuel datoindeks</string>
+    <string name="content_description_calendar_indicator_start_date">Startdatoindeks</string>
+    <string name="content_description_calendar_indicator_end_date">Slutdatoindeks</string>
+    <string name="content_description_calendar_indicator_medical_appointment">Lægeaftaleindeks</string>
+    <string name="content_description_calendar_indicator_medication_intake">Medicinindtagindeks</string>
+</resources>

@@ -102,6 +102,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
+        } else if (itemId == R.id.menuSettings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
         } else if (itemId == R.id.menuHelp) {
             NavigationUtils.openUserManual(this);
             return true;
@@ -414,11 +418,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             timeDifferenceString = getString(R.string.medicines_now);
         } else {
             if (days > 0)
-                timeDifferenceString += getResources().getQuantityString(R.plurals.medicines_days, (int) days, days) + " ";
+                timeDifferenceString += days + " " + getString(R.string.medicines_days) + " ";
             if (hours > 0)
-                timeDifferenceString += getResources().getQuantityString(R.plurals.medicines_hours, (int) hours, hours) + " ";
+                timeDifferenceString += hours + " " + getString(R.string.medicines_hours) + " ";
             if (minutes > 0)
-                timeDifferenceString += getResources().getQuantityString(R.plurals.medicines_minutes, (int) minutes, minutes);
+                timeDifferenceString += minutes + " " + getString(R.string.medicines_minutes);
         }
 
         return timeDifferenceString.trim();

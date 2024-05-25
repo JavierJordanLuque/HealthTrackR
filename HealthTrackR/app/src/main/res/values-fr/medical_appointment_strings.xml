@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medical_appointment_app_bar_title">Rendez-vous médical</string>
+    <string name="medical_appointment_app_bar_title_add">Ajout de rendez-vous médical</string>
+    <string name="medical_appointment_app_bar_title_modify">Modification de rendez-vous médical</string>
+    <string name="medical_appointment_app_bar_title_modify_notification">Modification de la notification</string>
+
+    <string name="medical_appointment_date_time">Date et heure</string>
+    <string name="medical_appointment_subject">Sujet</string>
+    <string name="medical_appointment_location">Emplacement</string>
+    <string name="medical_appointment_location_place">Lieu</string>
+    <string name="medical_appointment_location_latitude">Latitude :</string>
+    <string name="medical_appointment_location_longitude">Longitude :</string>
+    <string name="medical_appointment_before">avant</string>
+    <string name="medical_appointment_previous_notification_status">Statut de la notification précédente</string>
+
+    <string name="medical_appointment_form_date_time">Date et heure *</string>
+    <string name="medical_appointment_form_previous_notification_time">Heure de la notification précédente *</string>
+
+    <string name="medical_appointment_location_helper">Indiquer un emplacement précis</string>
+    <string name="medical_appointment_add_medicine_helper">Lors de l\'ajout du rendez-vous médical, une notification précédente (par défaut 1 heure avant) sera définie.</string>
+    <string name="medical_appointment_previous_notification_time_helper">Un temps de notification précédent de 0 heure et 0 minute indique aucune notification précédente.</string>
+
+    <string name="medical_appointment_dialog_message_no_location">Aucun emplacement n\'a été indiqué. Veuillez ajouter un emplacement au rendez-vous médical pour obtenir l\'itinéraire.</string>
+    <string name="medical_appointment_dialog_message_delete">Êtes-vous sûr de vouloir supprimer ce rendez-vous médical du traitement ?</string>
+    <string name="medical_appointment_dialog_denied_notification_permission">La permission de notification a été refusée, donc les notifications ne seront pas configurées. Il est recommandé de donner la permission pour recevoir les notifications de rendez-vous médical.</string>
+
+    <string name="medical_appointment_toast_confirmation_delete">Rendez-vous médical supprimé avec succès !</string>
+</resources>

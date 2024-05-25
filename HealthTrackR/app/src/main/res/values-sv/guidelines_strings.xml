@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guidelines_app_bar_title">Riktlinjer</string>
+    <string name="guidelines_app_bar_title_add">Lägg till riktlinje</string>
+    <string name="guidelines_app_bar_title_modify">Ändra riktlinje</string>
+
+    <string name="guidelines_no_elements">Du har inga riktlinjer i den här behandlingen. Lägg till en ny riktlinje.</string>
+
+    <string name="guidelines_description">Beskrivning</string>
+    <string name="guidelines_images">Bilder</string>
+    <string name="guidelines_videos">Videor</string>
+    <string name="guidelines_image_url_helper">URL:en måste innehålla en giltig prefix (https://, http://) och en giltig bildtillägg (.jpg, .jpeg, .png, .gif).</string>
+    <string name="guidelines_video_url_helper">URL:en måste innehålla en giltig prefix (https://, http://) och ett giltigt videotillägg (.mp4, .3gp, .avi, .mov) eller tillhöra YouTube.</string>
+
+    <string name="guidelines_add_guideline_helper">Efter att ha lagt till riktlinjen kan förklarande bilder eller videor inkluderas genom att ändra den.</string>
+
+    <string name="guidelines_add_image">Lägg till bild</string>
+    <string name="guidelines_add_video">Lägg till video</string>
+    <string name="guidelines_upload_image_from_device">Ladda upp bild från enheten</string>
+    <string name="guidelines_upload_video_from_device">Ladda upp video från enheten</string>
+
+    <string name="guidelines_select_image">Välj en bild</string>
+    <string name="guidelines_select_video">Välj en video</string>
+    <string name="guidelines_select_image_manage_info_api_34">Du har gett åtkomst till ett begränsat antal bilder.</string>
+    <string name="guidelines_select_video_manage_info_api_34">Du har gett åtkomst till ett begränsat antal videor.</string>
+    <string name="guidelines_select_image_manage_info_api_33">Du har gett åtkomst till enhetens bilder.</string>
+    <string name="guidelines_select_video_manage_info_api_33">Du har gett åtkomst till enhetens videor.</string>
+    <string name="guidelines_select_multimedia_manage_info_default">Du har gett åtkomst till enhetens multimedia-innehåll.</string>
+    <string name="guidelines_select_image_no_media">Inga bilder hittades på enheten.</string>
+    <string name="guidelines_select_video_no_media">Inga videor hittades på enheten.</string>
+
+    <string name="guidelines_form_title">Rubrik *</string>
+    <string name="guidelines_form_number_of_order">Ordningens nummer *</string>
+
+    <string name="guidelines_multimedia_not_found">Multimedia hittades inte</string>
+
+    <string name="guidelines_dialog_message_add_image">Ange bildens URL eller ladda upp en bild som är sparad på enheten:</string>
+    <string name="guidelines_dialog_message_add_video">Ange videons URL eller ladda upp en video som är sparad på enheten:</string>
+    <string name="guidelines_dialog_message_image_not_found">Bilden är inte längre tillgänglig, så den kommer att tas bort från riktlinjen.</string>
+    <string name="guidelines_dialog_message_video_not_found">Videon är inte längre tillgänglig, så den kommer att tas bort från riktlinjen.</string>
+    <string name="guidelines_dialog_message_delete">Är du säker på att du vill ta bort den här riktlinjen från behandlingen?</string>
+
+    <string name="guidelines_dialog_denied_read_multimedia_permission">Åtkomst till multimedia-innehållet har nekats, så multimedia kan inte väljas från enheten. Rekommenderas att ge tillstånd för att lägga till multimedia från enheten till riktlinjen.</string>
+
+    <string name="guidelines_toast_confirmation_delete">Riktlinjen har tagits bort framgångsrikt!</string>
+    <string name="guidelines_toast_no_app_open_image">Det finns ingen app tillgänglig för att öppna den här bilden.</string>
+    <string name="guidelines_toast_no_app_open_video">Det finns ingen app tillgänglig för att öppna den här videon.</string>
+</resources>

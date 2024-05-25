@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="questions_app_bar_title">Spørgsmål</string>
+
+    <string name="questions_no_elements">Du har ikke spørgsmål i denne behandling. Tilføj venligst et nyt spørgsmål.</string>
+
+    <string name="questions_form_description">Beskrivelse *</string>
+
+    <string name="questions_dialog_title_add">Spørgsmål tilføjelse</string>
+    <string name="questions_dialog_message_delete">Er du sikker på, at du vil slette dette spørgsmål fra behandlingen?</string>
+
+    <string name="questions_toast_confirmation_delete">Spørgsmål slettet med succes!</string>
+</resources>

@@ -19,13 +19,9 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        Object[] credentials = AuthenticationService.getCredentials(this);
-        String email = null;
-        String password = null;
-        if (credentials != null) {
-            email = (String) credentials[0];
-            password = (String) credentials[1];
-        }
+        String[] credentials = AuthenticationService.getCredentials(this);
+        String email = (credentials != null) ? credentials[0] : null;
+        String password = (credentials != null) ? credentials[1] : null;
 
         if (email != null && password != null) {
             try {

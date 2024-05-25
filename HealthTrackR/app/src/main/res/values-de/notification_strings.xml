@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_group_name_medication">Medicin</string>
+    <string name="notification_channel_group_name_medical_appointment">Lægeaftaler</string>
+    <string name="notification_channel_name_previous_medication">Tidligere påmindelser om medicin</string>
+    <string name="notification_channel_description_previous_medication">Modtag rettidige meddelelser om medicinplaner. Hold dig på rette spor med dine medicindoser ved at få påmindelser inden hver planlagte dosis.</string>
+    <string name="notification_channel_name_medication">Påmindelser om medicin</string>
+    <string name="notification_channel_description_medication">Modtag rettidige meddelelser om medicinplaner. Hold dig på rette spor med dine medicindoser ved at få påmindelser på tidspunktet for indtagelse.</string>
+    <string name="notification_channel_name_medical_appointment">Påmindelser om lægeaftaler</string>
+    <string name="notification_channel_description_medical_appointment">Modtag rettidige meddelelser om kommende lægeaftaler. Hold dig organiseret og forberedt ved at få påmindelser inden hver planlagte aftale.</string>
+
+    <string name="notification_title_medication">Medicindosis</string>
+    <string name="notification_title_medical_appointment">Lægeaftale</string>
+
+    <string name="notification_message_medication_dose">Næste dosis af</string>
+    <string name="notification_message_medication_treatment">fra behandlingen</string>
+    <string name="notification_message_medication_schedule_now">er planlagt til nu.</string>
+    <string name="notification_message_medication_scheduled_in">er planlagt om</string>
+
+    <string name="notification_message_medical_appointment_appointment">Lægeaftale for</string>
+    <string name="notification_message_medical_appointment_treatment">under behandling</string>
+    <string name="notification_message_medical_appointment_scheduled_now">planlagt til nu.</string>
+    <string name="notification_message_medical_appointment_scheduled_in">planlagt om</string>
+    <string name="notification_message_medical_appointment_location">Sted:</string>
+    <string name="notification_message_medical_appointment_latitude">Breddegrad</string>
+    <string name="notification_message_medical_appointment_longitude">Længdegrad</string>
+
+    <string name="notification_public_message_medication_scheduled_now">En medicindosis er planlagt til nu.</string>
+    <string name="notification_public_message_medication_scheduled_in">En medicindosis er planlagt om</string>
+    <string name="notification_public_message_medical_appointment_scheduled_now">En lægeaftale er planlagt til nu.</string>
+    <string name="notification_public_message_medical_appointment_scheduled_in">En lægeaftale er planlagt om</string>
+
+    <plurals name="notification_message_days">
+        <item quantity="one">én dag</item>
+        <item quantity="other">%d dage</item>
+    </plurals>
+    <plurals name="notification_message_hours">
+        <item quantity="one">én time</item>
+        <item quantity="other">%d timer</item>
+    </plurals>
+    <plurals name="notification_message_minutes">
+        <item quantity="one">et minut</item>
+        <item quantity="other">%d minutter</item>
+    </plurals>
+</resources>

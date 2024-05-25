@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medical_appointment_app_bar_title">Appuntamento medico</string>
+    <string name="medical_appointment_app_bar_title_add">Aggiunta appuntamento medico</string>
+    <string name="medical_appointment_app_bar_title_modify">Modifica appuntamento medico</string>
+    <string name="medical_appointment_app_bar_title_modify_notification">Modifica notifica</string>
+
+    <string name="medical_appointment_date_time">Data e ora</string>
+    <string name="medical_appointment_subject">Oggetto</string>
+    <string name="medical_appointment_location">Posizione</string>
+    <string name="medical_appointment_location_place">Luogo</string>
+    <string name="medical_appointment_location_latitude">Latitudine:</string>
+    <string name="medical_appointment_location_longitude">Longitudine:</string>
+    <string name="medical_appointment_before">prima</string>
+    <string name="medical_appointment_previous_notification_status">Stato della notifica precedente</string>
+
+    <string name="medical_appointment_form_date_time">Data e ora *</string>
+    <string name="medical_appointment_form_previous_notification_time">Orario della notifica precedente *</string>
+
+    <string name="medical_appointment_location_helper">Indicare posizione esatta</string>
+    <string name="medical_appointment_add_medicine_helper">Aggiungendo l\'appuntamento medico, sarà impostata una notifica precedente (predefinita 1 ora prima).</string>
+    <string name="medical_appointment_previous_notification_time_helper">Un orario di notifica precedente di 0 ore e 0 minuti indica nessuna notifica precedente.</string>
+
+    <string name="medical_appointment_dialog_message_no_location">Nessuna posizione è stata indicata. Si prega di aggiungere una posizione all\'appuntamento medico per ottenere l\'itinerario.</string>
+    <string name="medical_appointment_dialog_message_delete">Sei sicuro di voler eliminare questo appuntamento medico dalla terapia?</string>
+    <string name="medical_appointment_dialog_denied_notification_permission">Il permesso di notifica è stato negato, quindi le notifiche non verranno impostate. Si consiglia di concedere il permesso per ricevere le notifiche degli appuntamenti medici.</string>
+
+    <string name="medical_appointment_toast_confirmation_delete">Appuntamento medico eliminato con successo!</string>
+</resources>

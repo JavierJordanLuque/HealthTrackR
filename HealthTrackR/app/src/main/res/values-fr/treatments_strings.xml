@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="treatments_app_bar_title">Traitements</string>
+    <string name="treatments_app_bar_title_add">Ajouter un traitement</string>
+    <string name="treatments_app_bar_title_modify">Modifier le traitement</string>
+
+    <string name="treatments_no_elements">Vous n\'avez aucun traitement. Veuillez ajouter un nouveau traitement.</string>
+    <string name="treatments_not_found_message">Aucun traitement trouvé correspondant aux filtres spécifiés. Veuillez essayer d\'autres filtres.</string>
+
+    <string name="treatments_title">Titre</string>
+    <string name="treatments_start_date">Date de début</string>
+    <string name="treatments_end_date">Date de fin</string>
+    <string name="treatments_category">Catégorie</string>
+    <string name="treatments_diagnosis">Diagnostic</string>
+    <string name="treatments_guidelines">Directives</string>
+    <string name="treatments_medicines">Médicaments</string>
+    <string name="treatments_symptoms">Symptômes</string>
+    <string name="treatments_calendar">Calendrier</string>
+
+    <string name="treatments_form_title">Titre *</string>
+    <string name="treatments_form_start_date">Date de début *</string>
+    <string name="treatments_form_category">Catégorie *</string>
+
+    <string name="treatments_dialog_message_start_date">Sélectionnez la date de début du traitement :</string>
+    <string name="treatments_dialog_message_invalid_start_date">La date de début sélectionnée est postérieure à d\'autres dates contenues dans le traitement. Veuillez ajuster les dates des médicaments et des rendez-vous médicaux avant de modifier la date de début du traitement.</string>
+    <string name="treatments_dialog_message_end_date">Sélectionnez la date de fin du traitement :</string>
+    <string name="treatments_dialog_message_invalid_end_date">La date de fin sélectionnée est antérieure à d\'autres dates contenues dans le traitement. Veuillez ajuster les dates des médicaments et des rendez-vous médicaux avant de modifier la date de fin du traitement.</string>
+    <string name="treatments_dialog_message_delete">Êtes-vous sûr de vouloir supprimer ce traitement ?</string>
+
+    <string name="treatments_toast_confirmation_delete">Traitement supprimé avec succès !</string>
+
+    <string name="treatments_status">Statut</string>
+    <string name="treatments_status_pending">En attente</string>
+    <string name="treatments_status_in_progress">En cours</string>
+    <string name="treatments_status_finished">Terminé</string>
+
+    <string-array name="treatments_array_category">
+        <item>Médical</item>
+        <item>Pharmacologique</item>
+        <item>Physiothérapie</item>
+        <item>Rééducation</item>
+        <item>Psychologique</item>
+        <item>Préventif</item>
+        <item>Chronique</item>
+        <item>Alternatif</item>
+    </string-array>
+</resources>

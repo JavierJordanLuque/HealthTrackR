@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_app_bar_title">Min konto</string>
+    <string name="account_app_bar_title_modify">Rediger konto</string>
+    <string name="account_app_bar_title_change_password">Skift adgangskode</string>
+
+    <string name="account_email">E-mail</string>
+    <string name="account_first_name">Fornavn</string>
+    <string name="account_last_name">Efternavn</string>
+    <string name="account_birth_date">Fødselsdato</string>
+    <string name="account_gender">Køn</string>
+    <string name="account_blood_type">Blodtype</string>
+    <string name="account_allergies">Allergier</string>
+    <string name="account_previous_medical_conditions">Tidligere medicinske tilstande</string>
+    <string name="account_sign_out">Log ud</string>
+    <string name="account_delete">Slet konto</string>
+    <string name="account_change_password">Skift adgangskode</string>
+
+    <string name="account_form_first_name">Fornavn *</string>
+    <string name="account_form_last_name">Efternavn *</string>
+    <string name="account_form_current_password">Nuværende adgangskode *</string>
+    <string name="account_form_new_password">Ny adgangskode *</string>
+    <string name="account_form_repeat_new_password">Gentag ny adgangskode *</string>
+
+    <string name="account_helper_allergies">Indtast dine allergier adskilt af kommaer (,).</string>
+    <string name="account_helper_previous_medical_condition">Indtast dine tidligere medicinske tilstande adskilt af kommaer (,).</string>
+
+    <string name="account_dialog_message_birth_date">Vælg din fødselsdato:</string>
+    <string name="account_dialog_message_sign_out">Er du sikker på, at du vil logge ud?</string>
+    <string name="account_dialog_message_delete">Er du sikker på, at du vil slette din konto?</string>
+    <string name="account_dialog_message_change_password">Er du sikker på, at du vil skifte din adgangskode?</string>
+
+    <string name="account_toast_confirmation_delete">Kontoen blev slettet med succes!</string>
+    <string name="account_toast_confirmation_change_password">Adgangskoden blev opdateret med succes!</string>
+
+    <string-array name="account_array_gender">
+        <item>Mand</item>
+        <item>Kvinde</item>
+        <item>Ikke specificeret</item>
+    </string-array>
+    <string-array name="account_array_blood_type">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>Ikke specificeret</item>
+    </string-array>
+</resources>

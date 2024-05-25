@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unspecified">Ej specificerat</string>
+
+    <string name="easter_egg_5_message">Har du en nervös tick?</string>
+    <string name="easter_egg_10_message">Vad är det med dig?</string>
+    <string name="easter_egg_15_message">Du frestar ödet…</string>
+    <string name="easter_egg_20_message">Har du fått nog nu? Låt mig vara ifred!</string>
+    <string name="easter_egg_25_message">Okej, okej, du vann! Du kan sluta med det nu!</string>
+    <string name="easter_egg_30_message">Du har vunnit priset för den mest ihärdiga personen!</string>
+
+    <string name="snackbar_action_more">Mer</string>
+
+    <string name="button_add">Lägg till</string>
+    <string name="button_save">Spara</string>
+    <string name="button_modify">Ändra</string>
+    <string name="button_change">Ändra</string>
+    <string name="button_delete">Radera</string>
+
+    <string name="dialog_positive_yes">Ja</string>
+    <string name="dialog_positive_accept">Acceptera</string>
+    <string name="dialog_positive_confirm">Bekräfta</string>
+
+    <string name="dialog_negative_no">Nej</string>
+    <string name="dialog_negative_cancel">Avbryt</string>
+    <string name="dialog_negative_try_again">Försök igen</string>
+
+    <string name="dialog_message_save">Är du säker på att du vill spara ändringarna?</string>
+
+    <string name="dialog_date_picker_day">Dag</string>
+    <string name="dialog_date_picker_month">Månad</string>
+    <string name="dialog_date_picker_year">År</string>
+
+    <string name="toast_confirmation_save">Ändringar sparade!</string>
+
+    <string name="filter_title">Filter</string>
+    <string name="filter_filter">Filtrera</string>
+    <string name="filter_show_all">Visa alla</string>
+
+    <string name="date_at_time">kl.</string>
+    <string name="hours">h</string>
+    <string name="minutes">min</string>
+
+    <string name="manage">Hantera</string>
+</resources>

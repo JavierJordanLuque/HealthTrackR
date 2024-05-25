@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicines_app_bar_title">Mediciner</string>
+    <string name="medicines_app_bar_title_add">Lägg till medicin</string>
+    <string name="medicines_app_bar_title_modify">Ändra medicin</string>
+    <string name="medicines_app_bar_title_modify_notifications">Ändra meddelanden</string>
+
+    <string name="medicines_no_elements">Du har inga mediciner i den här behandlingen. Lägg till en ny medicin.</string>
+    <string name="medicines_none">Ingen</string>
+    <string name="medicines_now">Nu</string>
+    <string name="medicines_single_dose">Enkel dos</string>
+
+    <string name="medicines_mg">mg</string>
+    <string name="medicines_days">d</string>
+    <string name="medicines_hours">h</string>
+    <string name="medicines_minutes">min</string>
+
+    <string name="medicines_active_substance">Aktiv substans</string>
+    <string name="medicines_dose">Dos</string>
+    <string name="medicines_administration_route">Administrationssätt</string>
+    <string name="medicines_initial_dosing_time">Initial doseringstid</string>
+    <string name="medicines_dosing_frequency">Dosfrekvens</string>
+    <string name="medicines_next_dose">Nästa dos</string>
+    <string name="medicines_each">Varje:</string>
+    <string name="medicines_before">före</string>
+    <string name="medicines_previous_notification_status">Tidigare notifieringsstatus</string>
+    <string name="medicines_dosing_notification_status">Doseringsnotifieringsstatus</string>
+    <string name="medicines_add_medicine_helper">När du lägger till medicinen kommer två doseringsnotifieringar att ställas in: en tidigare notifiering (standard 1 timme före) och en notifiering vid doseringstiden.</string>
+
+    <string name="medicines_form_name">Namn *</string>
+    <string name="medicines_form_initial_dosing_time">Initial doseringstid *</string>
+    <string name="medicines_form_dosing_frequency">Dosfrekvens *</string>
+    <string name="medicines_form_previous_notification_time">Tidigare notifieringstid *</string>
+
+    <string name="medicines_dosing_frequency_helper">En dosfrekvens på 0 timmar och 0 minuter indikerar en enkel dos.</string>
+    <string name="medicines_previous_notification_time_helper">En tidigare notifieringstid på 0 timmar och 0 minuter indikerar ingen tidigare notifiering. Tidigare notifieringstider mindre än 20 minuter kan orsaka inbäddning av notifieringar med doseringsnotifiering.</string>
+
+    <string name="medicines_dialog_message_no_previous_notification_add">Dosfrekvensen är mindre än eller lika med tiden som anges för tidigare notifiering (standard 1 timme före). Därför kommer den tidigare notifieringen inte att ställas in. Är du säker på att du vill lägga till detta läkemedel?</string>
+    <string name="medicines_dialog_message_no_previous_notification_modify">Dosfrekvensen är mindre än eller lika med den tid som anges för tidigare notifiering. Därför kommer den tidigare notifieringen inte att ställas in. Är du säker på att du vill spara ändringarna?</string>
+    <string name="medicines_dialog_message_delete">Är du säker på att du vill ta bort detta läkemedel från behandlingen?</string>
+    <string name="medicines_dialog_denied_notification_permission">Tillståndet för meddelanden har nekats, så meddelanden kommer inte att ställas in. Det rekommenderas att tillstånd ges för att ta emot meddelanden om mediciner.</string>
+
+    <string name="medicines_toast_confirmation_delete">Medicin borttagen framgångsrikt!</string>
+
+    <string-array name="medicines_array_administration_route">
+        <item>Oralt</item>
+        <item>Topiskt</item>
+        <item>Parenteralt</item>
+        <item>Inhalation</item>
+        <item>Oftalmiskt</item>
+        <item>Otiskt</item>
+        <item>Nasalt</item>
+        <item>Rektalt</item>
+        <item>Ej specificerat</item>
+    </string-array>
+</resources>

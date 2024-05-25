@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="treatments_app_bar_title">Лечение</string>
+    <string name="treatments_app_bar_title_add">Добавить лечение</string>
+    <string name="treatments_app_bar_title_modify">Изменить лечение</string>
+
+    <string name="treatments_no_elements">У вас нет лечения. Пожалуйста, добавьте новое лечение.</string>
+    <string name="treatments_not_found_message">Не найдено лечения, соответствующего указанным фильтрам. Пожалуйста, попробуйте другие фильтры.</string>
+
+    <string name="treatments_title">Название</string>
+    <string name="treatments_start_date">Дата начала</string>
+    <string name="treatments_end_date">Дата окончания</string>
+    <string name="treatments_category">Категория</string>
+    <string name="treatments_diagnosis">Диагноз</string>
+    <string name="treatments_guidelines">Рекомендации</string>
+    <string name="treatments_medicines">Лекарства</string>
+    <string name="treatments_symptoms">Симптомы</string>
+    <string name="treatments_calendar">Календарь</string>
+
+    <string name="treatments_form_title">Название *</string>
+    <string name="treatments_form_start_date">Дата начала *</string>
+    <string name="treatments_form_category">Категория *</string>
+
+    <string name="treatments_dialog_message_start_date">Выберите начальную дату лечения:</string>
+    <string name="treatments_dialog_message_invalid_start_date">Выбранная начальная дата позже других дат, содержащихся в лечении. Пожалуйста, настройте даты приема лекарств и медицинских приемов перед изменением начальной даты лечения.</string>
+    <string name="treatments_dialog_message_end_date">Выберите дату окончания лечения:</string>
+    <string name="treatments_dialog_message_invalid_end_date">Выбранная дата окончания раньше других дат, содержащихся в лечении. Пожалуйста, настройте даты приема лекарств и медицинских приемов перед изменением даты окончания лечения.</string>
+    <string name="treatments_dialog_message_delete">Вы уверены, что хотите удалить это лечение?</string>
+
+    <string name="treatments_toast_confirmation_delete">Лечение успешно удалено!</string>
+
+    <string name="treatments_status">Статус</string>
+    <string name="treatments_status_pending">Ожидает</string>
+    <string name="treatments_status_in_progress">В процессе</string>
+    <string name="treatments_status_finished">Завершено</string>
+
+    <string-array name="treatments_array_category">
+        <item>Медицинское</item>
+        <item>Фармакологическое</item>
+        <item>Физиотерапевтическое</item>
+        <item>Реабилитация</item>
+        <item>Психологическое</item>
+        <item>Профилактическое</item>
+        <item>Хроническое</item>
+        <item>Альтернативное</item>
+    </string-array>
+</resources>

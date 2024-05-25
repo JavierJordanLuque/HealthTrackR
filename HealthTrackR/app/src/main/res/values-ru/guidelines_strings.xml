@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guidelines_app_bar_title">Руководство</string>
+    <string name="guidelines_app_bar_title_add">Добавить руководство</string>
+    <string name="guidelines_app_bar_title_modify">Изменить руководство</string>
+
+    <string name="guidelines_no_elements">У вас нет руководств в этом лечении. Пожалуйста, добавьте новое руководство.</string>
+
+    <string name="guidelines_description">Описание</string>
+    <string name="guidelines_images">Изображения</string>
+    <string name="guidelines_videos">Видео</string>
+    <string name="guidelines_image_url_helper">URL должен содержать допустимый префикс (https://, http://) и допустимое расширение изображения (.jpg, .jpeg, .png, .gif).</string>
+    <string name="guidelines_video_url_helper">URL должен содержать допустимый префикс (https://, http://) и допустимое расширение видео (.mp4, .3gp, .avi, .mov) или принадлежать YouTube.</string>
+
+    <string name="guidelines_add_guideline_helper">После добавления руководства можно включить поясняющие изображения или видео, изменив его.</string>
+
+    <string name="guidelines_add_image">Добавить изображение</string>
+    <string name="guidelines_add_video">Добавить видео</string>
+    <string name="guidelines_upload_image_from_device">Загрузить изображение с устройства</string>
+    <string name="guidelines_upload_video_from_device">Загрузить видео с устройства</string>
+
+    <string name="guidelines_select_image">Выбрать изображение</string>
+    <string name="guidelines_select_video">Выбрать видео</string>
+    <string name="guidelines_select_image_manage_info_api_34">Вы предоставили доступ к ограниченному числу изображений.</string>
+    <string name="guidelines_select_video_manage_info_api_34">Вы предоставили доступ к ограниченному числу видео.</string>
+    <string name="guidelines_select_image_manage_info_api_33">Вы предоставили доступ к изображениям устройства.</string>
+    <string name="guidelines_select_video_manage_info_api_33">Вы предоставили доступ к видео устройства.</string>
+    <string name="guidelines_select_multimedia_manage_info_default">Вы предоставили доступ к мультимедийному содержимому устройства.</string>
+    <string name="guidelines_select_image_no_media">На устройстве не найдены изображения.</string>
+    <string name="guidelines_select_video_no_media">На устройстве не найдены видео.</string>
+
+    <string name="guidelines_form_title">Заголовок *</string>
+    <string name="guidelines_form_number_of_order">Номер заказа *</string>
+
+    <string name="guidelines_multimedia_not_found">Мультимедийный контент не найден</string>
+
+    <string name="guidelines_dialog_message_add_image">Введите URL изображения или загрузите изображение, сохраненное на устройстве:</string>
+    <string name="guidelines_dialog_message_add_video">Введите URL видео или загрузите видео, сохраненное на устройстве:</string>
+    <string name="guidelines_dialog_message_image_not_found">Изображение больше не доступно, поэтому оно будет удалено из руководства.</string>
+    <string name="guidelines_dialog_message_video_not_found">Видео больше не доступно, поэтому оно будет удалено из руководства.</string>
+    <string name="guidelines_dialog_message_delete">Вы уверены, что хотите удалить это руководство из лечения?</string>
+
+    <string name="guidelines_dialog_denied_read_multimedia_permission">Доступ к мультимедийному контенту запрещен, поэтому невозможно выбрать мультимедиа с устройства. Рекомендуется предоставить разрешение на добавление мультимедиа с устройства в руководство.</string>
+
+    <string name="guidelines_toast_confirmation_delete">Руководство успешно удалено!</string>
+    <string name="guidelines_toast_no_app_open_image">Нет доступных приложений для открытия этого изображения.</string>
+    <string name="guidelines_toast_no_app_open_video">Нет доступных приложений для открытия этого видео.</string>
+</resources>

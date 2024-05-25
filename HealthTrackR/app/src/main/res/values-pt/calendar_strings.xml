@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calendar_app_bar_title">Calendário</string>
+    <string name="calendar_treatment_app_bar_title">Calendário e consultas médicas</string>
+
+    <string name="calendar_filter_medical_appointments">Consultas médicas</string>
+    <string name="calendar_filter_medication_intake">Ingestão de medicamentos</string>
+    <string name="calendar_filter_passed">Passado</string>
+    <string name="calendar_filter_pending">Pendente</string>
+
+    <string name="calendar_no_elements">Você não tem eventos para esta data.</string>
+
+    <string name="calendar_today">(hoje)</string>
+    <string name="calendar_yesterday">(ontem)</string>
+    <string name="calendar_tomorrow">(amanhã)</string>
+
+    <string name="calendar_medicines">Medicamentos</string>
+    <string name="calendar_medical_appointments">Consulta médica</string>
+
+    <string name="calendar_treatment_start">Início do tratamento</string>
+    <string name="calendar_treatment_end">Fim do tratamento</string>
+
+    <string name="calendar_legend_info">Indicadores sobrepõem-se de menos importante para mais importante:</string>
+    <string name="calendar_legend_current_date">Data atual</string>
+    <string name="calendar_legend_start_date">Data de início</string>
+    <string name="calendar_legend_end_date">Data de término</string>
+    <string name="calendar_legend_medical_appointment">Consulta médica</string>
+    <string name="calendar_legend_medication_intake">Ingestão de medicamentos</string>
+
+    <string-array name="weekdays">
+        <item>dom</item>
+        <item>seg</item>
+        <item>ter</item>
+        <item>qua</item>
+        <item>qui</item>
+        <item>sex</item>
+        <item>sáb</item>
+    </string-array>
+    <string-array name="months">
+        <item>janeiro</item>
+        <item>fevereiro</item>
+        <item>março</item>
+        <item>abril</item>
+        <item>maio</item>
+        <item>junho</item>
+        <item>julho</item>
+        <item>agosto</item>
+        <item>setembro</item>
+        <item>outubro</item>
+        <item>novembro</item>
+        <item>dezembro</item>
+    </string-array>
+</resources>

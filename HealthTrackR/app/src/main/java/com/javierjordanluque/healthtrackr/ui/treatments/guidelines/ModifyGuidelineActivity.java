@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
@@ -697,6 +698,7 @@ public class ModifyGuidelineActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.snackbar_action_more), (dialog, id) -> {
                     Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                     intent.setData(android.net.Uri.parse("package:" + getPackageName()));
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getResources().getConfiguration().getLocales().get(0).getLanguage());
                     readMultimediaPermissionLauncher.launch(intent);
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> dialog.dismiss());

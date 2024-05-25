@@ -10,6 +10,11 @@
     <string name="medicines_now">Ahora</string>
     <string name="medicines_single_dose">Dosis única</string>
 
+    <string name="medicines_mg">mg</string>
+    <string name="medicines_days">d</string>
+    <string name="medicines_hours">h</string>
+    <string name="medicines_minutes">min</string>
+
     <string name="medicines_active_substance">Principio activo</string>
     <string name="medicines_dose">Dosis</string>
     <string name="medicines_administration_route">Vía de administración</string>

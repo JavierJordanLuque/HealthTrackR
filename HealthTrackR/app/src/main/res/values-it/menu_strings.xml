@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_settings">Impostazioni</string>
+    <string name="menu_help">Aiuto</string>
+    <string name="menu_sign_out">Disconnettersi</string>
+</resources>

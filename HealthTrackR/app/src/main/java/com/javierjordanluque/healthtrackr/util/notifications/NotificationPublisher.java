@@ -255,9 +255,9 @@ public class NotificationPublisher extends BroadcastReceiver {
         Intent actionIntent = null;
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 
-        Object[] credentials = AuthenticationService.getCredentials(context);
-        String email = (credentials != null) ? (String) credentials[0] : null;
-        String password = (credentials != null) ? (String) credentials[1] : null;
+        String[] credentials = AuthenticationService.getCredentials(context);
+        String email = (credentials != null) ? credentials[0] : null;
+        String password = (credentials != null) ? credentials[1] : null;
 
         if (email != null && password != null) {
             try {

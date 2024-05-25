@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_app_bar_title">Configuración</string>
+
+    <string name="settings_reset">Restablecer configuración</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_appearance">Apariencia</string>
+
+    <string name="settings_dialog_message_reset">¿Estás seguro/a de restablecer la configuración?</string>
+    <string name="settings_dialog_positive_reset">Restablecer</string>
+</resources>

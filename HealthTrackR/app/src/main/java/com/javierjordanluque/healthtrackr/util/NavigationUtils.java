@@ -3,6 +3,7 @@ package com.javierjordanluque.healthtrackr.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Browser;
 
 import com.javierjordanluque.healthtrackr.models.Location;
 
@@ -11,6 +12,7 @@ public class NavigationUtils {
 
     public static void openUserManual(Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(USER_MANUAL_URL));
+        intent.putExtra(Browser.EXTRA_HEADERS, "Accept-Language: " + context.getResources().getConfiguration().getLocales().get(0).getLanguage());
         context.startActivity(intent);
     }
 

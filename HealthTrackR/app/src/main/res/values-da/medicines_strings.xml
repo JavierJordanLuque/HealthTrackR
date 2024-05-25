@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicines_app_bar_title">Medicin</string>
+    <string name="medicines_app_bar_title_add">Tilføj medicin</string>
+    <string name="medicines_app_bar_title_modify">Ændre medicin</string>
+    <string name="medicines_app_bar_title_modify_notifications">Ændre underretninger</string>
+
+    <string name="medicines_no_elements">Du har ingen medicin i denne behandling. Tilføj venligst en ny medicin.</string>
+    <string name="medicines_none">Ingen</string>
+    <string name="medicines_now">Nu</string>
+    <string name="medicines_single_dose">Enkelt dosis</string>
+
+    <string name="medicines_mg">mg</string>
+    <string name="medicines_days">d</string>
+    <string name="medicines_hours">t</string>
+    <string name="medicines_minutes">min</string>
+
+    <string name="medicines_active_substance">Aktivt stof</string>
+    <string name="medicines_dose">Dosis</string>
+    <string name="medicines_administration_route">Administration rute</string>
+    <string name="medicines_initial_dosing_time">Start doseringstid</string>
+    <string name="medicines_dosing_frequency">Dosering hyppighed</string>
+    <string name="medicines_next_dose">Næste dosis</string>
+    <string name="medicines_each">Hver:</string>
+    <string name="medicines_before">før</string>
+    <string name="medicines_previous_notification_status">Tidligere underretningsstatus</string>
+    <string name="medicines_dosing_notification_status">Dosering underretningsstatus</string>
+    <string name="medicines_add_medicine_helper">Ved tilføjelse af medicin vil to doseringsunderretninger blive indstillet: en tidligere underretning (standard 1 time før) og en underretning ved doseringstiden.</string>
+
+    <string name="medicines_form_name">Navn *</string>
+    <string name="medicines_form_initial_dosing_time">Start doseringstid *</string>
+    <string name="medicines_form_dosing_frequency">Dosering hyppighed *</string>
+    <string name="medicines_form_previous_notification_time">Tidligere underretningstid *</string>
+
+    <string name="medicines_dosing_frequency_helper">En dosering hyppighed på 0 timer og 0 minutter indikerer en enkelt dosis.</string>
+    <string name="medicines_previous_notification_time_helper">En tidligere underretningstid på 0 timer og 0 minutter indikerer ingen tidligere underretning. Tidligere underretningstider mindre end 20 minutter kan medføre underretning omkring doseringen.</string>
+
+    <string name="medicines_dialog_message_no_previous_notification_add">Dosering hyppigheden er mindre end eller lig med den tid, der er angivet for den tidligere underretning (standard 1 time før). Derfor vil den tidligere underretning ikke blive indstillet. Er du sikker på, at du vil tilføje denne medicin?</string>
+    <string name="medicines_dialog_message_no_previous_notification_modify">Dosering hyppigheden er mindre end eller lig med den tid, der er angivet for den tidligere underretning. Derfor vil den tidligere underretning ikke blive indstillet. Er du sikker på, at du vil gemme ændringerne?</string>
+    <string name="medicines_dialog_message_delete">Er du sikker på, at du vil slette denne medicin fra behandlingen?</string>
+    <string name="medicines_dialog_denied_notification_permission">Tilladelse til underretninger er blevet nægtet, så underretninger vil ikke blive indstillet. Det anbefales at give tilladelse til at modtage medicinunderretninger.</string>
+
+    <string name="medicines_toast_confirmation_delete">Medicin slettet med succes!</string>
+
+    <string-array name="medicines_array_administration_route">
+        <item>Oral</item>
+        <item>Topisk</item>
+        <item>Parenteral</item>
+        <item>Inhalation</item>
+        <item>Oftalmisk</item>
+        <item>Otisk</item>
+        <item>Nasal</item>
+        <item>Rektal</item>
+        <item>Ikke specificeret</item>
+    </string-array>
+</resources>

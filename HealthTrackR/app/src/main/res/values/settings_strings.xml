@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_app_bar_title">Settings</string>
+
+    <string name="settings_reset">Reset settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_appearance">Appearance</string>
+
+    <string name="settings_dialog_message_reset">Are you sure you want to reset the settings?</string>
+    <string name="settings_dialog_positive_reset">Reset</string>
+
+    <string-array name="settings_array_locale" translatable="false">
+        <item>Dansk</item>
+        <item>Deutsch</item>
+        <item>English</item>
+        <item>Español</item>
+        <item>Français</item>
+        <item>Italiano</item>
+        <item>Português</item>
+        <item>Pусский</item>
+        <item>Svenska</item>
+    </string-array>
+</resources>

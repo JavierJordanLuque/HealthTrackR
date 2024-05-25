@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_app_bar_title">Indstillinger</string>
+
+    <string name="settings_reset">Nulstil indstillinger</string>
+    <string name="settings_language">Sprog</string>
+    <string name="settings_appearance">Udseende</string>
+
+    <string name="settings_dialog_message_reset">Er du sikker på, at du vil nulstille indstillingerne?</string>
+    <string name="settings_dialog_positive_reset">Nulstil</string>
+</resources>

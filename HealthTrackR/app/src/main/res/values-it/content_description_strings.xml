@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_description_app_icon">Icona HealthTrackR</string>
+    <string name="content_description_back_icon">Indietro</string>
+    <string name="content_description_toggle_password_visibility">Attiva/disattiva visibilità password</string>
+    <string name="content_description_clear_text">Cancella testo</string>
+
+    <string name="content_description_modify_account">Modifica account</string>
+    <string name="content_description_add_treatment">Aggiungi trattamento</string>
+    <string name="content_description_access_treatment">Accedi al trattamento</string>
+    <string name="content_description_modify_treatment">Modifica trattamento</string>
+    <string name="content_description_access_guidelines">Accedi alle linee guida</string>
+    <string name="content_description_access_medicines">Accedi ai farmaci</string>
+    <string name="content_description_access_symptoms">Accedi ai sintomi</string>
+    <string name="content_description_access_calendar">Accedi al calendario del trattamento</string>
+    <string name="content_description_access_questions">Accedi alle domande</string>
+    <string name="content_description_delete_treatment">Elimina trattamento</string>
+
+    <string name="content_description_status_pending">Stato del trattamento in sospeso</string>
+    <string name="content_description_status_in_progress">Stato del trattamento in corso</string>
+    <string name="content_description_status_finished">Stato del trattamento completato</string>
+
+    <string name="content_description_add_medicine">Aggiungi medicinale</string>
+    <string name="content_description_modify_medicine">Modifica medicinale</string>
+    <string name="content_description_delete_medicine">Elimina medicinale</string>
+    <string name="content_description_access_medicine_notifications">Accedi alle notifiche dei farmaci</string>
+    <string name="content_description_error_icon">Icona di errore</string>
+
+    <string name="content_description_add_guideline">Aggiungi linea guida</string>
+    <string name="content_description_remove_multimedia">Rimuovi multimediale</string>
+    <string name="content_description_multimedia_error_loading_multimedia_content">Errore durante il caricamento dei contenuti multimediali</string>
+    <string name="content_description_guideline_image">Immagine della linea guida:</string>
+    <string name="content_description_guideline_video">Video della linea guida:</string>
+    <string name="content_description_selectable_image">Immagine selezionabile</string>
+    <string name="content_description_selectable_video">Video selezionabile</string>
+    <string name="content_description_close_dialog">Chiudi dialogo</string>
+    <string name="content_description_video_duration">Durata del video</string>
+
+    <string name="content_description_add_symptom">Aggiungi sintomo</string>
+    <string name="content_description_add_question">Aggiungi domanda</string>
+
+    <string name="content_description_add_medical_appointment">Aggiungi appuntamento medico</string>
+    <string name="content_description_modify_medical_appointment">Modifica appuntamento medico</string>
+    <string name="content_description_delete_medical_appointment">Elimina appuntamento medico</string>
+    <string name="content_description_access_medical_appointment_notification">Accedi alla notifica dell\'appuntamento medico</string>
+    <string name="content_description_directions">Indicazioni</string>
+
+    <string name="content_description_calendar_filter_medical_appointment_passed">Appuntamenti medici passati</string>
+    <string name="content_description_calendar_filter_medical_appointment_pending">Appuntamenti medici in sospeso</string>
+    <string name="content_description_calendar_filter_medication_intake_passed">Assunzione di farmaci passata</string>
+    <string name="content_description_calendar_filter_medication_intake_pending">Assunzione di farmaci in sospeso</string>
+
+    <string name="content_description_calendar_legend">Legenda del calendario</string>
+    <string name="content_description_calendar_indicator_current_date">Indicatore della data attuale</string>
+    <string name="content_description_calendar_indicator_start_date">Indicatore della data di inizio</string>
+    <string name="content_description_calendar_indicator_end_date">Indicatore della data di fine</string>
+    <string name="content_description_calendar_indicator_medical_appointment">Indicatore dell\'appuntamento medico</string>
+    <string name="content_description_calendar_indicator_medication_intake">Indicatore dell\'assunzione di farmaci</string>
+</resources>

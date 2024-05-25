@@ -9,42 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/buttonModifyMedicalAppointment"
-            style="@style/Widget.HealthTrackR.FloatingActionButton.Primary.BelowStatus"
-            android:layout_gravity="top|end"
-            android:contentDescription="@string/content_description_modify_medical_appointment"
-            app:srcCompat="@drawable/ic_modify" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/StatusLayout"
-            tools:ignore="TextSizeCheck">
-
-            <ImageView
-                android:id="@+id/imageViewStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/content_description_status_in_progress"
-                android:src="@drawable/ic_status_in_progress"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/amber"
-                tools:ignore="ImageContrastCheck" />
-
-            <TextView
-                android:id="@+id/textViewStatus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/treatments_status_in_progress"
-                android:textAlignment="center"
-                android:textAppearance="?attr/textAppearanceLabelLarge"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewStatus" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
@@ -212,6 +176,55 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/buttonModifyMedicalAppointment"
+                style="@style/Widget.HealthTrackR.FloatingActionButton.Primary.BelowStatus"
+                app:srcCompat="@drawable/ic_modify"
+                android:contentDescription="@string/content_description_modify_medical_appointment"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutStatus" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutStatus"
+                style="@style/StatusLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextSizeCheck">
+
+                <ImageView
+                    android:id="@+id/imageViewStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/content_description_status_in_progress"
+                    android:src="@drawable/ic_status_in_progress"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/amber"
+                    tools:ignore="ImageContrastCheck" />
+
+                <TextView
+                    android:id="@+id/textViewStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/treatments_status_in_progress"
+                    android:textAlignment="center"
+                    android:textAppearance="?attr/textAppearanceLabelLarge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewStatus" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

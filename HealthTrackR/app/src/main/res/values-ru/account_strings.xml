@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_app_bar_title">Мой аккаунт</string>
+    <string name="account_app_bar_title_modify">Изменить аккаунт</string>
+    <string name="account_app_bar_title_change_password">Изменить пароль</string>
+
+    <string name="account_email">Электронная почта</string>
+    <string name="account_first_name">Имя</string>
+    <string name="account_last_name">Фамилия</string>
+    <string name="account_birth_date">Дата рождения</string>
+    <string name="account_gender">Пол</string>
+    <string name="account_blood_type">Группа крови</string>
+    <string name="account_allergies">Аллергии</string>
+    <string name="account_previous_medical_conditions">Предыдущие медицинские состояния</string>
+    <string name="account_sign_out">Выйти</string>
+    <string name="account_delete">Удалить аккаунт</string>
+    <string name="account_change_password">Изменить пароль</string>
+
+    <string name="account_form_first_name">Имя *</string>
+    <string name="account_form_last_name">Фамилия *</string>
+    <string name="account_form_current_password">Текущий пароль *</string>
+    <string name="account_form_new_password">Новый пароль *</string>
+    <string name="account_form_repeat_new_password">Повторите новый пароль *</string>
+
+    <string name="account_helper_allergies">Введите ваши аллергии, разделенные запятыми (,).</string>
+    <string name="account_helper_previous_medical_condition">Введите ваши предыдущие медицинские состояния, разделенные запятыми (,).</string>
+
+    <string name="account_dialog_message_birth_date">Выберите вашу дату рождения:</string>
+    <string name="account_dialog_message_sign_out">Вы уверены, что хотите выйти?</string>
+    <string name="account_dialog_message_delete">Вы уверены, что хотите удалить свой аккаунт?</string>
+    <string name="account_dialog_message_change_password">Вы уверены, что хотите изменить свой пароль?</string>
+
+    <string name="account_toast_confirmation_delete">Аккаунт успешно удален!</string>
+    <string name="account_toast_confirmation_change_password">Пароль успешно обновлен!</string>
+
+    <string-array name="account_array_gender">
+        <item>Мужской</item>
+        <item>Женский</item>
+        <item>Не указан</item>
+    </string-array>
+    <string-array name="account_array_blood_type">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>Не указана</item>
+    </string-array>
+</resources>

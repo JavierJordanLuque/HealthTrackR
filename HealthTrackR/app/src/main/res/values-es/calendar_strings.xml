@@ -10,7 +10,6 @@
 
     <string name="calendar_no_elements">No tienes eventos para esta fecha.</string>
 
-    <string name="calendar_of">de</string>
     <string name="calendar_today">(hoy)</string>
     <string name="calendar_yesterday">(ayer)</string>
     <string name="calendar_tomorrow">(mañana)</string>
@@ -27,4 +26,28 @@
     <string name="calendar_legend_end_date">Fecha de finalización</string>
     <string name="calendar_legend_medical_appointment">Cita médica</string>
     <string name="calendar_legend_medication_intake">Toma de medicamento</string>
+
+    <string-array name="weekdays">
+        <item>dom</item>
+        <item>lun</item>
+        <item>mar</item>
+        <item>mié</item>
+        <item>jue</item>
+        <item>vie</item>
+        <item>sáb</item>
+    </string-array>
+    <string-array name="months">
+        <item>enero</item>
+        <item>febrero</item>
+        <item>marzo</item>
+        <item>abril</item>
+        <item>mayo</item>
+        <item>junio</item>
+        <item>julio</item>
+        <item>agosto</item>
+        <item>septiembre</item>
+        <item>octubre</item>
+        <item>noviembre</item>
+        <item>diciembre</item>
+    </string-array>
 </resources>

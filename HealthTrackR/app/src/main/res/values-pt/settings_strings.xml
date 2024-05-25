@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_app_bar_title">Configurações</string>
+
+    <string name="settings_reset">Redefinir configurações</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_appearance">Aparência</string>
+
+    <string name="settings_dialog_message_reset">Tem certeza de que deseja redefinir as configurações?</string>
+    <string name="settings_dialog_positive_reset">Redefinir</string>
+</resources>

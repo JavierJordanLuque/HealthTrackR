@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_group_name_medication">Лекарства</string>
+    <string name="notification_channel_group_name_medical_appointment">Медицинские приемы</string>
+    <string name="notification_channel_name_previous_medication">Напоминания о предыдущих препаратах</string>
+    <string name="notification_channel_description_previous_medication">Получайте своевременные уведомления о графиках приема лекарств. Будьте на пульсе с вашими дозами лекарств, получая напоминания перед каждой запланированной дозой.</string>
+    <string name="notification_channel_name_medication">Напоминания о лекарствах</string>
+    <string name="notification_channel_description_medication">Получайте своевременные уведомления о графиках приема лекарств. Будьте на пульсе с вашими дозами лекарств, получая напоминания во время приема.</string>
+    <string name="notification_channel_name_medical_appointment">Напоминания о медицинских приемах</string>
+    <string name="notification_channel_description_medical_appointment">Получайте своевременные уведомления о предстоящих медицинских приемах. Будьте организованными и готовыми, получая напоминания перед каждым запланированным приемом.</string>
+
+    <string name="notification_title_medication">Доза лекарства</string>
+    <string name="notification_title_medical_appointment">Медицинский прием</string>
+
+    <string name="notification_message_medication_dose">Следующая доза</string>
+    <string name="notification_message_medication_treatment">из курса</string>
+    <string name="notification_message_medication_schedule_now">запланирована на сейчас.</string>
+    <string name="notification_message_medication_scheduled_in">запланирована через</string>
+
+    <string name="notification_message_medical_appointment_appointment">Медицинский прием для</string>
+    <string name="notification_message_medical_appointment_treatment">в рамках курса</string>
+    <string name="notification_message_medical_appointment_scheduled_now">запланирован на сейчас.</string>
+    <string name="notification_message_medical_appointment_scheduled_in">запланирован через</string>
+    <string name="notification_message_medical_appointment_location">Место:</string>
+    <string name="notification_message_medical_appointment_latitude">Широта</string>
+    <string name="notification_message_medical_appointment_longitude">Долгота</string>
+
+    <string name="notification_public_message_medication_scheduled_now">Доза лекарства запланирована на сейчас.</string>
+    <string name="notification_public_message_medication_scheduled_in">Доза лекарства запланирована через</string>
+    <string name="notification_public_message_medical_appointment_scheduled_now">Медицинский прием запланирован на сейчас.</string>
+    <string name="notification_public_message_medical_appointment_scheduled_in">Медицинский прием запланирован через</string>
+
+    <plurals name="notification_message_days">
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дня</item>
+        <item quantity="many">%d дней</item>
+        <item quantity="other">%d дней</item>
+    </plurals>
+    <plurals name="notification_message_hours">
+        <item quantity="one">%d час</item>
+        <item quantity="few">%d часа</item>
+        <item quantity="many">%d часов</item>
+        <item quantity="other">%d часов</item>
+    </plurals>
+    <plurals name="notification_message_minutes">
+        <item quantity="one">%d минута</item>
+        <item quantity="few">%d минуты</item>
+        <item quantity="many">%d минут</item>
+        <item quantity="other">%d минут</item>
+    </plurals>
+</resources>

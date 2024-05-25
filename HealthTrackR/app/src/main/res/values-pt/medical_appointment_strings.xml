@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medical_appointment_app_bar_title">Consulta médica</string>
+    <string name="medical_appointment_app_bar_title_add">Adicionar consulta médica</string>
+    <string name="medical_appointment_app_bar_title_modify">Modificar consulta médica</string>
+    <string name="medical_appointment_app_bar_title_modify_notification">Modificar notificação</string>
+
+    <string name="medical_appointment_date_time">Data e hora</string>
+    <string name="medical_appointment_subject">Assunto</string>
+    <string name="medical_appointment_location">Localização</string>
+    <string name="medical_appointment_location_place">Local</string>
+    <string name="medical_appointment_location_latitude">Latitude:</string>
+    <string name="medical_appointment_location_longitude">Longitude:</string>
+    <string name="medical_appointment_before">antes</string>
+    <string name="medical_appointment_previous_notification_status">Status de notificação anterior</string>
+
+    <string name="medical_appointment_form_date_time">Data e hora *</string>
+    <string name="medical_appointment_form_previous_notification_time">Hora da notificação anterior *</string>
+
+    <string name="medical_appointment_location_helper">Indicar localização exata</string>
+    <string name="medical_appointment_add_medicine_helper">Ao adicionar a consulta médica, será configurada uma notificação anterior (1 hora antes por padrão).</string>
+    <string name="medical_appointment_previous_notification_time_helper">Um tempo de notificação anterior de 0 horas e 0 minutos indica nenhuma notificação anterior.</string>
+
+    <string name="medical_appointment_dialog_message_no_location">Nenhuma localização foi indicada. Por favor, adicione uma localização à consulta médica para obter a rota.</string>
+    <string name="medical_appointment_dialog_message_delete">Tem certeza de que deseja excluir esta consulta médica do tratamento?</string>
+    <string name="medical_appointment_dialog_denied_notification_permission">A permissão de notificação foi negada, portanto as notificações não serão configuradas. Recomenda-se conceder permissão para receber notificações de consulta médica.</string>
+
+    <string name="medical_appointment_toast_confirmation_delete">Consulta médica excluída com sucesso!</string>
+</resources>

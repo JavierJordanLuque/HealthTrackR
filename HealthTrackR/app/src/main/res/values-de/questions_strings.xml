@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="questions_app_bar_title">Fragen</string>
+
+    <string name="questions_no_elements">Sie haben keine Fragen in dieser Behandlung. Bitte fügen Sie eine neue Frage hinzu.</string>
+
+    <string name="questions_form_description">Beschreibung *</string>
+
+    <string name="questions_dialog_title_add">Frage hinzufügen</string>
+    <string name="questions_dialog_message_delete">Sind Sie sicher, dass Sie diese Frage aus der Behandlung löschen möchten?</string>
+
+    <string name="questions_toast_confirmation_delete">Frage erfolgreich gelöscht!</string>
+</resources>

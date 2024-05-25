@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicines_app_bar_title">Medicamenti</string>
+    <string name="medicines_app_bar_title_add">Aggiungi medicamento</string>
+    <string name="medicines_app_bar_title_modify">Modifica medicamento</string>
+    <string name="medicines_app_bar_title_modify_notifications">Modifica notifiche</string>
+
+    <string name="medicines_no_elements">Non hai medicinali in questo trattamento. Si prega di aggiungere un nuovo medicamento.</string>
+    <string name="medicines_none">Nessuno</string>
+    <string name="medicines_now">Ora</string>
+    <string name="medicines_single_dose">Dose singola</string>
+
+    <string name="medicines_mg">mg</string>
+    <string name="medicines_days">g</string>
+    <string name="medicines_hours">h</string>
+    <string name="medicines_minutes">min</string>
+
+    <string name="medicines_active_substance">Principio attivo</string>
+    <string name="medicines_dose">Dose</string>
+    <string name="medicines_administration_route">Via di somministrazione</string>
+    <string name="medicines_initial_dosing_time">Orario di dosaggio iniziale</string>
+    <string name="medicines_dosing_frequency">Frequenza di dosaggio</string>
+    <string name="medicines_next_dose">Prossima dose</string>
+    <string name="medicines_each">Ogni:</string>
+    <string name="medicines_before">prima</string>
+    <string name="medicines_previous_notification_status">Stato notifica precedente</string>
+    <string name="medicines_dosing_notification_status">Stato notifica dosaggio</string>
+    <string name="medicines_add_medicine_helper">Aggiungendo il medicamento, verranno impostate due notifiche di dosaggio: una notifica precedente (predefinito 1 ora prima) e una notifica all\'orario del dosaggio.</string>
+
+    <string name="medicines_form_name">Nome *</string>
+    <string name="medicines_form_initial_dosing_time">Orario di dosaggio iniziale *</string>
+    <string name="medicines_form_dosing_frequency">Frequenza di dosaggio *</string>
+    <string name="medicines_form_previous_notification_time">Orario notifica precedente *</string>
+
+    <string name="medicines_dosing_frequency_helper">Una frequenza di dosaggio di 0 ore e 0 minuti indica una dose singola.</string>
+    <string name="medicines_previous_notification_time_helper">Un orario di notifica precedente di 0 ore e 0 minuti indica nessuna notifica precedente. Gli orari di notifica precedente inferiori a 20 minuti possono causare un\'interruzione delle notifiche con la notifica di dosaggio.</string>
+
+    <string name="medicines_dialog_message_no_previous_notification_add">La frequenza di dosaggio è inferiore o uguale al tempo impostato per la notifica precedente (predefinito 1 ora prima). Pertanto, la notifica precedente non verrà impostata. Sei sicuro di voler aggiungere questo medicamento?</string>
+    <string name="medicines_dialog_message_no_previous_notification_modify">La frequenza di dosaggio è inferiore o uguale al tempo impostato per la notifica precedente. Pertanto, la notifica precedente non verrà impostata. Sei sicuro di voler salvare le modifiche?</string>
+    <string name="medicines_dialog_message_delete">Sei sicuro di voler eliminare questo medicamento dalla terapia?</string>
+    <string name="medicines_dialog_denied_notification_permission">L\'autorizzazione alle notifiche è stata negata, quindi le notifiche non verranno impostate. Si consiglia di concedere l\'autorizzazione per ricevere le notifiche dei medicinali.</string>
+
+    <string name="medicines_toast_confirmation_delete">Medicamento eliminato con successo!</string>
+
+    <string-array name="medicines_array_administration_route">
+        <item>Orale</item>
+        <item>Topico</item>
+        <item>Parenterale</item>
+        <item>Inalazione</item>
+        <item>Oftalmico</item>
+        <item>Otico</item>
+        <item>Nasale</item>
+        <item>Retto</item>
+        <item>Non specificato</item>
+    </string-array>
+</resources>

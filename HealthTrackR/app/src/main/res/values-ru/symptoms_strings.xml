@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="symptoms_app_bar_title">Симптомы</string>
+
+    <string name="symptoms_no_elements">У вас нет симптомов в этом лечении. Пожалуйста, добавьте новый симптом.</string>
+
+    <string name="symptoms_form_description">Описание *</string>
+
+    <string name="symptoms_dialog_title_add">Добавление симптома</string>
+    <string name="symptoms_dialog_message_delete">Вы уверены, что хотите удалить этот симптом из лечения?</string>
+
+    <string name="symptoms_toast_confirmation_delete">Симптом успешно удален!</string>
+</resources>

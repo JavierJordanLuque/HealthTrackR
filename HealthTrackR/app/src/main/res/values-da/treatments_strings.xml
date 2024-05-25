@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="treatments_app_bar_title">Behandlinger</string>
+    <string name="treatments_app_bar_title_add">Tilføjelse af behandling</string>
+    <string name="treatments_app_bar_title_modify">Behandlingsændring</string>
+
+    <string name="treatments_no_elements">Du har ingen behandlinger. Tilføj venligst en ny behandling.</string>
+    <string name="treatments_not_found_message">Ingen behandlinger fundet, der matcher de angivne filtre. Prøv forskellige filtre.</string>
+
+    <string name="treatments_title">Titel</string>
+    <string name="treatments_start_date">Startdato</string>
+    <string name="treatments_end_date">Slutdato</string>
+    <string name="treatments_category">Kategori</string>
+    <string name="treatments_diagnosis">Diagnose</string>
+    <string name="treatments_guidelines">Retningslinjer</string>
+    <string name="treatments_medicines">Medicin</string>
+    <string name="treatments_symptoms">Symptomer</string>
+    <string name="treatments_calendar">Kalender</string>
+
+    <string name="treatments_form_title">Titel *</string>
+    <string name="treatments_form_start_date">Startdato *</string>
+    <string name="treatments_form_category">Kategori *</string>
+
+    <string name="treatments_dialog_message_start_date">Vælg behandlingens startdato:</string>
+    <string name="treatments_dialog_message_invalid_start_date">Den valgte startdato er efter andre datoer i behandlingen. Juster venligst datoerne for medicin og lægeaftaler, inden du ændrer behandlingens startdato.</string>
+    <string name="treatments_dialog_message_end_date">Vælg behandlingens slutdato:</string>
+    <string name="treatments_dialog_message_invalid_end_date">Den valgte slutdato er før andre datoer i behandlingen. Juster venligst datoerne for medicin og lægeaftaler, inden du ændrer behandlingens slutdato.</string>
+    <string name="treatments_dialog_message_delete">Er du sikker på, at du vil slette denne behandling?</string>
+
+    <string name="treatments_toast_confirmation_delete">Behandling slettet succesfuldt!</string>
+
+    <string name="treatments_status">Status</string>
+    <string name="treatments_status_pending">Afventer</string>
+    <string name="treatments_status_in_progress">Under udførelse</string>
+    <string name="treatments_status_finished">Afsluttet</string>
+
+    <string-array name="treatments_array_category">
+        <item>Medicinsk</item>
+        <item>Farmakologisk</item>
+        <item>Fysioterapi</item>
+        <item>Rehabilitering</item>
+        <item>Psykologisk</item>
+        <item>Forebyggende</item>
+        <item>Kronisk</item>
+        <item>Alternativ</item>
+    </string-array>
+</resources>

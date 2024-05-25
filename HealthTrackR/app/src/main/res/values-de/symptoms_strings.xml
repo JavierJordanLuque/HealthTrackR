@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="symptoms_app_bar_title">Symptome</string>
+
+    <string name="symptoms_no_elements">Du hast keine Symptome in dieser Behandlung. Bitte füge ein neues Symptom hinzu.</string>
+
+    <string name="symptoms_form_description">Beschreibung *</string>
+
+    <string name="symptoms_dialog_title_add">Symptom hinzufügen</string>
+    <string name="symptoms_dialog_message_delete">Möchtest du dieses Symptom wirklich aus der Behandlung löschen?</string>
+
+    <string name="symptoms_toast_confirmation_delete">Symptom erfolgreich gelöscht!</string>
+</resources>

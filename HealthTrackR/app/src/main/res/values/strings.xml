@@ -4,11 +4,11 @@
     <string name="unspecified">Unspecified</string>
 
     <string name="easter_egg_5_message">Do you have a nervous tic?</string>
-    <string name="easter_egg_10_message">What`s wrong with you?</string>
-    <string name="easter_egg_15_message">You`re tempting fate…</string>
+    <string name="easter_egg_10_message">What\'s wrong with you?</string>
+    <string name="easter_egg_15_message">You\'re tempting fate…</string>
     <string name="easter_egg_20_message">Had enough yet? Leave me alone!</string>
     <string name="easter_egg_25_message">Okay, okay, you won! You can stop that now!</string>
-    <string name="easter_egg_30_message">You`ve won the award for the most persistent person!</string>
+    <string name="easter_egg_30_message">You\'ve won the award for the most persistent person!</string>
 
     <string name="snackbar_action_more">More</string>
 
@@ -42,8 +42,8 @@
     <string name="filter_less_or_equal" translatable="false">≤</string>
 
     <string name="date_at_time">at</string>
-    <string name="hours" translatable="false">h</string>
-    <string name="minutes" translatable="false">min</string>
+    <string name="hours">h</string>
+    <string name="minutes">min</string>
 
     <string name="manage">Manage</string>
 </resources>

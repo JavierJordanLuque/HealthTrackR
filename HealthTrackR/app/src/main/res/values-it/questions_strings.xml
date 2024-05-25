@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="questions_app_bar_title">Domande</string>
+
+    <string name="questions_no_elements">Non hai domande in questo trattamento. Si prega di aggiungere una nuova domanda.</string>
+
+    <string name="questions_form_description">Descrizione *</string>
+
+    <string name="questions_dialog_title_add">Aggiunta domanda</string>
+    <string name="questions_dialog_message_delete">Sei sicuro di voler eliminare questa domanda dal trattamento?</string>
+
+    <string name="questions_toast_confirmation_delete">Domanda eliminata con successo!</string>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_app_bar_title">Mein Konto</string>
+    <string name="account_app_bar_title_modify">Konto bearbeiten</string>
+    <string name="account_app_bar_title_change_password">Passwort ändern</string>
+
+    <string name="account_email">E-Mail</string>
+    <string name="account_first_name">Vorname</string>
+    <string name="account_last_name">Nachname</string>
+    <string name="account_birth_date">Geburtsdatum</string>
+    <string name="account_gender">Geschlecht</string>
+    <string name="account_blood_type">Blutgruppe</string>
+    <string name="account_allergies">Allergien</string>
+    <string name="account_previous_medical_conditions">Vorherige medizinische Bedingungen</string>
+    <string name="account_sign_out">Abmelden</string>
+    <string name="account_delete">Konto löschen</string>
+    <string name="account_change_password">Passwort ändern</string>
+
+    <string name="account_form_first_name">Vorname *</string>
+    <string name="account_form_last_name">Nachname *</string>
+    <string name="account_form_current_password">Aktuelles Passwort *</string>
+    <string name="account_form_new_password">Neues Passwort *</string>
+    <string name="account_form_repeat_new_password">Neues Passwort wiederholen *</string>
+
+    <string name="account_helper_allergies">Geben Sie Ihre Allergien durch Kommas getrennt ein (,).</string>
+    <string name="account_helper_previous_medical_condition">Geben Sie Ihre früheren medizinischen Bedingungen durch Kommas getrennt ein (,).</string>
+
+    <string name="account_dialog_message_birth_date">Wählen Sie Ihr Geburtsdatum aus:</string>
+    <string name="account_dialog_message_sign_out">Möchten Sie sich wirklich abmelden?</string>
+    <string name="account_dialog_message_delete">Möchten Sie Ihr Konto wirklich löschen?</string>
+    <string name="account_dialog_message_change_password">Möchten Sie Ihr Passwort wirklich ändern?</string>
+
+    <string name="account_toast_confirmation_delete">Konto erfolgreich gelöscht!</string>
+    <string name="account_toast_confirmation_change_password">Passwort erfolgreich aktualisiert!</string>
+
+    <string-array name="account_array_gender">
+        <item>Männlich</item>
+        <item>Weiblich</item>
+        <item>Nicht spezifiziert</item>
+    </string-array>
+    <string-array name="account_array_blood_type">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>Nicht spezifiziert</item>
+    </string-array>
+</resources>

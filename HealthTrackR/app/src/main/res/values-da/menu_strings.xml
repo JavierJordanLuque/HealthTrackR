@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_settings">Indstillinger</string>
+    <string name="menu_help">Hjælp</string>
+    <string name="menu_sign_out">Log ud</string>
+</resources>

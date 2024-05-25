@@ -33,7 +33,7 @@
     <string name="error_invalid_guideline_title">The title mustn´t be empty.</string>
     <string name="error_invalid_guideline_description">The description must contain less than 300 characters.</string>
 
-    <string name="error_invalid_symptom_description">The description mustn`t be empty.</string>
+    <string name="error_invalid_symptom_description">The description mustn\'t be empty.</string>
 
     <string name="error_invalid_medical_appointment_date_time">The date time mustn´t be empty.</string>
     <string name="error_invalid_medical_appointment_subject">The subject must contain less than 200 characters.</string>

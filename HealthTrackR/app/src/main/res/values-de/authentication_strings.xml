@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="authentication_app_bar_title_log_in">Anmelden</string>
+    <string name="authentication_app_bar_title_sign_up">Registrieren</string>
+
+    <string name="authentication_log_in">Anmelden</string>
+    <string name="authentication_sign_in">Einloggen</string>
+    <string name="authentication_sign_up">Registrieren</string>
+    <string name="authentication_remember_me">Erinnere dich an mich</string>
+    <string name="authentication_create_account">Konto erstellen</string>
+
+    <string name="authentication_form_email">E-Mail *</string>
+    <string name="authentication_form_password">Passwort *</string>
+    <string name="authentication_form_repeat_password">Passwort wiederholen *</string>
+    <string name="authentication_form_first_name">Vorname *</string>
+    <string name="authentication_form_last_name">Nachname *</string>
+
+    <string name="authentication_helper_password">Das Passwort muss zwischen 8 und 60 Zeichen lang sein und folgendes enthalten: Großbuchstaben, Kleinbuchstaben, Zahlen und Sonderzeichen.</string>
+</resources>

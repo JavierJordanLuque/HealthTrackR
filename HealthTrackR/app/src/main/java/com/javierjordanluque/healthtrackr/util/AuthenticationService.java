@@ -100,15 +100,15 @@ public class AuthenticationService {
         editor.apply();
     }
 
-    public static Object[] getCredentials(Context context) {
-        Object[] credentials = null;
+    public static String[] getCredentials(Context context) {
+        String[] credentials = null;
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String email = sharedPreferences.getString(AuthenticationService.PREFS_EMAIL, null);
-        String password = sharedPreferences.getString(AuthenticationService.PREFS_PASSWORD, null);
+        String email = sharedPreferences.getString(PREFS_EMAIL, null);
+        String password = sharedPreferences.getString(PREFS_PASSWORD, null);
 
         if (email != null && password != null)
-            credentials = new Object[]{email, password};
+            credentials = new String[]{email, password};
 
         return credentials;
     }

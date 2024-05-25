@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -189,6 +190,7 @@ public class ModifyMedicalAppointmentNotificationActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.snackbar_action_more), (dialog, id) -> {
                     Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getResources().getConfiguration().getLocales().get(0).getLanguage());
                     notificationPermissionLauncher.launch(intent);
                 })
                 .setNegativeButton(getString(R.string.dialog_negative_cancel), (dialog, id) -> {

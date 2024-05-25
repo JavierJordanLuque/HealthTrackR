@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_app_bar_title">Paramètres</string>
+
+    <string name="settings_reset">Réinitialiser les paramètres</string>
+    <string name="settings_language">Langue</string>
+    <string name="settings_appearance">Apparence</string>
+
+    <string name="settings_dialog_message_reset">Êtes-vous sûr de vouloir réinitialiser les paramètres ?</string>
+    <string name="settings_dialog_positive_reset">Réinitialiser</string>
+</resources>

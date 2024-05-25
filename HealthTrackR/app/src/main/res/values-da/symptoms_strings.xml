@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="symptoms_app_bar_title">Symptomer</string>
+
+    <string name="symptoms_no_elements">Du har ingen symptomer i denne behandling. Tilføj venligst et nyt symptom.</string>
+
+    <string name="symptoms_form_description">Beskrivelse *</string>
+
+    <string name="symptoms_dialog_title_add">Tilføjelse af symptom</string>
+    <string name="symptoms_dialog_message_delete">Er du sikker på, at du vil slette dette symptom fra behandlingen?</string>
+
+    <string name="symptoms_toast_confirmation_delete">Symptom slettet med succes!</string>
+</resources>

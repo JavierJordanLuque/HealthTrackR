@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unspecified">Nicht spezifiziert</string>
+
+    <string name="easter_egg_5_message">Hast du ein nervöses Tic?</string>
+    <string name="easter_egg_10_message">Was ist mit dir los?</string>
+    <string name="easter_egg_15_message">Du spielst mit dem Schicksal…</string>
+    <string name="easter_egg_20_message">Genug davon? Lass mich in Ruhe!</string>
+    <string name="easter_egg_25_message">Okay, okay, du hast gewonnen! Du kannst jetzt aufhören!</string>
+    <string name="easter_egg_30_message">Du hast den Preis für die hartnäckigste Person gewonnen!</string>
+
+    <string name="snackbar_action_more">Mehr</string>
+
+    <string name="button_add">Hinzufügen</string>
+    <string name="button_save">Speichern</string>
+    <string name="button_modify">Ändern</string>
+    <string name="button_change">Ändern</string>
+    <string name="button_delete">Löschen</string>
+
+    <string name="dialog_positive_yes">Ja</string>
+    <string name="dialog_positive_accept">Akzeptieren</string>
+    <string name="dialog_positive_confirm">Bestätigen</string>
+
+    <string name="dialog_negative_no">Nein</string>
+    <string name="dialog_negative_cancel">Abbrechen</string>
+    <string name="dialog_negative_try_again">Erneut versuchen</string>
+
+    <string name="dialog_message_save">Möchtest du die Änderungen wirklich speichern?</string>
+
+    <string name="dialog_date_picker_day">Tag</string>
+    <string name="dialog_date_picker_month">Monat</string>
+    <string name="dialog_date_picker_year">Jahr</string>
+
+    <string name="toast_confirmation_save">Änderungen erfolgreich angewendet!</string>
+
+    <string name="filter_title">Filter</string>
+    <string name="filter_filter">Filtern</string>
+    <string name="filter_show_all">Alle anzeigen</string>
+
+    <string name="date_at_time">um</string>
+    <string name="hours">std</string>
+    <string name="minutes">min</string>
+
+    <string name="manage">Verwalten</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medical_appointment_app_bar_title">Läkarbesök</string>
+    <string name="medical_appointment_app_bar_title_add">Lägg till läkarbesök</string>
+    <string name="medical_appointment_app_bar_title_modify">Ändra läkarbesök</string>
+    <string name="medical_appointment_app_bar_title_modify_notification">Ändra meddelande</string>
+
+    <string name="medical_appointment_date_time">Datum och tid</string>
+    <string name="medical_appointment_subject">Ämne</string>
+    <string name="medical_appointment_location">Plats</string>
+    <string name="medical_appointment_location_place">Plats</string>
+    <string name="medical_appointment_location_latitude">Latitud:</string>
+    <string name="medical_appointment_location_longitude">Longitud:</string>
+    <string name="medical_appointment_before">innan</string>
+    <string name="medical_appointment_previous_notification_status">Status för tidigare meddelande</string>
+
+    <string name="medical_appointment_form_date_time">Datum och tid *</string>
+    <string name="medical_appointment_form_previous_notification_time">Tid för tidigare meddelande *</string>
+
+    <string name="medical_appointment_location_helper">Ange exakt plats</string>
+    <string name="medical_appointment_add_medicine_helper">Vid läggning av läkarbesök kommer ett tidigare meddelande att ställas in (standard 1 timme innan).</string>
+    <string name="medical_appointment_previous_notification_time_helper">Tid för tidigare meddelande 0 timmar och 0 minuter indikerar inget tidigare meddelande.</string>
+
+    <string name="medical_appointment_dialog_message_no_location">Ingen plats har angetts. Lägg till en plats för läkarbesöket för att få vägbeskrivning.</string>
+    <string name="medical_appointment_dialog_message_delete">Är du säker på att du vill ta bort detta läkarbesök från behandlingen?</string>
+    <string name="medical_appointment_dialog_denied_notification_permission">Tillstånd för meddelanden har nekats, så meddelanden kommer inte att ställas in. Det rekommenderas att ge tillstånd för att ta emot meddelanden om läkarbesök.</string>
+
+    <string name="medical_appointment_toast_confirmation_delete">Läkarbesök raderat framgångsrikt!</string>
+</resources>

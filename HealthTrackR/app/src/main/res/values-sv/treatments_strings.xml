@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="treatments_app_bar_title">Behandlingar</string>
+    <string name="treatments_app_bar_title_add">Lägg till behandling</string>
+    <string name="treatments_app_bar_title_modify">Modifiera behandling</string>
+
+    <string name="treatments_no_elements">Du har inga behandlingar. Lägg till en ny behandling.</string>
+    <string name="treatments_not_found_message">Inga behandlingar hittades som matchar de angivna filtren. Försök med andra filter.</string>
+
+    <string name="treatments_title">Titel</string>
+    <string name="treatments_start_date">Startdatum</string>
+    <string name="treatments_end_date">Slutdatum</string>
+    <string name="treatments_category">Kategori</string>
+    <string name="treatments_diagnosis">Diagnos</string>
+    <string name="treatments_guidelines">Riktlinjer</string>
+    <string name="treatments_medicines">Mediciner</string>
+    <string name="treatments_symptoms">Symptom</string>
+    <string name="treatments_calendar">Kalender</string>
+
+    <string name="treatments_form_title">Titel *</string>
+    <string name="treatments_form_start_date">Startdatum *</string>
+    <string name="treatments_form_category">Kategori *</string>
+
+    <string name="treatments_dialog_message_start_date">Välj behandlingens startdatum:</string>
+    <string name="treatments_dialog_message_invalid_start_date">Det valda startdatumet är efter andra datum som ingår i behandlingen. Justera datum för mediciner och läkarbesök innan du ändrar behandlingens startdatum.</string>
+    <string name="treatments_dialog_message_end_date">Välj behandlingens slutdatum:</string>
+    <string name="treatments_dialog_message_invalid_end_date">Det valda slutdatumet är före andra datum som ingår i behandlingen. Justera datum för mediciner och läkarbesök innan du ändrar behandlingens slutdatum.</string>
+    <string name="treatments_dialog_message_delete">Är du säker på att du vill ta bort den här behandlingen?</string>
+
+    <string name="treatments_toast_confirmation_delete">Behandlingen har tagits bort!</string>
+
+    <string name="treatments_status">Status</string>
+    <string name="treatments_status_pending">Väntande</string>
+    <string name="treatments_status_in_progress">Pågående</string>
+    <string name="treatments_status_finished">Avslutad</string>
+
+    <string-array name="treatments_array_category">
+        <item>Medicinsk</item>
+        <item>Farmakologisk</item>
+        <item>Fysioterapi</item>
+        <item>Rehabilitering</item>
+        <item>Psykologisk</item>
+        <item>Förebyggande</item>
+        <item>Kronisk</item>
+        <item>Alternativ</item>
+    </string-array>
+</resources>

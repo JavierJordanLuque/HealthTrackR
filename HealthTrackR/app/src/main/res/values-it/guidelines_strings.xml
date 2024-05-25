@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guidelines_app_bar_title">Linee guida</string>
+    <string name="guidelines_app_bar_title_add">Aggiunta linea guida</string>
+    <string name="guidelines_app_bar_title_modify">Modifica linea guida</string>
+
+    <string name="guidelines_no_elements">Non hai linee guida in questo trattamento. Si prega di aggiungere una nuova linea guida.</string>
+
+    <string name="guidelines_description">Descrizione</string>
+    <string name="guidelines_images">Immagini</string>
+    <string name="guidelines_videos">Video</string>
+    <string name="guidelines_image_url_helper">L\'URL deve contenere un prefisso valido (https://, http://) e un\'estensione immagine valida (.jpg, .jpeg, .png, .gif).</string>
+    <string name="guidelines_video_url_helper">L\'URL deve contenere un prefisso valido (https://, http://) e un\'estensione video valida (.mp4, .3gp, .avi, .mov) o appartenere a YouTube.</string>
+
+    <string name="guidelines_add_guideline_helper">Dopo aver aggiunto la linea guida, è possibile includere immagini o video esplicativi modificandoli.</string>
+
+    <string name="guidelines_add_image">Aggiungi immagine</string>
+    <string name="guidelines_add_video">Aggiungi video</string>
+    <string name="guidelines_upload_image_from_device">Carica immagine dal dispositivo</string>
+    <string name="guidelines_upload_video_from_device">Carica video dal dispositivo</string>
+
+    <string name="guidelines_select_image">Seleziona un\'immagine</string>
+    <string name="guidelines_select_video">Seleziona un video</string>
+    <string name="guidelines_select_image_manage_info_api_34">Hai dato accesso a un numero limitato di immagini.</string>
+    <string name="guidelines_select_video_manage_info_api_34">Hai dato accesso a un numero limitato di video.</string>
+    <string name="guidelines_select_image_manage_info_api_33">Hai dato accesso alle immagini del dispositivo.</string>
+    <string name="guidelines_select_video_manage_info_api_33">Hai dato accesso ai video del dispositivo.</string>
+    <string name="guidelines_select_multimedia_manage_info_default">Hai dato accesso al contenuto multimediale del dispositivo.</string>
+    <string name="guidelines_select_image_no_media">Nessuna immagine trovata sul dispositivo.</string>
+    <string name="guidelines_select_video_no_media">Nessun video trovato sul dispositivo.</string>
+
+    <string name="guidelines_form_title">Titolo *</string>
+    <string name="guidelines_form_number_of_order">Numero di ordine *</string>
+
+    <string name="guidelines_multimedia_not_found">Multimedia non trovato</string>
+
+    <string name="guidelines_dialog_message_add_image">Inserisci l\'URL dell\'immagine o carica un\'immagine memorizzata sul dispositivo:</string>
+    <string name="guidelines_dialog_message_add_video">Inserisci l\'URL del video o carica un video memorizzato sul dispositivo:</string>
+    <string name="guidelines_dialog_message_image_not_found">L\'immagine non è più disponibile, quindi verrà rimossa dalla linea guida.</string>
+    <string name="guidelines_dialog_message_video_not_found">Il video non è più disponibile, quindi verrà rimosso dalla linea guida.</string>
+    <string name="guidelines_dialog_message_delete">Sei sicuro di voler eliminare questa linea guida dal trattamento?</string>
+
+    <string name="guidelines_dialog_denied_read_multimedia_permission">L\'accesso al contenuto multimediale è stato negato, quindi non è possibile selezionare multimedia dal dispositivo. Si consiglia di concedere l\'autorizzazione per aggiungere multimedia dal dispositivo alla linea guida.</string>
+
+    <string name="guidelines_toast_confirmation_delete">Linea guida eliminata con successo!</string>
+    <string name="guidelines_toast_no_app_open_image">Non c\'è un\'app disponibile per aprire questa immagine.</string>
+    <string name="guidelines_toast_no_app_open_video">Non c\'è un\'app disponibile per aprire questo video.</string>
+</resources>
