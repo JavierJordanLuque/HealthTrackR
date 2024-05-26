@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -37,7 +36,6 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class ModifyMedicineNotificationsActivity extends BaseActivity {

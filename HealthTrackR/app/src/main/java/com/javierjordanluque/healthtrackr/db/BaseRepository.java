@@ -40,7 +40,7 @@ public abstract class BaseRepository<T extends Identifiable> {
     }
 
     protected abstract ContentValues getContentValues(T item) throws SerializationException, EncryptionException, HashException;
-    protected abstract T cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException, DBDeleteException, DBUpdateException;
+    protected abstract T cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException, DBUpdateException;
 
     public long insert(T item) throws DBInsertException {
         SQLiteDatabase db = null;
@@ -109,7 +109,7 @@ public abstract class BaseRepository<T extends Identifiable> {
             if (cursor != null && cursor.moveToFirst())
                 item = cursorToItem(cursor);
         } catch (SQLiteException | DBFindException | DBUpdateException | DecryptionException |
-                 DeserializationException | DBInsertException | DBDeleteException exception) {
+                 DeserializationException | DBInsertException exception) {
             throw new DBFindException("Failed to findById item with id (" + id + ")", exception);
         } finally {
             if (cursor != null)
@@ -136,7 +136,7 @@ public abstract class BaseRepository<T extends Identifiable> {
                 }
             }
         } catch (SQLiteException | DBFindException | DBUpdateException | DecryptionException |
-                 DeserializationException | DBInsertException | DBDeleteException exception) {
+                 DeserializationException | DBInsertException exception) {
             throw new DBFindException("Failed to findAll items", exception);
         } finally {
             if (cursor != null)

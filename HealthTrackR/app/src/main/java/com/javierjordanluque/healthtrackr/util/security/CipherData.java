@@ -1,8 +1,8 @@
 package com.javierjordanluque.healthtrackr.util.security;
 
 public class CipherData {
-    private byte[] encryptedData;
-    private byte[] initializationVector;
+    private final byte[] encryptedData;
+    private final byte[] initializationVector;
 
     public CipherData(byte[] encryptedData, byte[] initializationVector) {
         this.encryptedData = encryptedData;

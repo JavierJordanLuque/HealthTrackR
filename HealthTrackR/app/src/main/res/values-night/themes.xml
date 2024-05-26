@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <style name="Base.Theme.HealthTrackR" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Dark theme -->
         <item name="colorPrimary">@color/dark_primary</item>

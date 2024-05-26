@@ -89,7 +89,7 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
 
     @Override
     @SuppressLint("Range")
-    protected MedicalAppointment cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException, DBDeleteException {
+    protected MedicalAppointment cursorToItem(Cursor cursor) throws DBFindException, DecryptionException, DeserializationException, DBInsertException {
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
@@ -126,7 +126,7 @@ public class MedicalAppointmentRepository extends BaseRepository<MedicalAppointm
                     appointments.add(cursorToItem(cursor));
             }
         } catch (SQLiteException | DBFindException | DecryptionException |
-                 DeserializationException | DBInsertException | DBDeleteException exception) {
+                 DeserializationException | DBInsertException exception) {
             throw new DBFindException("Failed to findTreatmentAppointments from treatment with id (" + treatmentId + ")", exception);
         } finally {
             if (cursor != null)

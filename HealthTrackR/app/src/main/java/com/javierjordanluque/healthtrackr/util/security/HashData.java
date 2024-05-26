@@ -1,8 +1,8 @@
 package com.javierjordanluque.healthtrackr.util.security;
 
 public class HashData {
-    private byte[] hashedData;
-    private byte[] salt;
+    private final byte[] hashedData;
+    private final byte[] salt;
 
     public HashData(byte[] hashedData, byte[] salt) {
         this.hashedData = hashedData;

@@ -1,7 +1,6 @@
 package com.javierjordanluque.healthtrackr.ui.calendar.decorators;
 
 import android.content.Context;
-import android.content.res.Configuration;
 
 import androidx.core.content.ContextCompat;
 

@@ -144,7 +144,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
     }
 
     @SuppressLint("Range")
-    private Medicine cursorToMedicine(Cursor cursor) throws DBFindException, DBInsertException, DBDeleteException {
+    private Medicine cursorToMedicine(Cursor cursor) throws DBFindException, DBInsertException {
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         Treatment treatment = treatmentRepository.findById(cursor.getLong(cursor.getColumnIndex(TREATMENT_ID)));
 
@@ -273,7 +273,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
     }
 
     private boolean hasTreatment(Medicine medicine) throws SQLiteException {
-        SQLiteDatabase db = null;
+        SQLiteDatabase db;
         Cursor cursor = null;
 
         try {
@@ -321,7 +321,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
                 }
             }
         } catch (SQLiteException | DBFindException | DecryptionException |
-                 DeserializationException | DBInsertException | DBDeleteException exception) {
+                 DeserializationException | DBInsertException exception) {
             throw new DBFindException("Failed to findById medicine with treatmentId (" + treatmentId + ") and medicineId (" + medicineId + ")", exception);
         } finally {
             if (cursor != null)
@@ -363,7 +363,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
                 }
             }
         } catch (SQLiteException | DBFindException | DecryptionException |
-                 DeserializationException | DBInsertException | DBDeleteException exception) {
+                 DeserializationException | DBInsertException exception) {
             throw new DBFindException("Failed to findAll medicines", exception);
         } finally {
             if (cursor != null)
@@ -402,7 +402,7 @@ public class MedicineRepository extends BaseRepository<Medicine> {
                 }
             }
         } catch (SQLiteException | DBFindException | DecryptionException |
-                 DeserializationException | DBInsertException | DBDeleteException exception) {
+                 DeserializationException | DBInsertException exception) {
             throw new DBFindException("Failed to findTreatmentMedicines from treatment with id (" + treatmentId + ")", exception);
         } finally {
             if (cursor != null)

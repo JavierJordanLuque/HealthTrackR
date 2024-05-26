@@ -282,7 +282,7 @@ public class CalendarFragment extends Fragment {
                 LocalDate limitDate;
 
                 if (passedMedicationsFilter == null || pendingMedicationsFilter == null || (isPassedFilter && isPendingFilter)) {
-                    limitDate = endDate != null ? endDate.toLocalDate() : currentDateTime.toLocalDate().plusDays(10);
+                    limitDate = endDate != null ? endDate.toLocalDate() : currentDateTime.toLocalDate().plusDays(30);
                 } else if (isPassedFilter) {
                     if (cntDosingTime.isAfter(currentDateTime))
                         continue;

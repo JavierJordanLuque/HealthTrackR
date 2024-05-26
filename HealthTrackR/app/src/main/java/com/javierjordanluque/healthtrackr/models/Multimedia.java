@@ -1,7 +1,6 @@
 package com.javierjordanluque.healthtrackr.models;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 
 import com.javierjordanluque.healthtrackr.models.enumerations.MultimediaType;
