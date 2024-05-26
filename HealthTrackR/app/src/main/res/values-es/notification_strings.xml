@@ -17,8 +17,7 @@
     <string name="notification_message_medication_schedule_now">está programada para ahora.</string>
     <string name="notification_message_medication_scheduled_in">está programada para dentro de</string>
 
-    <string name="notification_message_medical_appointment_appointment">Cita médica para</string>
-    <string name="notification_message_medical_appointment_treatment">del tratamiento</string>
+    <string name="notification_message_medical_appointment_appointment">Cita médica del tratamiento</string>
     <string name="notification_message_medical_appointment_scheduled_now">programado para ahora.</string>
     <string name="notification_message_medical_appointment_scheduled_in">programada para dentro de</string>
     <string name="notification_message_medical_appointment_location">Ubicación:</string>

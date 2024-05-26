@@ -36,6 +36,7 @@ import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class ModifyMedicineNotificationsActivity extends BaseActivity {
@@ -121,12 +122,11 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
 
         MedicationNotification previousNotification = null;
         try {
-            for (MedicationNotification notification : medicine.getNotifications(this)) {
+            for (MedicationNotification notification : new ArrayList<>(medicine.getNotifications(this))) {
                 if (notification.getTimestamp() != medicine.getInitialDosingTime().toInstant().toEpochMilli()) {
-                    switchPreviousNotificationStatus.setChecked(true);
-
                     previousNotification = notification;
-                    setPreviousNotificationTime(notification);
+                    switchPreviousNotificationStatus.setChecked(true);
+                    setPreviousNotificationTime(previousNotification);
                 } else {
                     switchDosingNotificationStatus.setChecked(true);
                 }

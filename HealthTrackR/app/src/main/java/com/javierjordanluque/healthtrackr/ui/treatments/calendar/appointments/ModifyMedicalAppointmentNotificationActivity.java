@@ -100,14 +100,15 @@ public class ModifyMedicalAppointmentNotificationActivity extends BaseActivity {
 
         MedicalAppointmentNotification previousNotification = null;
         try {
-            previousNotification = medicalAppointment.getNotification(this);
+            MedicalAppointmentNotification notification = medicalAppointment.getNotification(this);
+
+            if (notification != null) {
+                previousNotification = notification;
+                switchPreviousNotificationStatus.setChecked(true);
+                setPreviousNotificationTime(previousNotification);
+            }
         } catch (DBFindException exception) {
             ExceptionManager.advertiseUI(this, exception.getMessage());
-        }
-
-        if (previousNotification != null) {
-            switchPreviousNotificationStatus.setChecked(true);
-            setPreviousNotificationTime(previousNotification);
         }
 
         MedicalAppointmentNotification finalPreviousNotification = previousNotification;

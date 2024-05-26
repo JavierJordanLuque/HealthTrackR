@@ -3,7 +3,7 @@
     <string name="medical_appointment_app_bar_title">Cita médica</string>
     <string name="medical_appointment_app_bar_title_add">Adición de cita médica</string>
     <string name="medical_appointment_app_bar_title_modify">Modificación de cita médica</string>
-    <string name="medical_appointment_app_bar_title_modify_notification">Modifificación de notificación</string>
+    <string name="medical_appointment_app_bar_title_modify_notification">Modificación de notificación</string>
 
     <string name="medical_appointment_date_time">Fecha y hora</string>
     <string name="medical_appointment_subject">Asunto</string>

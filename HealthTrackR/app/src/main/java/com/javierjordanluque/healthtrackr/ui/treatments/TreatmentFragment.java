@@ -28,6 +28,7 @@ import com.javierjordanluque.healthtrackr.ui.treatments.medicines.MedicinesFragm
 import com.javierjordanluque.healthtrackr.ui.treatments.questions.QuestionsFragment;
 import com.javierjordanluque.healthtrackr.ui.treatments.symptoms.SymptomsFragment;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
 
 import java.time.ZonedDateTime;
@@ -106,7 +107,7 @@ public class TreatmentFragment extends Fragment {
 
                         Toast.makeText(requireActivity(), getString(R.string.treatments_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
                         requireActivity().onBackPressed();
-                    } catch (DBDeleteException exception) {
+                    } catch (DBDeleteException | DBFindException exception) {
                         ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
                     }
                 })

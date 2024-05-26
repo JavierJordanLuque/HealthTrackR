@@ -17,8 +17,7 @@
     <string name="notification_message_medication_schedule_now">är schemalagd för nu.</string>
     <string name="notification_message_medication_scheduled_in">är schemalagd om</string>
 
-    <string name="notification_message_medical_appointment_appointment">Läkarbesök för</string>
-    <string name="notification_message_medical_appointment_treatment">under behandlingen</string>
+    <string name="notification_message_medical_appointment_appointment">Läkarbesök för behandling</string>
     <string name="notification_message_medical_appointment_scheduled_now">är schemalagd för nu.</string>
     <string name="notification_message_medical_appointment_scheduled_in">är schemalagd om</string>
     <string name="notification_message_medical_appointment_location">Plats:</string>

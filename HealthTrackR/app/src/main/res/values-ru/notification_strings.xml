@@ -17,8 +17,7 @@
     <string name="notification_message_medication_schedule_now">запланирована на сейчас.</string>
     <string name="notification_message_medication_scheduled_in">запланирована через</string>
 
-    <string name="notification_message_medical_appointment_appointment">Медицинский прием для</string>
-    <string name="notification_message_medical_appointment_treatment">в рамках курса</string>
+    <string name="notification_message_medical_appointment_appointment">Медицинская запись на лечение</string>
     <string name="notification_message_medical_appointment_scheduled_now">запланирован на сейчас.</string>
     <string name="notification_message_medical_appointment_scheduled_in">запланирован через</string>
     <string name="notification_message_medical_appointment_location">Место:</string>

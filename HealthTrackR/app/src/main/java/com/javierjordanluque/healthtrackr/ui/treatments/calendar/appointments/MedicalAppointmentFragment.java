@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.calendar.appointments;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ import com.javierjordanluque.healthtrackr.util.NavigationUtils;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicalAppointmentNotification;
+import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
 public class MedicalAppointmentFragment extends Fragment {
     private OnToolbarChangeListener listener;
@@ -174,6 +177,22 @@ public class MedicalAppointmentFragment extends Fragment {
             layoutLocation.setVisibility(View.GONE);
             textViewLocation.setVisibility(View.VISIBLE);
             textViewLocation.setText(R.string.unspecified);
+        }
+
+        checkNotification();
+    }
+
+    private void checkNotification() {
+        try {
+            MedicalAppointmentNotification notification = medicalAppointment.getNotification(requireActivity());
+
+            if (notification != null) {
+                PendingIntent pendingIntent = NotificationScheduler.buildPendingIntent(requireActivity(), notification.getId(), true, true);
+                if (pendingIntent == null)
+                    medicalAppointment.removeNotification(requireActivity(), notification);
+            }
+        } catch (DBFindException | DBDeleteException exception) {
+            ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
     }
 

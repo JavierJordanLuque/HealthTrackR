@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.medicines;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,9 +28,12 @@ import com.javierjordanluque.healthtrackr.ui.OnToolbarChangeListener;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.ExceptionManager;
+import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
+import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class MedicineFragment extends Fragment {
@@ -175,6 +179,7 @@ public class MedicineFragment extends Fragment {
             textViewDosingFrequency.setText(R.string.medicines_single_dose);
         }
 
+        checkNotifications();
 
         updateNextDose(true);
     }
@@ -190,6 +195,20 @@ public class MedicineFragment extends Fragment {
             handler.postDelayed(() -> updateNextDose(false), delayMillis);
         } else {
             textViewNextDose.setText(R.string.medicines_none);
+        }
+    }
+
+    private void checkNotifications() {
+        try {
+            for (MedicationNotification notification : new ArrayList<>(medicine.getNotifications(requireActivity()))) {
+                boolean flagOneShot = medicine.getDosageFrequencyHours() == 0 && medicine.getDosageFrequencyMinutes() == 0;
+
+                PendingIntent pendingIntent = NotificationScheduler.buildPendingIntent(requireActivity(), notification.getId(), flagOneShot, true);
+                if (pendingIntent == null)
+                    medicine.removeNotification(requireActivity(), notification);
+            }
+        } catch (DBFindException | DBDeleteException exception) {
+            ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
         }
     }
 

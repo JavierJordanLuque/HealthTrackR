@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.javierjordanluque.healthtrackr.models.Medicine;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.NotificationException;
@@ -14,13 +15,13 @@ import java.util.concurrent.TimeUnit;
 public class NotificationScheduler {
     public static final int PREVIOUS_DEFAULT_MINUTES = 60;
     private static final int WINDOW_LENGTH_MINUTES = 15;
-    protected static final String NOTIFICATION_ID = "notification_id";
+    public static final String NOTIFICATION_ID = "notification_id";
 
     public static void scheduleInexactNotification(Context context, Notification notification) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
             long windowLengthInMillis = TimeUnit.MINUTES.toMillis(WINDOW_LENGTH_MINUTES);
-            PendingIntent pendingIntent = buildPendingIntent(context, notification);
+            PendingIntent pendingIntent = buildPendingIntent(context, notification.getId(), true, false);
 
             // Set the alarm timestamp to approximately ring halfway through the window of time set,
             // ensuring the alarm is triggered approximately at the indicated time
@@ -42,7 +43,7 @@ public class NotificationScheduler {
                     int dosageFrequencyMinutes = medicationNotification.getMedicine().getDosageFrequencyMinutes();
 
                     long intervalMillis = TimeUnit.HOURS.toMillis(dosageFrequencyHours) + TimeUnit.MINUTES.toMillis(dosageFrequencyMinutes);
-                    PendingIntent pendingIntent = buildPendingIntent(context, notification);
+                    PendingIntent pendingIntent = buildPendingIntent(context, notification.getId(), false, false);
                     long nextNotificationTimeMillis = getNextNotificationTimeMillis(notification, System.currentTimeMillis(), intervalMillis);
 
                     alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, nextNotificationTimeMillis, intervalMillis, pendingIntent);
@@ -73,20 +74,33 @@ public class NotificationScheduler {
         return nextNotificationTimeMillis;
     }
 
-    private static PendingIntent buildPendingIntent(Context context, Notification notification) {
+    public static PendingIntent buildPendingIntent(Context context, long notificationId, boolean flagOneShot, boolean flagNoCreate) {
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
         notificationIntent.setAction(context.getPackageName() + ".SHOW_NOTIFICATION");
-        notificationIntent.putExtra(NOTIFICATION_ID, notification.getId());
+        notificationIntent.putExtra(NOTIFICATION_ID, notificationId);
 
-        return PendingIntent.getBroadcast(context, (int) notification.getId(), notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+        int flags = PendingIntent.FLAG_IMMUTABLE;
+        if (flagOneShot)
+            flags |= PendingIntent.FLAG_ONE_SHOT;
+        if (flagNoCreate)
+            flags |= PendingIntent.FLAG_NO_CREATE;
+
+        return PendingIntent.getBroadcast(context, (int) notificationId, notificationIntent, flags);
     }
 
     public static void cancelNotification(Context context, Notification notification) throws DBFindException, DBDeleteException {
-        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) notification.getId(), notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent;
+        boolean flagOneShot = true;
+
+        if (notification instanceof MedicationNotification) {
+            Medicine medicine = ((MedicationNotification) notification).getMedicine();
+            flagOneShot = medicine.getDosageFrequencyHours() == 0 && medicine.getDosageFrequencyMinutes() == 0;
+        }
+
+        pendingIntent = buildPendingIntent(context, notification.getId(), flagOneShot, true);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
+        if (alarmManager != null && pendingIntent != null) {
             alarmManager.cancel(pendingIntent);
             pendingIntent.cancel();
 

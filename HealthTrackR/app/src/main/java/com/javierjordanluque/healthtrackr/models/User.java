@@ -160,7 +160,12 @@ public class User implements Identifiable {
         treatments.add(treatment);
     }
 
-    public void removeTreatment(Context context, Treatment treatment) throws DBDeleteException {
+    public void removeTreatment(Context context, Treatment treatment) throws DBDeleteException, DBFindException {
+        for (Medicine medicine : new ArrayList<>(treatment.getMedicines(context)))
+            treatment.removeMedicine(context, medicine);
+        for (MedicalAppointment medicalAppointment : new ArrayList<>(treatment.getAppointments(context)))
+            treatment.removeAppointment(context, medicalAppointment);
+
         TreatmentRepository treatmentRepository = new TreatmentRepository(context);
         treatmentRepository.delete(treatment);
         treatments.remove(treatment);

@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="notification_channel_group_name_medication">Medicin</string>
-    <string name="notification_channel_group_name_medical_appointment">Lægeaftaler</string>
-    <string name="notification_channel_name_previous_medication">Tidligere påmindelser om medicin</string>
-    <string name="notification_channel_description_previous_medication">Modtag rettidige meddelelser om medicinplaner. Hold dig på rette spor med dine medicindoser ved at få påmindelser inden hver planlagte dosis.</string>
-    <string name="notification_channel_name_medication">Påmindelser om medicin</string>
-    <string name="notification_channel_description_medication">Modtag rettidige meddelelser om medicinplaner. Hold dig på rette spor med dine medicindoser ved at få påmindelser på tidspunktet for indtagelse.</string>
-    <string name="notification_channel_name_medical_appointment">Påmindelser om lægeaftaler</string>
-    <string name="notification_channel_description_medical_appointment">Modtag rettidige meddelelser om kommende lægeaftaler. Hold dig organiseret og forberedt ved at få påmindelser inden hver planlagte aftale.</string>
+    <string name="notification_channel_group_name_medication">Medikation</string>
+    <string name="notification_channel_group_name_medical_appointment">Arzttermine</string>
+    <string name="notification_channel_name_previous_medication">Vorherige Medikamentenerinnerungen</string>
+    <string name="notification_channel_description_previous_medication">Erhalten Sie rechtzeitige Benachrichtigungen für Ihre Medikamentenpläne. Bleiben Sie über Ihre Medikamentendosen informiert, indem Sie Erinnerungen vor jeder geplanten Dosis erhalten.</string>
+    <string name="notification_channel_name_medication">Medikamentenerinnerungen</string>
+    <string name="notification_channel_description_medication">Erhalten Sie rechtzeitige Benachrichtigungen für Ihre Medikamentenpläne. Bleiben Sie über Ihre Medikamentendosen informiert, indem Sie Erinnerungen zum Zeitpunkt der Einnahme erhalten.</string>
+    <string name="notification_channel_name_medical_appointment">Arztterminerinnerungen</string>
+    <string name="notification_channel_description_medical_appointment">Erhalten Sie rechtzeitige Benachrichtigungen für bevorstehende Arzttermine. Bleiben Sie organisiert und vorbereitet, indem Sie Erinnerungen vor jedem geplanten Termin erhalten.</string>
 
-    <string name="notification_title_medication">Medicindosis</string>
-    <string name="notification_title_medical_appointment">Lægeaftale</string>
+    <string name="notification_title_medication">Medikamentendosis</string>
+    <string name="notification_title_medical_appointment">Arzttermin</string>
 
-    <string name="notification_message_medication_dose">Næste dosis af</string>
-    <string name="notification_message_medication_treatment">fra behandlingen</string>
-    <string name="notification_message_medication_schedule_now">er planlagt til nu.</string>
-    <string name="notification_message_medication_scheduled_in">er planlagt om</string>
+    <string name="notification_message_medication_dose">Nächste Dosis von</string>
+    <string name="notification_message_medication_treatment">der Behandlung</string>
+    <string name="notification_message_medication_schedule_now">ist jetzt geplant.</string>
+    <string name="notification_message_medication_scheduled_in">ist in</string>
 
-    <string name="notification_message_medical_appointment_appointment">Lægeaftale for</string>
-    <string name="notification_message_medical_appointment_treatment">under behandling</string>
-    <string name="notification_message_medical_appointment_scheduled_now">planlagt til nu.</string>
-    <string name="notification_message_medical_appointment_scheduled_in">planlagt om</string>
-    <string name="notification_message_medical_appointment_location">Sted:</string>
-    <string name="notification_message_medical_appointment_latitude">Breddegrad</string>
-    <string name="notification_message_medical_appointment_longitude">Længdegrad</string>
+    <string name="notification_message_medical_appointment_appointment">Arzttermin der Behandlung</string>
+    <string name="notification_message_medical_appointment_scheduled_now">ist jetzt geplant.</string>
+    <string name="notification_message_medical_appointment_scheduled_in">ist in</string>
+    <string name="notification_message_medical_appointment_location">Ort:</string>
+    <string name="notification_message_medical_appointment_latitude">Breitengrad</string>
+    <string name="notification_message_medical_appointment_longitude">Längengrad</string>
 
-    <string name="notification_public_message_medication_scheduled_now">En medicindosis er planlagt til nu.</string>
-    <string name="notification_public_message_medication_scheduled_in">En medicindosis er planlagt om</string>
-    <string name="notification_public_message_medical_appointment_scheduled_now">En lægeaftale er planlagt til nu.</string>
-    <string name="notification_public_message_medical_appointment_scheduled_in">En lægeaftale er planlagt om</string>
+    <string name="notification_public_message_medication_scheduled_now">Eine Medikamentendosis ist jetzt geplant.</string>
+    <string name="notification_public_message_medication_scheduled_in">Eine Medikamentendosis ist in</string>
+    <string name="notification_public_message_medical_appointment_scheduled_now">Ein Arzttermin ist jetzt geplant.</string>
+    <string name="notification_public_message_medical_appointment_scheduled_in">Ein Arzttermin ist in</string>
 
     <plurals name="notification_message_days">
-        <item quantity="one">én dag</item>
-        <item quantity="other">%d dage</item>
+        <item quantity="one">einem Tag</item>
+        <item quantity="other">%d Tagen</item>
     </plurals>
     <plurals name="notification_message_hours">
-        <item quantity="one">én time</item>
-        <item quantity="other">%d timer</item>
+        <item quantity="one">einer Stunde</item>
+        <item quantity="other">%d Stunden</item>
     </plurals>
     <plurals name="notification_message_minutes">
-        <item quantity="one">et minut</item>
-        <item quantity="other">%d minutter</item>
+        <item quantity="one">einer Minute</item>
+        <item quantity="other">%d Minuten</item>
     </plurals>
 </resources>
