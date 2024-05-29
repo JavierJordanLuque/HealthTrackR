@@ -1,19 +1,24 @@
 package com.javierjordanluque.healthtrackr.ui;
 
 import android.app.AlertDialog;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.core.os.LocaleListCompat;
 
 import com.javierjordanluque.healthtrackr.R;
+import com.javierjordanluque.healthtrackr.util.Settings;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -22,6 +27,8 @@ public class SettingsActivity extends BaseActivity {
     private String localeCode;
     private LinkedHashMap<String, String> localeOptions;
     private boolean isSpinnerInitialization = true;
+    private RadioGroup radioGroupTheme;
+    private boolean isReset = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,8 @@ public class SettingsActivity extends BaseActivity {
         setLocaleCode();
         configureLocaleSpinner();
 
+        configureRadioGroupTheme();
+
         Button buttonResetSettings = findViewById(R.id.buttonResetSettings);
         buttonResetSettings.setOnClickListener(view -> showResetSettingsConfirmationDialog());
     }
@@ -42,6 +51,12 @@ public class SettingsActivity extends BaseActivity {
         builder.setMessage(getString(R.string.settings_dialog_message_reset))
                 .setPositiveButton(getString(R.string.settings_dialog_positive_reset), (dialog, id) -> {
                     AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList());
+
+                    isReset = true;
+                    radioGroupTheme.check(R.id.radioButtonSystemDefault);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    Settings.clearSettings(this);
+                    isReset = false;
 
                     Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
                 })
@@ -97,6 +112,45 @@ public class SettingsActivity extends BaseActivity {
             if (!localeOptions.containsValue(localeCode))
                 localeCode = "en";
         }
+    }
+
+    private void configureRadioGroupTheme() {
+        radioGroupTheme = findViewById(R.id.radioGroupTheme);
+        RadioButton radioButtonSystemDefault = findViewById(R.id.radioButtonSystemDefault);
+
+        int systemDefaultMode = Resources.getSystem().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (systemDefaultMode == Configuration.UI_MODE_NIGHT_NO) {
+            radioButtonSystemDefault.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.drawable.ic_light_mode), null);
+        } else {
+            radioButtonSystemDefault.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.drawable.ic_dark_mode), null);
+        }
+
+        int appTheme = AppCompatDelegate.getDefaultNightMode();
+        if (appTheme == AppCompatDelegate.MODE_NIGHT_NO) {
+            radioGroupTheme.check(R.id.radioButtonLight);
+        } else if (appTheme == AppCompatDelegate.MODE_NIGHT_YES) {
+            radioGroupTheme.check(R.id.radioButtonDark);
+        } else {
+            radioGroupTheme.check(R.id.radioButtonSystemDefault);
+        }
+
+
+        radioGroupTheme.setOnCheckedChangeListener((group, checkedId) -> {
+            if (isReset) {
+                return;
+            }
+
+            if (checkedId == R.id.radioButtonLight && appTheme != AppCompatDelegate.MODE_NIGHT_NO) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                Settings.saveTheme(this, Settings.LIGHT);
+            } else if (checkedId == R.id.radioButtonDark && appTheme != AppCompatDelegate.MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                Settings.saveTheme(this, Settings.DARK);
+            } else if (checkedId == R.id.radioButtonSystemDefault && appTheme != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                Settings.saveTheme(this, Settings.SYSTEM_DEFAULT);
+            }
+        });
     }
 
     @Override

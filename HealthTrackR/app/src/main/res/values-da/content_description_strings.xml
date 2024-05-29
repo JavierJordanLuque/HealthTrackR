@@ -56,4 +56,8 @@
     <string name="content_description_calendar_indicator_end_date">Slutdatoindeks</string>
     <string name="content_description_calendar_indicator_medical_appointment">Lægeaftaleindeks</string>
     <string name="content_description_calendar_indicator_medication_intake">Medicinindtagindeks</string>
+
+    <string name="content_description_settings_appearance_system_default">Ikon for systemets standardtilstand</string>
+    <string name="content_description_settings_appearance_light">Ikon for lys tilstand</string>
+    <string name="content_description_settings_appearance_dark">Ikon for mørk tilstand</string>
 </resources>

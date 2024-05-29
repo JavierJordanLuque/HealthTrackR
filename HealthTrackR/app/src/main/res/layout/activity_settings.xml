@@ -91,9 +91,46 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/form_margin_top"
-                        android:text="@string/settings_appearance"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/settings_colour_scheme"
                         android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/form_margin_top">
+
+                            <RadioButton
+                                android:id="@+id/radioButtonSystemDefault"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/settings_appearance_system_default"
+                                android:drawableEnd="@drawable/ic_light_mode"
+                                android:drawableTint="?attr/colorOnSurface"
+                                android:drawablePadding="8dp" />
+
+                            <RadioButton
+                                android:id="@+id/radioButtonLight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/settings_appearance_light"
+                                android:drawableEnd="@drawable/ic_light_mode"
+                                android:drawableTint="?attr/colorOnSurface"
+                                android:drawablePadding="8dp" />
+
+                            <RadioButton
+                                android:id="@+id/radioButtonDark"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/settings_appearance_dark"
+                                android:drawableEnd="@drawable/ic_dark_mode"
+                                android:drawableTint="?attr/colorOnSurface"
+                                android:drawablePadding="8dp" />
+
+                    </RadioGroup>
 
                 </LinearLayout>
 

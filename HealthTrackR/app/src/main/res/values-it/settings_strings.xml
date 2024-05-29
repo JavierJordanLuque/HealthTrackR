@@ -4,8 +4,12 @@
 
     <string name="settings_reset">Ripristina impostazioni</string>
     <string name="settings_language">Lingua</string>
-    <string name="settings_appearance">Aspetto</string>
+    <string name="settings_colour_scheme">Schema di colore</string>
 
     <string name="settings_dialog_message_reset">Sei sicuro di voler ripristinare le impostazioni?</string>
     <string name="settings_dialog_positive_reset">Ripristina</string>
+
+    <string name="settings_appearance_system_default">Modalità predefinita di sistema</string>
+    <string name="settings_appearance_light">Modalità chiara</string>
+    <string name="settings_appearance_dark">Modalità scura</string>
 </resources>

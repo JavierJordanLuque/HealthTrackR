@@ -4,10 +4,14 @@
 
     <string name="settings_reset">Reset settings</string>
     <string name="settings_language">Language</string>
-    <string name="settings_appearance">Appearance</string>
+    <string name="settings_colour_scheme">Colour scheme</string>
 
     <string name="settings_dialog_message_reset">Are you sure you want to reset the settings?</string>
     <string name="settings_dialog_positive_reset">Reset</string>
+
+    <string name="settings_appearance_system_default">System default mode</string>
+    <string name="settings_appearance_light">Light mode</string>
+    <string name="settings_appearance_dark">Dark mode</string>
 
     <string-array name="settings_array_locale" translatable="false">
         <item>Dansk</item>

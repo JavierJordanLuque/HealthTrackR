@@ -4,8 +4,12 @@
 
     <string name="settings_reset">Återställ inställningar</string>
     <string name="settings_language">Språk</string>
-    <string name="settings_appearance">Utseende</string>
+    <string name="settings_colour_scheme">Färgschema</string>
 
     <string name="settings_dialog_message_reset">Är du säker på att du vill återställa inställningarna?</string>
     <string name="settings_dialog_positive_reset">Återställ</string>
+
+    <string name="settings_appearance_system_default">Systemstandardläge</string>
+    <string name="settings_appearance_light">Ljust läge</string>
+    <string name="settings_appearance_dark">Mörkt läge</string>
 </resources>

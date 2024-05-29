@@ -6,9 +6,11 @@ import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.javierjordanluque.healthtrackr.ui.SessionViewModel;
+import com.javierjordanluque.healthtrackr.util.Settings;
 
 public class HealthTrackRApp extends Application {
     private SessionViewModel sessionViewModel;
@@ -33,6 +35,8 @@ public class HealthTrackRApp extends Application {
                 getString(R.string.notification_channel_description_medication), MEDICATION_CHANNEL_GROUP_ID);
         createNotificationChannel(MEDICAL_APPOINTMENT_CHANNEL_ID, getString(R.string.notification_channel_name_medical_appointment), NotificationManager.IMPORTANCE_HIGH,
                 getString(R.string.notification_channel_description_medical_appointment), MEDICAL_APPOINTMENT_CHANNEL_GROUP_ID);
+
+        setSettings();
     }
 
     public SessionViewModel getSessionViewModel() {
@@ -55,5 +59,21 @@ public class HealthTrackRApp extends Application {
 
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
+    }
+
+    private void setSettings() {
+        String[] settings = Settings.getSettings(this);
+        String theme = settings[0];
+
+        if (theme != null) {
+            int appTheme = AppCompatDelegate.getDefaultNightMode();
+            if (theme.equals(Settings.LIGHT) && appTheme != AppCompatDelegate.MODE_NIGHT_NO) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            } else if (theme.equals(Settings.DARK) && appTheme != AppCompatDelegate.MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else if (theme.equals(Settings.SYSTEM_DEFAULT) && appTheme != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            }
+        }
     }
 }

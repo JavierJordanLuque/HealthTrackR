@@ -58,4 +58,8 @@
     <string name="content_description_calendar_indicator_end_date">Indicador de fecha de finalización</string>
     <string name="content_description_calendar_indicator_medical_appointment">Indicador de cita médica</string>
     <string name="content_description_calendar_indicator_medication_intake">Indicador de toma de medicamento</string>
+
+    <string name="content_description_settings_appearance_system_default">Icono del modo predeterminado del sistema</string>
+    <string name="content_description_settings_appearance_light">Icono de modo claro</string>
+    <string name="content_description_settings_appearance_dark">Icono de modo oscuro</string>
 </resources>

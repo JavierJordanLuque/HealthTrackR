@@ -56,4 +56,8 @@
     <string name="content_description_calendar_indicator_end_date">Slutdatummarkör</string>
     <string name="content_description_calendar_indicator_medical_appointment">Läkarbesöksmarkör</string>
     <string name="content_description_calendar_indicator_medication_intake">Medicineringsmarkör</string>
+
+    <string name="content_description_settings_appearance_system_default">Ikonen för systemets standardläge</string>
+    <string name="content_description_settings_appearance_light">Ljuslägeikonen</string>
+    <string name="content_description_settings_appearance_dark">Mörkt lägeikonen</string>
 </resources>

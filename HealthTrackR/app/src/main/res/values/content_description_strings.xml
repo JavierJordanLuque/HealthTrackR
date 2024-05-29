@@ -58,4 +58,8 @@
     <string name="content_description_calendar_indicator_end_date">End date indicator</string>
     <string name="content_description_calendar_indicator_medical_appointment">Medical appointment indicator</string>
     <string name="content_description_calendar_indicator_medication_intake">Medication intake indicator</string>
+
+    <string name="content_description_settings_appearance_system_default">System default mode icon</string>
+    <string name="content_description_settings_appearance_light">Light mode icon</string>
+    <string name="content_description_settings_appearance_dark">Dark mode icon</string>
 </resources>

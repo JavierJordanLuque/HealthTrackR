@@ -18,7 +18,7 @@ import com.javierjordanluque.healthtrackr.util.security.SecurityService;
 import com.javierjordanluque.healthtrackr.util.security.SerializationUtils;
 
 public class AuthenticationService {
-    private static final String PREFS_NAME = "HealthTrackR";
+    private static final String PREFS_NAME = "HealthTrackR_authentication";
     private static final String PREFS_EMAIL = "email";
     private static final String PREFS_PASSWORD = "password";
 

@@ -1,59 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="content_description_app_icon">Ícone HealthTrackR</string>
-    <string name="content_description_back_icon">Voltar</string>
-    <string name="content_description_toggle_password_visibility">Alternar visibilidade da senha</string>
-    <string name="content_description_clear_text">Limpar texto</string>
+    <string name="content_description_app_icon">Значок HealthTrackR</string>
 
-    <string name="content_description_modify_account">Modificar conta</string>
-    <string name="content_description_add_treatment">Adicionar tratamento</string>
-    <string name="content_description_access_treatment">Acessar tratamento</string>
-    <string name="content_description_modify_treatment">Modificar tratamento</string>
-    <string name="content_description_access_guidelines">Acessar diretrizes</string>
-    <string name="content_description_access_medicines">Acessar medicamentos</string>
-    <string name="content_description_access_symptoms">Acessar sintomas</string>
-    <string name="content_description_access_calendar">Acessar calendário de tratamento</string>
-    <string name="content_description_access_questions">Acessar perguntas</string>
-    <string name="content_description_delete_treatment">Excluir tratamento</string>
+    <string name="content_description_back_icon">Назад</string>
 
-    <string name="content_description_status_pending">Status de tratamento pendente</string>
-    <string name="content_description_status_in_progress">Status de tratamento em progresso</string>
-    <string name="content_description_status_finished">Status de tratamento concluído</string>
+    <string name="content_description_toggle_password_visibility">Переключить видимость пароля</string>
+    <string name="content_description_clear_text">Очистить текст</string>
 
-    <string name="content_description_add_medicine">Adicionar medicamento</string>
-    <string name="content_description_modify_medicine">Modificar medicamento</string>
-    <string name="content_description_delete_medicine">Excluir medicamento</string>
-    <string name="content_description_access_medicine_notifications">Acessar notificações de medicamentos</string>
-    <string name="content_description_error_icon">Ícone de erro</string>
+    <string name="content_description_modify_account">Изменить аккаунт</string>
+    <string name="content_description_add_treatment">Добавить лечение</string>
+    <string name="content_description_access_treatment">Доступ к лечению</string>
+    <string name="content_description_modify_treatment">Изменить лечение</string>
+    <string name="content_description_access_guidelines">Доступ к руководствам</string>
+    <string name="content_description_access_medicines">Доступ к лекарствам</string>
+    <string name="content_description_access_symptoms">Доступ к симптомам</string>
+    <string name="content_description_access_calendar">Доступ к календарю лечения</string>
+    <string name="content_description_access_questions">Доступ к вопросам</string>
+    <string name="content_description_delete_treatment">Удалить лечение</string>
 
-    <string name="content_description_add_guideline">Adicionar diretriz</string>
-    <string name="content_description_remove_multimedia">Remover multimídia</string>
-    <string name="content_description_multimedia_error_loading_multimedia_content">Erro ao carregar conteúdo multimídia</string>
-    <string name="content_description_guideline_image">Imagem da diretriz:</string>
-    <string name="content_description_guideline_video">Vídeo da diretriz:</string>
-    <string name="content_description_selectable_image">Imagem selecionável</string>
-    <string name="content_description_selectable_video">Vídeo selecionável</string>
-    <string name="content_description_close_dialog">Fechar diálogo</string>
-    <string name="content_description_video_duration">Duração do vídeo</string>
+    <string name="content_description_status_pending">Статус ожидания лечения</string>
+    <string name="content_description_status_in_progress">Статус лечения в процессе</string>
+    <string name="content_description_status_finished">Статус завершенного лечения</string>
 
-    <string name="content_description_add_symptom">Adicionar sintoma</string>
-    <string name="content_description_add_question">Adicionar pergunta</string>
+    <string name="content_description_add_medicine">Добавить лекарство</string>
+    <string name="content_description_modify_medicine">Изменить лекарство</string>
+    <string name="content_description_delete_medicine">Удалить лекарство</string>
+    <string name="content_description_access_medicine_notifications">Доступ к уведомлениям о лекарствах</string>
+    <string name="content_description_error_icon">Иконка ошибки</string>
 
-    <string name="content_description_add_medical_appointment">Adicionar consulta médica</string>
-    <string name="content_description_modify_medical_appointment">Modificar consulta médica</string>
-    <string name="content_description_delete_medical_appointment">Excluir consulta médica</string>
-    <string name="content_description_access_medical_appointment_notification">Acessar notificação de consulta médica</string>
-    <string name="content_description_directions">Direções</string>
+    <string name="content_description_add_guideline">Добавить руководство</string>
+    <string name="content_description_remove_multimedia">Удалить мультимедиа</string>
+    <string name="content_description_multimedia_error_loading_multimedia_content">Ошибка загрузки мультимедийного контента</string>
+    <string name="content_description_guideline_image">Изображение руководства:</string>
+    <string name="content_description_guideline_video">Видео руководства:</string>
+    <string name="content_description_selectable_image">Выбираемое изображение</string>
+    <string name="content_description_selectable_video">Выбираемое видео</string>
+    <string name="content_description_close_dialog">Закрыть диалог</string>
+    <string name="content_description_video_duration">Продолжительность видео</string>
 
-    <string name="content_description_calendar_filter_medical_appointment_passed">Consultas médicas realizadas</string>
-    <string name="content_description_calendar_filter_medical_appointment_pending">Consultas médicas pendentes</string>
-    <string name="content_description_calendar_filter_medication_intake_passed">Medicamentos tomados</string>
-    <string name="content_description_calendar_filter_medication_intake_pending">Medicamentos pendentes</string>
+    <string name="content_description_add_symptom">Добавить симптом</string>
+    <string name="content_description_add_question">Добавить вопрос</string>
 
-    <string name="content_description_calendar_legend">Legenda do calendário</string>
-    <string name="content_description_calendar_indicator_current_date">Indicador de data atual</string>
-    <string name="content_description_calendar_indicator_start_date">Indicador de data de início</string>
-    <string name="content_description_calendar_indicator_end_date">Indicador de data de término</string>
-    <string name="content_description_calendar_indicator_medical_appointment">Indicador de consulta médica</string>
-    <string name="content_description_calendar_indicator_medication_intake">Indicador de medicamento</string>
+    <string name="content_description_add_medical_appointment">Добавить медицинское назначение</string>
+    <string name="content_description_modify_medical_appointment">Изменить медицинское назначение</string>
+    <string name="content_description_delete_medical_appointment">Удалить медицинское назначение</string>
+    <string name="content_description_access_medical_appointment_notification">Доступ к уведомлению о медицинском назначении</string>
+    <string name="content_description_directions">Направления</string>
+
+    <string name="content_description_calendar_filter_medical_appointment_passed">Прошедшие медицинские назначения</string>
+    <string name="content_description_calendar_filter_medical_appointment_pending">Ожидающие медицинские назначения</string>
+    <string name="content_description_calendar_filter_medication_intake_passed">Прошедший прием лекарств</string>
+    <string name="content_description_calendar_filter_medication_intake_pending">Ожидающий прием лекарств</string>
+
+    <string name="content_description_calendar_legend">Легенда календаря</string>
+    <string name="content_description_calendar_indicator_current_date">Индикатор текущей даты</string>
+    <string name="content_description_calendar_indicator_start_date">Индикатор начальной даты</string>
+    <string name="content_description_calendar_indicator_end_date">Индикатор конечной даты</string>
+    <string name="content_description_calendar_indicator_medical_appointment">Индикатор медицинского назначения</string>
+    <string name="content_description_calendar_indicator_medication_intake">Индикатор приема лекарств</string>
+
+    <string name="content_description_settings_appearance_system_default">Иконка режима по умолчанию системы</string>
+    <string name="content_description_settings_appearance_light">Иконка светлого режима</string>
+    <string name="content_description_settings_appearance_dark">Иконка темного режима</string>
 </resources>
