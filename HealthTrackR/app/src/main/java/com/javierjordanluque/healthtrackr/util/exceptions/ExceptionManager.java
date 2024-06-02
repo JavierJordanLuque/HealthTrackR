@@ -14,7 +14,7 @@ public class ExceptionManager {
     protected static final String WARNING = "W";
     protected static final String INFO = "I";
 
-    protected static void log(String severity, String tag, String exception, String message, Throwable cause) {
+    public static void log(String severity, String tag, String exception, String message, Throwable cause) {
         String fullMessage;
         if (cause == null) {
             fullMessage = exception + " | " + message;
