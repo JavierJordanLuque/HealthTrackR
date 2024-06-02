@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.javierjordanluque.healthtrackr.R;
+import com.prolificinteractive.materialcalendarview.BuildConfig;
 
 public class ExceptionManager {
     protected static final String ERROR = "E";
@@ -15,19 +16,21 @@ public class ExceptionManager {
     protected static final String INFO = "I";
 
     public static void log(String severity, String tag, String exception, String message, Throwable cause) {
-        String fullMessage;
-        if (cause == null) {
-            fullMessage = exception + " | " + message;
-        } else {
-            fullMessage = exception + " | " + message + " caused by " + cause.getClass().getSimpleName();
-        }
+        if (BuildConfig.DEBUG) {
+            String fullMessage;
+            if (cause == null) {
+                fullMessage = exception + " | " + message;
+            } else {
+                fullMessage = exception + " | " + message + " caused by " + cause.getClass().getSimpleName();
+            }
 
-        if (severity.equals(WARNING)) {
-            Log.w(tag, fullMessage);
-        } else if (severity.equals(INFO)) {
-            Log.i(tag, fullMessage);
-        } else {
-            Log.e(tag, fullMessage);
+            if (severity.equals(WARNING)) {
+                Log.w(tag, fullMessage);
+            } else if (severity.equals(INFO)) {
+                Log.i(tag, fullMessage);
+            } else {
+                Log.e(tag, fullMessage);
+            }
         }
     }
 
