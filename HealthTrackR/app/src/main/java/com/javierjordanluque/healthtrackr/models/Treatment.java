@@ -298,7 +298,7 @@ public class Treatment implements Identifiable {
         return medicines;
     }
 
-    private void setMedicines(List<Medicine> medicines) {
+    public void setMedicines(List<Medicine> medicines) {
         this.medicines = medicines;
     }
 

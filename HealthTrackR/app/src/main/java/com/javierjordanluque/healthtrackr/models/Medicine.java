@@ -307,7 +307,7 @@ public class Medicine implements Identifiable {
         return notifications;
     }
 
-    private void setNotifications(List<MedicationNotification> notifications) {
+    public void setNotifications(List<MedicationNotification> notifications) {
         this.notifications = notifications;
     }
 
