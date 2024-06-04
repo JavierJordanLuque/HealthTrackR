@@ -25,62 +25,78 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockedConstruction;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
-@RunWith(MockitoJUnitRunner.class)
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+
+@RunWith(JUnitParamsRunner.class)
 public class TreatmentTest {
+    private AutoCloseable mocks;
     @Mock
     private Context mockContext;
-    private User user;
     private MockedConstruction<TreatmentRepository> mockTreatmentRepository;
+    private User user;
 
     @Before
     public void setUp() {
+        mocks = MockitoAnnotations.openMocks(this);
+
         user = new User("email@example.com", "FirstName", "LastName");
         user.setTreatments(new ArrayList<>());
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws Exception {
+        mocks.close();
+
         if (mockTreatmentRepository != null)
             mockTreatmentRepository.close();
     }
 
+    public Object[] treatmentAdditionParameters() {
+        return new Object[]{
+                new Object[]{"Title", ZonedDateTime.now(), ZonedDateTime.now().plusDays(1), "", TreatmentCategory.MEDICAL},
+                new Object[]{"Another Title", ZonedDateTime.now().minusDays(2), ZonedDateTime.now().plusDays(2), "Initial Diagnosis",
+                        TreatmentCategory.PHYSIOTHERAPY}
+        };
+    }
     @Test
-    public void testAddTreatment_ThenReturnAndInsertTreatment() throws DBInsertException, DBFindException {
-        String title = "Title";
-        ZonedDateTime startDate =  ZonedDateTime.now();
-        ZonedDateTime endDate = ZonedDateTime.now().plusDays(1);
-        String diagnosis = "";
-        TreatmentCategory treatmentCategory = TreatmentCategory.MEDICAL;
+    @Parameters(method = "treatmentAdditionParameters")
+    public void testAddTreatment_ThenReturnAndInsertTreatment(String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis,
+                                                              TreatmentCategory treatmentCategory) throws DBInsertException, DBFindException {
 
         mockTreatmentRepository = Mockito.mockConstruction(TreatmentRepository.class,
                 (mock, context) -> when(mock.insert(any(Treatment.class))).thenReturn(1L));
 
         Treatment expectedResult = new Treatment(mockContext, user, title, startDate, endDate, diagnosis, treatmentCategory);
+
+        user.getTreatments(mockContext).add(expectedResult);
+
         Treatment obtainedResult = user.getTreatments(mockContext).get(0);
 
         verify(mockTreatmentRepository.constructed().get(0), times(1)).insert(any(Treatment.class));
         assertEquals(obtainedResult, expectedResult);
     }
 
-
+    public Object[] treatmentModificationParameters() {
+        return new Object[]{
+                new Object[]{"Title", ZonedDateTime.now(), ZonedDateTime.now().plusDays(1), "", TreatmentCategory.MEDICAL,
+                        "Title Modified", ZonedDateTime.now().minusDays(1), null, "Diagnosis", TreatmentCategory.ALTERNATIVE},
+                new Object[]{"Another Title", ZonedDateTime.now().minusDays(2), ZonedDateTime.now().plusDays(2), "Initial Diagnosis", TreatmentCategory.CHRONIC,
+                        "Updated Title", ZonedDateTime.now().minusDays(3), ZonedDateTime.now().plusDays(3), "Updated Diagnosis", TreatmentCategory.REHABILITATION}
+        };
+    }
     @Test
-    public void testModifyTreatment_ThenModifyAndUpdateTreatment() throws DBInsertException, DBFindException, DBDeleteException, DBUpdateException {
-        String title = "Title";
-        ZonedDateTime startDate =  ZonedDateTime.now();
-        ZonedDateTime endDate = ZonedDateTime.now().plusDays(1);
-        String diagnosis = "";
-        TreatmentCategory treatmentCategory = TreatmentCategory.MEDICAL;
-
-        String expectedTitle = "Title Modified";
-        ZonedDateTime expectedStartDate =  ZonedDateTime.now().minusDays(1);
-        ZonedDateTime expectedEndDate = null;
-        String expectedDiagnosis = "Diagnosis";
-        TreatmentCategory expectedTreatmentCategory = TreatmentCategory.ALTERNATIVE;
+    @Parameters(method = "treatmentModificationParameters")
+    public void testModifyTreatment_ThenModifyAndUpdateTreatment(String title, ZonedDateTime startDate, ZonedDateTime endDate, String diagnosis,
+                                                                 TreatmentCategory treatmentCategory, String expectedTitle, ZonedDateTime expectedStartDate,
+                                                                 ZonedDateTime expectedEndDate, String expectedDiagnosis,
+                                                                 TreatmentCategory expectedTreatmentCategory)
+            throws DBInsertException, DBFindException, DBDeleteException, DBUpdateException {
 
         mockTreatmentRepository = Mockito.mockConstruction(TreatmentRepository.class,
                 (mock, context) -> {
@@ -92,10 +108,10 @@ public class TreatmentTest {
         treatment.modifyTreatment(mockContext, expectedTitle, expectedStartDate, expectedEndDate, expectedDiagnosis, expectedTreatmentCategory);
         Treatment obtainedResult = user.getTreatments(mockContext).get(0);
 
-        assertEquals(obtainedResult.getTitle(), expectedTitle);
-        assertEquals(obtainedResult.getStartDate(), expectedStartDate);
-        assertEquals(obtainedResult.getEndDate(), expectedEndDate);
-        assertEquals(obtainedResult.getDiagnosis(), expectedDiagnosis);
-        assertEquals(obtainedResult.getCategory(), expectedTreatmentCategory);
+        assertEquals(expectedTitle, obtainedResult.getTitle());
+        assertEquals(expectedStartDate, obtainedResult.getStartDate());
+        assertEquals(expectedEndDate, obtainedResult.getEndDate());
+        assertEquals(expectedDiagnosis, obtainedResult.getDiagnosis());
+        assertEquals(expectedTreatmentCategory, obtainedResult.getCategory());
     }
 }
