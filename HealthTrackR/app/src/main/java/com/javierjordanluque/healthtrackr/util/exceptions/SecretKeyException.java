@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.util.exceptions;
 
 public class SecretKeyException extends Exception {
+    /** @noinspection FieldCanBeLocal*/
     private final String TAG = "KEY";
 
     public SecretKeyException(String message, Throwable cause) {

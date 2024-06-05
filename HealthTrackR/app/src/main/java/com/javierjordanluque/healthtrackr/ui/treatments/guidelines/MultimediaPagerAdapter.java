@@ -57,7 +57,7 @@ public class MultimediaPagerAdapter extends RecyclerView.Adapter<MultimediaPager
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Multimedia multimedia = multimedias.get(position);
-        View multimediaNotFoundView = LayoutInflater.from(context).inflate(R.layout.layout_multimedia_not_found, null);
+        @SuppressLint("InflateParams") View multimediaNotFoundView = LayoutInflater.from(context).inflate(R.layout.layout_multimedia_not_found, null);
 
         if (multimedia.getType() == MultimediaType.IMAGE) {
             Glide.with(context)
@@ -166,9 +166,9 @@ public class MultimediaPagerAdapter extends RecyclerView.Adapter<MultimediaPager
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        VideoView videoView;
-        WebView webView;
+        final ImageView imageView;
+        final VideoView videoView;
+        final WebView webView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

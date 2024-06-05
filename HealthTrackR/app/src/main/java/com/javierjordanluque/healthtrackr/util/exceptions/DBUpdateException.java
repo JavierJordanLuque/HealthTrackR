@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.util.exceptions;
 
 public class DBUpdateException extends Exception {
+    /** @noinspection FieldCanBeLocal*/
     private final String TAG = "UPDATE";
 
     public DBUpdateException(String message, Throwable cause) {

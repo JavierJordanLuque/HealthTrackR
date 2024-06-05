@@ -91,7 +91,7 @@ public class ModifyMedicineActivity extends BaseActivity {
         buttonSave.setOnClickListener(this::modifyMedicine);
     }
 
-    private void modifyMedicine(View view) {
+    private void modifyMedicine(View ignoredView) {
         hideKeyboard(this);
 
         String doseString = editTextDose.getText().toString().trim();

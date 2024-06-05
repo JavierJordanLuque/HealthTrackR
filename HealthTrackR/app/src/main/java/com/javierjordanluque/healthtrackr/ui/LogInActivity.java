@@ -45,7 +45,7 @@ public class LogInActivity extends BaseActivity {
         buttonLogIn.setOnClickListener(this::logIn);
     }
 
-    private void logIn(View view) {
+    private void logIn(View ignoredView) {
         hideKeyboard(this);
 
         String email = editTextEmail.getText().toString().trim();

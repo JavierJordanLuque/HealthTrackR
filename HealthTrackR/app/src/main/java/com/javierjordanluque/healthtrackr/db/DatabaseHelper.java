@@ -45,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Method to upgrade database
     }
 
+    /** @noinspection SameParameterValue*/
     private void executeSQLScript(SQLiteDatabase db, String scriptFile) throws DBInitializingException {
         try {
             InputStream inputStream = context.getAssets().open(scriptFile);

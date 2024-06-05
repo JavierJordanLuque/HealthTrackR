@@ -129,6 +129,7 @@ public class MedicalAppointmentFragment extends Fragment {
                         treatment.removeAppointment(requireActivity(), medicalAppointment);
 
                         Toast.makeText(requireActivity(), getString(R.string.medical_appointment_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
+                        //noinspection deprecation
                         requireActivity().onBackPressed();
                     } catch (DBFindException | DBDeleteException exception) {
                         ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());

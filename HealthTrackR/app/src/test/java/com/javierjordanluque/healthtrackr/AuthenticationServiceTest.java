@@ -79,6 +79,7 @@ public class AuthenticationServiceTest {
     }
 
     public Object[] invalidEmailParameters() {
+        //noinspection SpellCheckingInspection
         return new Object[]{
                 new Object[]{"invalid@example", "12345678Aa*", "FirstName", "LastName"},
                 new Object[]{"another_invalidexample.com", "12345678Bb/", "AnotherFirstName", "AnotherLastName"}

@@ -124,7 +124,7 @@ public class ModifyMedicalAppointmentNotificationActivity extends BaseActivity {
         buttonSave.setOnClickListener(this::modifyMedicalAppointmentNotification);
     }
 
-    private void modifyMedicalAppointmentNotification(View view) {
+    private void modifyMedicalAppointmentNotification(View ignoredView) {
         hideKeyboard(this);
 
         boolean previousNotificationStatus = switchPreviousNotificationStatus.isChecked();

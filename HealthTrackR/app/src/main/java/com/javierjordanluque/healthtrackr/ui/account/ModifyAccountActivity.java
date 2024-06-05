@@ -136,7 +136,7 @@ public class ModifyAccountActivity extends BaseActivity {
         buttonSave.setOnClickListener(this::modifyAccount);
     }
 
-    private void modifyAccount(View view) {
+    private void modifyAccount(View ignoredView) {
         hideKeyboard(this);
 
         String firstName = editTextFirstName.getText().toString().trim();

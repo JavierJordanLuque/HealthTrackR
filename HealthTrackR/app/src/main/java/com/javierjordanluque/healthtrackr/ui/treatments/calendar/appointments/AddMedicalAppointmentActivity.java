@@ -130,7 +130,7 @@ public class AddMedicalAppointmentActivity extends BaseActivity {
         buttonAddMedicalAppointment.setOnClickListener(this::addMedicalAppointment);
     }
 
-    private void addMedicalAppointment(View view) {
+    private void addMedicalAppointment(View ignoredView) {
         hideKeyboard(this);
 
         String subject = editTextSubject.getText().toString().trim();

@@ -48,6 +48,7 @@ public class HealthTrackRApp extends Application {
         notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(groupId, groupName));
     }
 
+    /** @noinspection SameParameterValue*/
     private void createNotificationChannel(String channelId, CharSequence channelName, int importance, String channelDescription, String groupId) {
         NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
         channel.setDescription(channelDescription);

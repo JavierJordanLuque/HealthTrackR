@@ -95,8 +95,8 @@ public class SelectableMultimediaAdapter extends RecyclerView.Adapter<Selectable
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView textViewDuration;
+        final ImageView imageView;
+        final TextView textViewDuration;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,7 +112,7 @@ public class SelectableMultimediaAdapter extends RecyclerView.Adapter<Selectable
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position, View view);
+        void onItemClick(int position, View ignoredView);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

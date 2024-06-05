@@ -100,6 +100,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         if (item.getItemId() == android.R.id.home) {
+            //noinspection deprecation
             onBackPressed();
             return true;
         } else if (itemId == R.id.menuSettings) {

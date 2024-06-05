@@ -106,6 +106,7 @@ public class TreatmentFragment extends Fragment {
                         ((MainActivity) requireActivity()).sessionViewModel.getUserSession().removeTreatment(requireActivity(), treatment);
 
                         Toast.makeText(requireActivity(), getString(R.string.treatments_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
+                        //noinspection deprecation
                         requireActivity().onBackPressed();
                     } catch (DBDeleteException | DBFindException exception) {
                         ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());

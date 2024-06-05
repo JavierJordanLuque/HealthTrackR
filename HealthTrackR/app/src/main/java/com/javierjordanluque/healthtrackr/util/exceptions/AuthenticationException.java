@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.util.exceptions;
 
 public class AuthenticationException extends Exception {
+    /** @noinspection FieldCanBeLocal*/
     private final String TAG = "AUTHENTICATION";
 
     public AuthenticationException(String message, Throwable cause) {

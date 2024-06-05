@@ -105,7 +105,7 @@ public class ModifyTreatmentActivity extends BaseActivity {
         buttonSave.setOnClickListener(this::modifyTreatment);
     }
 
-    private void modifyTreatment(View view) {
+    private void modifyTreatment(View ignoredView) {
         hideKeyboard(this);
 
         String title = editTextTitle.getText().toString().trim();

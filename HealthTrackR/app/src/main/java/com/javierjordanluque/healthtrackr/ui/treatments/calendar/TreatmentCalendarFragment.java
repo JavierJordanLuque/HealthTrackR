@@ -1,5 +1,6 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.calendar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -118,7 +119,7 @@ public class TreatmentCalendarFragment extends Fragment {
 
         imageButtonLegend = fragmentView.findViewById(R.id.imageButtonLegend);
         imageButtonLegend.setOnClickListener(view -> {
-            View popupView = getLayoutInflater().inflate(R.layout.calendar_legend, null);
+            @SuppressLint("InflateParams") View popupView = getLayoutInflater().inflate(R.layout.calendar_legend, null);
             PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             popupWindow.showAsDropDown(imageButtonLegend, -popupView.getMeasuredWidth(), -imageButtonLegend.getWidth() - 20);
@@ -126,7 +127,7 @@ public class TreatmentCalendarFragment extends Fragment {
 
         ExtendedFloatingActionButton buttonFilterCalendar = fragmentView.findViewById(R.id.buttonFilterCalendar);
         buttonFilterCalendar.setOnClickListener(view -> {
-            View popupView = getLayoutInflater().inflate(R.layout.filter_calendar, null);
+            @SuppressLint("InflateParams") View popupView = getLayoutInflater().inflate(R.layout.filter_calendar, null);
             PopupWindow popupWindow = new PopupWindow(popupView, buttonFilterCalendar.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popupWindow.showAsDropDown(buttonFilterCalendar, 0, 0);
 

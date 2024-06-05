@@ -60,6 +60,7 @@ public class SerializationUtils {
 
     private static <T extends Enum<T>> T deserializeEnum(byte[] data, Class<?> enumType) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method valueOfMethod = enumType.getMethod("valueOf", String.class);
+        //noinspection unchecked
         return (T) valueOfMethod.invoke(null, deserializeString(data));
     }
 

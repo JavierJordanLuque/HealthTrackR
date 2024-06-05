@@ -2,6 +2,7 @@ package com.javierjordanluque.healthtrackr.util.media;
 
 import android.net.Uri;
 
+/** @noinspection unused*/
 public class Media {
     private final Uri uri;
     private final String name;

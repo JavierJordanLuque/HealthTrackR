@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.util.exceptions;
 
 public class DecryptionException extends Exception {
+    /** @noinspection FieldCanBeLocal*/
     private final String TAG = "DECRYPTION";
 
     public DecryptionException(String message, Throwable cause) {

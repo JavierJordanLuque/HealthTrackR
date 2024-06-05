@@ -50,7 +50,7 @@ public class AddGuidelineActivity extends BaseActivity {
         buttonAddGuideline.setOnClickListener(this::addGuideline);
     }
 
-    private void addGuideline(View view) {
+    private void addGuideline(View ignoredView) {
         hideKeyboard(this);
 
         String title = editTextTitle.getText().toString().trim();

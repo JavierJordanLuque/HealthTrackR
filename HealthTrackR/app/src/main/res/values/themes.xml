@@ -32,8 +32,11 @@
 
     <style name="Theme.HealthTrackR" parent="Base.Theme.HealthTrackR">
         <item name="textAppearanceDisplayMedium">@style/TextAppearance.HealthTrackR.DisplayMedium</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.HealthTrackR.HeadlineLarge</item>
         <item name="textAppearanceHeadlineSmall">@style/TextAppearance.HealthTrackR.HeadlineSmall</item>
         <item name="textAppearanceTitleLarge">@style/TextAppearance.HealthTrackR.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.HealthTrackR.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.HealthTrackR.TitleSmall</item>
         <item name="textAppearanceBodyLarge">@style/TextAppearance.HealthTrackR.BodyLarge</item>
         <item name="textAppearanceBodyMedium">@style/TextAppearance.HealthTrackR.BodyMedium</item>
         <item name="textAppearanceBodySmall">@style/TextAppearance.HealthTrackR.BodySmall</item>

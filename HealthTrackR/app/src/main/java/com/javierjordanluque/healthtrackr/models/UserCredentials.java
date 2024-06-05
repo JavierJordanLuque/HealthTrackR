@@ -15,6 +15,7 @@ public class UserCredentials {
         this.hashData = hashData;
     }
 
+    /** @noinspection BooleanMethodIsAlwaysInverted*/
     public boolean equalsPassword(String password) throws SerializationException, HashException {
         return SecurityService.equalsHashAndData(hashData.getHashedData(), hashData.getSalt(), SerializationUtils.serialize(password));
     }

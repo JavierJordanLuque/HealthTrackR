@@ -50,7 +50,7 @@ public class ChangePasswordActivity extends BaseActivity {
         buttonChangePassword.setOnClickListener(this::changePassword);
     }
 
-    private void changePassword(View view) {
+    private void changePassword(View ignoredView) {
         hideKeyboard(this);
 
         String currentPassword = editTextCurrentPassword.getText().toString().trim();

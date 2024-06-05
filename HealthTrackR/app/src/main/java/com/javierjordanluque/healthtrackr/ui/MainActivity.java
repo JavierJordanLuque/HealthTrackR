@@ -120,7 +120,7 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
         fragmentTransaction.commit();
     }
 
-    public ActivityResultLauncher<Intent> fragmentLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+    public final ActivityResultLauncher<Intent> fragmentLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
             Intent data = result.getData();
 
@@ -256,6 +256,7 @@ public class MainActivity extends BaseActivity implements OnToolbarChangeListene
         return R.menu.toolbar_menu;
     }
 
+    /** @noinspection deprecation*/
     @Override
     public void onBackPressed() {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);

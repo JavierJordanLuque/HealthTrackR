@@ -22,7 +22,6 @@
 
     <dimen name="spinner_layout_padding_top">5dp</dimen>
     <dimen name="spinner_layout_padding_horizontal">10dp</dimen>
-    <dimen name="spinner_layout_margin_top">20dp</dimen>
 
     <dimen name="relative_layout_grid_layout_margin">8dp</dimen>
     <dimen name="relative_layout_grid_padding">2dp</dimen>

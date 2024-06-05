@@ -17,11 +17,8 @@
     <string name="button_change">Skift</string>
     <string name="button_delete">Slet</string>
 
-    <string name="dialog_positive_yes">Ja</string>
-    <string name="dialog_positive_accept">Accepter</string>
     <string name="dialog_positive_confirm">Bekræft</string>
 
-    <string name="dialog_negative_no">Nej</string>
     <string name="dialog_negative_cancel">Annuller</string>
     <string name="dialog_negative_try_again">Prøv igen</string>
 

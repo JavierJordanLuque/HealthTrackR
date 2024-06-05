@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.util.exceptions;
 
 public class DBInsertException extends Exception {
+    /** @noinspection FieldCanBeLocal*/
     private final String TAG = "INSERT";
 
     public DBInsertException(String message, Throwable cause) {

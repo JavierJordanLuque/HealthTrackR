@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="seed">#1294B1</color>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="seed" tools:ignore="UnusedResources">#1294B1</color>
     <color name="red">#FF0000</color>
     <color name="green">#00FF00</color>
     <color name="amber">#FFA500</color>
@@ -35,10 +35,10 @@
     <color name="light_inverseOnSurface">#EFF1F2</color>
     <color name="light_inverseSurface">#2E3132</color>
     <color name="light_inversePrimary">#59D5F8</color>
-    <color name="light_shadow">#000000</color>
-    <color name="light_surfaceTint">#00677D</color>
-    <color name="light_outlineVariant">#BFC8CC</color>
-    <color name="light_scrim">#000000</color>
+    <color name="light_shadow" tools:ignore="UnusedResources">#000000</color>
+    <color name="light_surfaceTint" tools:ignore="UnusedResources">#00677D</color>
+    <color name="light_outlineVariant" tools:ignore="UnusedResources">#BFC8CC</color>
+    <color name="light_scrim" tools:ignore="UnusedResources">#000000</color>
 
     <color name="dark_primary">#59D5F8</color>
     <color name="dark_onPrimary">#003642</color>
@@ -66,8 +66,8 @@
     <color name="dark_inverseOnSurface">#191C1D</color>
     <color name="dark_inverseSurface">#E1E3E4</color>
     <color name="dark_inversePrimary">#00677D</color>
-    <color name="dark_shadow">#000000</color>
-    <color name="dark_surfaceTint">#59D5F8</color>
-    <color name="dark_outlineVariant">#40484B</color>
-    <color name="dark_scrim">#000000</color>
+    <color name="dark_shadow" tools:ignore="UnusedResources">#000000</color>
+    <color name="dark_surfaceTint" tools:ignore="UnusedResources">#59D5F8</color>
+    <color name="dark_outlineVariant" tools:ignore="UnusedResources">#40484B</color>
+    <color name="dark_scrim" tools:ignore="UnusedResources">#000000</color>
 </resources>

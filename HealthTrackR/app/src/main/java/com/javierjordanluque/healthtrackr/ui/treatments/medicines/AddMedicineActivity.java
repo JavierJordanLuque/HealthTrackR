@@ -102,7 +102,7 @@ public class AddMedicineActivity extends BaseActivity {
         buttonAddMedicine.setOnClickListener(this::addMedicine);
     }
 
-    private void addMedicine(View view) {
+    private void addMedicine(View ignoredView) {
         hideKeyboard(this);
 
         String name = editTextName.getText().toString().trim();

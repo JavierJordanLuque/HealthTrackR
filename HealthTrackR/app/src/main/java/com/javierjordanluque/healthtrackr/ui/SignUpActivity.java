@@ -58,7 +58,7 @@ public class SignUpActivity extends BaseActivity {
         buttonCreateAccount.setOnClickListener(this::signUp);
     }
 
-    private void signUp(View view) {
+    private void signUp(View ignoredView) {
         hideKeyboard(this);
 
         String email = editTextEmail.getText().toString().trim();

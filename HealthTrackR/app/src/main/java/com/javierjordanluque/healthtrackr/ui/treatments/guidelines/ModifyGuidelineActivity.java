@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui.treatments.guidelines;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -277,7 +278,7 @@ public class ModifyGuidelineActivity extends BaseActivity {
         return filePath;
     }
 
-    private void modifyGuideline(View view) {
+    private void modifyGuideline(View ignoredView) {
         hideKeyboard(this);
 
         String title = editTextTitle.getText().toString().trim();
@@ -337,7 +338,7 @@ public class ModifyGuidelineActivity extends BaseActivity {
         builder.show();
     }
 
-    private void addImage(View view) {
+    private void addImage(View ignoredView) {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_image, null);
 
         TextView textViewURLHelper = dialogView.findViewById(R.id.textViewURLHelper);
@@ -416,7 +417,7 @@ public class ModifyGuidelineActivity extends BaseActivity {
         });
     }
 
-    private void addVideo(View view) {
+    private void addVideo(View ignoredView) {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_video, null);
 
         TextView textViewURLHelper = dialogView.findViewById(R.id.textViewURLHelper);
@@ -554,7 +555,7 @@ public class ModifyGuidelineActivity extends BaseActivity {
         onRequestReadMultimediaPermissionMultimediaType = MultimediaType.IMAGE;
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        View bottomSheetView = LayoutInflater.from(this).inflate(R.layout.dialog_media_selector, null);
+        @SuppressLint("InflateParams") View bottomSheetView = LayoutInflater.from(this).inflate(R.layout.dialog_media_selector, null);
         bottomSheetDialog.setContentView(bottomSheetView);
 
         TextView textViewSelect = bottomSheetView.findViewById(R.id.textViewSelect);
@@ -625,7 +626,7 @@ public class ModifyGuidelineActivity extends BaseActivity {
         onRequestReadMultimediaPermissionMultimediaType = MultimediaType.VIDEO;
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        View bottomSheetView = LayoutInflater.from(this).inflate(R.layout.dialog_media_selector, null);
+        @SuppressLint("InflateParams") View bottomSheetView = LayoutInflater.from(this).inflate(R.layout.dialog_media_selector, null);
         bottomSheetDialog.setContentView(bottomSheetView);
 
         TextView textViewSelect = bottomSheetView.findViewById(R.id.textViewSelect);

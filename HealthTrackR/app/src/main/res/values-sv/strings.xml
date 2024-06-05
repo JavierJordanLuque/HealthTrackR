@@ -17,11 +17,8 @@
     <string name="button_change">Ändra</string>
     <string name="button_delete">Radera</string>
 
-    <string name="dialog_positive_yes">Ja</string>
-    <string name="dialog_positive_accept">Acceptera</string>
     <string name="dialog_positive_confirm">Bekräfta</string>
 
-    <string name="dialog_negative_no">Nej</string>
     <string name="dialog_negative_cancel">Avbryt</string>
     <string name="dialog_negative_try_again">Försök igen</string>
 

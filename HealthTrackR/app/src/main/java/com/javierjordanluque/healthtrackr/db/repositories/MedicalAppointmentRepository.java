@@ -12,7 +12,6 @@ import com.javierjordanluque.healthtrackr.models.Location;
 import com.javierjordanluque.healthtrackr.models.MedicalAppointment;
 import com.javierjordanluque.healthtrackr.models.Treatment;
 import com.javierjordanluque.healthtrackr.util.security.SerializationUtils;
-import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DecryptionException;

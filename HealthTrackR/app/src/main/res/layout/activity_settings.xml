@@ -110,7 +110,8 @@
                                 android:text="@string/settings_appearance_system_default"
                                 android:drawableEnd="@drawable/ic_light_mode"
                                 android:drawableTint="?attr/colorOnSurface"
-                                android:drawablePadding="8dp" />
+                                android:drawablePadding="8dp"
+                                android:contentDescription="@string/content_description_settings_appearance_system_default" />
 
                             <RadioButton
                                 android:id="@+id/radioButtonLight"
@@ -119,7 +120,8 @@
                                 android:text="@string/settings_appearance_light"
                                 android:drawableEnd="@drawable/ic_light_mode"
                                 android:drawableTint="?attr/colorOnSurface"
-                                android:drawablePadding="8dp" />
+                                android:drawablePadding="8dp"
+                                android:contentDescription="@string/content_description_settings_appearance_light" />
 
                             <RadioButton
                                 android:id="@+id/radioButtonDark"
@@ -128,7 +130,8 @@
                                 android:text="@string/settings_appearance_dark"
                                 android:drawableEnd="@drawable/ic_dark_mode"
                                 android:drawableTint="?attr/colorOnSurface"
-                                android:drawablePadding="8dp" />
+                                android:drawablePadding="8dp"
+                                android:contentDescription="@string/content_description_settings_appearance_dark" />
 
                     </RadioGroup>
 

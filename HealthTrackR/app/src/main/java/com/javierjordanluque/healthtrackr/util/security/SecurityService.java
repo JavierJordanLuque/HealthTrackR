@@ -142,6 +142,7 @@ public class SecurityService {
         return matcher.matches();
     }
 
+    /** @noinspection BooleanMethodIsAlwaysInverted*/
     public static boolean meetsPasswordRequirements(String password) {
         if (password.length() < 8 || password.length() > 60)
             return false;

@@ -121,6 +121,7 @@ public class MedicineFragment extends Fragment {
                         treatment.removeMedicine(requireActivity(), medicine);
 
                         Toast.makeText(requireActivity(), getString(R.string.medicines_toast_confirmation_delete), Toast.LENGTH_SHORT).show();
+                        //noinspection deprecation
                         requireActivity().onBackPressed();
                     } catch (DBFindException | DBDeleteException exception) {
                         ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());

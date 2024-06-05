@@ -17,11 +17,8 @@
     <string name="button_change">Изменить</string>
     <string name="button_delete">Удалить</string>
 
-    <string name="dialog_positive_yes">Да</string>
-    <string name="dialog_positive_accept">Принять</string>
     <string name="dialog_positive_confirm">Подтвердить</string>
 
-    <string name="dialog_negative_no">Нет</string>
     <string name="dialog_negative_cancel">Отмена</string>
     <string name="dialog_negative_try_again">Попробовать снова</string>
 

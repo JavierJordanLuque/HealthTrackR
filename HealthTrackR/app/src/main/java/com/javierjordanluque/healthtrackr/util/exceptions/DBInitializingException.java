@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.util.exceptions;
 
 public class DBInitializingException extends Exception {
+    /** @noinspection FieldCanBeLocal*/
     private final String TAG = "DB INIT";
 
     public DBInitializingException(String message, Throwable cause) {

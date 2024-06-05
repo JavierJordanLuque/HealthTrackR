@@ -148,7 +148,7 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
         buttonSave.setOnClickListener(this::modifyMedicineNotifications);
     }
 
-    private void modifyMedicineNotifications(View view) {
+    private void modifyMedicineNotifications(View ignoredView) {
         hideKeyboard(this);
 
         boolean previousNotificationStatus = switchPreviousNotificationStatus.isChecked();

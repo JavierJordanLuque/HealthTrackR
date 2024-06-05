@@ -90,7 +90,7 @@ public class AddTreatmentActivity extends BaseActivity {
         buttonAddTreatment.setOnClickListener(this::addTreatment);
     }
 
-    private void addTreatment(View view) {
+    private void addTreatment(View ignoredView) {
         hideKeyboard(this);
 
         String title = editTextTitle.getText().toString().trim();

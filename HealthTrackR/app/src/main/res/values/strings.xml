@@ -19,11 +19,8 @@
     <string name="button_delete">Delete</string>
 
     <string name="dialog_positive_ok" translatable="false">OK</string>
-    <string name="dialog_positive_yes">Yes</string>
-    <string name="dialog_positive_accept">Accept</string>
     <string name="dialog_positive_confirm">Confirm</string>
 
-    <string name="dialog_negative_no">No</string>
     <string name="dialog_negative_cancel">Cancel</string>
     <string name="dialog_negative_try_again">Try again</string>
 

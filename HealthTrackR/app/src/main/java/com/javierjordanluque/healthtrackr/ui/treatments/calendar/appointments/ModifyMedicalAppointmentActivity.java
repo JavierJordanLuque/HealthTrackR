@@ -146,7 +146,7 @@ public class ModifyMedicalAppointmentActivity extends BaseActivity {
         buttonSave.setOnClickListener(this::modifyMedicalAppointment);
     }
 
-    private void modifyMedicalAppointment(View view) {
+    private void modifyMedicalAppointment(View ignoredView) {
         hideKeyboard(this);
 
         String subject = editTextSubject.getText().toString().trim();

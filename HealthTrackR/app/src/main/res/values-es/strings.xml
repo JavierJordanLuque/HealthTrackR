@@ -17,11 +17,8 @@
     <string name="button_change">Cambiar</string>
     <string name="button_delete">Eliminar</string>
 
-    <string name="dialog_positive_yes">Sí</string>
-    <string name="dialog_positive_accept">Aceptar</string>
     <string name="dialog_positive_confirm">Confirmar</string>
 
-    <string name="dialog_negative_no">No</string>
     <string name="dialog_negative_cancel">Cancelar</string>
     <string name="dialog_negative_try_again">Volver a intentar</string>
 

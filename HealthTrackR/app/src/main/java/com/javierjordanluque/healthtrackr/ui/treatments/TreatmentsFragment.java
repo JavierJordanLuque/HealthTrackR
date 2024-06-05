@@ -1,5 +1,6 @@
 package com.javierjordanluque.healthtrackr.ui.treatments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -79,7 +80,7 @@ public class TreatmentsFragment extends Fragment {
 
         ExtendedFloatingActionButton buttonFilterTreatments = fragmentView.findViewById(R.id.buttonFilterTreatments);
         buttonFilterTreatments.setOnClickListener(view -> {
-            View popupView = getLayoutInflater().inflate(R.layout.filter_treatments, null);
+            @SuppressLint("InflateParams") View popupView = getLayoutInflater().inflate(R.layout.filter_treatments, null);
             PopupWindow popupWindow = new PopupWindow(popupView, buttonFilterTreatments.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popupWindow.showAsDropDown(buttonFilterTreatments, 0, 0);
 
