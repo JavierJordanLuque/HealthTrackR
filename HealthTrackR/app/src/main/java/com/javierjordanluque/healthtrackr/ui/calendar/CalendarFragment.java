@@ -249,9 +249,9 @@ public class CalendarFragment extends Fragment {
             } catch (DBFindException exception) {
                 ExceptionManager.advertiseUI(requireActivity(), exception.getMessage());
             }
-
-            showSelectedDateSchedule();
         }
+
+        showSelectedDateSchedule();
     }
 
     private void showHighlightedMedicalAppointments(List<MedicalAppointment> appointments) {
