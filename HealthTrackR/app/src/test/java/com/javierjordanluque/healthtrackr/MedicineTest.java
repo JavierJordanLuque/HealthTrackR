@@ -3,7 +3,9 @@ package com.javierjordanluque.healthtrackr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -22,6 +24,7 @@ import com.javierjordanluque.healthtrackr.util.PermissionManager;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBDeleteException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBFindException;
 import com.javierjordanluque.healthtrackr.util.exceptions.DBInsertException;
+import com.javierjordanluque.healthtrackr.util.exceptions.DBUpdateException;
 import com.javierjordanluque.healthtrackr.util.notifications.MedicationNotification;
 import com.javierjordanluque.healthtrackr.util.notifications.NotificationScheduler;
 
@@ -71,7 +74,7 @@ public class MedicineTest {
     public Object[] medicineAdditionParameters() {
         return new Object[]{
                 new Object[]{"Name", "Active substance", 500, AdministrationRoute.NASAL, ZonedDateTime.now(), 1, 5},
-                new Object[]{"Another Name", null, null, AdministrationRoute.UNSPECIFIED, ZonedDateTime.now().minusDays(1), 0, 0},
+                new Object[]{"Another Name", null, null, AdministrationRoute.UNSPECIFIED, ZonedDateTime.now().minusDays(1), 0, 0}
         };
     }
     @Test
@@ -93,7 +96,7 @@ public class MedicineTest {
     public Object[] medicineDosageFrequencyNotZeroOrLessOrEqualThanPreviousMinutesParameters() {
         return new Object[]{
                 new Object[]{"Name", "Active substance", 500, AdministrationRoute.NASAL, ZonedDateTime.now(), 0, 50, 60},
-                new Object[]{"Another Name", null, null, AdministrationRoute.UNSPECIFIED, ZonedDateTime.now().minusDays(1), 0, 30, 30},
+                new Object[]{"Another Name", null, null, AdministrationRoute.UNSPECIFIED, ZonedDateTime.now().minusDays(1), 0, 30, 30}
         };
     }
     @Test
@@ -111,15 +114,15 @@ public class MedicineTest {
 
         medicine.schedulePreviousMedicationNotification(mockContext, previousMinutes);
 
-        mockPermissionManager.close();
-
         assertTrue(medicine.getNotifications(mockContext).isEmpty());
+
+        mockPermissionManager.close();
     }
 
     public Object[] medicineDosageFrequencyZeroOrGreaterThanPreviousMinutesParameters() {
         return new Object[]{
                 new Object[]{"Name", "Active substance", 500, AdministrationRoute.NASAL, ZonedDateTime.now(), 1, 1, 60},
-                new Object[]{"Another Name", null, null, AdministrationRoute.UNSPECIFIED, ZonedDateTime.now().plusDays(1), 0, 0, 30},
+                new Object[]{"Another Name", null, null, AdministrationRoute.UNSPECIFIED, ZonedDateTime.now().plusDays(1), 0, 0, 30}
         };
     }
     @Test
@@ -146,10 +149,79 @@ public class MedicineTest {
 
         medicine.schedulePreviousMedicationNotification(mockContext, previousMinutes);
 
+        assertFalse(medicine.getNotifications(mockContext).isEmpty());
+
         mockPermissionManager.close();
         mockNotificationRepository.close();
         mockNotificationScheduler.close();
+    }
 
-        assertFalse(medicine.getNotifications(mockContext).isEmpty());
+    public Object[] medicineModificationParameters() {
+        return new Object[]{
+                new Object[]{"Name", "Active substance", 500, AdministrationRoute.NASAL, ZonedDateTime.now(), 1, 5, null, AdministrationRoute.ORAL,
+                        ZonedDateTime.now().minusDays(50), 0, 0},
+                new Object[]{"Another Name", null, null, AdministrationRoute.UNSPECIFIED, ZonedDateTime.now().minusDays(1), 0, 0, 1000,
+                        AdministrationRoute.INHALATION, ZonedDateTime.now(), 2, 30}
+        };
+    }
+    @Test
+    @Parameters(method = "medicineModificationParameters")
+    public void testModifyMedicine_ThenModifyAndUpdateMedicine(String name, String activeSubstance, Integer dose, AdministrationRoute administrationRoute,
+                                                               ZonedDateTime initialDosingTime, int dosageFrequencyHours, int dosageFrequencyMinutes,
+                                                               Integer expectedDose, AdministrationRoute expectedAdministrationRoute,
+                                                               ZonedDateTime expectedInitialDosingTime, Integer expectedDosageFrequencyHours,
+                                                               Integer expectedDosageFrequencyMinutes)
+            throws DBInsertException, DBFindException, DBDeleteException, DBUpdateException {
+        mockMedicineRepository = Mockito.mockConstruction(MedicineRepository.class,
+                (mock, context) -> doNothing().when(mock).update(any(Medicine.class)));
+
+        MockedConstruction<NotificationRepository> mockNotificationRepository = Mockito.mockConstruction(NotificationRepository.class,
+                (mock, context) -> when(mock.findMedicineNotifications(anyLong(), anyLong())).thenReturn(new ArrayList<>()));
+
+        Medicine medicine = new Medicine(null, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime,
+                dosageFrequencyHours, dosageFrequencyMinutes);
+        treatment.setMedicines(new ArrayList<>(Collections.singletonList(medicine)));
+
+        medicine.modifyMedicine(mockContext, expectedDose, expectedAdministrationRoute, expectedInitialDosingTime, expectedDosageFrequencyHours,
+                expectedDosageFrequencyMinutes);
+        Medicine obtainedResult = treatment.getMedicines(mockContext).get(0);
+
+        verify(mockMedicineRepository.constructed().get(0), times(1)).update(any(Medicine.class));
+        assertEquals(expectedDose, obtainedResult.getDose());
+        assertEquals(expectedAdministrationRoute, obtainedResult.getAdministrationRoute());
+        assertEquals(expectedInitialDosingTime, obtainedResult.getInitialDosingTime());
+        assertEquals(expectedDosageFrequencyHours, obtainedResult.getDosageFrequencyHours());
+        assertEquals(expectedDosageFrequencyMinutes, obtainedResult.getDosageFrequencyMinutes());
+
+        mockNotificationRepository.close();
+    }
+
+    public Object[] medicineEliminationParameters() {
+        return new Object[]{
+                new Object[]{"Name", "Active substance", 500, AdministrationRoute.NASAL, ZonedDateTime.now(), 1, 5},
+                new Object[]{"Another Name", null, null, AdministrationRoute.UNSPECIFIED, ZonedDateTime.now().minusDays(1), 0, 0}
+        };
+    }
+    @Test
+    @Parameters(method = "medicineEliminationParameters")
+    public void testDeleteMedicine_ThenRemoveMedicineFromTreatment(String name, String activeSubstance, Integer dose, AdministrationRoute administrationRoute,
+                                                                   ZonedDateTime initialDosingTime, int dosageFrequencyHours, int dosageFrequencyMinutes)
+            throws DBInsertException, DBFindException, DBDeleteException {
+        mockMedicineRepository = Mockito.mockConstruction(MedicineRepository.class,
+                (mock, context) -> doNothing().when(mock).delete(any(Medicine.class)));
+
+        MockedConstruction<NotificationRepository> mockNotificationRepository = Mockito.mockConstruction(NotificationRepository.class,
+                (mock, context) -> when(mock.findMedicineNotifications(anyLong(), anyLong())).thenReturn(new ArrayList<>()));
+
+        Medicine medicine = new Medicine(null, treatment, name, activeSubstance, dose, administrationRoute, initialDosingTime,
+                dosageFrequencyHours, dosageFrequencyMinutes);
+        treatment.setMedicines(new ArrayList<>(Collections.singletonList(medicine)));
+
+        treatment.removeMedicine(mockContext, medicine);
+
+        verify(mockMedicineRepository.constructed().get(0), times(1)).delete(medicine);
+        assertTrue(treatment.getMedicines(mockContext).isEmpty());
+
+        mockNotificationRepository.close();
     }
 }

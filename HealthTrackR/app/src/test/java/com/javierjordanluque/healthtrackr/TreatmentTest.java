@@ -140,7 +140,7 @@ public class TreatmentTest {
 
         user.removeTreatment(mockContext, treatment);
 
-        verify(mockTreatmentRepository.constructed().get(0), times(1)).delete(any(Treatment.class));
+        verify(mockTreatmentRepository.constructed().get(0), times(1)).delete(treatment);
         assertTrue(user.getTreatments(mockContext).isEmpty());
 
         mockMedicineRepository.close();

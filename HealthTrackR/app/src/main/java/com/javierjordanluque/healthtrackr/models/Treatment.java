@@ -364,7 +364,7 @@ public class Treatment implements Identifiable {
         return appointments;
     }
 
-    private void setAppointments(List<MedicalAppointment> appointments) {
+    public void setAppointments(List<MedicalAppointment> appointments) {
         this.appointments = appointments;
     }
 
