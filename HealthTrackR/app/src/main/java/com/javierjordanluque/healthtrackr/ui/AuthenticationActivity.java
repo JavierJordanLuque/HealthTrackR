@@ -19,32 +19,34 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        String[] credentials = AuthenticationService.getCredentials(this);
-        String email = (credentials != null) ? credentials[0] : null;
-        String password = (credentials != null) ? credentials[1] : null;
+        if (savedInstanceState == null) {
+            String[] credentials = AuthenticationService.getCredentials(this);
+            String email = (credentials != null) ? credentials[0] : null;
+            String password = (credentials != null) ? credentials[1] : null;
 
-        if (email != null && password != null) {
-            try {
-                User user = AuthenticationService.login(this, email, password);
+            if (email != null && password != null) {
+                try {
+                    User user = AuthenticationService.login(this, email, password);
 
-                Intent intent = new Intent(AuthenticationActivity.this, MainActivity.class);
-                ((HealthTrackRApp) getApplication()).getSessionViewModel().setUserSession(user);
-                startActivity(intent);
-                finish();
-            } catch (AuthenticationException exception) {
-                ExceptionManager.advertiseUI(this, exception.getMessage());
+                    Intent intent = new Intent(this, MainActivity.class);
+                    ((HealthTrackRApp) getApplication()).getSessionViewModel().setUserSession(user);
+                    startActivity(intent);
+                    finish();
+                } catch (AuthenticationException exception) {
+                    ExceptionManager.advertiseUI(this, exception.getMessage());
+                }
             }
         }
 
         Button buttonLogIn = findViewById(R.id.buttonLogIn);
         buttonLogIn.setOnClickListener((view) -> {
-            Intent intent = new Intent(AuthenticationActivity.this, LogInActivity.class);
+            Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
         });
 
         Button buttonSignUp = findViewById(R.id.buttonSignUp);
         buttonSignUp.setOnClickListener((view) -> {
-            Intent intent = new Intent(AuthenticationActivity.this, SignUpActivity.class);
+            Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         });
     }
