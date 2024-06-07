@@ -27,8 +27,7 @@ public class SettingsActivity extends BaseActivity {
     private String localeCode;
     private LinkedHashMap<String, String> localeOptions;
     private boolean isSpinnerInitialization = true;
-    private RadioGroup radioGroupTheme;
-    private boolean isReset = false;
+    private RadioButton radioButtonSystemDefault;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +51,8 @@ public class SettingsActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.settings_dialog_positive_reset), (dialog, id) -> {
                     AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList());
 
-                    isReset = true;
-                    radioGroupTheme.check(R.id.radioButtonSystemDefault);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                     Settings.clearSettings(this);
-                    isReset = false;
+                    radioButtonSystemDefault.setChecked(true);
 
                     Toast.makeText(this, getString(R.string.toast_confirmation_save), Toast.LENGTH_SHORT).show();
                 })
@@ -115,8 +111,10 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void configureRadioGroupTheme() {
-        radioGroupTheme = findViewById(R.id.radioGroupTheme);
-        RadioButton radioButtonSystemDefault = findViewById(R.id.radioButtonSystemDefault);
+        radioButtonSystemDefault = findViewById(R.id.radioButtonSystemDefault);
+        RadioGroup radioGroupTheme = findViewById(R.id.radioGroupTheme);
+        RadioButton radioButtonLight = findViewById(R.id.radioButtonLight);
+        RadioButton radioButtonDark = findViewById(R.id.radioButtonDark);
 
         int systemDefaultMode = Resources.getSystem().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (systemDefaultMode == Configuration.UI_MODE_NIGHT_NO) {
@@ -127,28 +125,23 @@ public class SettingsActivity extends BaseActivity {
 
         int appTheme = AppCompatDelegate.getDefaultNightMode();
         if (appTheme == AppCompatDelegate.MODE_NIGHT_NO) {
-            radioGroupTheme.check(R.id.radioButtonLight);
+            radioButtonLight.setChecked(true);
         } else if (appTheme == AppCompatDelegate.MODE_NIGHT_YES) {
-            radioGroupTheme.check(R.id.radioButtonDark);
+            radioButtonDark.setChecked(true);
         } else {
-            radioGroupTheme.check(R.id.radioButtonSystemDefault);
+            radioButtonSystemDefault.setChecked(true);
         }
 
-
         radioGroupTheme.setOnCheckedChangeListener((group, checkedId) -> {
-            if (isReset) {
-                return;
-            }
-
             if (checkedId == R.id.radioButtonLight && appTheme != AppCompatDelegate.MODE_NIGHT_NO) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 Settings.saveTheme(this, Settings.LIGHT);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             } else if (checkedId == R.id.radioButtonDark && appTheme != AppCompatDelegate.MODE_NIGHT_YES) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 Settings.saveTheme(this, Settings.DARK);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else if (checkedId == R.id.radioButtonSystemDefault && appTheme != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 Settings.saveTheme(this, Settings.SYSTEM_DEFAULT);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             }
         });
     }
