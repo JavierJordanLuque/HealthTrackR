@@ -301,7 +301,7 @@ public class CalendarFragment extends Fragment {
                             cntDosingTime = cntDosingTime.plus(frequency.multipliedBy(dosesElapsed + 1));
                         }
 
-                        limitDate = endDate != null ? endDate.toLocalDate() : currentDateTime.toLocalDate().plusDays(10);
+                        limitDate = endDate != null ? endDate.toLocalDate() : currentDateTime.toLocalDate().plusDays(30);
                     } else {
                         continue;
                     }
