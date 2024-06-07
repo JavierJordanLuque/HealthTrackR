@@ -585,10 +585,10 @@ public class ModifyGuidelineActivity extends BaseActivity {
                 });
             } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
                 textViewManageInfo.setText(R.string.guidelines_select_image_manage_info_api_33);
-                textViewManageButton.setVisibility(View.GONE);
+                textViewManageButton.setVisibility(View.INVISIBLE);
             } else {
                 textViewManageInfo.setText(R.string.guidelines_select_multimedia_manage_info_default);
-                textViewManageButton.setVisibility(View.GONE);
+                textViewManageButton.setVisibility(View.INVISIBLE);
             }
 
             bottomSheetDialog.setOnShowListener(dialog -> {
@@ -656,10 +656,10 @@ public class ModifyGuidelineActivity extends BaseActivity {
                 });
             } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
                 textViewManageInfo.setText(R.string.guidelines_select_video_manage_info_api_33);
-                textViewManageButton.setVisibility(View.GONE);
+                textViewManageButton.setVisibility(View.INVISIBLE);
             } else {
                 textViewManageInfo.setText(R.string.guidelines_select_multimedia_manage_info_default);
-                textViewManageButton.setVisibility(View.GONE);
+                textViewManageButton.setVisibility(View.INVISIBLE);
             }
 
             bottomSheetDialog.setOnShowListener(dialog -> {
