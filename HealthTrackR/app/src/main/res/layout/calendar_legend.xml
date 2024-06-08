@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/calendar_legend_info"
                 android:textAppearance="?attr/textAppearanceBodySmall"
+                android:justificationMode="inter_word"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout"
                 app:layout_constraintTop_toTopOf="parent" />

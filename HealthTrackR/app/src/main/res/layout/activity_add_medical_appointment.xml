@@ -262,10 +262,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:labelFor="@+id/editTextLatitude"
-                                android:textAppearance="?attr/textAppearanceBodySmall"
                                 android:paddingTop="2dp"
                                 android:paddingHorizontal="15dp"
                                 android:text="@string/error_invalid_medical_appointment_location"
+                                android:textAppearance="?attr/textAppearanceBodySmall"
+                                android:justificationMode="inter_word"
                                 android:textColor="?attr/colorError"
                                 app:layout_constraintTop_toBottomOf="@+id/layoutLocation"
                                 android:visibility="invisible" />
@@ -285,6 +286,7 @@
                     android:paddingTop="2dp"
                     android:text="@string/medical_appointment_add_medicine_helper"
                     android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:justificationMode="inter_word"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

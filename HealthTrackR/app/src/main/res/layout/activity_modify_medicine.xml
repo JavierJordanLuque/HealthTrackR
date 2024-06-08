@@ -217,10 +217,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:labelFor="@+id/editTextDosageFrequencyMinutes"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
                         android:paddingTop="2dp"
                         android:paddingHorizontal="15dp"
-                        android:text="@string/medicines_dosing_frequency_helper" />
+                        android:text="@string/medicines_dosing_frequency_helper"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:justificationMode="inter_word" />
 
                 </LinearLayout>
 

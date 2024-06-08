@@ -215,12 +215,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:labelFor="@+id/editTextDosageFrequencyMinutes"
-                            android:textAppearance="?attr/textAppearanceBodySmall"
                             android:paddingTop="2dp"
                             android:paddingHorizontal="15dp"
                             android:text="@string/medical_appointment_previous_notification_time_helper"
-                            android:visibility="visible"
-                            app:layout_constraintTop_toBottomOf="@+id/layoutPreviousNotificationTime"/>
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:justificationMode="inter_word"
+                            app:layout_constraintTop_toBottomOf="@+id/layoutPreviousNotificationTime"
+                            android:visibility="visible" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

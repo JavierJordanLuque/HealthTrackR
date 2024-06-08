@@ -53,6 +53,7 @@
         android:layout_height="match_parent"
         android:labelFor="@+id/editTextDescription"
         android:textAppearance="?attr/textAppearanceBodySmall"
+        android:justificationMode="inter_word"
         android:paddingTop="2dp"
         android:paddingHorizontal="15dp"
         android:text="@string/guidelines_image_url_helper" />

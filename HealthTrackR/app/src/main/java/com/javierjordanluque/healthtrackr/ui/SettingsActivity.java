@@ -152,6 +152,7 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
+    /** @noinspection SpellCheckingInspection*/
     private void openAutostartSettings() {
         Intent intent = new Intent();
         String manufacturer = android.os.Build.MANUFACTURER;

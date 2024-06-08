@@ -244,7 +244,8 @@
                         android:paddingHorizontal="15dp"
                         android:paddingTop="2dp"
                         android:text="@string/medicines_dosing_frequency_helper"
-                        android:textAppearance="?attr/textAppearanceBodySmall" />
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:justificationMode="inter_word" />
 
                 </LinearLayout>
 
@@ -257,6 +258,7 @@
                     android:paddingTop="2dp"
                     android:text="@string/medicines_add_medicine_helper"
                     android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:justificationMode="inter_word"
                     app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout"
