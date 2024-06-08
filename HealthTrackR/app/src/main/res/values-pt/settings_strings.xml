@@ -9,6 +9,9 @@
     <string name="settings_dialog_message_reset">Tem certeza de que deseja redefinir as configurações?</string>
     <string name="settings_dialog_positive_reset">Redefinir</string>
 
+    <string name="settings_auto_startup_info">Para manter as notificações ativas após reiniciar o dispositivo, certifique-se de ativar a permissão de inicialização automática em segundo plano.</string>
+    <string name="settings_auto_startup_enable">Ativar inicialização automática</string>
+
     <string name="settings_appearance_system_default">Modo padrão do sistema</string>
     <string name="settings_appearance_light">Modo claro</string>
     <string name="settings_appearance_dark">Modo escuro</string>

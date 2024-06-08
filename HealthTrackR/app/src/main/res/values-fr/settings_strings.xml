@@ -9,6 +9,9 @@
     <string name="settings_dialog_message_reset">Êtes-vous sûr de vouloir réinitialiser les paramètres ?</string>
     <string name="settings_dialog_positive_reset">Réinitialiser</string>
 
+    <string name="settings_auto_startup_info">Pour maintenir les notifications actives après le redémarrage de l\'appareil, assurez-vous d\'activer l\'autorisation de démarrage automatique en arrière-plan.</string>
+    <string name="settings_auto_startup_enable">Activer le démarrage automatique</string>
+
     <string name="settings_appearance_system_default">Mode par défaut du système</string>
     <string name="settings_appearance_light">Mode clair</string>
     <string name="settings_appearance_dark">Mode sombre</string>

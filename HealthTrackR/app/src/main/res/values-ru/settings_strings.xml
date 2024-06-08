@@ -9,6 +9,9 @@
     <string name="settings_dialog_message_reset">Вы уверены, что хотите сбросить настройки?</string>
     <string name="settings_dialog_positive_reset">Сбросить</string>
 
+    <string name="settings_auto_startup_info">Чтобы сохранить активные уведомления после перезапуска устройства, убедитесь, что разрешение на автоматический запуск в фоновом режиме включено.</string>
+    <string name="settings_auto_startup_enable">Включить автозапуск</string>
+
     <string name="settings_appearance_system_default">Стандартный режим системы</string>
     <string name="settings_appearance_light">Светлый режим</string>
     <string name="settings_appearance_dark">Темный режим</string>

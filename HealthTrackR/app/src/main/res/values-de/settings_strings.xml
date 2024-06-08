@@ -9,6 +9,9 @@
     <string name="settings_dialog_message_reset">Möchtest du die Einstellungen wirklich zurücksetzen?</string>
     <string name="settings_dialog_positive_reset">Zurücksetzen</string>
 
+    <string name="settings_auto_startup_info">Um Benachrichtigungen nach dem Neustart des Geräts aktiv zu halten, stellen Sie sicher, dass die Hintergrund-Autostart-Berechtigung aktiviert ist.</string>
+    <string name="settings_auto_startup_enable">Autostart aktivieren</string>
+
     <string name="settings_appearance_system_default">Systemstandardmodus</string>
     <string name="settings_appearance_light">Hellmodus</string>
     <string name="settings_appearance_dark">Dunkelmodus</string>

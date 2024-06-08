@@ -13,6 +13,9 @@
     <string name="settings_appearance_light">Light mode</string>
     <string name="settings_appearance_dark">Dark mode</string>
 
+    <string name="settings_auto_startup_info">To keep notifications active after restarting the device, make sure to enable the background autostart permission.</string>
+    <string name="settings_auto_startup_enable">Enable autostart</string>
+
     <string-array name="settings_array_locale" translatable="false">
         <item>Dansk</item>
         <item>Deutsch</item>

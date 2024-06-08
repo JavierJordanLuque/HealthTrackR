@@ -12,4 +12,7 @@
     <string name="settings_appearance_system_default">Modo predeterminado del sistema</string>
     <string name="settings_appearance_light">Modo claro</string>
     <string name="settings_appearance_dark">Modo oscuro</string>
+
+    <string name="settings_auto_startup_info">Para mantener las notificaciones activas después de reiniciar el dispositivo, asegúrate de habilitar el permiso de autoinicio en segundo plano.</string>
+    <string name="settings_auto_startup_enable">Habilitar autoinicio</string>
 </resources>

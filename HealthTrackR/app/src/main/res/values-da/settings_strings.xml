@@ -9,6 +9,9 @@
     <string name="settings_dialog_message_reset">Er du sikker på, at du vil nulstille indstillingerne?</string>
     <string name="settings_dialog_positive_reset">Nulstil</string>
 
+    <string name="settings_auto_startup_info">For at holde notifikationer aktive efter genstart af enheden, sørg for at aktivere baggrundsautostarttilladelsen.</string>
+    <string name="settings_auto_startup_enable">Aktivér autostart</string>
+
     <string name="settings_appearance_system_default">Systemstandardtilstand</string>
     <string name="settings_appearance_light">Lyst tilstand</string>
     <string name="settings_appearance_dark">Mørkt tilstand</string>

@@ -9,6 +9,9 @@
     <string name="settings_dialog_message_reset">Är du säker på att du vill återställa inställningarna?</string>
     <string name="settings_dialog_positive_reset">Återställ</string>
 
+    <string name="settings_auto_startup_info">För att behålla meddelanden aktiva efter omstart av enheten, se till att aktivera tillståndet för automatisk start i bakgrunden.</string>
+    <string name="settings_auto_startup_enable">Aktivera automatisk start</string>
+
     <string name="settings_appearance_system_default">Systemstandardläge</string>
     <string name="settings_appearance_light">Ljust läge</string>
     <string name="settings_appearance_dark">Mörkt läge</string>

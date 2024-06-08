@@ -1,9 +1,12 @@
 package com.javierjordanluque.healthtrackr.ui;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,6 +46,9 @@ public class SettingsActivity extends BaseActivity {
 
         Button buttonResetSettings = findViewById(R.id.buttonResetSettings);
         buttonResetSettings.setOnClickListener(view -> showResetSettingsConfirmationDialog());
+
+        Button buttonAutostart = findViewById(R.id.buttonAutostart);
+        buttonAutostart.setOnClickListener(view -> openAutostartSettings());
     }
 
     private void showResetSettingsConfirmationDialog() {
@@ -144,6 +150,30 @@ public class SettingsActivity extends BaseActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             }
         });
+    }
+
+    private void openAutostartSettings() {
+        Intent intent = new Intent();
+        String manufacturer = android.os.Build.MANUFACTURER;
+
+        if ("samsung".equalsIgnoreCase(manufacturer)) {
+            intent.setComponent(new ComponentName("com.samsung.android.lool", "com.samsung.android.sm.ui.battery.BatteryActivity"));
+        } else if ("xiaomi".equalsIgnoreCase(manufacturer)) {
+            intent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
+        } else if ("oppo".equalsIgnoreCase(manufacturer)) {
+            intent.setComponent(new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.permission.startup.StartupAppListActivity"));
+        } else if ("vivo".equalsIgnoreCase(manufacturer)) {
+            intent.setComponent(new ComponentName("com.vivo.permissionmanager", "com.vivo.permissionmanager.activity.BgStartUpManagerActivity"));
+        } else if ("Letv".equalsIgnoreCase(manufacturer)) {
+            intent.setComponent(new ComponentName("com.letv.android.letvsafe", "com.letv.android.letvsafe.AutobootManageActivity"));
+        } else if ("Honor".equalsIgnoreCase(manufacturer)) {
+            intent.setComponent(new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity"));
+        } else {
+            intent.setAction(android.provider.Settings.ACTION_SETTINGS);
+        }
+
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getResources().getConfiguration().getLocales().get(0).getLanguage());
+        startActivity(intent);
     }
 
     @Override
