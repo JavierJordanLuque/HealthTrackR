@@ -146,7 +146,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="10dp"
                             android:text="@string/settings_auto_startup_info"
                             android:textAppearance="?attr/textAppearanceBodySmall"
                             android:justificationMode="inter_word" />
