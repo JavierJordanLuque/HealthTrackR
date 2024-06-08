@@ -108,12 +108,8 @@ public class ModifyMedicineNotificationsActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 1) {
-                    char firstChar = s.charAt(0);
-                    if (firstChar < '0' || firstChar > '5') {
-                        s.clear();
-                    }
-                }
+                if (s.length() == 2 && s.charAt(0) > '5')
+                    s.delete(1, 2);
             }
         });
 

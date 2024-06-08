@@ -53,6 +53,7 @@ public class HealthTrackRApp extends Application {
         NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
         channel.setDescription(channelDescription);
         channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        channel.enableLights(true);
         channel.setLightColor(R.color.light_primary);
 
         if (groupId != null)
