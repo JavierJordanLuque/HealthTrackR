@@ -1,6 +1,7 @@
 package com.javierjordanluque.healthtrackr.ui;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -174,7 +175,15 @@ public class SettingsActivity extends BaseActivity {
         }
 
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getResources().getConfiguration().getLocales().get(0).getLanguage());
-        startActivity(intent);
+
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException exception) {
+            intent = new Intent();
+            intent.setAction(android.provider.Settings.ACTION_SETTINGS);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getResources().getConfiguration().getLocales().get(0).getLanguage());
+            startActivity(intent);
+        }
     }
 
     @Override
