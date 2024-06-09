@@ -1,11 +1,12 @@
 package com.javierjordanluque.healthtrackr.ui;
 
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
@@ -155,32 +156,36 @@ public class SettingsActivity extends BaseActivity {
 
     /** @noinspection SpellCheckingInspection*/
     private void openAutostartSettings() {
-        Intent intent = new Intent();
-        String manufacturer = android.os.Build.MANUFACTURER;
+        Intent[] AUTO_START_INTENTS = {
+                new Intent().setComponent(new ComponentName("com.samsung.android.lool", "com.samsung.android.sm.ui.battery.BatteryActivity")),
+                new Intent().setComponent(new ComponentName("com.samsung.android.lool", "com.samsung.android.sm.battery.ui.BatteryActivity")),
+                new Intent("miui.intent.action.OP_AUTO_START").addCategory(Intent.CATEGORY_DEFAULT),
+                new Intent().setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity")),
+                new Intent().setComponent(new ComponentName("com.letv.android.letvsafe", "com.letv.android.letvsafe.AutobootManageActivity")),
+                new Intent().setComponent(new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity")),
+                new Intent().setComponent(new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.permission.startup.StartupAppListActivity")),
+                new Intent().setComponent(new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.startupapp.StartupAppListActivity")),
+                new Intent().setComponent(new ComponentName("com.oppo.safe", "com.oppo.safe.permission.startup.StartupAppListActivity")),
+                new Intent().setComponent(new ComponentName("com.iqoo.secure", "com.iqoo.secure.ui.phoneoptimize.AddWhiteListActivity")),
+                new Intent().setComponent(new ComponentName("com.iqoo.secure", "com.iqoo.secure.ui.phoneoptimize.BgStartUpManager")),
+                new Intent().setComponent(new ComponentName("com.vivo.permissionmanager", "com.vivo.permissionmanager.activity.BgStartUpManagerActivity")),
+                new Intent().setComponent(new ComponentName("com.asus.mobilemanager", "com.asus.mobilemanager.entry.FunctionActivity")).setData(
+                        Uri.parse("mobilemanager://function/entry/AutoStart"))
+        };
 
-        if ("samsung".equalsIgnoreCase(manufacturer)) {
-            intent.setComponent(new ComponentName("com.samsung.android.lool", "com.samsung.android.sm.ui.battery.BatteryActivity"));
-        } else if ("xiaomi".equalsIgnoreCase(manufacturer)) {
-            intent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
-        } else if ("oppo".equalsIgnoreCase(manufacturer)) {
-            intent.setComponent(new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.permission.startup.StartupAppListActivity"));
-        } else if ("vivo".equalsIgnoreCase(manufacturer)) {
-            intent.setComponent(new ComponentName("com.vivo.permissionmanager", "com.vivo.permissionmanager.activity.BgStartUpManagerActivity"));
-        } else if ("Letv".equalsIgnoreCase(manufacturer)) {
-            intent.setComponent(new ComponentName("com.letv.android.letvsafe", "com.letv.android.letvsafe.AutobootManageActivity"));
-        } else if ("Honor".equalsIgnoreCase(manufacturer)) {
-            intent.setComponent(new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity"));
-        } else {
-            intent.setAction(android.provider.Settings.ACTION_SETTINGS);
+        boolean intentMatches = false;
+        for (Intent intent : AUTO_START_INTENTS){
+            if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+                intentMatches = true;
+
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getResources().getConfiguration().getLocales().get(0).getLanguage());
+                startActivity(intent);
+                break;
+            }
         }
 
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getResources().getConfiguration().getLocales().get(0).getLanguage());
-
-        try {
-            startActivity(intent);
-        } catch (ActivityNotFoundException exception) {
-            intent = new Intent();
-            intent.setAction(android.provider.Settings.ACTION_SETTINGS);
+        if (!intentMatches) {
+            Intent intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, getResources().getConfiguration().getLocales().get(0).getLanguage());
             startActivity(intent);
         }

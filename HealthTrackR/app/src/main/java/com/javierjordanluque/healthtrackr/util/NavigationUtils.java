@@ -8,7 +8,7 @@ import android.provider.Browser;
 import com.javierjordanluque.healthtrackr.models.Location;
 
 public class NavigationUtils {
-    private static final String USER_MANUAL_URL = "https://github.com/JavierJordanLuque/HealthTrackR/tree/main";
+    private static final String USER_MANUAL_URL = "https://github.com/JavierJordanLuque/HealthTrackR/blob/v1.0/docs/Manuales/Manual%20de%20Usuario/Manual%20de%20Usuario%20v1.0.pdf";
 
     public static void openUserManual(Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(USER_MANUAL_URL));
