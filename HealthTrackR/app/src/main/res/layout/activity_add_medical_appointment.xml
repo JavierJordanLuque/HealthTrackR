@@ -134,6 +134,8 @@
                             style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_marginTop="0dp"
+                            app:endIconContentDescription="@string/content_description_clear_text"
+                            app:endIconMode="clear_text"
                             app:errorEnabled="false"
                             app:layout_constraintTop_toTopOf="parent"
                             android:visibility="visible">

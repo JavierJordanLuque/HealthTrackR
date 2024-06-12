@@ -81,6 +81,8 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutActiveSubstance"
                         style="@style/Widget.HealthTrackR.TextInputLayout.OutlinedBox"
+                        app:endIconContentDescription="@string/content_description_clear_text"
+                        app:endIconMode="clear_text"
                         app:errorEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText

@@ -148,7 +148,8 @@
                             android:autofillHints="text"
                             android:hint="@string/treatments_diagnosis"
                             android:inputType="textMultiLine"
-                            android:maxLength="200" />
+                            android:maxLength="200"
+                            tools:ignore="TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

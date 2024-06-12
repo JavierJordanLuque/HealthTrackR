@@ -175,6 +175,8 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutAllergies"
                         style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        app:endIconContentDescription="@string/content_description_clear_text"
+                        app:endIconMode="clear_text"
                         app:helperText="@string/account_helper_allergies"
                         app:helperTextEnabled="true">
 
@@ -191,6 +193,8 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutPreviousMedicalConditions"
                         style="@style/Widget.HealthTrackR.TextInputLayout.FilledBox"
+                        app:endIconContentDescription="@string/content_description_clear_text"
+                        app:endIconMode="clear_text"
                         app:helperText="@string/account_helper_previous_medical_condition"
                         app:helperTextEnabled="true">
 
