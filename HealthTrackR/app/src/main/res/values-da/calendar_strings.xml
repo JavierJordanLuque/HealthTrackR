@@ -28,13 +28,13 @@
     <string name="calendar_legend_medication_intake">Indtagelse af medicin</string>
 
     <string-array name="weekdays">
-        <item>søn</item>
         <item>man</item>
         <item>tir</item>
         <item>ons</item>
         <item>tor</item>
         <item>fre</item>
         <item>lør</item>
+        <item>søn</item>
     </string-array>
     <string-array name="months">
         <item>januar</item>

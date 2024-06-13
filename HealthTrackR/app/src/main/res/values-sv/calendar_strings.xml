@@ -28,13 +28,13 @@
     <string name="calendar_legend_medication_intake">Medicinintag</string>
 
     <string-array name="weekdays">
-        <item>sön</item>
         <item>mån</item>
         <item>tis</item>
         <item>ons</item>
         <item>tor</item>
         <item>fre</item>
         <item>lör</item>
+        <item>sön</item>
     </string-array>
     <string-array name="months">
         <item>januari</item>

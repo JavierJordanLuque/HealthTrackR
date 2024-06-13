@@ -28,13 +28,13 @@
     <string name="calendar_legend_medication_intake">Прием лекарств</string>
 
     <string-array name="weekdays">
-        <item>вс</item>
         <item>пн</item>
         <item>вт</item>
         <item>ср</item>
         <item>чт</item>
         <item>пт</item>
         <item>сб</item>
+        <item>вс</item>
     </string-array>
     <string-array name="months">
         <item>январь</item>

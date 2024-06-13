@@ -28,13 +28,13 @@
     <string name="calendar_legend_medication_intake">Assunzione di farmaci</string>
 
     <string-array name="weekdays">
-        <item>dom</item>
         <item>lun</item>
         <item>mar</item>
         <item>mer</item>
         <item>gio</item>
         <item>ven</item>
         <item>sab</item>
+        <item>dom</item>
     </string-array>
     <string-array name="months">
         <item>gennaio</item>

@@ -28,13 +28,13 @@
     <string name="calendar_legend_medication_intake">Prise de médicaments</string>
 
     <string-array name="weekdays">
-        <item>dim</item>
         <item>lun</item>
         <item>mar</item>
         <item>mer</item>
         <item>jeu</item>
         <item>ven</item>
         <item>sam</item>
+        <item>dim</item>
     </string-array>
     <string-array name="months">
         <item>janvier</item>

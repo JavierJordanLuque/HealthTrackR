@@ -28,13 +28,13 @@
     <string name="calendar_legend_medication_intake">Ingestão de medicamentos</string>
 
     <string-array name="weekdays">
-        <item>dom</item>
         <item>seg</item>
         <item>ter</item>
         <item>qua</item>
         <item>qui</item>
         <item>sex</item>
         <item>sáb</item>
+        <item>dom</item>
     </string-array>
     <string-array name="months">
         <item>janeiro</item>

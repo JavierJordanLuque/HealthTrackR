@@ -28,13 +28,13 @@
     <string name="calendar_legend_medication_intake">Toma de medicamento</string>
 
     <string-array name="weekdays">
-        <item>dom</item>
         <item>lun</item>
         <item>mar</item>
         <item>mié</item>
         <item>jue</item>
         <item>vie</item>
         <item>sáb</item>
+        <item>dom</item>
     </string-array>
     <string-array name="months">
         <item>enero</item>
