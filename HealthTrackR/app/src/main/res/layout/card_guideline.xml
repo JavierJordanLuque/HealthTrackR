@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/textViewDescription"
-            style="@style/Widget.HealthTrackR.TextView.Value"
+            style="@style/Widget.HealthTrackR.TextView"
             android:layout_marginHorizontal="14dp"
             android:visibility="gone" />
 
