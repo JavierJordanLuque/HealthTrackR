@@ -278,20 +278,6 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textViewAddMedicalAppointmentHelper"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@+id/editTextDosageFrequencyMinutes"
-                    android:paddingHorizontal="15dp"
-                    android:paddingTop="2dp"
-                    android:text="@string/medical_appointment_add_medicine_helper"
-                    android:textAppearance="?attr/textAppearanceBodySmall"
-                    android:justificationMode="inter_word"
-                    app:layout_constraintEnd_toEndOf="@id/vMarginGuidelineEnd"
-                    app:layout_constraintStart_toStartOf="@id/vMarginGuidelineStart"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/vLargeButtonGuidelineStart"
                     style="@style/vLargeButtonGuidelineStart" />
@@ -308,7 +294,7 @@
                     android:paddingBottom="@dimen/linear_layout_padding_bottom"
                     app:layout_constraintEnd_toEndOf="@id/vLargeButtonGuidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/vLargeButtonGuidelineStart"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewAddMedicalAppointmentHelper"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
                     app:layout_constraintWidth_max="@dimen/large_btn_max_width">
 
                     <Button
