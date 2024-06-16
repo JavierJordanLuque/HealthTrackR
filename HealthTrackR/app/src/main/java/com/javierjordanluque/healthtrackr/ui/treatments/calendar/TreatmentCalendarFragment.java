@@ -55,6 +55,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -203,9 +204,7 @@ public class TreatmentCalendarFragment extends Fragment {
     private void setCalendarView() {
         calendarView.setTitleFormatter(new MonthArrayTitleFormatter(getResources().getTextArray(R.array.months)));
         calendarView.setWeekDayFormatter(new ArrayWeekDayFormatter(getResources().getTextArray(R.array.weekdays)));
-
-        calendarView.setSelectedDate(CalendarDay.today());
-        calendarView.addDecorator(new CurrentDateDecorator(requireActivity()));
+        calendarView.setShowOtherDates(MaterialCalendarView.SHOW_OUT_OF_RANGE);
 
         boolean isNightMode = ((MainActivity) requireActivity()).isNightMode();
         calendarView.setDateTextAppearance(isNightMode ? R.style.TextAppearance_HealthTrackR_Date_Dark : R.style.TextAppearance_HealthTrackR_Date_Light);
@@ -225,8 +224,27 @@ public class TreatmentCalendarFragment extends Fragment {
         if (listener != null)
             listener.onTitleChanged(treatment.getTitle());
 
-        if (selectedDate == null)
+        if (LocalDate.now().isBefore(treatment.getStartDate().toLocalDate()) || (treatment.getEndDate() != null && LocalDate.now().isAfter(treatment.getEndDate().toLocalDate()))) {
+            selectedDate = treatment.getStartDate().toLocalDate();
+
+            CalendarDay selectedDate = CalendarDay.from(treatment.getStartDate().getYear(), treatment.getStartDate().getMonthValue(), treatment.getStartDate().getDayOfMonth());
+            calendarView.setSelectedDate(selectedDate);
+            calendarView.setCurrentDate(selectedDate);
+
+            if (treatment.getEndDate() != null && treatment.getStartDate().getMonthValue() == treatment.getEndDate().getMonthValue()) {
+                CharSequence[] monthLabels = getResources().getTextArray(R.array.months);
+
+                CharSequence[] selectedMonth = new CharSequence[12];
+                Arrays.fill(selectedMonth, monthLabels[treatment.getStartDate().getMonthValue() - 1]);
+
+                calendarView.setTitleFormatter(new MonthArrayTitleFormatter(selectedMonth));
+            }
+        } else {
             selectedDate = LocalDate.now();
+
+            calendarView.setSelectedDate(CalendarDay.today());
+            calendarView.addDecorator(new CurrentDateDecorator(requireActivity()));
+        }
 
         calendarView.state().edit()
                 .setMinimumDate(CalendarDay.from(treatment.getStartDate().getYear(), treatment.getStartDate().getMonthValue(), treatment.getStartDate().getDayOfMonth()))
