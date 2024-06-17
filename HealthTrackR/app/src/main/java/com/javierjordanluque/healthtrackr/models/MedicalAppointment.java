@@ -72,8 +72,8 @@ public class MedicalAppointment implements Identifiable {
 
             MedicalAppointmentNotification medicalAppointmentNotification = getNotification(context);
             if (medicalAppointmentNotification != null) {
-                int previousMinutes = (int) ChronoUnit.MINUTES.between(oldDateTime, Instant.ofEpochMilli(medicalAppointmentNotification.getTimestamp())
-                        .atZone(oldDateTime.getZone()));
+                int previousMinutes = (int) ChronoUnit.MINUTES.between(Instant.ofEpochMilli(medicalAppointmentNotification.getTimestamp())
+                        .atZone(oldDateTime.getZone()), oldDateTime);
 
                 NotificationScheduler.cancelNotification(context, medicalAppointmentNotification);
                 scheduleAppointmentNotification(context, previousMinutes);
