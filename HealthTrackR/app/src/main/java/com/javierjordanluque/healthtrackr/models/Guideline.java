@@ -59,7 +59,7 @@ public class Guideline implements Identifiable {
                         newOtherGuideline.setId(otherGuideline.getId());
 
                         otherGuideline.setNumOrder(otherGuideline.getNumOrder() + 1);
-                        newOtherGuideline.setNumOrder(otherGuideline.getNumOrder() + 1);
+                        newOtherGuideline.setNumOrder(otherGuideline.getNumOrder());
 
                         guidelineRepository.update(newOtherGuideline);
                     }
@@ -71,7 +71,7 @@ public class Guideline implements Identifiable {
                         newOtherGuideline.setId(otherGuideline.getId());
 
                         otherGuideline.setNumOrder(otherGuideline.getNumOrder() - 1);
-                        newOtherGuideline.setNumOrder(otherGuideline.getNumOrder() - 1);
+                        newOtherGuideline.setNumOrder(otherGuideline.getNumOrder());
 
                         guidelineRepository.update(newOtherGuideline);
                     }
@@ -98,7 +98,7 @@ public class Guideline implements Identifiable {
                 guidelineToUpdate.setId(guideline.getId());
 
                 guideline.setNumOrder(guideline.getNumOrder() + shift);
-                guidelineToUpdate.setNumOrder(guideline.getNumOrder() + shift);
+                guidelineToUpdate.setNumOrder(guideline.getNumOrder());
                 guidelineRepository.update(guidelineToUpdate);
             }
         }
