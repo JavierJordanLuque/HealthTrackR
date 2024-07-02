@@ -1,6 +1,6 @@
 # HealthTrackR
 
-HealthTrackR: A comprehensive healthcare treatment tracking app for Android Devices. Final degree project (TFG) of the Software Engineering degree at the University of Malaga (UMA), authored by Javier Jordán Luque.
+HealthTrackR: A comprehensive healthcare treatment tracking app for Android devices. Final degree project (TFG) of the Software Engineering degree at the University of Malaga (UMA), authored by Javier Jordán Luque.
 
 Within the repository's structure, you'll find two primary directories thoughtfully organizing the project's components. Firstly, the "HealthTrackR" folder houses the complete Android Studio project, including its codebase, resources, and configurations. Secondly, the "docs" directory serves as a central hub for all project documentation, crafted in Spanish.
 
